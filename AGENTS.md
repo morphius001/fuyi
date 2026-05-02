@@ -72,6 +72,19 @@ Development servers:
 - Keep PRs small enough for Codex App worktrees and parallel subagents to review independently.
 - Preserve existing business behavior unless the task explicitly asks for a localized replacement and includes verification.
 
+## Codex Task File Execution Rules
+
+- 如果用户说“执行 xxx”或“执行任务 xxx”，先在 `.codex/tasks/` 查找对应 markdown 文件，例如 `.codex/tasks/xxx.md`.
+- 执行任务前必须读取 `AGENTS.md` 和对应 task 文件.
+- 默认不要自动 commit.
+- 默认不要 push.
+- 默认不要创建 PR.
+- 默认不要运行 `git reset --hard`, `git merge`, `git rebase`, `git pull`, `git worktree remove`，除非任务文件明确允许.
+- 完成后只输出修改文件、验证结果、风险点和下一步建议.
+- 如果任务文件和用户当前指令冲突，以用户当前指令为准.
+- 如果任务文件和 `AGENTS.md` 冲突，以 `AGENTS.md` 的安全边界为准.
+- 如果用户说“执行下一个任务”，读取 `.codex/queue.md`，选择第一个未完成且未标记 `local-wip` 或 `done` 的任务.
+
 ## Storefront China UX Rules
 
 - Use zh-CN copy and CNY prices by default.

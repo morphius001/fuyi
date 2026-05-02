@@ -32,7 +32,7 @@ Scope:
 - 更新 `docs/china-ux-spec.md`
 - 更新 `docs/china-integration-architecture.md`
 - 更新 `docs/china-localization-task-list.md`
-- 记录当前没有 `apps/storefront`
+- 记录第一轮审计时尚无 `apps/storefront`；storefront scaffold 后续以 `apps/storefront` 为准
 - 记录 `bun run check-types` 当前没有实际执行任务
 
 Non-goals:
@@ -54,14 +54,44 @@ Risk:
 
 ## Batch 1: 低风险并行 PR
 
-### PR 1: Storefront 归属确认与接入规划
+### PR 0: Storefront Scaffold
 
 Scope:
 
-- 确认 Storefront 是否在其他仓库。
-- 如果不在，规划 `apps/storefront` scaffold。
+- Add the official Mercur B2C Storefront under `apps/storefront`.
+- Keep the scaffold close to the upstream storefront.
+- Align package manager usage with root `bun@1.3.13`.
+- Do not localize copy, layout, payment, order, refund, settlement, commission, or permission behavior.
+
+Non-goals:
+
+- 不做中文化。
+- 不接入真实 Stripe、Algolia、TalkJS、微信支付、支付宝。
+- 不写真实密钥或提交 `.env.local`。
+- 不修改支付、订单、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- Confirm root workspaces include `apps/*`.
+- Run `bun install`.
+- Run `bun run lint:storefront` and record scaffold-level compatibility issues without broad business-code fixes.
+- Confirm `.env.local.example` exists and `.env.local` remains ignored/untracked.
+
+Risk:
+
+- Storefront scaffold brings React 19 and Next.js 15 dependencies into a monorepo that already has React 18 dashboard apps.
+- Provider dependencies such as Stripe, Algolia, and TalkJS remain present but must stay unconfigured unless a later scoped task requires mock or placeholder setup.
+
+### PR 1: Storefront 中文化基线（storefront-zhcn-baseline）
+
+Scope:
+
+- 基于 `apps/storefront` 做 storefront-zhcn-baseline。
+- Localize storefront copy to zh-CN where applicable.
+- Use CNY display conventions.
+- Propose domestic ecommerce layout improvements for product listing, product detail, cart, checkout, and mobile sticky actions.
 - 规划端口、环境变量、Store API 边界、页面清单。
-- 明确 Storefront 第一版只做展示层与中文化。
+- Keep checkout/order/payment behavior unchanged.
 
 Non-goals:
 
@@ -71,13 +101,14 @@ Non-goals:
 
 Verification:
 
-- 确认当前仓库是否仍无 `apps/storefront`。
-- 如果新增 scaffold，运行 `bun run lint`、`bun run check-types`、`bun run build`。
+- 确认 `apps/storefront` 是后续 storefront-zhcn-baseline 的唯一前台目录。
+- 运行 `bun run lint:storefront`。
+- 如范围包含构建验证，运行 `bun run build:storefront`。
 - 桌面和移动端打开首页、搜索、类目、商品详情、购物车入口。
 
 Risk:
 
-- 低到中。新增前台应用可能引入依赖，应单独评审。
+- 低到中。前台应用依赖和本地化改造应单独评审。
 
 ### PR 2: Admin Panel 中文化基线
 
@@ -416,16 +447,41 @@ Risk:
 
 - 最高。资金、权限、订单、退款共同交汇。
 
+### PR 15: 权限与 Migration 串行保护
+
+Scope:
+
+- 审计权限、角色、商家数据归属和 migration 对中国本地化任务的影响。
+- 任何 schema migration、权限策略、RBAC、商家归属、历史数据迁移都必须串行推进。
+- 在 migration 方案中明确回滚、数据备份、灰度和失败恢复策略。
+
+Non-goals:
+
+- 不在 UI 中文化 PR 中顺带改权限。
+- 不在支付、退款、对账、结算、佣金 PR 中夹带无关 migration。
+- 不绕过现有 Medusa/Mercur 权限和 ownership 约束。
+
+Verification:
+
+- migration dry-run 或等价演练。
+- 权限/RBAC 回归测试。
+- 商家只能访问自有数据的回归测试。
+- migration 回滚或恢复步骤人工复核。
+
+Risk:
+
+- 最高。权限和 migration 会影响数据安全、商家隔离、资金链路和回滚能力，必须串行处理。
+
 ## 推荐下一步
 
 推荐先做 `PR 0: 中国本地化第一轮审计文档`，也就是本轮 docs 变更。完成后再并行拆出：
 
 1. `admin-i18n-zhcn-baseline`
 2. `vendor-i18n-zhcn-baseline`
-3. `storefront-location-plan`
+3. `storefront-zhcn-baseline`，基于 `apps/storefront`
 
 原因：
 
-- 当前没有 Storefront，先确认归属能避免前台工作误建在错误位置。
+- Storefront 归属已指向 `apps/storefront`，后续中文化基线应在该目录内进行。
 - Admin/Vendor 中文化基线相对低风险，但能快速暴露 Mercur dashboard 的 i18n 扩展方式。
-- 支付、退款、对账、结算必须等文档和 mock provider 边界清楚后串行推进。
+- 支付、退款、对账、结算、佣金、权限和 migration 必须等文档和 mock provider 边界清楚后串行推进。

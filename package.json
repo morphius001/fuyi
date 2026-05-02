@@ -4,7 +4,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:storefront": "bun --cwd apps/storefront dev",
     "lint": "turbo run lint",
+    "lint:storefront": "bun --cwd apps/storefront lint",
+    "build:storefront": "bun --cwd apps/storefront build",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },

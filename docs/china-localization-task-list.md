@@ -4,11 +4,32 @@
 
 ## Batch 1: Low-Risk PRs
 
+### PR 0: Storefront Scaffold
+
+Scope:
+
+- Add the official Mercur B2C Storefront under `apps/storefront`.
+- Keep the scaffold close to the upstream storefront.
+- Align package manager usage with root `bun@1.3.13`.
+- Do not localize copy, layout, payment, order, refund, settlement, commission, or permission behavior.
+
+Verification:
+
+- Confirm root workspaces include `apps/*`.
+- Run `bun install`.
+- Run `bun run lint:storefront` and record scaffold-level compatibility issues without broad business-code fixes.
+- Confirm `.env.local.example` exists and `.env.local` remains ignored/untracked.
+
+Risk:
+
+- Storefront scaffold brings React 19 and Next.js 15 dependencies into a monorepo that already has React 18 dashboard apps.
+- Provider dependencies such as Stripe, Algolia, and TalkJS remain present but must stay unconfigured unless a later scoped task requires mock or placeholder setup.
+
 ### PR 1: Storefront 中文化和国内布局
 
 Scope:
 
-- Confirm storefront location because this repository snapshot currently has no `apps/storefront`.
+- Use `apps/storefront` as the storefront location.
 - Localize storefront copy to zh-CN where applicable.
 - Use CNY display conventions.
 - Propose domestic ecommerce layout improvements for product listing, product detail, cart, checkout, and mobile sticky actions.

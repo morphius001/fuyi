@@ -14,6 +14,17 @@
 - 草稿保存的是商户输入和 AI 建议，不代表平台审核通过。
 - 生鲜商品、市场物料商品、上游货源报价需要分清业务链路，不混入消费者首页主链路。
 
+## 与读写落地计划的关系
+
+后续落地以 `docs/vendor-draft-product-readwrite-plan.md` 为执行拆分。
+
+关键边界：
+
+- `draft` 只保存商户输入、规格选择和 AI suggestion。
+- `ready_for_product_create` 只是商品创建候选，不是已发布商品。
+- AI suggestion 不直接覆盖商户确认字段。
+- 真实创建 Medusa product、库存初始化、图片转存、审核发布必须另开 PR。
+
 ## 草稿状态机
 
 ```mermaid

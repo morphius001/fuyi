@@ -376,12 +376,13 @@
 
 1. `market-membership-post-migration-validation`: done，对 PR AZ-BC 做合并后验证和下一步收口。
 2. `admin-market-membership-readonly-view`: done，Admin 只读查看市场、商户市场关系、档口、公告、营业时间、配送 profile，不保存。
-3. `market-membership-db-dry-run-plan`: pending，设计本地/预发 migration dry-run、rollback、空表和兼容性检查。
+3. `market-membership-db-dry-run-plan`: done，设计本地/预发 migration dry-run、rollback、空表和兼容性检查。
 
 第三十轮进度：
 
 - `market-membership-post-migration-validation`: done，API read model 单测、Vendor route helper 单测、API typecheck、Medusa build 和 diff check 均通过；已记录 workspace PATH 验证注意事项。
 - `admin-market-membership-readonly-view`: done，确认现有 `/cn/operations/market-capabilities/:id` 已覆盖 membership、档口、配送 profile、营业时间、公告和只读边界；Admin build 和 diff check 通过，没有新增业务代码。
+- `market-membership-db-dry-run-plan`: done，已规划本地/预发 migration dry-run、rollback、测试数据规则、Vendor route 三态、Admin 只读页三态和进入真实数据接入前的验收标准。
 
 ## Status Rules
 

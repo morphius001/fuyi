@@ -168,13 +168,14 @@
 
 1. `api-read-model-skeleton`: done，小范围实现 market/module/draft/discovery 的只读类型和 builder。
 2. `storefront-discovery-view-shape`: done，先定义 Storefront home/search/seller read model，不重做 UI。
-3. `vendor-draft-product-skeleton`: pending，先实现草稿模型 skeleton，不发布商品。
+3. `vendor-draft-product-skeleton`: done，先实现草稿模型 skeleton，不发布商品。
 4. `admin-config-readonly-api`: pending，先实现 Admin 模块配置只读 API，不保存不生效。
 
 第十四轮进度：
 
 - `api-read-model-skeleton`: done，新增 API 只读 read model builder，覆盖 discovery、module config capability view 和 vendor product draft skeleton；现有 `/store/china/discovery` 输出保持兼容。
 - `storefront-discovery-view-shape`: done，新增 Storefront home/search/seller view shape builder，明确提货卡为 secondary/separate entry，直播只作为 seller status badge。
+- `vendor-draft-product-skeleton`: done，新增未注册 Vendor product draft skeleton service 和单元测试，草稿、AI suggestion、审核候选均不创建真实商品。
 
 ## Status Rules
 

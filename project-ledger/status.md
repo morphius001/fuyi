@@ -45,7 +45,8 @@
 - `api-read-model-skeleton`: done，新增 `packages/api/src/lib/china-read-models.ts` 和单元测试，把 discovery、module config capability view、vendor product draft 的只读模型先做成纯 builder。
 - 现有 `/store/china/discovery` 改为调用 read model builder；输出语义保持只读，不影响 checkout、订单、支付、退款、结算、佣金、权限或履约。
 - `storefront-discovery-view-shape`: done，新增 Storefront home/search/seller view shape builder，后续前端可按稳定合同读取，不重做 UI。
-- 下一项：`vendor-draft-product-skeleton`。
+- `vendor-draft-product-skeleton`: done，新增未注册 `packages/api/src/modules/china-product-drafts/**` skeleton，覆盖草稿、AI suggestion、审核候选和审计记录；不新增 route、不写库、不创建真实商品。
+- 下一项：`admin-config-readonly-api`。
 
 ## 已跑通
 

@@ -70,3 +70,4 @@
 - 完成 `docs/storefront-real-discovery-bridge.md`，把 Storefront 首页、搜索、店铺页从 mock/read-only 到真实 market/seller/category/product read model 的桥接拆成 N1-N7。
 - 完成 `api-read-model-skeleton`，新增 API 只读 read model builder 和单元测试，现有 discovery route 改为调用 builder，保持不触碰交易链路。
 - 完成 `storefront-discovery-view-shape`，新增 Storefront home/search/seller view shape builder 和单元测试，不修改前端 UI。
+- 完成 `vendor-draft-product-skeleton`，新增未注册 Vendor product draft skeleton service 和单元测试，不创建真实商品。

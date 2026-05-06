@@ -16,6 +16,12 @@ const Review = ({ cart }: { cart: any }) => {
 
   return (
     <div>
+      <div className="mb-6 rounded-sm border p-4">
+        <h2 className="heading-sm text-primary">核对订单</h2>
+        <p className="mt-2 text-sm text-secondary">
+          请确认商品规格、数量、收货方式和联系方式。提交后，生鲜海鲜类商品会按商家接单、市场营业时间和配送能力履约。
+        </p>
+      </div>
       <div className="mb-6 w-full">
         <CartItems cart={cart} />
       </div>
@@ -36,10 +42,15 @@ const Review = ({ cart }: { cart: any }) => {
       </div>
 
       {previousStepsCompleted && (
+        <>
+          <p className="mb-3 text-xs text-secondary">
+            点击提交订单后，请以支付渠道和平台后端异步通知结果为准。
+          </p>
         <PaymentButton
           cart={cart}
           data-testid="submit-order-button"
         />
+        </>
       )}
     </div>
   );

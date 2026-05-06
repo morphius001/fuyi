@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { HttpTypes } from "@medusajs/types"
 
 import { CartDropdown, MobileNavbar, Navbar } from "@/components/cells"
@@ -9,15 +8,16 @@ import { Badge } from "@/components/atoms"
 import CountrySelector from "@/components/molecules/CountrySelector/CountrySelector"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { MessageButton } from "@/components/molecules/MessageButton/MessageButton"
+import { NavbarSearch } from "@/components/molecules"
 import { listCategories } from "@/lib/data/categories"
 import { listRegions } from "@/lib/data/regions"
 import { getUserWishlists } from "@/lib/data/wishlist"
 import { retrieveCustomer } from "@/lib/data/customer"
-import { ParentCategoryLinks } from "@/components/molecules/ParentCategoryLinks/ParentCategoryLinks"
 
 export const Header = async ({ locale } : {
   locale: string
 }) => {
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Fuyi"
   const user = await retrieveCustomer().catch(() => null)
   const isLoggedIn = Boolean(user)
 
@@ -35,31 +35,35 @@ export const Header = async ({ locale } : {
     parentCategories: HttpTypes.StoreProductCategory[]
   }
   return (
-    <header data-testid="header">
-      <div className="flex py-2 lg:px-8 px-4 md:px-5" data-testid="header-top">
-        <div className="flex items-center lg:w-1/3">
+    <header className="border-b border-[#E5E7EB] bg-white" data-testid="header">
+      <div
+        className="mx-auto flex h-12 w-full max-w-[1680px] items-center gap-4 px-4 md:h-16 md:px-5 lg:h-20 lg:px-8 2xl:px-10"
+        data-testid="header-top"
+      >
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <MobileNavbar
             parentCategories={parentCategories}
             categories={categories}
           />
-          <ParentCategoryLinks
-            parentCategories={parentCategories}
-            categories={categories}
-          />
-        </div>
-        <div className="flex lg:justify-center lg:w-1/3 items-center pl-4 lg:pl-0">
-          <LocalizedClientLink href="/" className="text-2xl font-bold" data-testid="header-logo-link">
-            <Image
-              src="/Logo.svg"
-              width={126}
-              height={40}
-              alt="Logo"
-              priority
-            />
+          <LocalizedClientLink
+            href="/"
+            className="shrink-0 text-[22px] font-bold leading-none tracking-normal text-primary md:text-2xl"
+            aria-label={`${siteName} 首页`}
+            data-testid="header-logo-link"
+          >
+            {siteName}
           </LocalizedClientLink>
+          <span className="hidden border-l border-[#E5E7EB] pl-3 text-sm text-secondary lg:inline">
+            本地鲜货市场
+          </span>
         </div>
-        <div className="flex items-center justify-end gap-2 lg:gap-4 w-full lg:w-1/3 py-2" data-testid="header-actions">
-          <CountrySelector regions={regions} />
+        <div className="hidden w-full max-w-[520px] shrink lg:block" data-testid="header-search-desktop">
+          <NavbarSearch className="max-w-[520px]" />
+        </div>
+        <div className="ml-auto hidden min-w-0 shrink-0 items-center justify-end gap-2 py-2 lg:flex lg:gap-4" data-testid="header-actions">
+          <div className="hidden sm:block">
+            <CountrySelector regions={regions} />
+          </div>
           {isLoggedIn && <MessageButton />}
           <UserDropdown isLoggedIn={isLoggedIn} />
           {isLoggedIn && (

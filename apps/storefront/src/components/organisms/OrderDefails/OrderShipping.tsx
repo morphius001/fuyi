@@ -1,20 +1,20 @@
-import { isStripe, paymentInfoMap } from "@/lib/constants"
-import { convertToLocale } from "@/lib/helpers/money"
-import { HttpTypes } from "@medusajs/types"
-import { Container, Text } from "@medusajs/ui"
+import { isStripe, paymentInfoMap } from "@/lib/constants";
+import { convertToLocale } from "@/lib/helpers/money";
+import { HttpTypes } from "@medusajs/types";
+import { Container, Text } from "@medusajs/ui";
 
 type ShippingDetailsProps = {
-  order: HttpTypes.StoreOrder
-}
+  order: HttpTypes.StoreOrder;
+};
 
 const OrderShipping = ({ order }: ShippingDetailsProps) => {
-  const payment = order.payment_collections?.[0].payments?.[0]
+  const payment = order.payment_collections?.[0].payments?.[0];
 
   return (
     <div className="border rounded-sm p-4">
       <div>
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Shipping Address
+          收货地址
         </Text>
         <Text className="txt-medium text-ui-fg-subtle">
           {order.shipping_address?.first_name}{" "}
@@ -34,7 +34,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
 
       <div className="mt-4" data-testid="shipping-contact-summary">
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Contact
+          联系方式
         </Text>
         <Text className="txt-medium text-ui-fg-subtle">
           {order.shipping_address?.phone}
@@ -44,7 +44,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
 
       <div className="mt-4" data-testid="shipping-method-summary">
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Delivery method
+          配送方式
         </Text>
         <Text className="txt-medium text-ui-fg-subtle">
           {(order as any).shipping_methods[0]?.name} (
@@ -59,7 +59,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
       </div>
       <div className="mt-4">
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Payment method
+          支付方式
         </Text>
         <div>
           {payment && (
@@ -77,7 +77,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrderShipping
+export default OrderShipping;

@@ -1,26 +1,19 @@
-"use client"
+'use client';
 
-import {
-  Badge,
-  Divider,
-  LogoutButton,
-  NavigationItem,
-} from "@/components/atoms"
-import { Dropdown } from "@/components/molecules"
-import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
-import { ProfileIcon } from "@/icons"
-import { HttpTypes } from "@medusajs/types"
-import { useUnreads } from "@talkjs/react"
-import { useState } from "react"
+import { useState } from 'react';
 
-export const UserDropdown = ({
-  isLoggedIn,
-}: {
-  isLoggedIn: boolean
-}) => {
-  const [open, setOpen] = useState(false)
+import { HttpTypes } from '@medusajs/types';
+import { useUnreads } from '@talkjs/react';
 
-  const unreads = useUnreads()
+import { Badge, Divider, LogoutButton, NavigationItem } from '@/components/atoms';
+import { Dropdown } from '@/components/molecules';
+import LocalizedClientLink from '@/components/molecules/LocalizedLink/LocalizedLink';
+import { ProfileIcon } from '@/icons';
+
+export const UserDropdown = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+  const [open, setOpen] = useState(false);
+
+  const unreads = useUnreads();
 
   return (
     <div
@@ -30,9 +23,9 @@ export const UserDropdown = ({
       onFocus={() => setOpen(true)}
     >
       <LocalizedClientLink
-        href={isLoggedIn ? "/user" : "/login"}
+        href={isLoggedIn ? '/user' : '/login'}
         className="relative"
-        aria-label="Go to user profile"
+        aria-label="进入个人中心"
       >
         <ProfileIcon size={20} />
       </LocalizedClientLink>
@@ -40,34 +33,33 @@ export const UserDropdown = ({
         {isLoggedIn ? (
           <div className="p-1">
             <div className="lg:w-[200px]">
-              <h3 className="uppercase heading-xs border-b p-4">
-                Your account
-              </h3>
+              <h3 className="heading-xs border-b p-4 uppercase">我的账户</h3>
             </div>
-            <NavigationItem href="/user/orders">Orders</NavigationItem>
-            <NavigationItem href="/user/messages" className="relative">
-              Messages
+            <NavigationItem href="/user/orders">订单</NavigationItem>
+            <NavigationItem
+              href="/user/messages"
+              className="relative"
+            >
+              消息
               {Boolean(unreads?.length) && (
-                <Badge className="absolute top-3 left-24 w-4 h-4 p-0">
-                  {unreads?.length}
-                </Badge>
+                <Badge className="absolute left-24 top-3 h-4 w-4 p-0">{unreads?.length}</Badge>
               )}
             </NavigationItem>
-            <NavigationItem href="/user/returns">Returns</NavigationItem>
-            <NavigationItem href="/user/addresses">Addresses</NavigationItem>
-            <NavigationItem href="/user/reviews">Reviews</NavigationItem>
-            <NavigationItem href="/user/wishlist">Wishlist</NavigationItem>
+            <NavigationItem href="/user/returns">售后</NavigationItem>
+            <NavigationItem href="/user/addresses">地址</NavigationItem>
+            <NavigationItem href="/user/reviews">评价</NavigationItem>
+            <NavigationItem href="/user/wishlist">收藏</NavigationItem>
             <Divider />
-            <NavigationItem href="/user/settings">Settings</NavigationItem>
+            <NavigationItem href="/user/settings">设置</NavigationItem>
             <LogoutButton />
           </div>
         ) : (
           <div className="p-1">
-            <NavigationItem href="/login">Login</NavigationItem>
-            <NavigationItem href="/register">Register</NavigationItem>
+            <NavigationItem href="/login">登录</NavigationItem>
+            <NavigationItem href="/register">注册</NavigationItem>
           </div>
         )}
       </Dropdown>
     </div>
-  )
-}
+  );
+};

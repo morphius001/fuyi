@@ -1,18 +1,18 @@
-export const steps = ["Received", "Preparing", "Shipped", "Delivered"]
+export const steps = ["已下单", "商家备货", "已发货", "已签收"];
 
 export const parcelStatuses = (
-  order: "not_fulfilled" | "fulfilled" | "delivered" | "shipped"
+  order: "not_fulfilled" | "fulfilled" | "delivered" | "shipped",
 ) => {
   switch (order) {
     case "not_fulfilled":
-      return 0
+      return 0;
     case "fulfilled":
-      return 1
+      return 1;
     case "delivered":
-      return 3
+      return 3;
     case "shipped":
-      return 2
+      return 2;
     default:
-      return 0
+      return 0;
   }
-}
+};

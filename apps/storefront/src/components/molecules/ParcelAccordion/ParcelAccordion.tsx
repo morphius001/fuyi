@@ -1,18 +1,18 @@
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import { Button } from '@/components/atoms';
-import LocalizedClientLink from '@/components/molecules/LocalizedLink/LocalizedLink';
-import { convertToLocale } from '@/lib/helpers/money';
+import { Button } from "@/components/atoms";
+import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink";
+import { convertToLocale } from "@/lib/helpers/money";
 
-import { ParcelAccordionItems } from './ParcelAccordionItems';
+import { ParcelAccordionItems } from "./ParcelAccordionItems";
 
 export const ParcelAccordion = ({
   orderId,
   orderDisplayId,
   createdAt,
   total,
-  currency_code = 'eur',
-  orders
+  currency_code = "eur",
+  orders,
 }: {
   orderId: string;
   orderDisplayId: string;
@@ -28,26 +28,17 @@ export const ParcelAccordion = ({
       data-testid={`order-${orderId}`}
     >
       <div className="flex flex-col justify-between sm:col-span-4 sm:pr-10 lg:flex-row lg:items-center lg:gap-4">
-        <h2
-          className="heading-sm truncate"
-          data-testid="order-display-id"
-        >
-          ORDER SET {orderDisplayId}
+        <h2 className="heading-sm truncate" data-testid="order-display-id">
+          合并订单 {orderDisplayId}
         </h2>
-        <h2
-          className="label-md"
-          data-testid="order-date"
-        >
-          Order date:{' '}
+        <h2 className="label-md" data-testid="order-date">
+          下单时间：{" "}
           <span className="text-primary lg:block xl:inline-block">
-            {format(createdAt || '', 'yyyy-MM-dd')}
+            {format(createdAt || "", "yyyy-MM-dd")}
           </span>
         </h2>
-        <h2
-          className="label-md"
-          data-testid="order-total"
-        >
-          Total:{' '}
+        <h2 className="label-md" data-testid="order-total">
+          合计：{" "}
           <span
             className="text-primary lg:block xl:inline-block"
             data-testid={`order-${orderId}-price`}
@@ -58,20 +49,14 @@ export const ParcelAccordion = ({
       </div>
       <div className="col-span-1 flex items-center justify-end gap-4">
         <LocalizedClientLink href={`/user/orders/${orderId}`}>
-          <Button
-            variant="tonal"
-            data-testid="order-view-button"
-          >
-            <span className="label-md text-primary">VIEW ORDER</span>
+          <Button variant="tonal" data-testid="order-view-button">
+            <span className="label-md text-primary">查看订单</span>
           </Button>
         </LocalizedClientLink>
       </div>
     </div>
     <div className="mb-4">
-      <ul
-        className="w-full"
-        data-testid="order-items-list"
-      >
+      <ul className="w-full" data-testid="order-items-list">
         {orders.map((order, index) => (
           <ParcelAccordionItems
             key={order.id}

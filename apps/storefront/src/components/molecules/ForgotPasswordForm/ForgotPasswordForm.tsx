@@ -43,14 +43,14 @@ const Form = () => {
     const result = await sendResetPasswordEmail(data.email);
 
     if (!result.success) {
-      toast.error({ title: result.error || 'An error occurred. Please try again.' });
+      toast.error({ title: result.error || '发生错误，请稍后重试。' });
       return;
     }
 
     reset({ email: '' });
 
     toast.success({
-      title: `Password reset was requested. If an account exists for ${data.email}, you’ll receive an email with a reset link. Check your inbox and spam folder - the link is valid for one hour.`
+      title: `已提交密码重置申请。如果 ${data.email} 对应账户存在，你将收到重置邮件；链接有效期为 1 小时。`
     });
   };
 
@@ -59,18 +59,16 @@ const Form = () => {
       className="mx-auto mt-6 w-full max-w-xl space-y-4 rounded-sm border p-4"
       data-testid="forgot-password-form-container"
     >
-      <h1 className="heading-md my-0 mb-2 uppercase text-primary">Forgot your password?</h1>
-      <p className="text-md">
-        Enter the email you used to sign up and we&#39;ll send you a password reset email. email.
-      </p>
+      <h1 className="heading-md my-0 mb-2 uppercase text-primary">忘记密码？</h1>
+      <p className="text-md">输入注册邮箱，我们会发送密码重置邮件。</p>
       <form
         onSubmit={handleSubmit(submit)}
         data-testid="forgot-password-form"
       >
         <div className="space-y-4">
           <LabeledInput
-            label="E-mail"
-            placeholder="Your e-mail address"
+            label="邮箱"
+            placeholder="请输入邮箱地址"
             error={errors.email as FieldError}
             data-testid="forgot-password-email-input"
             {...register('email')}
@@ -83,7 +81,7 @@ const Form = () => {
             disabled={isSubmitting}
             data-testid="forgot-password-submit-button"
           >
-            Reset Password
+            重置密码
           </Button>
 
           <Link
@@ -95,7 +93,7 @@ const Form = () => {
               variant="tonal"
               className="flex w-full justify-center uppercase"
             >
-              Back to log in
+              返回登录
             </Button>
           </Link>
         </div>

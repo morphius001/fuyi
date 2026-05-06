@@ -113,14 +113,17 @@ const CartPaymentSection = ({
   const isEditEnabled = !isOpen && !!cart?.payment_collection?.payment_sessions?.length;
 
   return (
-    <div className="bg-ui-bg-interactive rounded-sm border p-4" data-testid="checkout-step-payment">
+    <div
+      className="bg-ui-bg-interactive rounded-sm border p-4"
+      data-testid="checkout-step-payment"
+    >
       <div className="mb-6 flex flex-row items-center justify-between">
         <Heading
           level="h2"
           className="text-3xl-regular flex flex-row items-center items-baseline gap-x-2"
         >
           {!isOpen && paymentReady && <CheckCircleSolid />}
-          Payment
+          支付方式
         </Heading>
         {isEditEnabled && (
           <Text>
@@ -129,13 +132,16 @@ const CartPaymentSection = ({
               onClick={handleEdit}
               variant="tonal"
             >
-              Edit
+              编辑
             </Button>
           </Text>
         )}
       </div>
       <div>
         <div className={isOpen ? 'block' : 'hidden'}>
+          <div className="mb-4 rounded-sm border border-ui-border-base bg-ui-bg-subtle p-3 text-sm text-ui-fg-subtle">
+            支付成功必须以后端异步通知确认为准；前台返回页和按钮状态只用于流程展示，不作为最终支付成功依据。
+          </div>
           {!paidByGiftcard && availablePaymentMethods?.length && (
             <>
               <RadioGroup
@@ -168,12 +174,15 @@ const CartPaymentSection = ({
 
           {paidByGiftcard && (
             <div className="flex w-1/3 flex-col">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">Payment method</Text>
+              <Text className="txt-medium-plus text-ui-fg-base mb-1">支付方式</Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                礼品卡
+              </Text>
+              <Text className="txt-small text-ui-fg-muted mt-2">
+                提货卡不属于礼品卡、优惠券或支付方式。
               </Text>
             </div>
           )}
@@ -190,8 +199,8 @@ const CartPaymentSection = ({
             disabled={(isStripe && !cardComplete) || (!selectedPaymentMethod && !paidByGiftcard)}
           >
             {!activeSession && isStripeFunc(selectedPaymentMethod)
-              ? ' Enter card details'
-              : 'Continue to review'}
+              ? '填写银行卡信息'
+              : '继续核对订单'}
           </Button>
         </div>
 
@@ -199,7 +208,7 @@ const CartPaymentSection = ({
           {cart && paymentReady && activeSession ? (
             <div className="flex w-full items-start gap-x-1">
               <div className="flex w-1/3 flex-col">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">Payment method</Text>
+                <Text className="txt-medium-plus text-ui-fg-base mb-1">支付方式</Text>
                 <Text
                   className="txt-medium text-ui-fg-subtle"
                   data-testid="payment-method-summary"
@@ -208,30 +217,36 @@ const CartPaymentSection = ({
                 </Text>
               </div>
               <div className="flex w-1/3 flex-col">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">Payment details</Text>
+                <Text className="txt-medium-plus text-ui-fg-base mb-1">支付信息</Text>
                 <div
                   className="txt-medium text-ui-fg-subtle flex items-center gap-2"
                   data-testid="payment-details-summary"
                 >
-                  <Container className="bg-ui-button-neutral-hover flex h-7 w-fit items-center p-2"     data-testid="payment-details-summary">
+                  <Container
+                    className="bg-ui-button-neutral-hover flex h-7 w-fit items-center p-2"
+                    data-testid="payment-details-summary"
+                  >
                     {paymentInfoMap[selectedPaymentMethod]?.icon || <CreditCard />}
                   </Container>
                   <Text>
                     {isStripeFunc(selectedPaymentMethod) && cardBrand
                       ? cardBrand
-                      : 'Another step will appear'}
+                      : '下一步继续确认'}
                   </Text>
                 </div>
+                <Text className="txt-small text-ui-fg-muted mt-2">
+                  最终支付结果以后端通知为准。
+                </Text>
               </div>
             </div>
           ) : paidByGiftcard ? (
             <div className="flex w-1/3 flex-col">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">Payment method</Text>
+              <Text className="txt-medium-plus text-ui-fg-base mb-1">支付方式</Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                礼品卡
               </Text>
             </div>
           ) : null}

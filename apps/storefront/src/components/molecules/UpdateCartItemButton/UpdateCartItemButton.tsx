@@ -51,9 +51,9 @@ export const UpdateCartItemButton = ({
         const errorMessage =
           error instanceof Error
             ? error.message.replace('Error setting up the request: ', '')
-            : 'Failed to update quantity';
+            : '更新数量失败';
         toast.error({
-          title: 'Error updating cart',
+          title: '更新购物车失败',
           description: errorMessage
         });
       }

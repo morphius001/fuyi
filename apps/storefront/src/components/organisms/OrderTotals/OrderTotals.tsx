@@ -1,17 +1,17 @@
-import { Card, Divider } from "@/components/atoms"
-import { convertToLocale } from "@/lib/helpers/money"
+import { Card, Divider } from "@/components/atoms";
+import { convertToLocale } from "@/lib/helpers/money";
 
 export const OrderTotals = ({ orderSet }: { orderSet: any }) => {
-  const delivery = orderSet.shipping_total
-  const subtotal = orderSet.total - delivery
-  const total = orderSet.total
+  const delivery = orderSet.shipping_total;
+  const subtotal = orderSet.total - delivery;
+  const total = orderSet.total;
 
-  const currency_code = orderSet.payment_collection.currency_code
+  const currency_code = orderSet.payment_collection.currency_code;
 
   return (
     <Card className="mb-8 p-4">
-      <p className="text-secondary label-md mb-2 flex justify-between">
-        Subtotal:
+      <p className="label-md mb-2 flex justify-between text-secondary">
+        商品金额：
         <span className="text-primary">
           {convertToLocale({
             amount: subtotal,
@@ -19,8 +19,8 @@ export const OrderTotals = ({ orderSet }: { orderSet: any }) => {
           })}
         </span>
       </p>
-      <p className="text-secondary label-md flex justify-between">
-        Delivery:
+      <p className="label-md flex justify-between text-secondary">
+        配送费：
         <span className="text-primary">
           {convertToLocale({
             amount: delivery,
@@ -29,8 +29,8 @@ export const OrderTotals = ({ orderSet }: { orderSet: any }) => {
         </span>
       </p>
       <Divider className="my-4" />
-      <p className="text-secondary label-md flex justify-between items-center">
-        Total:{" "}
+      <p className="label-md flex items-center justify-between text-secondary">
+        合计：
         <span className="text-primary heading-md">
           {convertToLocale({
             amount: total,
@@ -39,5 +39,5 @@ export const OrderTotals = ({ orderSet }: { orderSet: any }) => {
         </span>
       </p>
     </Card>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import { OrdersPagination } from "@/components/organisms/OrdersPagination/OrdersPagination"
-import { SingleOrderReturn } from "@/components/organisms/SingleOrderReturn/SingleOrderReturn"
-import { Heading } from "@medusajs/ui"
-import { isEmpty } from "lodash"
+import { OrdersPagination } from "@/components/organisms/OrdersPagination/OrdersPagination";
+import { SingleOrderReturn } from "@/components/organisms/SingleOrderReturn/SingleOrderReturn";
+import { Heading } from "@medusajs/ui";
+import { isEmpty } from "lodash";
 
-const LIMIT = 10
+const LIMIT = 10;
 
 export const OrderReturnRequests = ({
   returns = [],
@@ -12,31 +12,36 @@ export const OrderReturnRequests = ({
   currentReturn,
   returnReasons,
 }: {
-  returns: any[]
-  user: any
-  page: string
-  currentReturn: string
-  returnReasons: any[]
+  returns: any[];
+  user: any;
+  page: string;
+  currentReturn: string;
+  returnReasons: any[];
 }) => {
-  const pages = Math.ceil(returns.length / LIMIT)
-  const currentPage = +page || 1
-  const offset = (+currentPage - 1) * LIMIT
+  const pages = Math.ceil(returns.length / LIMIT);
+  const currentPage = +page || 1;
+  const offset = (+currentPage - 1) * LIMIT;
 
-  const processedReturns = returns.slice(offset, offset + LIMIT)
+  const processedReturns = returns.slice(offset, offset + LIMIT);
 
   if (isEmpty(processedReturns)) {
     return (
       <div className="mt-8" data-testid="order-return-requests-empty-state">
-        <Heading level="h2" className="uppercase text-center heading-lg" data-testid="no-returns-heading">
-          No returns
+        <Heading
+          level="h2"
+          className="uppercase text-center heading-lg"
+          data-testid="no-returns-heading"
+        >
+          暂无售后申请
         </Heading>
-        <p className="text-center text-secondary w-96 mt-8 mx-auto" data-testid="no-returns-description">
-          {
-            "You haven't requested any returns yet. Once you request a return, it will appear here."
-          }
+        <p
+          className="text-center text-secondary w-96 mt-8 mx-auto"
+          data-testid="no-returns-description"
+        >
+          {"发起退换货或退款申请后，可在这里查看处理进度。"}
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -56,5 +61,5 @@ export const OrderReturnRequests = ({
         <OrdersPagination pages={pages} />
       </div>
     </div>
-  )
-}
+  );
+};

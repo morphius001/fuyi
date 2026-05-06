@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Funnel_Display } from 'next/font/google';
 
 import './globals.css';
 
@@ -11,21 +10,12 @@ import { retrieveCart } from '@/lib/data/cart';
 
 import { Providers } from './providers';
 
-const funnelDisplay = Funnel_Display({
-  variable: '--font-funnel-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600']
-});
-
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${
-      process.env.NEXT_PUBLIC_SITE_NAME || 'Mercur B2C Demo - Marketplace Storefront'
-    }`,
-    default: process.env.NEXT_PUBLIC_SITE_NAME || 'Mercur B2C Demo - Marketplace Storefront'
+    template: `%s | ${process.env.NEXT_PUBLIC_SITE_NAME || 'Fuyi 买家端'}`,
+    default: process.env.NEXT_PUBLIC_SITE_NAME || 'Fuyi 买家端'
   },
-  description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'Mercur B2C Demo - Marketplace Storefront',
+  description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'Fuyi 中国大陆多商户电商买家端',
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   alternates: {
     languages: {
@@ -43,7 +33,7 @@ export default async function RootLayout({
 
   const ALGOLIA_APP = process.env.NEXT_PUBLIC_ALGOLIA_ID;
   // default lang updated by HtmlLangSetter
-  const htmlLang = 'en';
+  const htmlLang = 'zh-CN';
 
   return (
     <html
@@ -51,24 +41,6 @@ export default async function RootLayout({
       className=""
     >
       <Head>
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="dns-prefetch"
-          href="https://fonts.gstatic.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="dns-prefetch"
-          href="https://fonts.googleapis.com"
-        />
         <link
           rel="preconnect"
           href="https://i.imgur.com"
@@ -138,7 +110,7 @@ export default async function RootLayout({
           href="https://api.mercurjs.com"
         />
       </Head>
-      <body className={`${funnelDisplay.className} relative bg-primary text-secondary antialiased`}>
+      <body className="relative bg-primary text-secondary antialiased">
         <HtmlLangSetter />
         <Providers cart={cart}>{children}</Providers>
         <Toaster position="top-right" />

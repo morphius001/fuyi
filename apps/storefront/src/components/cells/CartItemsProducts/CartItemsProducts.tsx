@@ -38,11 +38,14 @@ export const CartItemsProducts = ({
             className="flex gap-2 rounded-sm border p-1"
           >
             <LocalizedClientLink href={`/products/${product.product_handle}`}>
-              <div className="w-[100px] h-[132px] flex items-center justify-center" data-testid="cart-item-image">
+              <div
+                className="flex h-[132px] w-[100px] items-center justify-center"
+                data-testid="cart-item-image"
+              >
                 {product.thumbnail ? (
                   <Image
                     src={decodeURIComponent(product.thumbnail)}
-                    alt="Product thumbnail"
+                    alt="商品缩略图"
                     width={100}
                     height={132}
                     className="h-[132px] w-[100px] rounded-xs object-contain"
@@ -50,7 +53,7 @@ export const CartItemsProducts = ({
                 ) : (
                   <Image
                     src={'/images/placeholder.svg'}
-                    alt="Product thumbnail"
+                    alt="商品缩略图"
                     width={50}
                     height={66}
                     className="h-[66px] w-[50px] rounded-xs object-contain opacity-30"
@@ -63,7 +66,10 @@ export const CartItemsProducts = ({
               <div className="flex justify-between lg:mb-4">
                 <LocalizedClientLink href={`/products/${product.product_handle}`}>
                   <div className="mb-4 w-[100px] md:w-[200px] lg:mb-0 lg:w-[280px]">
-                    <h3 className="heading-xs truncate uppercase" data-testid="cart-item-title">
+                    <h3
+                      className="heading-xs truncate uppercase"
+                      data-testid="cart-item-title"
+                    >
                       {product.product_title}
                       {product.subtitle && ` - ${product.subtitle}`}
                     </h3>
@@ -75,8 +81,11 @@ export const CartItemsProducts = ({
                   </div>
                 )}
               </div>
-              <div className="lg:flex justify-between -mt-4 lg:mt-0">
-                <div className="label-md text-secondary" data-testid="cart-item-details">
+              <div className="-mt-4 justify-between lg:mt-0 lg:flex">
+                <div
+                  className="label-md text-secondary"
+                  data-testid="cart-item-details"
+                >
                   {options?.map(({ option, id, value }) => (
                     <p key={id}>
                       {option?.title}: <span className="text-primary">{value}</span>
@@ -89,12 +98,17 @@ export const CartItemsProducts = ({
                     />
                   ) : (
                     <p>
-                      Quantity: <span className="text-primary">{product.quantity}</span>
+                      数量：<span className="text-primary">{product.quantity}</span>
                     </p>
                   )}
                 </div>
                 <div className="mt-4 flex items-center gap-2 lg:mt-0 lg:block lg:text-right">
-                  <p className="label-lg" data-testid="cart-item-price">{total}</p>
+                  <p
+                    className="label-lg"
+                    data-testid="cart-item-price"
+                  >
+                    {total}
+                  </p>
                 </div>
               </div>
             </div>

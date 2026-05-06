@@ -166,10 +166,14 @@
 
 第十四轮建议：
 
-1. `api-read-model-skeleton`: pending，小范围实现 market/module/draft/discovery 的只读类型和 builder。
+1. `api-read-model-skeleton`: done，小范围实现 market/module/draft/discovery 的只读类型和 builder。
 2. `storefront-discovery-view-shape`: pending，先定义 Storefront home/search/seller read model，不重做 UI。
 3. `vendor-draft-product-skeleton`: pending，先实现草稿模型 skeleton，不发布商品。
 4. `admin-config-readonly-api`: pending，先实现 Admin 模块配置只读 API，不保存不生效。
+
+第十四轮进度：
+
+- `api-read-model-skeleton`: done，新增 API 只读 read model builder，覆盖 discovery、module config capability view 和 vendor product draft skeleton；现有 `/store/china/discovery` 输出保持兼容。
 
 ## Status Rules
 

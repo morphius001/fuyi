@@ -307,11 +307,19 @@
 第二十五轮建议：
 
 1. `vendor-fulfillment-context-readonly`: done，在 Vendor 配送设置/物流页展示 delivery profiles，只读不影响 checkout。
-2. `vendor-announcements-readonly`: pending，在 Vendor 公告/服务页展示商户侧市场公告，只读不发布。
+2. `vendor-announcements-readonly`: done，在 Vendor 公告/服务页展示商户侧市场公告，只读不发布。
 
 第二十五轮进度：
 
 - `vendor-fulfillment-context-readonly`: done，Vendor 物流页新增 delivery profiles 只读区，明确 checkoutImpact 为 none、runtimeEnabled 为 false；API 不可用时保留下方物流 mock 表。
+- `vendor-announcements-readonly`: done，Vendor 客服页新增商户侧市场公告只读区；API 不可用时保留下方客服 mock 表，不发布公告、不发送短信、IM 或站内信。
+
+第二十五轮队列已清空。
+
+第二十六轮建议：
+
+1. `vendor-market-context-post-merge-validation`: pending，对 PR AL-AP 合并后的 Vendor lint/build 做总验证报告。
+2. `vendor-market-context-next-plan`: pending，规划后续真正 Vendor API route/builder 和页面细节拆分。
 
 ## Status Rules
 

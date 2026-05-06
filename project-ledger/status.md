@@ -60,7 +60,8 @@
 
 - `market-read-model-module-skeleton`: done，新增未注册 `packages/api/src/modules/china-market-read-model/**` skeleton，覆盖市场、档口关系、商户角色、公告、营业时间和配送 profile 的只读 service。
 - `market-read-model-static-adapter`: done，新增 static adapter，把默认市场和 seller metadata 转成 market read model seed；仍不新增 route、不接 migration、不影响 checkout。
-- 下一项：`market-readonly-store-api`。
+- `market-readonly-store-api`: done，新增 Store 端中国市场只读 API，覆盖市场列表、市场详情和市场档口列表；不新增写接口、不影响 checkout。
+- 下一项：`admin-market-readonly-api`。
 
 ## 已跑通
 

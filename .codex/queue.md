@@ -271,11 +271,19 @@
 第二十二轮建议：
 
 1. `admin-market-detail-readonly-page`: done，Admin 读取 `/admin/china/markets/:id` 展示市场详情，只读不保存。
-2. `vendor-market-context-readonly-plan`: pending，规划 Vendor 所属市场/档口/公告只读接入，不改履约。
+2. `vendor-market-context-readonly-plan`: done，规划 Vendor 所属市场/档口/公告只读接入，不改履约。
 
 第二十二轮进度：
 
 - `admin-market-detail-readonly-page`: done，市场只读列表新增详情入口；详情页展示市场基础信息、商户/档口归属、配送 profile、营业时间、公告和只读边界，不保存、不发布、不影响订单、配送、支付、结算或权限。
+- `vendor-market-context-readonly-plan`: done，已规划 Vendor 市场上下文只读视图、页面消费方式、跨市场多档口策略、商户类型边界、PR 拆分和验证步骤。
+
+第二十二轮队列已清空。
+
+第二十三轮建议：
+
+1. `vendor-market-context-api-plan`: pending，设计 Vendor 专用市场上下文只读 API 合同，不改 UI。
+2. `vendor-market-context-client`: pending，新增 Vendor market context client/fallback，不改页面布局。
 
 ## Status Rules
 

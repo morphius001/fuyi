@@ -1,4 +1,7 @@
-import { ChinaMarketReadModelService } from "..";
+import {
+  buildStaticMarketReadModelSeed,
+  ChinaMarketReadModelService,
+} from "..";
 
 describe("ChinaMarketReadModelService skeleton", () => {
   const service = new ChinaMarketReadModelService({
@@ -102,5 +105,43 @@ describe("ChinaMarketReadModelService skeleton", () => {
         status: "active",
       },
     ]);
+  });
+
+  it("wraps static markets and seller metadata into read model seed", () => {
+    const seed = buildStaticMarketReadModelSeed({
+      sellers: [
+        {
+          id: "sel_1",
+          handle: "a-hai-xian-huo-dang",
+          name: "阿海鲜活档",
+          metadata: {
+            market_name: "三门海鲜市场",
+            booth_no: "A区18号",
+            category_summary: "鲜活蟹类",
+          },
+        },
+      ],
+    });
+    const readModel = new ChinaMarketReadModelService(seed);
+    const market = readModel.listOpenMarkets()[0];
+    const detail = readModel.buildMarketDetail(market.slug);
+
+    expect(detail).toMatchObject({
+      runtimeEnabled: false,
+      memberships: [
+        {
+          sellerHandle: "a-hai-xian-huo-dang",
+          boothNo: "A区18号",
+        },
+      ],
+      deliveryProfiles: [
+        {
+          displayName: "市场自提",
+        },
+        {
+          displayName: "统一配送展示能力",
+        },
+      ],
+    });
   });
 });

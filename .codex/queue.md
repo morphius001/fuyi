@@ -333,13 +333,22 @@
 1. `vendor-market-context-builder`: done，实现 Vendor market context builder 和单元测试，不注册 route。
 2. `vendor-market-context-readonly-route`: done，实现只读 Vendor route 和鉴权边界。
 3. `vendor-market-context-client-api-polish`: done，Vendor client 对接真实 route 的可用/空/fallback 状态。
-4. `vendor-market-context-visual-qa`: pending，四个 Vendor 页面做 API 状态视觉 QA。
+4. `vendor-market-context-visual-qa`: done，四个 Vendor 页面做 API 状态视觉 QA。
 
 第二十七轮进度：
 
 - `vendor-market-context-builder`: done，新增 Vendor market context 只读 builder、类型和单元测试；不注册 route、不新增 migration、不影响 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 - `vendor-market-context-readonly-route`: done，新增 `GET /vendor/china/market-context`，只从 `req.seller_context.seller_id` 解析当前商户；不接受前端 `sellerId`，不提供写入接口，不影响 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 - `vendor-market-context-client-api-polish`: done，Vendor client 查询参数对齐 `market_id`，补充响应校验和错误 fallback note；API 不可用时继续返回只读 fallback。
+- `vendor-market-context-visual-qa`: done，Vendor lint/build 和 diff check 通过；已固化首页、店铺资料、物流、客服四页的 API 可用、empty、fallback 三态视觉 QA 清单。
+
+第二十七轮队列已清空。
+
+第二十八轮建议：
+
+1. `vendor-market-context-post-api-validation`: pending，对 PR AS-AU 合并后的 API + Vendor 总验证。
+2. `vendor-market-context-authenticated-browser-qa`: pending，在用户已登录 Vendor 后做真实浏览器截图 QA。
+3. `vendor-market-context-next-data-plan`: pending，规划从 static adapter 过渡到真实 market membership 数据源。
 
 ## Status Rules
 

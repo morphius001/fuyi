@@ -234,8 +234,12 @@
 
 第十九轮建议：
 
-1. `admin-market-client`: pending，只新增 Admin markets API client，不改页面。
+1. `admin-market-client`: done，只新增 Admin markets API client，不改页面。
 2. `storefront-home-market-data-bridge`: pending，让首页读取 market client，但保持布局不重做。
+
+第十九轮进度：
+
+- `admin-market-client`: done，新增 `apps/admin/src/lib/china-admin-market-client.ts`，只封装 `/admin/china/markets*` 读取和空 fallback，不保存、不改权限、不影响运行时业务。
 
 ## Status Rules
 

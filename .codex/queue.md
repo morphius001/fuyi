@@ -182,8 +182,12 @@
 
 第十五轮建议：
 
-1. `api-post-merge-validation`: pending，对 PR O-R 合并后的 API typecheck、unit tests、build 做总验证。
+1. `api-post-merge-validation`: done，对 PR O-R 合并后的 API typecheck、unit tests、build 做总验证。
 2. `real-model-next-pr-plan`: pending，整理下一轮真正 migration/API route 的拆分顺序和风险门禁。
+
+第十五轮进度：
+
+- `api-post-merge-validation`: done，PR O-R 合并后 API typecheck、3 组单元测试 16/16、Medusa build 均通过。
 
 ## Status Rules
 

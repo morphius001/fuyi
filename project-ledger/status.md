@@ -49,6 +49,12 @@
 - `admin-config-readonly-api`: done，新增 `/admin/china/module-configs` 和 `/admin/china/module-configs/effective` 只读 GET endpoints，返回 static read model 和 effective capability view；不保存、不发布、不生效。
 - 第十四轮队列已清空。
 
+## 第十五轮进度
+
+- `api-post-merge-validation`: done，新增 `docs/api-post-merge-validation.md`。
+- PR O-R 合并后验证通过：API typecheck、3 组单元测试 16/16、Medusa build。
+- 下一项：`real-model-next-pr-plan`。
+
 ## 已跑通
 
 - 本地服务：

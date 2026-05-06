@@ -360,10 +360,14 @@
 
 第二十九轮建议：
 
-1. `market-membership-schema-finalization`: pending，docs-only，最终 schema 设计。
+1. `market-membership-schema-finalization`: done，docs-only，最终 schema 设计。
 2. `market-membership-migration-skeleton`: pending，migration skeleton，不接 route。
 3. `market-read-model-repository-adapter`: pending，真实数据 adapter + 单测。
 4. `vendor-market-context-data-source-switch`: pending，Vendor route 数据源切换，保留 fallback。
+
+第二十九轮进度：
+
+- `market-membership-schema-finalization`: done，已确认 market、membership、seller role、announcement、business hour、delivery profile、read model mapping 和 migration 前门禁。
 
 ## Status Rules
 

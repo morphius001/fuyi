@@ -10,6 +10,7 @@
 - PR J next data task files 已合并到 `main`，最新主线提交：`f8f4b69` `[china] PR J Next data task files`。
 - PR K market data model plan 已合并到 `main`，最新主线提交：`36ad4cc` `[china] PR K Market data model plan`。
 - PR L admin module config read model 已合并到 `main`，最新主线提交：`e2808b6` `[china] PR L Admin module config read model`。
+- PR M vendor draft product plan 已合并到 `main`，最新主线提交：`eaf4955` `[china] PR M Vendor draft product plan`。
 - 合并后验证报告：`docs/post-merge-validation-report.md`。
 - `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
 - 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
@@ -35,7 +36,8 @@
 - `market-data-model-implementation-plan`: done，新增 `docs/market-data-model-implementation-plan.md`，明确市场、商户、档口、商户类型、公告、营业时间和配送 profile 的真实数据模型落地顺序。
 - `admin-module-config-read-model`: done，新增 `docs/admin-module-config-read-model.md`，明确 Admin 模块开关只读配置模型、四类视图、合成顺序、PR L1-L7 和高风险边界。
 - `vendor-draft-product-readwrite-plan`: done，新增 `docs/vendor-draft-product-readwrite-plan.md`，明确手机快速上架、规格模板、AI mock suggestion、审核候选和真实商品创建的分层。
-- 下一项：`storefront-real-discovery-bridge`。
+- `storefront-real-discovery-bridge`: done，新增 `docs/storefront-real-discovery-bridge.md`，明确消费者首页、搜索、店铺页从 mock/read-only 过渡到真实 discovery read model 的桥接阶段。
+- 第十三轮 docs-only 队列已清空；下一轮进入小范围只读 skeleton 前，需要继续避免交易链路混入。
 
 ## 已跑通
 

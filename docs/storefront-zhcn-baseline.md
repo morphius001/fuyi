@@ -4,6 +4,8 @@
 
 本文件记录 `storefront-zhcn-baseline` 的范围、非目标和验证要求。目标是让 `apps/storefront` 具备中国大陆买家端的第一版 zh-CN/CNY 展示基线，同时保持 checkout、订单、支付、退款、结算、佣金和权限逻辑不变。
 
+后续真实发现数据桥接见 `docs/storefront-real-discovery-bridge.md`。Storefront UI 模板可以继续优化，但消费者主链路保持“选市场 / 找店铺 / 看鲜货 / 加购物车 / 结算”。提货卡、直播、物料采购、配送供应商和自提配送配置不能混进消费者首页主信息流。
+
 ## 范围
 
 - 前台目录确认：`apps/storefront` 是当前 monorepo 唯一买家端 storefront。

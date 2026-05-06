@@ -37,6 +37,18 @@ git worktree add ../fuyi-worktrees/storefront-ux -b china/storefront-ux
 - 大陆手机号校验。
 - 搜索、分类、促销和售后入口。
 
+## Discovery Bridge Boundary
+
+Storefront 后续数据桥接以 `docs/storefront-real-discovery-bridge.md` 为准。
+
+核心原则：
+
+- 首页、搜索、店铺页优先读取真实 market/seller/category/product read model。
+- 提货卡保持独立入口，不进入首页主信息流。
+- 直播只作为店铺/档口轻量状态，不作为首页主模块。
+- 物料采购、配送供应商、自提/配送配置属于商户或后台能力，不放到消费者首页前排。
+- UI 模板可替换，但 market id、seller id、membership、booth no、category id、product id 等数据合同不能随意改。
+
 后续 storefront 中国化不应在同一个 PR 中修改:
 
 - 支付状态判定。

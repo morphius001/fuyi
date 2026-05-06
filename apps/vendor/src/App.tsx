@@ -672,6 +672,7 @@ function ManagementPage({
       {page.id === "mobileListing" ? <MobileListingSkeleton /> : null}
       {page.id === "aiListingDraft" ? <AiListingDraftSkeleton /> : null}
       {page.id === "shopDecoration" ? <ShopDecorationSkeleton /> : null}
+      {page.id === "store" ? <VendorProfileMarketContext /> : null}
 
       <section className="filter-panel" aria-label={`${page.title}筛选区`}>
         {page.filters.map((label) => (
@@ -752,6 +753,126 @@ function ManagementPage({
         <p>{page.todo}</p>
       </section>
     </div>
+  );
+}
+
+function VendorProfileMarketContext() {
+  const [marketContextState, setMarketContextState] =
+    useState<MarketContextState>({
+      status: "loading",
+    });
+
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorMarketContext({
+      includeAnnouncements: true,
+      includeDeliveryProfiles: true,
+    }).then((data) => {
+      if (mounted) {
+        setMarketContextState({ status: "ready", data });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (marketContextState.status === "loading") {
+    return (
+      <section className="readonly-state" aria-label="店铺资料市场归属读取中">
+        <strong>市场归属</strong>
+        <p>正在读取 Vendor market context，只用于店铺资料展示，不提供保存。</p>
+      </section>
+    );
+  }
+
+  const { data } = marketContextState;
+  const primaryMembership = data.primaryMembership ?? data.memberships[0];
+
+  return (
+    <section className="panel" aria-label="店铺资料市场归属只读区">
+      <div className="panel-header">
+        <div>
+          <h2>市场归属只读</h2>
+          <p>
+            展示商户所属市场、档口号和商户类型；本区不保存市场关系，不改变权限、履约、结算或订单归属。
+          </p>
+        </div>
+        <span className="capability-source">
+          {data.source} · {data.mode}
+        </span>
+      </div>
+
+      <div className="boundary-grid" aria-label="市场归属摘要">
+        <article className="boundary-card">
+          <span>主市场</span>
+          <strong>{primaryMembership?.marketName ?? "暂无市场"}</strong>
+          <p>
+            {primaryMembership
+              ? `${primaryMembership.city}${
+                  primaryMembership.district ? ` / ${primaryMembership.district}` : ""
+                }`
+              : "Vendor API 未返回市场归属，继续显示下方静态资料表。"}
+          </p>
+        </article>
+        <article className="boundary-card">
+          <span>主档口</span>
+          <strong>{primaryMembership?.boothNo ?? "暂无档口"}</strong>
+          <p>{primaryMembership?.stallName ?? "档口号只读展示，不允许商户端修改。"}</p>
+        </article>
+        <article className="boundary-card">
+          <span>关联市场</span>
+          <strong>{data.memberships.length} 个</strong>
+          <p>跨市场切换只影响商户后台展示视角，不决定订单、库存或结算归属。</p>
+        </article>
+        <article className="boundary-card">
+          <span>运行边界</span>
+          <strong>{data.runtimeEnabled ? "运行时生效" : "未运行时生效"}</strong>
+          <p>{data.note}</p>
+        </article>
+      </div>
+
+      {data.memberships.length > 0 ? (
+        <div className="table-wrap compact">
+          <table>
+            <thead>
+              <tr>
+                <th>市场</th>
+                <th>档口</th>
+                <th>状态</th>
+                <th>商户类型</th>
+                <th>服务范围</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.memberships.map((membership) => (
+                <tr key={membership.id}>
+                  <td>{membership.marketName}</td>
+                  <td>
+                    {membership.boothNo}
+                    {membership.isPrimary ? " / 主档口" : ""}
+                  </td>
+                  <td>{membership.status}</td>
+                  <td>
+                    {membership.merchantTypeKeys.length > 0
+                      ? membership.merchantTypeKeys.join(" / ")
+                      : "未返回"}
+                  </td>
+                  <td>{membership.serviceRange ?? "待配置"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <section className="mock-notice" aria-label="市场归属未连接">
+          <strong>市场归属 API 未连接</strong>
+          <span>当前保留下方静态店铺资料 mock，不阻断商户后台操作。</span>
+        </section>
+      )}
+    </section>
   );
 }
 

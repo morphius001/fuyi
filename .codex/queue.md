@@ -347,18 +347,20 @@
 第二十八轮建议：
 
 1. `vendor-market-context-post-api-validation`: done，对 PR AS-AU 合并后的 API + Vendor 总验证。
-2. `vendor-market-context-authenticated-browser-qa`: pending，在用户已登录 Vendor 后做真实浏览器截图 QA。
+2. `vendor-market-context-authenticated-browser-qa`: blocked-manual，在用户已登录 Vendor 后做真实浏览器截图 QA。
 3. `vendor-market-context-next-data-plan`: pending，规划从 static adapter 过渡到真实 market membership 数据源。
 
 第二十八轮进度：
 
 - `vendor-market-context-post-api-validation`: done，API typecheck、2 组单测 8/8、API build、Vendor lint/build 和 diff check 均通过；确认只读 Vendor market context 没有触碰 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
+- `vendor-market-context-authenticated-browser-qa`: blocked-manual，当前没有可确认的已登录 Vendor 浏览器会话；已固化截图 QA 条件、目标页面、三态清单和安全边界，不伪造截图。
 
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。
 - `pending`: 可执行。
 - `done`: 已完成。
+- `blocked-manual`: 需要用户登录态、视觉确认或外部条件，自动队列跳过。
 - 未显式标记的队列任务默认为 `pending`。
 
 ## Execution Rules

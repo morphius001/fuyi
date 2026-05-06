@@ -1025,6 +1025,31 @@
           "supportedCapabilities": "Supported capabilities"
         }
       },
+      "marketReadonlyApi": {
+        "title": "Market readonly API",
+        "description": "Reads display data from /admin/china/markets. This panel does not save markets, publish announcements, or affect delivery, orders, payments, settlements, or permissions.",
+        "loading": "Loading readonly market data...",
+        "fallbackStatus": "Readonly fallback",
+        "errorMessage": "Load failed: {{message}}. The page keeps the mock configuration view.",
+        "empty": "No market data is available. The static configuration placeholder remains visible.",
+        "summary": {
+          "count": "Market count",
+          "note": "API note"
+        },
+        "columns": {
+          "name": "Market",
+          "city": "City / Area",
+          "hours": "Business hours",
+          "notice": "Announcement",
+          "status": "Status"
+        },
+        "status": {
+          "draft": "Draft",
+          "open": "Open",
+          "paused": "Paused",
+          "closed": "Closed"
+        }
+      },
       "marketPortfolio": {
         "title": "Market Configuration Overview",
         "description": "Shows multiple markets together so operators can compare hours, service range, and planned capabilities. A real version should be driven by market settings APIs.",

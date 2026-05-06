@@ -674,6 +674,7 @@ function ManagementPage({
       {page.id === "shopDecoration" ? <ShopDecorationSkeleton /> : null}
       {page.id === "store" ? <VendorProfileMarketContext /> : null}
       {page.id === "logistics" ? <VendorFulfillmentContext /> : null}
+      {page.id === "service" ? <VendorAnnouncementContext /> : null}
 
       <section className="filter-panel" aria-label={`${page.title}筛选区`}>
         {page.filters.map((label) => (
@@ -754,6 +755,96 @@ function ManagementPage({
         <p>{page.todo}</p>
       </section>
     </div>
+  );
+}
+
+function VendorAnnouncementContext() {
+  const [marketContextState, setMarketContextState] =
+    useState<MarketContextState>({
+      status: "loading",
+    });
+
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorMarketContext({
+      includeAnnouncements: true,
+    }).then((data) => {
+      if (mounted) {
+        setMarketContextState({ status: "ready", data });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (marketContextState.status === "loading") {
+    return (
+      <section className="readonly-state" aria-label="市场公告读取中">
+        <strong>市场公告</strong>
+        <p>正在读取商户侧市场公告，只用于客服页展示，不发送真实消息。</p>
+      </section>
+    );
+  }
+
+  const { data } = marketContextState;
+
+  return (
+    <section className="panel" aria-label="商户侧市场公告只读展示">
+      <div className="panel-header">
+        <div>
+          <h2>商户侧市场公告</h2>
+          <p>
+            展示市场面向商户的公告，客服可据此解释营业、配送或市场临时安排；本区不发布公告、不发送 IM。
+          </p>
+        </div>
+        <span className="capability-source">
+          {data.source} · {data.mode}
+        </span>
+      </div>
+
+      {data.announcements.length > 0 ? (
+        <div className="table-wrap compact">
+          <table>
+            <thead>
+              <tr>
+                <th>公告</th>
+                <th>级别</th>
+                <th>发布时间</th>
+                <th>有效期</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.announcements.map((announcement) => (
+                <tr key={announcement.id}>
+                  <td>
+                    <strong>{announcement.title}</strong>
+                    <p>{announcement.content}</p>
+                  </td>
+                  <td>{announcement.severity}</td>
+                  <td>{announcement.publishedAt ?? "未返回"}</td>
+                  <td>{announcement.expiresAt ?? "未设置"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <section className="mock-notice" aria-label="市场公告未连接">
+          <strong>市场公告 API 未连接</strong>
+          <span>当前客服页继续显示下方 mock 会话表；不会发布公告、发送短信、IM 或站内信。</span>
+        </section>
+      )}
+
+      <section className="readonly-state">
+        <strong>客服使用边界</strong>
+        <p>
+          公告只用于商户后台说明和客服参考，不替代正式通知送达，不改变售后、订单、履约或风控状态。
+        </p>
+      </section>
+    </section>
   );
 }
 

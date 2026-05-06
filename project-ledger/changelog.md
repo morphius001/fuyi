@@ -78,3 +78,4 @@
 - 完成 `market-read-model-static-adapter`，新增 static adapter，将默认市场和 seller metadata 包装成 market read model seed。
 - 完成 `market-readonly-store-api`，新增 Store 端中国市场只读 API，不影响 checkout 或交易链路。
 - 完成 `admin-market-readonly-api`，新增 Admin 端中国市场只读 API，不保存配置、不改变权限。
+- 完成 `market-api-post-merge-validation`，记录 PR U-X 合并后 API typecheck、市场 read model 单测和 Medusa build 通过。

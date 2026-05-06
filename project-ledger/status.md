@@ -11,6 +11,7 @@
 - PR K market data model plan 已合并到 `main`，最新主线提交：`36ad4cc` `[china] PR K Market data model plan`。
 - PR L admin module config read model 已合并到 `main`，最新主线提交：`e2808b6` `[china] PR L Admin module config read model`。
 - PR M vendor draft product plan 已合并到 `main`，最新主线提交：`eaf4955` `[china] PR M Vendor draft product plan`。
+- PR N storefront discovery bridge 已合并到 `main`，最新主线提交：`a4a0b49` `[china] PR N Storefront discovery bridge`。
 - 合并后验证报告：`docs/post-merge-validation-report.md`。
 - `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
 - 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
@@ -38,6 +39,12 @@
 - `vendor-draft-product-readwrite-plan`: done，新增 `docs/vendor-draft-product-readwrite-plan.md`，明确手机快速上架、规格模板、AI mock suggestion、审核候选和真实商品创建的分层。
 - `storefront-real-discovery-bridge`: done，新增 `docs/storefront-real-discovery-bridge.md`，明确消费者首页、搜索、店铺页从 mock/read-only 过渡到真实 discovery read model 的桥接阶段。
 - 第十三轮 docs-only 队列已清空；下一轮进入小范围只读 skeleton 前，需要继续避免交易链路混入。
+
+## 第十四轮进度
+
+- `api-read-model-skeleton`: done，新增 `packages/api/src/lib/china-read-models.ts` 和单元测试，把 discovery、module config capability view、vendor product draft 的只读模型先做成纯 builder。
+- 现有 `/store/china/discovery` 改为调用 read model builder；输出语义保持只读，不影响 checkout、订单、支付、退款、结算、佣金、权限或履约。
+- 下一项：`storefront-discovery-view-shape`。
 
 ## 已跑通
 

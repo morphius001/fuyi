@@ -53,7 +53,8 @@
 
 - `api-post-merge-validation`: done，新增 `docs/api-post-merge-validation.md`。
 - PR O-R 合并后验证通过：API typecheck、3 组单元测试 16/16、Medusa build。
-- 下一项：`real-model-next-pr-plan`。
+- `real-model-next-pr-plan`: done，新增 `docs/real-model-next-pr-plan.md`，明确下一轮 PR U-Z 的真实模型/API route 顺序和高风险门禁。
+- 第十五轮队列已清空；下一项建议为 `market-read-model-module-skeleton`。
 
 ## 已跑通
 

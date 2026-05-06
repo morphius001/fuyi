@@ -73,3 +73,4 @@
 - 完成 `vendor-draft-product-skeleton`，新增未注册 Vendor product draft skeleton service 和单元测试，不创建真实商品。
 - 完成 `admin-config-readonly-api`，新增 Admin 模块配置只读 GET endpoints 和默认 static read model，不提供写入。
 - 完成 `api-post-merge-validation`，记录 PR O-R 合并后 API typecheck、单元测试和 Medusa build 通过。
+- 完成 `real-model-next-pr-plan`，固化下一轮真实模型/API route 的 PR U-Z 拆分和风险门禁。

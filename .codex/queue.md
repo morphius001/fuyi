@@ -183,11 +183,21 @@
 第十五轮建议：
 
 1. `api-post-merge-validation`: done，对 PR O-R 合并后的 API typecheck、unit tests、build 做总验证。
-2. `real-model-next-pr-plan`: pending，整理下一轮真正 migration/API route 的拆分顺序和风险门禁。
+2. `real-model-next-pr-plan`: done，整理下一轮真正 migration/API route 的拆分顺序和风险门禁。
 
 第十五轮进度：
 
 - `api-post-merge-validation`: done，PR O-R 合并后 API typecheck、3 组单元测试 16/16、Medusa build 均通过。
+- `real-model-next-pr-plan`: done，已固化下一轮 PR U-Z 的真实模型/API route 拆分顺序和高风险门禁。
+
+第十五轮队列已清空。
+
+第十六轮建议：
+
+1. `market-read-model-module-skeleton`: pending，新增市场 read model module skeleton，不新增 migration、不接 checkout。
+2. `market-read-model-static-adapter`: pending，把当前静态市场/seller/category discovery 包装成 adapter。
+3. `market-readonly-store-api`: pending，新增 Store 只读 markets API。
+4. `admin-market-readonly-api`: pending，新增 Admin 只读 markets API。
 
 ## Status Rules
 

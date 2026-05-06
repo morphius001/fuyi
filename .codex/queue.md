@@ -211,11 +211,19 @@
 第十七轮建议：
 
 1. `market-api-post-merge-validation`: done，对 PR U-X 合并后的 API typecheck/build 和市场 read model 单测做总验证。
-2. `storefront-connect-market-readonly-api-plan`: pending，规划 Storefront 何时接入 markets API，不直接改 UI。
+2. `storefront-connect-market-readonly-api-plan`: done，规划 Storefront 何时接入 markets API，不直接改 UI。
 
 第十七轮进度：
 
 - `market-api-post-merge-validation`: done，PR U-X 合并后 API typecheck、2 组单元测试 8/8、Medusa build 均通过。
+- `storefront-connect-market-readonly-api-plan`: done，已规划 Storefront market client、首页、搜索、店铺页分阶段接入 markets API。
+
+第十七轮队列已清空。
+
+第十八轮建议：
+
+1. `storefront-market-client`: pending，只新增 Storefront markets API client/fetcher，不改页面布局。
+2. `admin-market-readonly-ui-plan`: pending，规划 Admin 市场只读 API 接入 UI，不直接改权限或保存逻辑。
 
 ## Status Rules
 

@@ -86,6 +86,12 @@
       "createBatch": "Create batch",
       "createChannel": "Create channel"
     },
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
     "dashboard": {
       "title": "Operations Dashboard",
       "description": "Placeholder metrics for mainland China marketplace operations. No real backend API is connected in this phase.",
@@ -1041,13 +1047,129 @@
           "city": "City / Area",
           "hours": "Business hours",
           "notice": "Announcement",
-          "status": "Status"
+          "status": "Status",
+          "action": "Action"
+        },
+        "actions": {
+          "viewDetail": "View detail"
         },
         "status": {
           "draft": "Draft",
           "open": "Open",
           "paused": "Paused",
           "closed": "Closed"
+        }
+      },
+      "marketDetail": {
+        "title": "Market detail",
+        "description": "Readonly view of one market, stall memberships, business hours, announcements, and delivery profiles. It does not save, publish, or affect orders or permissions.",
+        "loading": "Loading market detail...",
+        "errorMessage": "Failed to load market detail: {{message}}. No write operation is executed.",
+        "emptyMarket": "Market not found",
+        "actions": {
+          "back": "Back to market settings"
+        },
+        "summary": {
+          "memberships": "Merchant / stall memberships",
+          "primaryBooths": "Primary booth relations",
+          "deliveryProfiles": "Delivery profiles",
+          "announcements": "Market announcements"
+        },
+        "sections": {
+          "memberships": "Merchant and stall memberships",
+          "membershipsDescription": "Shows which market a merchant belongs to, booth number, primary booth, and status. It does not change permissions or business scope.",
+          "deliveryProfiles": "Delivery capability configuration",
+          "deliveryProfilesDescription": "Shows readonly market unified delivery, merchant self-delivery, and supplier delivery configuration. No real fulfillment is connected.",
+          "businessHours": "Business hours",
+          "businessHoursDescription": "Shows market opening hours and closure state. It does not affect order time validation.",
+          "announcements": "Announcements",
+          "announcementsDescription": "Shows consumer, merchant, or delivery-facing announcements. It does not publish real announcements.",
+          "boundary": "Readonly boundary",
+          "boundaryDescription": "This page only validates read model presentation. It does not modify markets, delivery, orders, payments, settlements, or permissions."
+        },
+        "fields": {
+          "location": "Province / city / district",
+          "address": "Address",
+          "timezone": "Time zone",
+          "hours": "Business hours summary",
+          "notice": "Announcement summary",
+          "serviceRange": "Service range",
+          "runtimeEnabled": "Runtime effective",
+          "note": "API note"
+        },
+        "membershipColumns": {
+          "seller": "Merchant",
+          "booth": "Booth",
+          "category": "Main categories",
+          "primary": "Primary booth",
+          "status": "Status"
+        },
+        "membershipStatus": {
+          "pending": "Pending",
+          "open": "Open",
+          "paused": "Paused",
+          "closed": "Closed"
+        },
+        "deliveryColumns": {
+          "name": "Delivery name",
+          "type": "Type",
+          "serviceArea": "Service area",
+          "cutoff": "Cutoff",
+          "enabled": "Enabled"
+        },
+        "deliveryTypes": {
+          "market_pickup": "Market pickup",
+          "merchant_self_delivery": "Merchant self-delivery",
+          "market_unified_delivery": "Market unified delivery",
+          "delivery_supplier": "Delivery supplier",
+          "cold_chain_express": "Cold-chain express"
+        },
+        "businessHourColumns": {
+          "weekday": "Weekday",
+          "time": "Time",
+          "status": "Status",
+          "note": "Note"
+        },
+        "businessHourStatus": {
+          "open": "Open",
+          "closed": "Closed"
+        },
+        "weekdays": {
+          "sunday": "Sunday",
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday"
+        },
+        "announcementColumns": {
+          "title": "Title",
+          "audience": "Audience",
+          "severity": "Severity",
+          "status": "Status"
+        },
+        "audience": {
+          "consumer": "Consumer",
+          "merchant": "Merchant",
+          "delivery_supplier": "Delivery supplier",
+          "all": "All"
+        },
+        "severity": {
+          "info": "Info",
+          "warning": "Warning",
+          "urgent": "Urgent"
+        },
+        "announcementStatus": {
+          "draft": "Draft",
+          "published": "Published",
+          "archived": "Archived"
+        },
+        "empty": {
+          "memberships": "No merchant / stall membership data for this market.",
+          "deliveryProfiles": "No delivery profile data for this market.",
+          "businessHours": "No business hour data for this market.",
+          "announcements": "No announcement data for this market."
         }
       },
       "marketPortfolio": {

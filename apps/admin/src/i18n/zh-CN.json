@@ -87,6 +87,12 @@
       "createBatch": "新建批次",
       "createChannel": "新建渠道"
     },
+    "common": {
+      "yes": "是",
+      "no": "否",
+      "enabled": "已启用",
+      "disabled": "未启用"
+    },
     "dashboard": {
       "title": "运营看板",
       "description": "面向中国大陆多商户平台运营的占位指标。本阶段不接入真实后端 API。",
@@ -1063,13 +1069,129 @@
           "city": "城市 / 区域",
           "hours": "营业时间",
           "notice": "公告",
-          "status": "状态"
+          "status": "状态",
+          "action": "操作"
+        },
+        "actions": {
+          "viewDetail": "查看详情"
         },
         "status": {
           "draft": "草稿",
           "open": "开放",
           "paused": "暂停",
           "closed": "关闭"
+        }
+      },
+      "marketDetail": {
+        "title": "市场详情",
+        "description": "只读查看单个市场、档口归属、营业时间、公告和配送配置；不保存、不发布、不影响订单或权限。",
+        "loading": "正在读取市场详情...",
+        "errorMessage": "读取市场详情失败：{{message}}。当前不执行任何写入。",
+        "emptyMarket": "未找到市场",
+        "actions": {
+          "back": "返回市场配置"
+        },
+        "summary": {
+          "memberships": "商户 / 档口归属",
+          "primaryBooths": "主档口关系",
+          "deliveryProfiles": "配送 profile",
+          "announcements": "市场公告"
+        },
+        "sections": {
+          "memberships": "商户与档口归属",
+          "membershipsDescription": "展示商户属于哪个市场、档口号、主档口和状态，不改变商户权限或经营范围。",
+          "deliveryProfiles": "配送能力配置",
+          "deliveryProfilesDescription": "展示市场统一配送、商家自配、供应商配送等只读配置，不接入真实履约。",
+          "businessHours": "营业时间",
+          "businessHoursDescription": "展示市场营业时间和休市状态，不影响下单时间判断。",
+          "announcements": "公告",
+          "announcementsDescription": "展示面向消费者、商户或配送方的公告，不发布真实公告。",
+          "boundary": "只读边界",
+          "boundaryDescription": "本页只校验 read model 展示形态，不修改市场、配送、订单、支付、结算或权限。"
+        },
+        "fields": {
+          "location": "省 / 市 / 区",
+          "address": "详细地址",
+          "timezone": "时区",
+          "hours": "营业时间摘要",
+          "notice": "公告摘要",
+          "serviceRange": "服务范围",
+          "runtimeEnabled": "是否运行时生效",
+          "note": "接口说明"
+        },
+        "membershipColumns": {
+          "seller": "商户",
+          "booth": "档口",
+          "category": "主营类目",
+          "primary": "主档口",
+          "status": "状态"
+        },
+        "membershipStatus": {
+          "pending": "待审核",
+          "open": "营业中",
+          "paused": "暂停",
+          "closed": "关闭"
+        },
+        "deliveryColumns": {
+          "name": "配送名称",
+          "type": "类型",
+          "serviceArea": "服务范围",
+          "cutoff": "截单时间",
+          "enabled": "启用状态"
+        },
+        "deliveryTypes": {
+          "market_pickup": "市场自提",
+          "merchant_self_delivery": "商家自配",
+          "market_unified_delivery": "市场统一配送",
+          "delivery_supplier": "配送供应商",
+          "cold_chain_express": "冷链快递"
+        },
+        "businessHourColumns": {
+          "weekday": "星期",
+          "time": "时间",
+          "status": "状态",
+          "note": "备注"
+        },
+        "businessHourStatus": {
+          "open": "营业",
+          "closed": "休市"
+        },
+        "weekdays": {
+          "sunday": "周日",
+          "monday": "周一",
+          "tuesday": "周二",
+          "wednesday": "周三",
+          "thursday": "周四",
+          "friday": "周五",
+          "saturday": "周六"
+        },
+        "announcementColumns": {
+          "title": "标题",
+          "audience": "对象",
+          "severity": "级别",
+          "status": "状态"
+        },
+        "audience": {
+          "consumer": "消费者",
+          "merchant": "商户",
+          "delivery_supplier": "配送供应商",
+          "all": "全部"
+        },
+        "severity": {
+          "info": "提示",
+          "warning": "提醒",
+          "urgent": "紧急"
+        },
+        "announcementStatus": {
+          "draft": "草稿",
+          "published": "已发布",
+          "archived": "已归档"
+        },
+        "empty": {
+          "memberships": "当前市场没有商户 / 档口归属数据。",
+          "deliveryProfiles": "当前市场没有配送 profile 数据。",
+          "businessHours": "当前市场没有营业时间数据。",
+          "announcements": "当前市场没有公告数据。"
         }
       },
       "marketPortfolio": {

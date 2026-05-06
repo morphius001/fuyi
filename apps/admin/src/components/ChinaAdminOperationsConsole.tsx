@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Badge, Button, Container, Heading, StatusBadge, Table, Text } from "@medusajs/ui"
+import { Link } from "react-router-dom"
 
 import { useChinaAdminTranslation } from "../i18n/use-china-admin-translation"
 import type { ChinaAdminPageMeta } from "../lib/china-admin-menu"
@@ -241,6 +242,9 @@ const MarketReadonlyApiPanel = () => {
                     <Table.HeaderCell>
                       {t("chinaAdmin.operations.marketReadonlyApi.columns.status")}
                     </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.action")}
+                    </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -271,6 +275,17 @@ const MarketReadonlyApiPanel = () => {
                         <StatusBadge color={marketStatusColors[market.status]}>
                           {t(`chinaAdmin.operations.marketReadonlyApi.status.${market.status}`)}
                         </StatusBadge>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button asChild size="small" variant="secondary">
+                          <Link
+                            to={`/cn/operations/market-capabilities/${encodeURIComponent(
+                              market.id,
+                            )}`}
+                          >
+                            {t("chinaAdmin.operations.marketReadonlyApi.actions.viewDetail")}
+                          </Link>
+                        </Button>
                       </Table.Cell>
                     </Table.Row>
                   ))}

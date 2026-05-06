@@ -247,11 +247,12 @@
 第二十轮建议：
 
 1. `admin-market-settings-readonly-page`: done，让 Admin 市场配置页展示 markets 只读 API 面板，不保存、不影响权限或履约。
-2. `storefront-search-market-context`: pending，让搜索页读取 market context，但不接真实搜索 provider。
+2. `storefront-search-market-context`: done，让搜索页读取 market context，但不接真实搜索 provider。
 
 第二十轮进度：
 
 - `admin-market-settings-readonly-page`: done，Admin 市场能力页新增 `/admin/china/markets` 只读面板，包含 loading、ready、error/fallback 和 empty 状态。
+- `storefront-search-market-context`: done，搜索页移动端市场条和桌面市场配置侧栏优先读取 `retrieveChinaMarkets()`，失败或空数据时保留 discovery/static fallback。
 
 ## Status Rules
 

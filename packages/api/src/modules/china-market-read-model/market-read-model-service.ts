@@ -14,47 +14,65 @@ export class ChinaMarketReadModelService {
   private readonly roles = new Map<string, ChinaSellerRole>();
   private readonly announcements = new Map<string, ChinaMarketAnnouncement>();
   private readonly businessHours = new Map<string, ChinaMarketBusinessHour>();
-  private readonly deliveryProfiles = new Map<string, ChinaMarketDeliveryProfile>();
+  private readonly deliveryProfiles = new Map<
+    string,
+    ChinaMarketDeliveryProfile
+  >();
 
   constructor(seed: ChinaMarketReadModelSeed = {}) {
     seed.markets?.forEach((market) => this.markets.set(market.id, market));
     seed.memberships?.forEach((membership) =>
-      this.memberships.set(membership.id, membership)
+      this.memberships.set(membership.id, membership),
     );
     seed.roles?.forEach((role) => this.roles.set(role.id, role));
     seed.announcements?.forEach((announcement) =>
-      this.announcements.set(announcement.id, announcement)
+      this.announcements.set(announcement.id, announcement),
     );
     seed.businessHours?.forEach((businessHour) =>
-      this.businessHours.set(businessHour.id, businessHour)
+      this.businessHours.set(businessHour.id, businessHour),
     );
     seed.deliveryProfiles?.forEach((deliveryProfile) =>
-      this.deliveryProfiles.set(deliveryProfile.id, deliveryProfile)
+      this.deliveryProfiles.set(deliveryProfile.id, deliveryProfile),
     );
   }
 
   listOpenMarkets() {
     return Array.from(this.markets.values()).filter(
-      (market) => market.status === "open"
+      (market) => market.status === "open",
     );
+  }
+
+  getMarketById(id: string) {
+    return this.markets.get(id);
   }
 
   getMarketBySlug(slug: string) {
     return Array.from(this.markets.values()).find(
-      (market) => market.slug === slug
+      (market) => market.slug === slug,
     );
   }
 
   listOpenMembershipsByMarket(marketId: string) {
     return Array.from(this.memberships.values()).filter(
       (membership) =>
-        membership.marketId === marketId && membership.status === "open"
+        membership.marketId === marketId && membership.status === "open",
     );
+  }
+
+  listVisibleMembershipsBySeller(sellerId: string, marketId?: string) {
+    return Array.from(this.memberships.values())
+      .filter(
+        (membership) =>
+          membership.sellerId === sellerId &&
+          membership.status !== "closed" &&
+          (!marketId || membership.marketId === marketId),
+      )
+      .sort((left, right) => Number(right.isPrimary) - Number(left.isPrimary));
   }
 
   listRolesBySeller(sellerId: string) {
     return Array.from(this.roles.values()).filter(
-      (role) => role.sellerId === sellerId && role.status === "active"
+      (role) => role.sellerId === sellerId && role.status === "active",
     );
   }
 
@@ -63,7 +81,7 @@ export class ChinaMarketReadModelService {
       (announcement) =>
         announcement.marketId === marketId &&
         announcement.status === "published" &&
-        (announcement.audience === audience || announcement.audience === "all")
+        (announcement.audience === audience || announcement.audience === "all"),
     );
   }
 
@@ -75,7 +93,7 @@ export class ChinaMarketReadModelService {
 
   listEnabledDeliveryProfiles(marketId: string) {
     return Array.from(this.deliveryProfiles.values()).filter(
-      (profile) => profile.marketId === marketId && profile.enabled
+      (profile) => profile.marketId === marketId && profile.enabled,
     );
   }
 

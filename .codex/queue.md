@@ -348,12 +348,22 @@
 
 1. `vendor-market-context-post-api-validation`: done，对 PR AS-AU 合并后的 API + Vendor 总验证。
 2. `vendor-market-context-authenticated-browser-qa`: blocked-manual，在用户已登录 Vendor 后做真实浏览器截图 QA。
-3. `vendor-market-context-next-data-plan`: pending，规划从 static adapter 过渡到真实 market membership 数据源。
+3. `vendor-market-context-next-data-plan`: done，规划从 static adapter 过渡到真实 market membership 数据源。
 
 第二十八轮进度：
 
 - `vendor-market-context-post-api-validation`: done，API typecheck、2 组单测 8/8、API build、Vendor lint/build 和 diff check 均通过；确认只读 Vendor market context 没有触碰 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 - `vendor-market-context-authenticated-browser-qa`: blocked-manual，当前没有可确认的已登录 Vendor 浏览器会话；已固化截图 QA 条件、目标页面、三态清单和安全边界，不伪造截图。
+- `vendor-market-context-next-data-plan`: done，已规划 schema finalization、migration skeleton、repository adapter、Vendor route data source switch、Admin readonly view 和 post-migration validation。
+
+第二十八轮队列已清空。
+
+第二十九轮建议：
+
+1. `market-membership-schema-finalization`: pending，docs-only，最终 schema 设计。
+2. `market-membership-migration-skeleton`: pending，migration skeleton，不接 route。
+3. `market-read-model-repository-adapter`: pending，真实数据 adapter + 单测。
+4. `vendor-market-context-data-source-switch`: pending，Vendor route 数据源切换，保留 fallback。
 
 ## Status Rules
 

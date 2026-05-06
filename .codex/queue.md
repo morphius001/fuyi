@@ -384,6 +384,17 @@
 - `admin-market-membership-readonly-view`: done，确认现有 `/cn/operations/market-capabilities/:id` 已覆盖 membership、档口、配送 profile、营业时间、公告和只读边界；Admin build 和 diff check 通过，没有新增业务代码。
 - `market-membership-db-dry-run-plan`: done，已规划本地/预发 migration dry-run、rollback、测试数据规则、Vendor route 三态、Admin 只读页三态和进入真实数据接入前的验收标准。
 
+第三十一轮建议：
+
+1. `market-membership-local-migration-dry-run`: done，本地可丢弃数据库 dry-run 脚本和执行记录。
+2. `market-membership-seed-fixture`: pending，只做测试 fixture，不进生产 seed。
+3. `vendor-market-context-db-qa`: pending，用 dry-run fixture 验证 Vendor route repository/fallback 三态。
+4. `admin-market-membership-browser-qa`: pending，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
+
+第三十一轮进度：
+
+- `market-membership-local-migration-dry-run`: done，新增 `.codex/scripts/market-membership-local-dry-run.sh`，从 migration skeleton 提取 SQL，在 `fuyi_market_membership_dry_run_*` 临时库验证 up/down、6 张表、约束拒绝和最小 fixture，并自动清理临时库。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -81,3 +81,4 @@
 - 完成 `market-api-post-merge-validation`，记录 PR U-X 合并后 API typecheck、市场 read model 单测和 Medusa build 通过。
 - 完成 `storefront-connect-market-readonly-api-plan`，规划 Storefront market client、首页、搜索和店铺页分阶段接入只读 markets API。
 - 完成 `storefront-market-client`，新增 Storefront 中国市场只读 API fetcher，不接页面布局。
+- 完成 `admin-market-readonly-ui-plan`，规划 Admin market client 和市场只读页接入顺序。

@@ -74,7 +74,8 @@
 ## 第十八轮进度
 
 - `storefront-market-client`: done，新增 Storefront 中国市场只读 API client/fetcher，不改页面布局、不影响 checkout。
-- 下一项：`admin-market-readonly-ui-plan`。
+- `admin-market-readonly-ui-plan`: done，新增 `docs/admin-market-readonly-ui-plan.md`，规划 Admin 只读 markets API 接入 UI。
+- 第十八轮队列已清空；下一项建议为 `admin-market-client`。
 
 ## 已跑通
 

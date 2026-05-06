@@ -223,11 +223,19 @@
 第十八轮建议：
 
 1. `storefront-market-client`: done，只新增 Storefront markets API client/fetcher，不改页面布局。
-2. `admin-market-readonly-ui-plan`: pending，规划 Admin 市场只读 API 接入 UI，不直接改权限或保存逻辑。
+2. `admin-market-readonly-ui-plan`: done，规划 Admin 市场只读 API 接入 UI，不直接改权限或保存逻辑。
 
 第十八轮进度：
 
 - `storefront-market-client`: done，新增 `apps/storefront/src/lib/data/china-markets.ts`，只提供 markets API fetcher 和 fallback，不接页面。
+- `admin-market-readonly-ui-plan`: done，已规划 Admin market client、市场配置只读页、市场详情只读页和模块配置联动。
+
+第十八轮队列已清空。
+
+第十九轮建议：
+
+1. `admin-market-client`: pending，只新增 Admin markets API client，不改页面。
+2. `storefront-home-market-data-bridge`: pending，让首页读取 market client，但保持布局不重做。
 
 ## Status Rules
 

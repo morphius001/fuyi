@@ -1,0 +1,79 @@
+div:has(> aside[data-testid="china-admin-sidebar"]) {
+  width: 288px;
+  min-width: 288px;
+}
+
+@media (max-width: 1023px) {
+  div:has(> aside[data-testid="china-admin-sidebar"]) {
+    width: min(336px, calc(100vw - 1rem));
+    min-width: 0;
+  }
+}
+
+aside[data-testid="china-admin-sidebar"] {
+  background: var(--bg-subtle);
+}
+
+.china-admin-shell-header {
+  align-items: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+
+.china-admin-shell-tools {
+  align-self: flex-start;
+  justify-content: flex-end;
+  margin-left: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .china-admin-shell-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .china-admin-shell-tools {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+}
+
+.china-pickup-metric-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.china-pickup-main-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
+}
+
+.china-pickup-two-col-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 1279px) {
+  .china-pickup-metric-grid,
+  .china-pickup-main-grid,
+  .china-pickup-two-col-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .china-pickup-metric-grid,
+  .china-pickup-main-grid,
+  .china-pickup-two-col-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  #root .relative.flex.h-screen > div.flex.h-screen.w-full.flex-col.overflow-auto > div.grid.w-full.grid-cols-2.border-b.p-3 {
+    display: none;
+  }
+}

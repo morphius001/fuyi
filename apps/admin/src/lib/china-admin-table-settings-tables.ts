@@ -1,0 +1,223 @@
+import { settingsColumns } from "./china-admin-table-columns"
+import {
+  cell,
+  statusCell,
+  type ChinaAdminTableData,
+  type ChinaAdminTableRow,
+} from "./china-admin-table-primitives"
+
+const settingsFilters = ["配置范围", "负责人", "更新时间"]
+
+const settingsRow = (
+  id: string,
+  name: string,
+  statusKey: string,
+  statusColor: "green" | "grey",
+  configScope: string,
+  configOwner: string,
+  configBoundary: string,
+  secretPolicy: string,
+  updatedAt: string,
+): ChinaAdminTableRow => ({
+  id,
+  cells: {
+    id: cell(id),
+    name: cell(name),
+    status: statusCell(statusKey, statusColor),
+    configScope: cell(configScope),
+    configOwner: cell(configOwner),
+    configBoundary: cell(configBoundary),
+    secretPolicy: cell(secretPolicy),
+    updatedAt: cell(updatedAt),
+  },
+  actions: ["view", "edit", "remark"],
+})
+
+export const settingsTables: Record<string, ChinaAdminTableData> = {
+  platformInformation: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-PLATFORM-001",
+        "中国大陆平台基础资料",
+        "chinaAdmin.status.settings.active",
+        "green",
+        "平台名称、默认币种 CNY、时区 Asia/Shanghai、客服电话占位",
+        "平台运营组",
+        "只读 mock，不写真实平台资料",
+        "不涉及密钥",
+        "2026-05-03 09:00",
+      ),
+      settingsRow(
+        "CFG-PLATFORM-002",
+        "多市场切换基础说明",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "市场公告、营业时间、配送能力、商户跨市场关系",
+        "平台运营组",
+        "仅记录信息架构，真实市场配置后续接后端能力开关",
+        "不涉及密钥",
+        "2026-05-03 09:05",
+      ),
+    ],
+  },
+  icpFiling: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-ICP-001",
+        "ICP备案展示占位",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "ICP备案号、公安备案号、展示位置",
+        "合规运营组",
+        "不写入真实备案号，后续走合规资料任务",
+        "不涉及密钥",
+        "2026-05-03 09:10",
+      ),
+    ],
+  },
+  businessLicenseDisplay: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-LICENSE-001",
+        "平台营业执照展示占位",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "证照图片、主体名称、统一社会信用代码脱敏展示",
+        "合规运营组",
+        "不上传真实证照，不写生产主体资料",
+        "不涉及密钥",
+        "2026-05-03 09:16",
+      ),
+    ],
+  },
+  userAgreement: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-AGREEMENT-001",
+        "用户协议草稿占位",
+        "chinaAdmin.status.settings.draft",
+        "grey",
+        "消费者注册、下单、售后、提货卡提货说明",
+        "法务 / 平台运营",
+        "仅为页面骨架，不发布真实协议版本",
+        "不涉及密钥",
+        "2026-05-03 09:22",
+      ),
+    ],
+  },
+  privacyPolicy: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-PRIVACY-001",
+        "隐私政策草稿占位",
+        "chinaAdmin.status.settings.draft",
+        "grey",
+        "手机号、地址、提货信息、客服会话和日志说明",
+        "法务 / 安全负责人",
+        "仅为页面骨架，不发布真实隐私政策",
+        "不写真实手机号、地址或用户数据",
+        "2026-05-03 09:28",
+      ),
+    ],
+  },
+  paymentConfigPlaceholder: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-PAY-001",
+        "中国支付 Provider 配置模板",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "Stripe 保留、微信支付/支付宝 mock provider 边界",
+        "技术配置负责人",
+        "不接真实支付，不改变支付成功判定、退款、对账或结算逻辑",
+        "不得写 appId、merchantId、私钥、证书、webhook token",
+        "2026-05-03 09:35",
+      ),
+      settingsRow(
+        "CFG-PAY-002",
+        "支付通知安全要求",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "验签、幂等、可重试、后端异步通知为准",
+        "支付架构负责人",
+        "只读说明，不实现真实 webhook",
+        "不写真实密钥或回调地址 token",
+        "2026-05-03 09:38",
+      ),
+    ],
+  },
+  smsConfigPlaceholder: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-SMS-001",
+        "短信 Provider 配置模板",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "验证码、订单通知、提货提醒、商户通知",
+        "技术配置负责人",
+        "只做 mock/provider 边界，不接阿里云短信或腾讯短信",
+        "不得写 accessKey、secret、签名密钥或模板生产编号",
+        "2026-05-03 09:42",
+      ),
+    ],
+  },
+  logisticsConfigPlaceholder: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-LOGISTICS-001",
+        "物流 Provider 配置模板",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "市场统一配送、商户自配送、快递打印、物流轨迹",
+        "物流配置负责人",
+        "只做 mock/provider 边界，不接快递100、菜鸟或真实电子面单",
+        "不得写物流账号、月结号、电子面单密钥",
+        "2026-05-03 09:48",
+      ),
+      settingsRow(
+        "CFG-LOGISTICS-002",
+        "统一配送能力说明",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "市场可提供统一配送能力，商户可选择统一/自行/混合配送",
+        "市场运营组",
+        "只读说明，不强制修改商户配送策略",
+        "不涉及密钥",
+        "2026-05-03 09:52",
+      ),
+    ],
+  },
+  imConfigPlaceholder: {
+    columns: settingsColumns,
+    filters: settingsFilters,
+    rows: [
+      settingsRow(
+        "CFG-IM-001",
+        "IM Provider 配置模板",
+        "chinaAdmin.status.settings.placeholder",
+        "grey",
+        "消费者客服、商户客服、投诉沟通、直播状态提示",
+        "技术配置负责人",
+        "只做 mock/provider 边界，不接腾讯 IM、环信、微信或 TalkJS 生产服务",
+        "不得写 appId、token、secret、webhook 密钥",
+        "2026-05-03 09:58",
+      ),
+    ],
+  },
+}

@@ -1,0 +1,1363 @@
+{
+  "customFields": {
+    "title": "自定义字段",
+    "description": "管理自定义字段和配置",
+    "noFields": "尚未配置自定义字段"
+  },
+  "chinaAdmin": {
+    "app": {
+      "title": "中国平台运营后台",
+      "subtitle": "中国大陆多商户基础版"
+    },
+    "nav": {
+      "ariaLabel": "中国大陆多商户运营后台导航",
+      "home": "首页",
+      "sections": {
+        "platformOps": "平台运营",
+        "merchantGoods": "商户商品",
+        "tradeFulfillment": "交易履约",
+        "financeRisk": "财务风控",
+        "system": "系统配置"
+      },
+      "operations": {
+        "title": "平台设置"
+      },
+      "merchants": {
+        "title": "商家管理"
+      },
+      "products": {
+        "title": "商品管理"
+      },
+      "orders": {
+        "title": "订单管理"
+      },
+      "afterSales": {
+        "title": "售后管理"
+      },
+      "pickupCards": {
+        "title": "提货卡管理"
+      },
+      "payments": {
+        "title": "支付与对账"
+      },
+      "settlements": {
+        "title": "结算管理"
+      },
+      "marketing": {
+        "title": "营销中心"
+      },
+      "messages": {
+        "title": "客服与消息"
+      },
+      "risk": {
+        "title": "风控管理"
+      },
+      "system": {
+        "title": "系统配置"
+      }
+    },
+    "shell": {
+      "platformName": "福宜多商户电商平台",
+      "phaseBadge": "Admin UI 基础版",
+      "searchPlaceholder": "搜索商家、商品、订单、提货卡号",
+      "todo": "待办 23",
+      "messages": "消息 8",
+      "admin": "平台管理员",
+      "location": "当前位置"
+    },
+    "actions": {
+      "export": "导出",
+      "batchPlaceholder": "批量操作",
+      "createPlaceholder": "新建占位",
+      "view": "查看",
+      "review": "审核",
+      "edit": "编辑",
+      "disable": "停用",
+      "copy": "复制",
+      "remark": "备注",
+      "freeze": "冻结",
+      "void": "作废",
+      "readonlyAction": "只读占位，不执行真实操作",
+      "viewRedeemRecord": "查看提货记录",
+      "viewBatch": "查看批次",
+      "activateBatch": "激活批次",
+      "pauseBatch": "暂停批次",
+      "exportCardNumbers": "导出卡号",
+      "createCardType": "新建卡种",
+      "createBatch": "新建批次",
+      "createChannel": "新建渠道"
+    },
+    "dashboard": {
+      "title": "运营看板",
+      "description": "面向中国大陆多商户平台运营的占位指标。本阶段不接入真实后端 API。",
+      "metrics": {
+        "todayGmv": {
+          "label": "今日交易额",
+          "value": "¥128,560",
+          "hint": "人民币占位金额"
+        },
+        "todayOrders": {
+          "label": "今日订单数",
+          "value": "1,286",
+          "hint": "订单数占位"
+        },
+        "pendingMerchants": {
+          "label": "待审核商家",
+          "value": "18",
+          "hint": "入驻审核队列"
+        },
+        "listedProducts": {
+          "label": "上架商品数",
+          "value": "18,642",
+          "hint": "mock 上架商品口径"
+        },
+        "pendingAfterSales": {
+          "label": "待处理售后",
+          "value": "27",
+          "hint": "退款与介入队列"
+        },
+        "activeMerchants": {
+          "label": "活跃商家数",
+          "value": "326",
+          "hint": "近 30 天有动销商家"
+        },
+        "pickupCardPending": {
+          "label": "提货卡待处理事项",
+          "value": "19",
+          "hint": "提货、冻结和即将过期"
+        },
+        "serviceNoticeExceptions": {
+          "label": "服务通知异常数",
+          "value": "8",
+          "hint": "短信 / IM / 站内信占位"
+        }
+      },
+      "mockSource": {
+        "title": "数据来源说明",
+        "message": "首页指标来自 apps/admin 前端静态 mock 常量，仅用于平台运营后台壳体验收口，不读取真实订单、支付、库存、结算或权限数据。"
+      },
+      "todo": {
+        "title": "运营待办",
+        "description": "把平台每天最常看的审核、异常和服务队列放在首页首屏。",
+        "merchantReview": "商家入驻审核",
+        "merchantReviewHint": "有 32 家商家提交了资质或档口资料",
+        "productReview": "商品上架审核",
+        "productReviewHint": "有 368 个商品需要平台审核",
+        "pickupCardPending": "提货卡待处理事项",
+        "paymentException": "支付异常跟进",
+        "serviceNoticeException": "服务通知异常跟进",
+        "serviceNoticeExceptionHint": "短信 / IM / 站内信 mock 发送异常"
+      },
+      "risk": {
+        "title": "风险提醒",
+        "description": "展示平台运营需要优先关注的异常信号，当前均为只读 mock。",
+        "deliveryDelay": {
+          "level": "高风险",
+          "message": "配送区域「东海新区」超时率超过阈值",
+          "time": "10 分钟前"
+        },
+        "merchantGrowth": {
+          "level": "中风险",
+          "message": "部分商户近期差评率上升，需要运营复核",
+          "time": "35 分钟前"
+        },
+        "inventoryWarning": {
+          "level": "中风险",
+          "message": "热门鲜活类目库存预警，可能影响履约",
+          "time": "1 小时前"
+        },
+        "liveDrop": {
+          "level": "低风险",
+          "message": "直播间互动率下降，建议内容运营跟进",
+          "time": "3 小时前"
+        }
+      },
+      "quickActions": {
+        "title": "快捷入口",
+        "description": "首页只放运营高频入口，配置项仍保留在左侧菜单和高级配置中。",
+        "reviewProduct": "审核商品",
+        "configureMarket": "配置市场",
+        "reviewMerchant": "查看商家",
+        "orderMonitor": "订单监管",
+        "moduleSwitches": "模块开关"
+      },
+      "focus": {
+        "title": "业务入口与职责说明",
+        "description": "说明首页各模块的运营职责和下一步，避免平台、商户、消费者能力混在一起。",
+        "columns": {
+          "module": "模块",
+          "owner": "主要职责",
+          "status": "当前状态",
+          "next": "下一步"
+        },
+        "merchant": {
+          "module": "商家管理",
+          "owner": "管理商家入驻、资质审核、档口和经营状态",
+          "status": "正常",
+          "next": "关注新商家入驻审核"
+        },
+        "product": {
+          "module": "商品审核",
+          "owner": "审核商品信息、规格模板和合规上架",
+          "status": "正常",
+          "next": "优先处理高风险商品"
+        },
+        "delivery": {
+          "module": "配送管理",
+          "owner": "配置市场配送能力、商家自配和配送供应商",
+          "status": "正常",
+          "next": "细化异常区域配送策略"
+        },
+        "order": {
+          "module": "订单监管",
+          "owner": "监控订单状态，不直接改支付或履约来源",
+          "status": "正常",
+          "next": "关注超时与异常订单"
+        },
+        "settlement": {
+          "module": "财务结算",
+          "owner": "对账、结算和资金报表规划",
+          "status": "正常",
+          "next": "后续串行接入真实结算"
+        }
+      },
+      "safety": {
+        "title": "第一阶段安全边界",
+        "message": "当前看板仅包含静态 UI 占位。支付、订单、退款、结算、佣金和权限的真实状态来源与业务逻辑均未改动。"
+      }
+    },
+    "pages": {
+      "moduleSwitches": {
+        "title": "模块开关",
+        "description": "平台全局模块开关占位页，用于规划哪些能力开放、试点、审核或暂停；当前不会真实影响 Vendor 菜单。"
+      },
+      "marketCapabilities": {
+        "title": "市场配置",
+        "description": "市场级能力开关占位页，用于规划不同市场的营业时间、公告、配送、自提和能力支持范围。"
+      },
+      "roleEnablement": {
+        "title": "商户类型开关",
+        "description": "商户和供应方角色开通占位页，展示资质审核、所属市场、档口或服务范围、模块可见性和状态。"
+      },
+      "merchantList": {
+        "title": "商家列表",
+        "description": "平台运营人员用于扫描商家状态、归属运营组和近期更新时间的基础列表骨架。"
+      },
+      "merchantOnboarding": {
+        "title": "入驻审核",
+        "description": "商家入驻审核队列占位页。本阶段不实现真实审核通过或驳回操作。"
+      },
+      "merchantLegalProfiles": {
+        "title": "主体资料",
+        "description": "用于后续承载企业主体、营业执照、注册信息等审核信息的页面骨架。"
+      },
+      "merchantStoreProfiles": {
+        "title": "店铺资料",
+        "description": "用于后续治理店铺展示资料、经营类目和运营标签的页面骨架。"
+      },
+      "merchantViolationRecords": {
+        "title": "商家违规记录",
+        "description": "商家风控和违规记录占位页，不改变处罚、权限或冻结逻辑。"
+      },
+      "productList": {
+        "title": "商品列表",
+        "description": "带中国电商审核状态的商品列表骨架，展示占位商品数据。"
+      },
+      "productReview": {
+        "title": "商品审核",
+        "description": "商品审核队列占位页。本阶段不实现上架、下架或审核动作。"
+      },
+      "categoryManagement": {
+        "title": "分类管理",
+        "description": "中国大陆平台类目运营和后续类目治理的页面骨架。"
+      },
+      "productSpecTemplates": {
+        "title": "规格模板",
+        "description": "平台运营维护商品规格模板、单位拆分、展示规则和版本审计的只读占位页。"
+      },
+      "brandManagement": {
+        "title": "品牌管理",
+        "description": "品牌资质、品牌展示和品牌治理的页面骨架。"
+      },
+      "prohibitedRules": {
+        "title": "禁售规则",
+        "description": "禁售商品规则说明占位页，不接入真实规则引擎或审核逻辑。"
+      },
+      "allOrders": {
+        "title": "全部订单",
+        "description": "使用中文订单状态的订单扫描骨架，不改变订单状态或归属逻辑。"
+      },
+      "pendingPaymentOrders": {
+        "title": "待付款",
+        "description": "待付款订单占位视图。支付成功仍必须以后端异步通知为准。"
+      },
+      "pendingShipmentOrders": {
+        "title": "待发货",
+        "description": "待发货运营跟进占位视图，不接入真实履约逻辑。"
+      },
+      "pendingReceiptOrders": {
+        "title": "待收货",
+        "description": "物流签收与用户收货跟进的占位视图。"
+      },
+      "completedOrders": {
+        "title": "已完成",
+        "description": "已完成订单的占位视图。"
+      },
+      "closedOrders": {
+        "title": "已关闭",
+        "description": "已关闭或已取消订单的占位视图。"
+      },
+      "exceptionOrders": {
+        "title": "异常订单",
+        "description": "异常订单监控占位页，不改变订单权限、归属或状态流转。"
+      },
+      "refundRequests": {
+        "title": "退款申请",
+        "description": "退款申请受理骨架。本阶段不执行退款或变更退款状态。"
+      },
+      "returnRefunds": {
+        "title": "退货退款",
+        "description": "退货退款流程和物流凭证的占位页面。"
+      },
+      "platformInterventions": {
+        "title": "平台介入",
+        "description": "交易纠纷升级与平台介入记录的页面骨架。"
+      },
+      "afterSalesReasons": {
+        "title": "售后原因配置",
+        "description": "售后原因配置的占位页面，后续需单独接入配置 API。"
+      },
+      "paymentTransactions": {
+        "title": "支付流水",
+        "description": "支付流水占位页，不接入真实支付提供方、通知验签或对账逻辑。"
+      },
+      "refundTransactions": {
+        "title": "退款流水",
+        "description": "退款流水占位页，不实现退款执行或状态变更。"
+      },
+      "reconciliationStatements": {
+        "title": "对账单",
+        "description": "每日对账单导入、核对和异常标记的页面骨架。"
+      },
+      "abnormalBills": {
+        "title": "异常账单",
+        "description": "支付与对账异常记录的占位页面。"
+      },
+      "merchantPendingSettlement": {
+        "title": "商家待结算",
+        "description": "商家待结算队列骨架，不改变结算、提现、佣金或打款逻辑。"
+      },
+      "settledRecords": {
+        "title": "已结算",
+        "description": "已结算批次记录的占位视图。"
+      },
+      "commissionRules": {
+        "title": "佣金规则",
+        "description": "佣金规则规划占位页，不改变佣金计算或执行逻辑。"
+      },
+      "withdrawalRequests": {
+        "title": "提现申请",
+        "description": "商家提现申请审核占位页，不接入真实打款或提现逻辑。"
+      },
+      "coupons": {
+        "title": "优惠券",
+        "description": "优惠券运营和后续本地化营销活动的页面骨架。"
+      },
+      "fullReductionActivities": {
+        "title": "满减活动",
+        "description": "满减活动配置和运营排期的占位页面。"
+      },
+      "flashSaleActivities": {
+        "title": "秒杀活动",
+        "description": "秒杀活动排期、商品坑位和审核的占位页面。"
+      },
+      "homeBanners": {
+        "title": "首页 Banner",
+        "description": "首页 Banner 资源位和投放计划的页面骨架。"
+      },
+      "marketingDashboard": {
+        "title": "营销看板",
+        "description": "普通营销活动的运营看板占位页。提货卡是独立业务，不归入优惠券或营销券。"
+      },
+      "recommendationSlots": {
+        "title": "推荐位",
+        "description": "首页、频道页和专题推荐位运营排期的占位页面。"
+      },
+      "pickupCardDashboard": {
+        "title": "提货卡看板",
+        "description": "线下实体提货卡的发行、激活、提货、发货和异常监控看板，使用 mock 数据。"
+      },
+      "pickupCardTypes": {
+        "title": "卡种管理",
+        "description": "配置实体提货卡可兑换的商品或套餐、有效期、配送日期和换货规则。"
+      },
+      "pickupCardBatches": {
+        "title": "批次管理",
+        "description": "管理提货卡制卡批次、发行数量、渠道、有效期和批次状态。"
+      },
+      "pickupCardNumbers": {
+        "title": "卡号查询",
+        "description": "查看脱敏卡号、激活、绑定、提货和冻结作废状态。页面不展示明文卡密。"
+      },
+      "pickupCardChannels": {
+        "title": "渠道管理",
+        "description": "管理线下发卡渠道和渠道发卡概览，占位页不做渠道结算。"
+      },
+      "pickupCardRedemptions": {
+        "title": "提货记录",
+        "description": "查看用户在线提货记录、脱敏手机号、收货信息、商品和处理状态。"
+      },
+      "pickupCardOrders": {
+        "title": "提货订单",
+        "description": "查看提货生成的履约订单占位数据，不创建真实订单、不扣减库存、不发货。"
+      },
+      "pickupCardFreezeVoid": {
+        "title": "风控与冻结",
+        "description": "冻结和作废操作的管理占位页，不实现真实风控或卡状态变更。"
+      },
+      "pickupCardOperationLogs": {
+        "title": "操作日志",
+        "description": "记录提货卡运营操作日志的占位页，后续需接入审计日志。"
+      },
+      "userConversations": {
+        "title": "用户会话",
+        "description": "用户客服会话占位页，不接入真实 IM 服务。"
+      },
+      "merchantConversations": {
+        "title": "商家会话",
+        "description": "商家客服会话占位页，不接入真实 IM 服务。"
+      },
+      "platformAnnouncements": {
+        "title": "平台公告",
+        "description": "平台公告撰写、发布和可见范围的页面骨架。"
+      },
+      "complaintRecords": {
+        "title": "投诉记录",
+        "description": "投诉受理、跟进和处理记录的占位页面。"
+      },
+      "riskDashboard": {
+        "title": "风控看板",
+        "description": "平台风控预警、异常队列和处置记录的占位看板，不改变权限、订单、支付或处罚逻辑。"
+      },
+      "merchantRisk": {
+        "title": "商家风控",
+        "description": "商家异常经营、资质风险和违规线索的占位列表，不执行冻结或处罚。"
+      },
+      "productRisk": {
+        "title": "商品风控",
+        "description": "禁售、敏感词和违规商品线索的占位列表，不接入真实规则引擎。"
+      },
+      "orderRisk": {
+        "title": "订单风控",
+        "description": "异常订单和售后风险线索的占位列表，不改变订单状态或归属。"
+      },
+      "pickupCardRisk": {
+        "title": "提货卡风控",
+        "description": "提货卡重复尝试、过期提货和渠道异常的占位列表，不改变卡状态。"
+      },
+      "riskOperationLogs": {
+        "title": "风控操作日志",
+        "description": "风控相关操作审计的占位页面，后续需接入真实审计日志。"
+      },
+      "platformInformation": {
+        "title": "平台信息",
+        "description": "中国大陆平台基础信息配置的页面骨架。"
+      },
+      "icpFiling": {
+        "title": "ICP 备案号",
+        "description": "ICP备案展示配置占位页，不写入真实备案号。"
+      },
+      "businessLicenseDisplay": {
+        "title": "营业执照展示",
+        "description": "营业执照展示要求和素材管理的占位页面。"
+      },
+      "userAgreement": {
+        "title": "用户协议",
+        "description": "用户协议内容管理的占位页面。"
+      },
+      "privacyPolicy": {
+        "title": "隐私政策",
+        "description": "隐私政策内容管理的占位页面。"
+      },
+      "paymentConfigPlaceholder": {
+        "title": "支付配置占位",
+        "description": "仅为占位，不修改 Stripe、微信支付、支付宝或任何生产密钥配置。"
+      },
+      "smsConfigPlaceholder": {
+        "title": "短信配置占位",
+        "description": "仅为占位，不接入真实短信服务商或生产凭证。"
+      },
+      "logisticsConfigPlaceholder": {
+        "title": "物流配置占位",
+        "description": "仅为占位，不接入真实物流服务商或生产凭证。"
+      },
+      "imConfigPlaceholder": {
+        "title": "IM 配置占位",
+        "description": "仅为占位，不接入真实 IM 服务商或生产凭证。"
+      }
+    },
+    "tables": {
+      "title": "运营列表",
+      "description": "按国内运营后台方式展示关键状态、负责人、金额和业务字段；当前均为 mock 数据。",
+      "mockHint": "静态占位数据，不接真实后端 API",
+      "summary": {
+        "total": "当前记录",
+        "totalHint": "当前筛选下的 mock 记录",
+        "attention": "需关注",
+        "attentionHint": "待处理 / 异常状态记录",
+        "latest": "最近更新",
+        "latestHint": "按 mock 更新时间排序"
+      },
+      "moduleOverview": {
+        "currentModule": "当前模块",
+        "currentPage": "当前页面",
+        "description": "用于快速判断当前模块覆盖哪些运营工作、哪些只是占位展示，避免把本地 UI 壳误认为真实业务流程。",
+        "mockMode": "mock 数据",
+        "recordCount": "展示记录",
+        "safetyLabel": "业务安全边界",
+        "safetyMessage": "本阶段只做中国大陆运营后台界面和信息架构，不修改订单、支付、退款、结算、佣金或权限逻辑。",
+        "scopeLabel": "模块页面",
+        "scopeUnit": "个入口",
+        "statusLabel": "真实 API、审批流、支付通知和配送履约后续按独立任务接入。"
+      },
+      "columns": {
+        "id": "编号",
+        "name": "名称",
+        "type": "类型",
+        "status": "状态",
+        "owner": "负责人",
+        "amount": "金额",
+        "market": "所属市场",
+        "stallNo": "档口号",
+        "merchantType": "商户类型",
+        "deliveryMode": "配送方式",
+        "paymentMethod": "支付方式",
+        "paymentState": "支付状态",
+        "fulfillmentState": "履约状态",
+        "receiverArea": "收货区域",
+        "deliveryWindow": "配送时段",
+        "exceptionReason": "异常原因",
+        "afterSalesType": "售后类型",
+        "orderNo": "订单号",
+        "buyer": "买家",
+        "merchant": "商户",
+        "evidence": "凭证",
+        "resolution": "处理建议",
+        "reasonScope": "适用范围",
+        "refundBoundary": "退款边界",
+        "providerEventId": "Provider 事件号",
+        "notificationState": "通知状态",
+        "idempotencyKey": "幂等键",
+        "verifyState": "验签状态",
+        "safeBoundary": "安全边界",
+        "statementNo": "对账单号",
+        "billDate": "账期",
+        "reconcileState": "对账状态",
+        "differenceReason": "差异原因",
+        "settlementPeriod": "结算周期",
+        "commissionRate": "佣金口径",
+        "settlementBoundary": "结算边界",
+        "withdrawalMethod": "提现方式",
+        "marketingChannel": "运营渠道",
+        "placement": "投放位置",
+        "audience": "面向对象",
+        "campaignPeriod": "活动周期",
+        "promoBoundary": "营销边界",
+        "messageChannel": "消息渠道",
+        "conversationRole": "会话角色",
+        "serviceBoundary": "服务边界",
+        "complaintType": "投诉类型",
+        "riskObject": "风险对象",
+        "riskType": "风险类型",
+        "triggerRule": "触发规则",
+        "riskBoundary": "风控边界",
+        "riskAction": "风控操作",
+        "operator": "操作人",
+        "configScope": "配置范围",
+        "configOwner": "配置负责人",
+        "configBoundary": "配置边界",
+        "secretPolicy": "密钥规则",
+        "capabilities": "开放能力",
+        "category": "类目",
+        "spec": "规格",
+        "legalEntity": "主体名称",
+        "licenseNoMasked": "证照号（脱敏）",
+        "contactMobile": "联系手机号",
+        "reviewItems": "审核要点",
+        "storeDecoration": "店铺装修",
+        "violationType": "违规类型",
+        "riskLevel": "风险等级",
+        "consumerPlacement": "消费者端位置",
+        "vendorPlacement": "商户端位置",
+        "updatedAt": "更新时间",
+        "createdAt": "创建时间",
+        "actions": "操作"
+      }
+    },
+    "specTemplates": {
+      "actions": {
+        "exportPlaceholder": "导出模板占位",
+        "createPlaceholder": "新建模板占位"
+      },
+      "mockNotice": {
+        "title": "只读规格模板控制台",
+        "message": "当前页面仅展示商品规格模板规划，不保存模板、不发布商品、不改库存、不影响订单、支付、结算或权限。"
+      },
+      "summary": {
+        "activeTemplates": {
+          "title": "启用模板",
+          "description": "已可供商户草稿读取"
+        },
+        "pilotMarkets": {
+          "title": "试点市场",
+          "description": "按市场或角色开放"
+        },
+        "draftVersions": {
+          "title": "草稿版本",
+          "description": "待运营评审"
+        },
+        "pausedTemplates": {
+          "title": "暂停模板",
+          "description": "保留历史版本"
+        }
+      },
+      "status": {
+        "active": "启用",
+        "pilot": "试点",
+        "draft": "草稿",
+        "paused": "暂停"
+      },
+      "templateTable": {
+        "title": "类目规格模板",
+        "description": "规格模板定义商户上架时要填写的规格字段，价格、库存和履约提示必须分开。"
+      },
+      "fieldTable": {
+        "title": "标准字段边界",
+        "description": "后台模板、商户快速上架和消费者展示使用同一字段边界，避免把价格当规格。"
+      },
+      "boundary": {
+        "title": "三端读取边界",
+        "description": "Admin 管模板，Vendor 填草稿，Storefront 只读展示视图。"
+      },
+      "columns": {
+        "template": "模板",
+        "scope": "适用范围",
+        "merchantTypes": "商户类型",
+        "required": "必填规则",
+        "display": "展示规则",
+        "version": "版本",
+        "status": "状态",
+        "fieldGroup": "字段组",
+        "fields": "字段",
+        "consumer": "消费者展示",
+        "vendor": "商户端使用"
+      },
+      "templates": {
+        "seafoodLive": "鲜活水产模板",
+        "fruitVegetable": "水果蔬菜模板",
+        "marketMaterials": "市场物料模板",
+        "seedlingWholesale": "种苗批发模板",
+        "regionalWholesaler": "外地批发模板"
+      },
+      "categories": {
+        "seafoodLive": "海鲜 / 水产",
+        "fruitVegetable": "水果蔬菜",
+        "marketMaterials": "商户 B 端物料",
+        "seedlingWholesale": "种苗供给",
+        "regionalWholesaler": "跨区供给"
+      },
+      "scopes": {
+        "platform": "平台通用",
+        "marketAndMerchantType": "市场 + 商户类型",
+        "rolePilot": "角色试点",
+        "marketPilot": "市场试点"
+      },
+      "merchantTypes": {
+        "seafoodStall": "海鲜档口 / 冻品 / 干货",
+        "fruitVegetableMerchant": "水果蔬菜商户",
+        "materialsSupplier": "物料供应商",
+        "seedlingSupplier": "种苗供应商",
+        "regionalWholesaler": "外地批发商"
+      },
+      "required": {
+        "yes": "必填",
+        "conditional": "按类目必填",
+        "seafoodRequired": "规格、单只重量、起售量、单位",
+        "produceRequired": "产地、等级、箱规、采摘日",
+        "materialsRequired": "尺寸、容量、件数、起订量",
+        "seedlingRequired": "品种、苗龄、起订量、运输",
+        "regionalRequired": "供应地、箱规、到货时效、冷链"
+      },
+      "display": {
+        "seafoodDisplay": "商品名 + 规格 + 价格/斤 + 档口库存",
+        "produceDisplay": "品种 + 等级 + 箱规 + 采摘日",
+        "materialsDisplay": "物料类型 + 尺寸 + 件数/组",
+        "seedlingDisplay": "品种 + 苗龄 + 起订量",
+        "regionalDisplay": "供应地 + 箱规 + 到货时效"
+      },
+      "fieldGroups": {
+        "base": "基础信息",
+        "spec": "规格信息",
+        "unit": "单位信息",
+        "price": "价格信息",
+        "fulfillment": "履约提示"
+      },
+      "fields": {
+        "base": "商品名、类目、市场、商户、档口",
+        "spec": "规格名称、等级/尺寸、包装规格、起售数量",
+        "unit": "销售单位、计价单位、库存单位、包装单位",
+        "price": "价格类型、固定价、区间价、阶梯价、时价",
+        "fulfillment": "商品提示、档口自送、统一配送、自提规则"
+      },
+      "consumer": {
+        "titleMarketStall": "识别商品、市场和档口",
+        "oneLineSpec": "商品卡一行关键规格",
+        "unitLine": "价格单位、起售量和库存口径",
+        "priceLine": "价格展示，不作为规格",
+        "stallCapability": "档口能力区展示取送方式"
+      },
+      "vendor": {
+        "quickListing": "手机快速上架基础字段",
+        "templateFields": "常用规格模板和复制昨日规格",
+        "unitSplit": "单位拆分预览",
+        "priceType": "今日价、区间价或时价草稿",
+        "merchantConfig": "从商户/市场配置读取履约能力"
+      },
+      "surfaces": {
+        "admin": "Admin 平台后台",
+        "vendor": "Vendor 商家后台",
+        "storefront": "Storefront 消费者前台"
+      },
+      "boundaryKeys": {
+        "admin": "配置源",
+        "vendor": "草稿源",
+        "storefront": "展示源"
+      },
+      "reads": {
+        "readTemplates": "读取模板、版本、字段、适用范围和审计状态。",
+        "readAvailableTemplates": "只读取当前市场和商户类型可用模板。",
+        "readSpecView": "只读取裁剪后的商品规格展示视图。"
+      },
+      "writes": {
+        "versionedAudit": "未来写入必须版本化并记录审计。",
+        "draftOnly": "只能写入商品草稿，不能直接正式发布。",
+        "noWrite": "消费者前台无模板写入能力。"
+      },
+      "guardrails": {
+        "noProductPublish": "模板配置不等于商品审核或商品发布。",
+        "merchantConfirm": "AI 草稿必须商户确认，不自动上架。",
+        "hideInternalRules": "不暴露后台内部规则、风控原因或权限配置。"
+      },
+      "safety": {
+        "title": "安全边界",
+        "message": "规格模板不是库存系统、不是订单系统、不是支付/退款/结算规则。市场统一配送是市场或商户能力，不应写成商品属性。"
+      }
+    },
+    "pickupCards": {
+      "definition": "提货卡是线下销售的实体卡，用户通过卡号 / 卡密 / 二维码在线兑换指定商品或套餐并填写收货地址。它不是优惠券、满减券、折扣券、储值卡、支付方式或普通营销券。",
+      "metrics": {
+        "totalIssued": {
+          "label": "总发行卡数",
+          "value": "128,000",
+          "hint": "累计制卡数量"
+        },
+        "activated": {
+          "label": "已激活卡数",
+          "value": "96,420",
+          "hint": "可在线提货"
+        },
+        "redeemed": {
+          "label": "已提货卡数",
+          "value": "58,216",
+          "hint": "已完成兑换"
+        },
+        "unredeemed": {
+          "label": "未提货卡数",
+          "value": "38,204",
+          "hint": "待用户兑换"
+        },
+        "todayRedemptions": {
+          "label": "今日提货数",
+          "value": "386",
+          "hint": "今日兑换量"
+        },
+        "pendingShipmentOrders": {
+          "label": "待发货提货订单",
+          "value": "74",
+          "hint": "履约待处理"
+        },
+        "expiringSoon": {
+          "label": "即将过期卡数",
+          "value": "1,208",
+          "hint": "30 天内过期"
+        },
+        "abnormalRecords": {
+          "label": "异常提货记录",
+          "value": "9",
+          "hint": "需人工排查"
+        }
+      },
+      "dashboard": {
+        "title": "消费者提货卡运营台",
+        "recentRedemptions": "最近提货记录",
+        "recentRedemptionsHint": "手机号和卡号均为脱敏展示。",
+        "overview": {
+          "title": "运营概览",
+          "description": "今日处理量、待履约、临期和异常只读展示，不触发真实核销。"
+        },
+        "abnormalCards": {
+          "title": "异常卡号提醒",
+          "message": "今日存在 9 条重复尝试、过期提货或渠道异常记录。"
+        },
+        "expiringBatches": {
+          "title": "即将过期批次",
+          "message": "BATCH-202605-A01 将在 2026-08-31 到期，建议运营提前提醒渠道。"
+        },
+        "channelOverview": {
+          "title": "渠道发卡概览",
+          "message": "华东商超渠道、本地企业福利渠道和线下门店渠道为当前主要发卡来源。"
+        }
+      },
+      "redemptionSteps": {
+        "offlineCard": "线下获得实体卡",
+        "verifyCard": "输入卡号 / 卡密 / 扫码",
+        "chooseEntitlement": "选择权益商品或套餐",
+        "submitFulfillment": "填写收货或自提信息",
+        "createPickupOrder": "生成提货单并履约"
+      },
+      "mockProducts": {
+        "freshGiftA": "鲜果礼盒 A 套餐",
+        "businessTeaGift": "商务茶礼盒"
+      },
+      "sections": {
+        "cardTypes": {
+          "title": "卡种 / 权益定义 mock",
+          "description": "卡种只定义可提权益，不定义余额、折扣、支付或购物车抵扣。"
+        },
+        "batches": {
+          "title": "批次 / 渠道 mock",
+          "description": "后续批次生成、导出、激活、冻结、作废必须走后端权限和审计。"
+        },
+        "fulfillment": {
+          "title": "商家提货履约 mock",
+          "description": "展示待备货、待发货、自提核销和异常处理占位，不创建真实发货或扣库存。"
+        },
+        "operationBoundary": {
+          "title": "风控 / 操作日志边界"
+        }
+      },
+      "cardTypes": {
+        "seafoodGiftA": {
+          "name": "端午海鲜礼盒卡",
+          "entitlement": "小黄鱼礼盒 / 冻虾仁 / 海鲜干货三选一",
+          "status": "启用 mock",
+          "note": "权益固定或可选，不含金额余额"
+        },
+        "freshBundleB": {
+          "name": "本地鲜货组合卡",
+          "entitlement": "鲜活水产 + 时令蔬菜套餐",
+          "status": "草稿 mock",
+          "note": "待后续接卡种版本和权益快照"
+        }
+      },
+      "channels": {
+        "corporateBenefits": "线下企业福利渠道",
+        "marketStores": "三门海鲜市场门店"
+      },
+      "batchStatus": {
+        "expiringMock": "即将过期 mock",
+        "activatingMock": "激活中 mock"
+      },
+      "fulfillmentMerchants": {
+        "ahaiSeafood": "阿海鲜活档",
+        "wankouFrozen": "湾口冰鲜行"
+      },
+      "fulfillmentMethods": {
+        "marketPickup": "市场自提",
+        "cityColdChain": "同城冷链配送"
+      },
+      "fulfillmentStatus": {
+        "preparingMock": "待备货 mock",
+        "exceptionReviewMock": "异常复核 mock"
+      },
+      "operationBoundaries": {
+        "batchActions": "冻结批次、作废卡号、导出制卡文件都必须进入高风险后端任务。",
+        "secretSafety": "当前页面不展示明文卡密，不生成真实卡号，不触发真实核销。",
+        "businessBoundary": "提货卡履约不能写入普通订单支付成功、退款、结算或佣金状态。"
+      },
+      "columns": {
+        "cardTypeName": "卡种名称",
+        "cardTypeCode": "卡种编码",
+        "boundProduct": "绑定商品 / 套餐",
+        "redeemQuantity": "可兑换数量",
+        "validityRule": "有效期规则",
+        "deliveryDateSupported": "指定配送日期",
+        "exchangeSupported": "支持换货",
+        "batchNo": "批次号",
+        "cardType": "卡种",
+        "issuedQuantity": "发行数量",
+        "activatedQuantity": "已激活数量",
+        "redeemedQuantity": "已提货数量",
+        "unredeemedQuantity": "未提货数量",
+        "channel": "渠道",
+        "producedAt": "制卡时间",
+        "validity": "有效期",
+        "cardNoMasked": "卡号（脱敏）",
+        "cardSecretMasked": "卡密（脱敏）",
+        "activationStatus": "激活状态",
+        "boundUser": "绑定用户",
+        "redeemStatus": "提货状态",
+        "redeemOrderNo": "提货订单号",
+        "lastActionAt": "最后操作时间",
+        "userPhoneMasked": "用户手机号（脱敏）",
+        "receiver": "收货人",
+        "receiverAddress": "收货地址",
+        "redeemProduct": "提货商品",
+        "redeemedAt": "提货时间",
+        "logisticsStatus": "物流状态",
+        "processStatus": "处理状态",
+        "productPackage": "商品 / 套餐",
+        "phoneMasked": "手机号（脱敏）",
+        "address": "地址",
+        "trackingNo": "物流单号",
+        "riskReason": "风控原因",
+        "operationTarget": "操作对象",
+        "operationAction": "操作动作",
+        "entitlement": "权益内容",
+        "boundary": "边界",
+        "quantity": "数量",
+        "pickupTicket": "提货单",
+        "merchantStall": "商家 / 档口",
+        "fulfillmentMethod": "履约方式"
+      }
+    },
+    "operations": {
+      "actions": {
+        "mockConfigure": "Mock 配置占位"
+      },
+      "mockNotice": {
+        "title": "Mock 控制台说明",
+        "message": "当前仅为 Admin 平台设置占位，后续需要接入后端 feature flags / market settings 作为真实配置来源；本页不写真实权限、不改 RBAC、不调用后端 API。"
+      },
+      "summary": {
+        "mockOnly": {
+          "title": "只读 mock 开关",
+          "description": "全部来自前端占位常量"
+        },
+        "marketScoped": {
+          "title": "市场级能力",
+          "description": "需后续接 market settings"
+        },
+        "roleScoped": {
+          "title": "角色准入能力",
+          "description": "需后续接角色能力映射"
+        },
+        "blockedRealProviders": {
+          "title": "真实服务接入",
+          "description": "本任务不接直播/物流/AI 服务"
+        }
+      },
+      "controlBlueprint": {
+        "title": "能力控制总览",
+        "description": "把平台总开关、市场默认值和商家自主选择分开，避免统一配送、物料接单、直播、快递打印等能力被做成强制一刀切。",
+        "switchAriaLabel": "{{capability}} {{field}} mock 只读开关",
+        "fields": {
+          "platformDefault": "平台开关",
+          "marketDefault": "市场默认",
+          "merchantChoice": "商家可选",
+          "consumerPlacement": "消费者端位置",
+          "vendorPlacement": "商户端位置"
+        },
+        "rows": {
+          "unifiedDelivery": {
+            "title": "市场统一配送能力",
+            "description": "平台提供统一配送能力，但商家可按市场规则选择统一配送或自行配送。",
+            "consumerPlacement": "不放首页；在档口 / 店铺和结算配送选择处展示。",
+            "vendorPlacement": "商家后台配送设置中选择统一配送、自行配送或组合模式。"
+          },
+          "merchantSelfDelivery": {
+            "title": "商家自行配送",
+            "description": "允许档口保留自配能力，适合熟客、近场订单和特殊鲜活商品。",
+            "consumerPlacement": "在档口配送说明和订单配送方式里展示。",
+            "vendorPlacement": "商家后台维护自配范围、时段和说明。"
+          },
+          "materialSupplierOrders": {
+            "title": "物料供应商接单",
+            "description": "泡沫箱、包装箱、冰袋、冰块等市场物料主要面向商户，不进入消费者前台主链路。",
+            "consumerPlacement": "消费者首页隐藏。",
+            "vendorPlacement": "商户后台独立物料采购入口；物料供应商可有接单工作台。"
+          },
+          "livestreamStoreStatus": {
+            "title": "档口直播状态",
+            "description": "直播不放首页，只在档口 / 店铺位置显示正在直播状态。",
+            "consumerPlacement": "店铺页、档口卡片或商家主页显示“正在直播”。",
+            "vendorPlacement": "商家后台维护直播占位状态，后续再接真实直播 provider。"
+          },
+          "aiQuickListingDraft": {
+            "title": "AI 快速上架草稿",
+            "description": "手机端和微信入口可一句话生成商品草稿，但必须商家确认后才上架。",
+            "consumerPlacement": "消费者不可见。",
+            "vendorPlacement": "商家移动端快速上架和商品草稿箱。"
+          },
+          "expressPrintTool": {
+            "title": "快递打印 / 电子面单",
+            "description": "先保留履约工具入口，不生成真实运单号，不确认真实发货。",
+            "consumerPlacement": "消费者端只看物流状态，不展示打印工具。",
+            "vendorPlacement": "商家后台订单履约工具区，后续接快递鸟、快递100或电子面单 adapter。"
+          }
+        }
+      },
+      "moduleSwitches": {
+        "title": "平台全局模块开关",
+        "description": "覆盖本地生鲜供应链与多角色经营平台的核心能力状态，表达平台级开放策略；开关均为只读 mock / 配置占位。"
+      },
+      "contract": {
+        "title": "后端能力契约",
+        "description": "读取 Admin 登录态只读接口，展示平台、市场、商户和供应方能力边界；本页仍不让开关真实生效。",
+        "loading": "正在读取 /admin/china/capabilities，只用于展示能力边界。",
+        "fallbackStatus": "未连接",
+        "errorUnknown": "未知错误",
+        "errorMessage": "能力接口暂不可用：{{message}}。当前继续显示本地只读 mock 开关。",
+        "ownerRisk": "owner: {{owner}} · risk: {{risk}}",
+        "summary": {
+          "groups": "能力分组",
+          "capabilities": "能力项",
+          "highRisk": "高风险项"
+        },
+        "status": {
+          "enabled_baseline": "基础可见",
+          "read_only_baseline": "只读基础版",
+          "disabled_until_backend": "待后端配置",
+          "design_only": "设计占位",
+          "high_risk_serial": "高风险串行"
+        }
+      },
+      "marketCapabilities": {
+        "switchTitle": "市场选择 / 切换",
+        "switchDescription": "示例展示多个市场，当前选择只是前端 mock，不写死单一市场，也不会真实切换租户或市场上下文。",
+        "currentMarket": "当前市场配置占位",
+        "capabilityTitle": "当前市场支持能力",
+        "capabilityDescription": "市场级能力后续可作为 Vendor 入口显示和业务流程开放的控制来源。",
+        "fields": {
+          "hours": "营业时间",
+          "announcement": "市场公告",
+          "deliveryRule": "配送规则",
+          "pickupRule": "自提规则",
+          "serviceRange": "服务范围",
+          "supportedCapabilities": "支持能力"
+        }
+      },
+      "marketPortfolio": {
+        "title": "市场配置总览",
+        "description": "把多个市场放在一起看，确认每个市场的营业时间、服务范围和已规划能力，后续真实版本应由市场配置 API 驱动。",
+        "capabilityCount": "规划能力",
+        "capabilityUnit": "项",
+        "currentMock": "当前 mock 选中市场"
+      },
+      "roleEnablement": {
+        "title": "商户 / 供应方角色开通",
+        "description": "角色开通、资质审核、所属市场、档口号或服务范围、模块可见性均为占位数据；不实现真实权限判断。"
+      },
+      "rolePortfolio": {
+        "title": "商户类型覆盖",
+        "description": "按角色类型汇总商户、供应商、产地供应方和外地批发商，先确认开放边界，再进入真实权限和资质流程。",
+        "typeBoundary": "类型边界占位，不写真实 RBAC",
+        "roleCount": "角色数",
+        "marketCount": "市场数",
+        "moduleCount": "能力数"
+      },
+      "columns": {
+        "module": "模块",
+        "switchPreview": "开关占位",
+        "status": "状态",
+        "layer": "控制层级",
+        "scope": "适用范围",
+        "vendorImpact": "Vendor 侧影响",
+        "openPolicy": "开放策略",
+        "mockBoundary": "Mock / 安全边界",
+        "updatedAt": "更新时间",
+        "capability": "能力",
+        "owner": "负责团队",
+        "role": "角色",
+        "roleType": "角色类型",
+        "qualification": "资质审核",
+        "market": "所属市场",
+        "moduleVisibility": "模块可见性"
+      },
+      "status": {
+        "enabled": "已开启",
+        "disabled": "未开启",
+        "pilot": "试点中",
+        "reviewing": "审核中",
+        "paused": "暂停"
+      },
+      "layers": {
+        "platform": "平台全局",
+        "market": "市场级",
+        "role": "商户 / 供应方角色"
+      },
+      "scopes": {
+        "freshTrade": "本地生鲜交易",
+        "coldChain": "冻品冷链交易",
+        "marketOps": "市场运营物料",
+        "deliveryNetwork": "同城配送网络",
+        "supplyChain": "上游货源协同",
+        "agriculture": "农业生产资料",
+        "crossRegion": "跨区域批发",
+        "contentSales": "内容销售",
+        "listingTools": "商品上架工具",
+        "fulfillmentTools": "履约工具",
+        "pickupCard": "提货卡业务",
+        "stallStoreStatus": "店铺 / 档口状态展示",
+        "storefrontTools": "店铺展示工具"
+      },
+      "policies": {
+        "open": "开放展示，占位不落库",
+        "marketPilot": "按市场试点，待市场配置确认",
+        "rolePilot": "按商户 / 供应方角色试点",
+        "reviewRequired": "资质和运营审核后才可开放",
+        "notOpen": "暂不开放，仅保留规划入口",
+        "placeholderOnly": "仅展示占位状态，不开放真实能力"
+      },
+      "guardrails": {
+        "noBusinessMutation": "不修改订单、支付、结算或权限状态",
+        "requiresMarketSettings": "后续必须由市场配置和审计日志兜底",
+        "merchantOnly": "仅面向商户工作台，不进入消费者主购物链路",
+        "noRealLogistics": "不接真实物流服务，不确认发货",
+        "noRealLivestream": "不接真实直播、IM、推流或支付",
+        "notPayment": "提货卡不是优惠券、储值卡或支付方式",
+        "draftOnly": "AI 只生成草稿，必须由商户确认后才可上架",
+        "noRealWaybill": "不生成真实运单号或电子面单"
+      },
+      "vendorImpact": {
+        "visible": "后续可显示 Vendor 入口",
+        "marketPilot": "仅试点市场显示",
+        "afterReview": "审核通过后显示",
+        "hidden": "Vendor 侧保持隐藏",
+        "rolePilot": "仅开通角色显示",
+        "storeStatusOnly": "不进首页，仅在店铺 / 档口显示状态",
+        "consumerEntitlement": "消费者权益提货凭证，不作为支付或优惠券"
+      },
+      "modules": {
+        "seafoodTrade": "海鲜商户",
+        "frozenGoods": "冻品商户",
+        "dryGoods": "干货商户",
+        "fruitsVegetables": "水果蔬菜",
+        "marketMaterials": "市场物料",
+        "deliverySuppliers": "配送供应商",
+        "upstreamSupply": "上游货源",
+        "seedlingWholesale": "种苗批发",
+        "remoteWholesalers": "外地批发商",
+        "livestream": "直播",
+        "aiQuickListing": "AI 快速上架",
+        "expressPrint": "快递打印 / 电子面单",
+        "pickupCard": "提货卡",
+        "storeDecoration": "店铺装修"
+      },
+      "switchPreview": {
+        "readonly": "Mock 只读占位",
+        "ariaLabel": "{{module}} 开关 mock 只读占位"
+      },
+      "integration": {
+        "title": "后端接入边界",
+        "description": "本页先固定信息架构和运营口径。真实可编辑版本需要在后续任务中接入 feature flags、market settings、角色能力映射和审计日志。",
+        "columns": {
+          "item": "接入项",
+          "source": "建议后端来源"
+        },
+        "items": {
+          "featureFlags": "模块开关状态",
+          "marketSettings": "市场营业时间 / 公告 / 配送规则",
+          "roleCapabilities": "商户类型与能力映射",
+          "mockProviders": "直播 / 物流 / AI mock provider",
+          "auditLogs": "操作审计和变更留痕"
+        },
+        "sources": {
+          "featureFlags": "feature_flags 或等价配置服务",
+          "marketSettings": "market_settings / market_profiles",
+          "roleCapabilities": "role_capabilities / merchant_type_capabilities",
+          "mockProviders": "mock provider / adapter templates",
+          "auditLogs": "audit_log / operator_event_log"
+        }
+      },
+      "markets": {
+        "sanmenSeafood": {
+          "name": "三门海鲜市场",
+          "hours": "05:00 - 18:00，节假日由市场运营单独维护",
+          "announcement": "伏季海鲜专区试运营，档口需补齐产地和检疫凭证。",
+          "deliveryRule": "同城冷链当日达，跨区订单进入人工确认队列。",
+          "pickupRule": "支持档口自提和市场服务台集中自提。",
+          "serviceRange": "三门县城区、海游街道及周边乡镇试点。"
+        },
+        "northProduce": {
+          "name": "城北果蔬批发中心",
+          "hours": "04:30 - 17:30，凌晨批发时段优先。",
+          "announcement": "叶菜类价格波动较大，建议商户每日 10:00 前更新库存。",
+          "deliveryRule": "同城配送按温区和车次分段计费。",
+          "pickupRule": "支持档口自提、园区装车点自提。",
+          "serviceRange": "城北片区、学校食堂、社区团购站点。"
+        },
+        "coastalFrozen": {
+          "name": "沿海冻品集配市场",
+          "hours": "06:00 - 20:00，冷库提货需提前预约。",
+          "announcement": "冻品批发试点外地批发商协同，当前为审核中。",
+          "deliveryRule": "冷链干线和同城短驳分开配置。",
+          "pickupRule": "支持冷库预约自提。",
+          "serviceRange": "沿海冷链仓、批发商干线中转点。"
+        }
+      },
+      "owners": {
+        "platformOps": "平台运营组",
+        "deliveryOps": "配送运营组",
+        "fulfillmentOps": "履约工具组",
+        "merchantOps": "商户运营组",
+        "contentOps": "内容风控组"
+      },
+      "roles": {
+        "seafoodStall": "海鲜档口",
+        "frozenMerchant": "冻品商户",
+        "dryGoodsMerchant": "干货商户",
+        "produceMerchant": "水果蔬菜商户",
+        "materialSupplier": "物料供应商",
+        "deliverySupplier": "配送供应商",
+        "aquacultureFarm": "养殖户",
+        "grower": "种植户",
+        "seedlingSupplier": "种苗供应商",
+        "remoteWholesaler": "外地批发商"
+      },
+      "qualifications": {
+        "draft": "资料草稿",
+        "pending": "资质审核中",
+        "approved": "资质已通过"
+      },
+      "roleTypes": {
+        "ordinaryMerchant": "普通经营商户",
+        "materialSupplier": "物料供应商",
+        "deliverySupplier": "配送供应商",
+        "originSupplier": "产地供应方",
+        "seedlingSupplier": "种苗供应商",
+        "remoteWholesaler": "外地批发商"
+      },
+      "roleScopes": {
+        "stallA12": "A12 档口",
+        "coldChain": "冷链仓配服务范围",
+        "stallB08": "B08 干货区",
+        "produceZone": "果蔬交易区",
+        "materialSupply": "市场物料供应范围",
+        "cityDelivery": "同城配送服务范围",
+        "originSupply": "产地直供范围",
+        "seedlingArea": "种苗服务范围",
+        "crossRegion": "跨区域批发范围"
+      }
+    },
+    "status": {
+      "order": {
+        "pendingPayment": "待付款",
+        "pendingShipment": "待发货",
+        "pendingReceipt": "待收货",
+        "completed": "已完成",
+        "cancelled": "已取消",
+        "refunding": "退款中",
+        "refunded": "已退款"
+      },
+      "merchant": {
+        "pending": "待审核",
+        "approved": "审核通过",
+        "rejected": "审核驳回",
+        "frozen": "已冻结"
+      },
+      "product": {
+        "draft": "草稿",
+        "pending": "待审核",
+        "listed": "已上架",
+        "delisted": "已下架",
+        "failed": "审核失败"
+      },
+      "afterSales": {
+        "pending": "待处理",
+        "processing": "处理中",
+        "intervention": "平台介入",
+        "resolved": "已处理",
+        "rejected": "已驳回"
+      },
+      "payment": {
+        "pendingReconcile": "待对账",
+        "notified": "已通知",
+        "mockOnly": "仅占位",
+        "reconciled": "已对账",
+        "exception": "异常"
+      },
+      "settlement": {
+        "pending": "待结算",
+        "settled": "已结算",
+        "mockOnly": "仅占位",
+        "withdrawing": "提现处理中",
+        "exception": "结算异常"
+      },
+      "marketing": {
+        "draft": "草稿",
+        "active": "进行中",
+        "mockOnly": "仅占位"
+      },
+      "pickupCard": {
+        "unactivated": "未激活",
+        "pendingActivation": "待启用",
+        "activated": "已激活",
+        "bound": "已绑定",
+        "redeemed": "已提货",
+        "partiallyRedeemed": "部分提货",
+        "unredeemed": "未提货",
+        "frozen": "已冻结",
+        "voided": "已作废",
+        "expired": "已过期"
+      },
+      "pickupBatch": {
+        "pendingProduction": "待制卡",
+        "produced": "已制卡",
+        "pendingActivation": "待激活",
+        "activated": "已激活",
+        "paused": "已暂停",
+        "voided": "已作废",
+        "expired": "已过期"
+      },
+      "pickupOrder": {
+        "pendingConfirm": "待确认",
+        "pendingShipment": "待发货",
+        "shipped": "已发货",
+        "signed": "已签收",
+        "abnormal": "异常",
+        "cancelled": "已取消"
+      },
+      "message": {
+        "pending": "待回复",
+        "processing": "处理中",
+        "resolved": "已处理",
+        "draft": "草稿",
+        "closed": "已关闭",
+        "exception": "通知异常"
+      },
+      "risk": {
+        "pending": "待处理",
+        "processing": "处理中",
+        "closed": "已关闭"
+      },
+      "settings": {
+        "placeholder": "占位",
+        "draft": "草稿",
+        "active": "已启用"
+      }
+    },
+    "empty": {
+      "title": "暂无记录",
+      "message": "当前阶段仅展示静态占位，不读取后端数据。"
+    },
+    "placeholder": {
+      "title": "后续功能占位",
+      "message": "后续可在独立任务中接入真实 API、权限、审计日志和功能开关。本页刻意不实现真实审核、结算、退款、支付或权限操作。"
+    },
+    "notFound": {
+      "title": "页面未配置",
+      "message": "当前访问的后台骨架页不在本阶段中国本地化菜单中。"
+    }
+  }
+}

@@ -1,0 +1,227 @@
+import { marketingColumns } from "./china-admin-table-columns"
+import {
+  cell,
+  statusCell,
+  type ChinaAdminTableData,
+} from "./china-admin-table-primitives"
+
+const marketingFilters = ["运营位置", "面向对象", "活动状态", "更新时间"]
+
+export const marketingTables: Record<string, ChinaAdminTableData> = {
+  marketingDashboard: {
+    columns: marketingColumns,
+    filters: marketingFilters,
+    rows: [
+      {
+        id: "MKT-DASH-20260503001",
+        cells: {
+          id: cell("MKT-DASH-20260503001"),
+          name: cell("早市鲜货运营看板"),
+          status: statusCell("chinaAdmin.status.marketing.active", "green"),
+          marketingChannel: cell("平台运营看板"),
+          placement: cell("首页鲜货区 / 店铺推荐区"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("2026-05-04 06:00 至 12:00"),
+          promoBoundary: cell("只读 mock，不发布真实活动；提货卡不归入营销券"),
+          updatedAt: cell("2026-05-03 09:18"),
+        },
+        actions: ["view", "remark"],
+      },
+      {
+        id: "MKT-DASH-20260503002",
+        cells: {
+          id: cell("MKT-DASH-20260503002"),
+          name: cell("商户物料采购提醒"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("商户后台消息位"),
+          placement: cell("商户端，不进入消费者首页"),
+          audience: cell("市场商户"),
+          campaignPeriod: cell("长期占位"),
+          promoBoundary: cell("泡沫箱 / 冰袋 / 包装箱属于商户采购"),
+          updatedAt: cell("2026-05-03 09:26"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  coupons: {
+    columns: marketingColumns,
+    filters: ["券状态", "适用市场", "面向对象", "更新时间"],
+    rows: [
+      {
+        id: "CPN-20260503001",
+        cells: {
+          id: cell("CPN-20260503001"),
+          name: cell("新客鲜货券占位"),
+          status: statusCell("chinaAdmin.status.marketing.draft", "grey"),
+          marketingChannel: cell("优惠券"),
+          placement: cell("消费者领券中心占位"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("2026-05-06 至 2026-05-12"),
+          promoBoundary: cell("只读 mock，不写入真实优惠券或订单抵扣"),
+          updatedAt: cell("2026-05-03 10:02"),
+        },
+        actions: ["view", "edit", "copy"],
+      },
+      {
+        id: "CPN-20260503002",
+        cells: {
+          id: cell("CPN-20260503002"),
+          name: cell("提货卡不是优惠券说明"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("规则说明"),
+          placement: cell("运营后台提示"),
+          audience: cell("平台运营"),
+          campaignPeriod: cell("长期占位"),
+          promoBoundary: cell("提货卡不进入优惠券、满减、折扣或支付方式链路"),
+          updatedAt: cell("2026-05-03 10:08"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  fullReductionActivities: {
+    columns: marketingColumns,
+    filters: ["活动状态", "适用市场", "商品范围", "更新时间"],
+    rows: [
+      {
+        id: "FR-20260503001",
+        cells: {
+          id: cell("FR-20260503001"),
+          name: cell("周末家庭餐满减占位"),
+          status: statusCell("chinaAdmin.status.marketing.draft", "grey"),
+          marketingChannel: cell("满减活动"),
+          placement: cell("商品详情 / 购物车提示占位"),
+          audience: cell("家庭消费者"),
+          campaignPeriod: cell("2026-05-10 至 2026-05-12"),
+          promoBoundary: cell("只读 mock，不改购物车、订单或支付金额"),
+          updatedAt: cell("2026-05-03 10:18"),
+        },
+        actions: ["view", "edit", "copy"],
+      },
+      {
+        id: "FR-20260503002",
+        cells: {
+          id: cell("FR-20260503002"),
+          name: cell("档口自运营满减占位"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("商户自运营"),
+          placement: cell("店铺页占位"),
+          audience: cell("店铺访客"),
+          campaignPeriod: cell("待商户确认"),
+          promoBoundary: cell("不越权修改商户订单、结算或佣金"),
+          updatedAt: cell("2026-05-03 10:22"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  flashSaleActivities: {
+    columns: marketingColumns,
+    filters: ["排期状态", "适用市场", "商品坑位", "更新时间"],
+    rows: [
+      {
+        id: "FS-20260503001",
+        cells: {
+          id: cell("FS-20260503001"),
+          name: cell("早市限时鲜活秒杀"),
+          status: statusCell("chinaAdmin.status.marketing.draft", "grey"),
+          marketingChannel: cell("秒杀活动"),
+          placement: cell("首页限时鲜货占位"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("2026-05-05 06:00 至 09:00"),
+          promoBoundary: cell("只读 mock，不锁库存、不改真实价格"),
+          updatedAt: cell("2026-05-03 10:31"),
+        },
+        actions: ["view", "edit", "copy"],
+      },
+      {
+        id: "FS-20260503002",
+        cells: {
+          id: cell("FS-20260503002"),
+          name: cell("果蔬清晨补货秒杀占位"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("秒杀活动"),
+          placement: cell("市场频道占位"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("待排期"),
+          promoBoundary: cell("需后续接库存和价格风控后才能真实上线"),
+          updatedAt: cell("2026-05-03 10:36"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  homeBanners: {
+    columns: marketingColumns,
+    filters: ["资源位", "适用端", "投放状态", "更新时间"],
+    rows: [
+      {
+        id: "BNR-20260503001",
+        cells: {
+          id: cell("BNR-20260503001"),
+          name: cell("三门海鲜市场主 Banner"),
+          status: statusCell("chinaAdmin.status.marketing.active", "green"),
+          marketingChannel: cell("首页 Banner"),
+          placement: cell("消费者首页首屏"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("2026-05-04 至 2026-05-10"),
+          promoBoundary: cell("只读 mock，不上传真实物料或触发发布"),
+          updatedAt: cell("2026-05-03 10:42"),
+        },
+        actions: ["view", "edit", "copy"],
+      },
+      {
+        id: "BNR-20260503002",
+        cells: {
+          id: cell("BNR-20260503002"),
+          name: cell("商户物料入口不进首页"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("规则说明"),
+          placement: cell("商户后台 / 运营后台"),
+          audience: cell("平台运营"),
+          campaignPeriod: cell("长期占位"),
+          promoBoundary: cell("市场物料买卖属于商户端，不放消费者首页前排"),
+          updatedAt: cell("2026-05-03 10:45"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  recommendationSlots: {
+    columns: marketingColumns,
+    filters: ["推荐位置", "推荐对象", "状态", "更新时间"],
+    rows: [
+      {
+        id: "REC-20260503001",
+        cells: {
+          id: cell("REC-20260503001"),
+          name: cell("今日鲜货档口推荐"),
+          status: statusCell("chinaAdmin.status.marketing.active", "green"),
+          marketingChannel: cell("推荐位"),
+          placement: cell("首页店铺推荐 / 市场频道"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("2026-05-04 至 2026-05-06"),
+          promoBoundary: cell("只读 mock，不改真实排序或搜索权重"),
+          updatedAt: cell("2026-05-03 10:52"),
+        },
+        actions: ["view", "edit", "copy"],
+      },
+      {
+        id: "REC-20260503002",
+        cells: {
+          id: cell("REC-20260503002"),
+          name: cell("正在直播店铺状态位"),
+          status: statusCell("chinaAdmin.status.marketing.mockOnly", "grey"),
+          marketingChannel: cell("店铺状态"),
+          placement: cell("店铺卡片轻提示"),
+          audience: cell("本地消费者"),
+          campaignPeriod: cell("仅展示状态占位"),
+          promoBoundary: cell("直播不作为首页主模块，不接真实直播服务"),
+          updatedAt: cell("2026-05-03 10:58"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+}

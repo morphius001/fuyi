@@ -306,8 +306,12 @@
 
 第二十五轮建议：
 
-1. `vendor-fulfillment-context-readonly`: pending，在 Vendor 配送设置/物流页展示 delivery profiles，只读不影响 checkout。
+1. `vendor-fulfillment-context-readonly`: done，在 Vendor 配送设置/物流页展示 delivery profiles，只读不影响 checkout。
 2. `vendor-announcements-readonly`: pending，在 Vendor 公告/服务页展示商户侧市场公告，只读不发布。
+
+第二十五轮进度：
+
+- `vendor-fulfillment-context-readonly`: done，Vendor 物流页新增 delivery profiles 只读区，明确 checkoutImpact 为 none、runtimeEnabled 为 false；API 不可用时保留下方物流 mock 表。
 
 ## Status Rules
 

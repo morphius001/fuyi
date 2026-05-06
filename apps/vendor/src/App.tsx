@@ -673,6 +673,7 @@ function ManagementPage({
       {page.id === "aiListingDraft" ? <AiListingDraftSkeleton /> : null}
       {page.id === "shopDecoration" ? <ShopDecorationSkeleton /> : null}
       {page.id === "store" ? <VendorProfileMarketContext /> : null}
+      {page.id === "logistics" ? <VendorFulfillmentContext /> : null}
 
       <section className="filter-panel" aria-label={`${page.title}筛选区`}>
         {page.filters.map((label) => (
@@ -753,6 +754,112 @@ function ManagementPage({
         <p>{page.todo}</p>
       </section>
     </div>
+  );
+}
+
+function VendorFulfillmentContext() {
+  const [marketContextState, setMarketContextState] =
+    useState<MarketContextState>({
+      status: "loading",
+    });
+
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorMarketContext({
+      includeDeliveryProfiles: true,
+    }).then((data) => {
+      if (mounted) {
+        setMarketContextState({ status: "ready", data });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (marketContextState.status === "loading") {
+    return (
+      <section className="readonly-state" aria-label="配送能力读取中">
+        <strong>配送能力</strong>
+        <p>正在读取市场 delivery profiles，只用于物流页展示，不影响 checkout shipping options。</p>
+      </section>
+    );
+  }
+
+  const { data } = marketContextState;
+  const enabledProfiles = data.deliveryProfiles.filter((profile) => profile.enabled);
+
+  return (
+    <section className="panel" aria-label="配送能力只读展示">
+      <div className="panel-header">
+        <div>
+          <h2>市场配送能力只读</h2>
+          <p>
+            展示市场统一配送、商家自配、自提、配送供应商和冷链快递能力；本区不创建运单、不确认发货、不修改 checkout。
+          </p>
+        </div>
+        <span className="capability-source">
+          checkoutImpact: none · runtimeEnabled: false
+        </span>
+      </div>
+
+      <section className="boundary-grid" aria-label="配送能力摘要">
+        <article className="boundary-card">
+          <span>可见配送 profile</span>
+          <strong>{data.deliveryProfiles.length}</strong>
+          <p>{data.source} · {data.mode}</p>
+        </article>
+        <article className="boundary-card">
+          <span>已启用展示项</span>
+          <strong>{enabledProfiles.length}</strong>
+          <p>启用只代表展示可见，不代表 checkout shipping options 生效。</p>
+        </article>
+        <article className="boundary-card">
+          <span>运行边界</span>
+          <strong>{data.runtimeEnabled ? "运行时生效" : "未运行时生效"}</strong>
+          <p>订单、发货、运费、结算和权限仍由后端真实链路决定。</p>
+        </article>
+        <article className="boundary-card">
+          <span>回退策略</span>
+          <strong>{data.deliveryProfiles.length > 0 ? "API 数据" : "静态物流表"}</strong>
+          <p>{data.deliveryProfiles.length > 0 ? data.note : "API 不可用时保留下方 mock 物流表。"}</p>
+        </article>
+      </section>
+
+      {data.deliveryProfiles.length > 0 ? (
+        <div className="table-wrap compact">
+          <table>
+            <thead>
+              <tr>
+                <th>配送能力</th>
+                <th>类型</th>
+                <th>服务范围</th>
+                <th>截单</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.deliveryProfiles.map((profile) => (
+                <tr key={profile.id}>
+                  <td>{profile.displayName}</td>
+                  <td>{profile.deliveryType}</td>
+                  <td>{profile.serviceAreaNote ?? "待配置"}</td>
+                  <td>{profile.cutoffTime ?? "无"}</td>
+                  <td>{profile.enabled ? "展示启用" : "展示停用"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <section className="mock-notice" aria-label="配送能力未连接">
+          <strong>配送 profile API 未连接</strong>
+          <span>当前继续显示下方物流 mock 表，不生成真实运单、不确认发货、不改变配送规则。</span>
+        </section>
+      )}
+    </section>
   );
 }
 

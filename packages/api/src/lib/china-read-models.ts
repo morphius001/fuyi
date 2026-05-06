@@ -47,6 +47,56 @@ export type ChinaDiscoveryReadModel = {
   categories: ChinaCategoryDiscoveryReadModel[];
 };
 
+export type ChinaStorefrontProductCardReadModel = {
+  id: string;
+  title: string;
+  handle?: string;
+  sellerId?: string;
+  sellerName?: string;
+  market?: string;
+  booth?: string;
+  priceText?: string;
+  specText?: string;
+  stockText?: string;
+  source: "store_product_table" | "placeholder";
+};
+
+export type ChinaStorefrontHomeView = {
+  mode: "storefront_home_view";
+  source: ChinaReadModelSource;
+  marketSelector: ChinaMarketReadModel[];
+  categoryNav: ChinaCategoryDiscoveryReadModel[];
+  featuredSellers: ChinaSellerDiscoveryReadModel[];
+  freshProducts: ChinaStorefrontProductCardReadModel[];
+  serviceLinks: Array<{
+    key: "pickup_card" | "after_sales" | "merchant_entry";
+    label: string;
+    placement: "secondary";
+  }>;
+  note: string;
+};
+
+export type ChinaStorefrontSearchView = {
+  mode: "storefront_search_view";
+  source: ChinaReadModelSource;
+  query: string;
+  marketContext?: ChinaMarketReadModel;
+  matchedSellers: ChinaSellerDiscoveryReadModel[];
+  matchedCategories: ChinaCategoryDiscoveryReadModel[];
+  matchedProducts: ChinaStorefrontProductCardReadModel[];
+  note: string;
+};
+
+export type ChinaStorefrontSellerView = {
+  mode: "storefront_seller_view";
+  source: ChinaReadModelSource;
+  seller: ChinaSellerDiscoveryReadModel;
+  products: ChinaStorefrontProductCardReadModel[];
+  pickupCardPlacement: "separate_entry";
+  livePlacement: "seller_status_badge";
+  note: string;
+};
+
 export type ChinaMetadataRecord = Record<string, unknown> | null | undefined;
 
 export type ChinaSellerDiscoveryRow = {
@@ -159,6 +209,108 @@ export const buildChinaDiscoveryReadModel = ({
     categories,
   };
 };
+
+export const buildChinaStorefrontHomeView = ({
+  discovery,
+  products = [],
+}: {
+  discovery: ChinaDiscoveryReadModel;
+  products?: ChinaStorefrontProductCardReadModel[];
+}): ChinaStorefrontHomeView => ({
+  mode: "storefront_home_view",
+  source: discovery.source,
+  marketSelector: discovery.markets,
+  categoryNav: discovery.categories,
+  featuredSellers: discovery.sellers,
+  freshProducts: products,
+  serviceLinks: [
+    {
+      key: "pickup_card",
+      label: "提货卡",
+      placement: "secondary",
+    },
+    {
+      key: "after_sales",
+      label: "售后服务",
+      placement: "secondary",
+    },
+    {
+      key: "merchant_entry",
+      label: "商家入驻",
+      placement: "secondary",
+    },
+  ],
+  note: CHINA_READ_MODEL_RUNTIME_NOTE,
+});
+
+const includesQuery = (value: string | undefined, query: string) =>
+  !query || value?.toLowerCase().includes(query.toLowerCase());
+
+export const buildChinaStorefrontSearchView = ({
+  discovery,
+  query,
+  products = [],
+  marketName,
+}: {
+  discovery: ChinaDiscoveryReadModel;
+  query: string;
+  products?: ChinaStorefrontProductCardReadModel[];
+  marketName?: string;
+}): ChinaStorefrontSearchView => {
+  const trimmedQuery = query.trim();
+  const marketContext = marketName
+    ? discovery.markets.find((market) => market.name === marketName)
+    : undefined;
+
+  return {
+    mode: "storefront_search_view",
+    source: discovery.source,
+    query: trimmedQuery,
+    marketContext,
+    matchedSellers: discovery.sellers.filter((seller) =>
+      [
+        seller.name,
+        seller.market,
+        seller.booth,
+        seller.summary,
+        ...seller.tags,
+      ].some((value) => includesQuery(value, trimmedQuery))
+    ),
+    matchedCategories: discovery.categories.filter((category) =>
+      [category.name, category.description].some((value) =>
+        includesQuery(value, trimmedQuery)
+      )
+    ),
+    matchedProducts: products.filter((product) =>
+      [
+        product.title,
+        product.sellerName,
+        product.market,
+        product.booth,
+        product.specText,
+      ].some((value) => includesQuery(value, trimmedQuery))
+    ),
+    note: CHINA_READ_MODEL_RUNTIME_NOTE,
+  };
+};
+
+export const buildChinaStorefrontSellerView = ({
+  seller,
+  products = [],
+}: {
+  seller: ChinaSellerDiscoveryReadModel;
+  products?: ChinaStorefrontProductCardReadModel[];
+}): ChinaStorefrontSellerView => ({
+  mode: "storefront_seller_view",
+  source: "seller_and_category_tables",
+  seller,
+  products: products.filter(
+    (product) => !product.sellerId || product.sellerId === seller.id
+  ),
+  pickupCardPlacement: "separate_entry",
+  livePlacement: "seller_status_badge",
+  note: CHINA_READ_MODEL_RUNTIME_NOTE,
+});
 
 export type ChinaModuleRuntimeScope =
   | "display_only"

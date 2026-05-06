@@ -69,3 +69,4 @@
 - 完成 `docs/vendor-draft-product-readwrite-plan.md`，把快速上架草稿、规格模板、AI mock suggestion、平台审核候选和真实商品创建拆成 M1-M8。
 - 完成 `docs/storefront-real-discovery-bridge.md`，把 Storefront 首页、搜索、店铺页从 mock/read-only 到真实 market/seller/category/product read model 的桥接拆成 N1-N7。
 - 完成 `api-read-model-skeleton`，新增 API 只读 read model builder 和单元测试，现有 discovery route 改为调用 builder，保持不触碰交易链路。
+- 完成 `storefront-discovery-view-shape`，新增 Storefront home/search/seller view shape builder 和单元测试，不修改前端 UI。

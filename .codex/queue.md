@@ -283,11 +283,19 @@
 第二十三轮建议：
 
 1. `vendor-market-context-api-plan`: done，设计 Vendor 专用市场上下文只读 API 合同，不改 UI。
-2. `vendor-market-context-client`: pending，新增 Vendor market context client/fallback，不改页面布局。
+2. `vendor-market-context-client`: done，新增 Vendor market context client/fallback，不改页面布局。
 
 第二十三轮进度：
 
 - `vendor-market-context-api-plan`: done，已规划 Vendor 专用 market context 只读路由、鉴权边界、响应结构、fallback、缓存、日志、PR 拆分和验证要求。
+- `vendor-market-context-client`: done，新增 `apps/vendor/src/lib/china-vendor-market-context-client.ts`，只提供类型、读取函数和空 fallback；API 不存在时不阻断 UI，且 `runtimeEnabled` 固定为 `false`。
+
+第二十三轮队列已清空。
+
+第二十四轮建议：
+
+1. `vendor-home-market-context`: pending，在 Vendor 首页展示市场/档口/公告只读摘要，不影响订单和履约。
+2. `vendor-profile-market-context`: pending，在 Vendor 店铺资料页展示市场归属，不提供保存。
 
 ## Status Rules
 

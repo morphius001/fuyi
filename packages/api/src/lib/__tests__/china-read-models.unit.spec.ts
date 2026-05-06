@@ -1,6 +1,9 @@
 import {
   buildChinaDiscoveryReadModel,
   buildChinaModuleCapabilityView,
+  buildChinaStorefrontHomeView,
+  buildChinaStorefrontSearchView,
+  buildChinaStorefrontSellerView,
   buildChinaVendorProductDraftReadModel,
 } from "../china-read-models";
 
@@ -114,5 +117,92 @@ describe("China read model builders", () => {
       canCreateProduct: false,
     });
     expect(draft.note).toContain("do not create products");
+  });
+
+  it("builds Storefront home, search, and seller view shapes without runtime side effects", () => {
+    const discovery = buildChinaDiscoveryReadModel({
+      sellerRows: [
+        {
+          id: "sel_1",
+          handle: "a-hai-xian-huo-dang",
+          name: "阿海鲜活档",
+          metadata: {
+            market_name: "三门海鲜市场",
+            booth_no: "A区18号",
+            category_summary: "鲜活蟹类",
+          },
+        },
+      ],
+      categoryRows: [
+        {
+          id: "pcat_1",
+          handle: "fresh-crab",
+          name: "鲜活蟹类",
+        },
+      ],
+    });
+    const products = [
+      {
+        id: "prod_1",
+        title: "鲜活梭子蟹",
+        sellerId: "sel_1",
+        sellerName: "阿海鲜活档",
+        market: "三门海鲜市场",
+        booth: "A区18号",
+        source: "store_product_table" as const,
+      },
+    ];
+
+    const home = buildChinaStorefrontHomeView({
+      discovery,
+      products,
+    });
+    const search = buildChinaStorefrontSearchView({
+      discovery,
+      query: "梭子蟹",
+      products,
+      marketName: "三门海鲜市场",
+    });
+    const seller = buildChinaStorefrontSellerView({
+      seller: discovery.sellers[0],
+      products,
+    });
+
+    expect(home).toMatchObject({
+      mode: "storefront_home_view",
+      serviceLinks: [
+        {
+          key: "pickup_card",
+          placement: "secondary",
+        },
+        {
+          key: "after_sales",
+          placement: "secondary",
+        },
+        {
+          key: "merchant_entry",
+          placement: "secondary",
+        },
+      ],
+    });
+    expect(search).toMatchObject({
+      mode: "storefront_search_view",
+      query: "梭子蟹",
+      matchedProducts: [
+        {
+          id: "prod_1",
+        },
+      ],
+    });
+    expect(seller).toMatchObject({
+      mode: "storefront_seller_view",
+      pickupCardPlacement: "separate_entry",
+      livePlacement: "seller_status_badge",
+      products: [
+        {
+          id: "prod_1",
+        },
+      ],
+    });
   });
 });

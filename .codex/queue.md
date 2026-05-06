@@ -123,6 +123,24 @@
 
 第十一轮队列已清空。下一步安全边界是创建 staging worktree 并按 `docs/integration-pr-staging-index.md` 拆 PR；如果没有明确 staging 目标，不继续往业务代码里写。
 
+第十二轮合并后收口任务：
+
+1. `post-merge-validation-report`: done
+
+第十二轮原则：
+
+- 只记录 PR A-H 已合并、合并后验证结果、临时网络配置清理状态和下一阶段边界。
+- 不修改 `apps/**` 或 `packages/**`。
+- 不引入依赖。
+- 不碰支付、订单、退款、结算、佣金、权限或真实履约逻辑。
+
+第十二轮完成后，下一阶段建议新增任务文件：
+
+1. `market-data-model-implementation-plan`: pending，设计并拆分市场/商户/档口/商户类型真实数据模型落地 PR。
+2. `admin-module-config-read-model`: pending，先做 Admin 模块开关的真实只读配置模型，不让它影响权限或业务流程。
+3. `vendor-draft-product-readwrite-plan`: pending，拆分 Vendor 快速上架草稿 API 与规格模板读取，不直接发布真实商品。
+4. `storefront-real-discovery-bridge`: pending，把首页、搜索、店铺页继续从 mock/read-only 过渡到真实市场/商户/商品数据。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -60,3 +60,6 @@
 - 记录高风险串行边界：支付、退款、对账、结算、佣金、权限、真实配送生效、Admin 模块开关真实落库和 checkout shipping options 生效。
 - 新增第十一轮 docs-only staging 准备任务，准备生成 PR A-G staging 索引。
 - 完成 `docs/integration-pr-staging-index.md`，记录 PR A-G 的候选文件、验证命令和禁止混入范围。
+- PR A-H 已拆分合并到 `main`，覆盖 Codex 工作流、API 只读契约、Storefront、Admin、Vendor、Mock provider skeleton、架构文档和本地运行手册。
+- 合并后验证通过：API typecheck/build、Mock provider unit test、Admin lint/build、Vendor lint/build、Storefront build。
+- 新增 `docs/post-merge-validation-report.md`，记录已合并 PR、验证命令、残留 warning、临时 WSL GitHub 代理清理状态和下一阶段高风险边界。

@@ -259,11 +259,19 @@
 第二十一轮建议：
 
 1. `storefront-seller-market-context`: done，让店铺页读取市场详情上下文，展示营业时间、公告和配送展示能力，不影响 checkout。
-2. `readonly-market-ui-post-merge-validation`: pending，对 Admin/Storefront markets UI read-only 接入做合并后验证报告。
+2. `readonly-market-ui-post-merge-validation`: done，对 Admin/Storefront markets UI read-only 接入做合并后验证报告。
 
 第二十一轮进度：
 
 - `storefront-seller-market-context`: done，店铺页通过 `retrieveChinaMarkets()` 和 `retrieveChinaMarketDetail()` 展示市场营业时间、公告和 deliveryProfiles，保留商家 metadata/static fallback。
+- `readonly-market-ui-post-merge-validation`: done，验证 API typecheck、market/read-model 单测、Medusa build、Admin lint/build、Storefront build 和 diff check 均通过；记录既有 warnings 和安全边界。
+
+第二十一轮队列已清空。
+
+第二十二轮建议：
+
+1. `admin-market-detail-readonly-page`: pending，Admin 读取 `/admin/china/markets/:id` 展示市场详情，只读不保存。
+2. `vendor-market-context-readonly-plan`: pending，规划 Vendor 所属市场/档口/公告只读接入，不改履约。
 
 ## Status Rules
 

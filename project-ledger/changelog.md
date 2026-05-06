@@ -64,3 +64,4 @@
 - 合并后验证通过：API typecheck/build、Mock provider unit test、Admin lint/build、Vendor lint/build、Storefront build。
 - 新增 `docs/post-merge-validation-report.md`，记录已合并 PR、验证命令、残留 warning、临时 WSL GitHub 代理清理状态和下一阶段高风险边界。
 - 新增第十三轮任务文件：市场数据模型落地计划、Admin 模块开关只读模型、Vendor 快速上架草稿读写计划、Storefront 真实发现数据桥接计划。
+- 完成 `docs/market-data-model-implementation-plan.md`，把市场、商户、档口、商户类型、公告、营业时间和配送 profile 的真实数据落地拆成 K1-K8。

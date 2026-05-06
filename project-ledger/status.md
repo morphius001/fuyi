@@ -7,6 +7,7 @@
 - PR A-H 已经合并到 `main`。
 - 当前 `origin/main` 最新合并提交：`a945ceb` `[china] PR H Integration runbooks and env template notes`。
 - PR I post-merge handoff 已合并到 `main`，最新主线提交：`12bbde0` `[china] PR I Post-merge validation handoff`。
+- PR J next data task files 已合并到 `main`，最新主线提交：`f8f4b69` `[china] PR J Next data task files`。
 - 合并后验证报告：`docs/post-merge-validation-report.md`。
 - `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
 - 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
@@ -26,6 +27,11 @@
 - `.codex/tasks/storefront-real-discovery-bridge.md`
 
 下一阶段先做真实数据模型、只读配置模型、草稿商品读写计划和 Storefront discovery bridge 的拆分设计；在任务文件明确允许前，不直接修改 `apps/**` 或 `packages/**`。
+
+## 第十三轮进度
+
+- `market-data-model-implementation-plan`: done，新增 `docs/market-data-model-implementation-plan.md`，明确市场、商户、档口、商户类型、公告、营业时间和配送 profile 的真实数据模型落地顺序。
+- 下一项：`admin-module-config-read-model`。
 
 ## 已跑通
 

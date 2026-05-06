@@ -143,7 +143,7 @@
 
 第十三轮任务文件准备：
 
-1. `market-data-model-implementation-plan`: pending
+1. `market-data-model-implementation-plan`: done
 2. `admin-module-config-read-model`: pending
 3. `vendor-draft-product-readwrite-plan`: pending
 4. `storefront-real-discovery-bridge`: pending
@@ -154,6 +154,10 @@
 - 每个任务默认先做设计、拆分、风险和验收清单。
 - 真正修改 `apps/**` 或 `packages/**` 前，必须由对应任务文件明确允许。
 - 支付、订单、退款、结算、佣金、权限、真实履约和真实 Provider 仍然保持高风险串行。
+
+第十三轮进度：
+
+- `market-data-model-implementation-plan`: done，已形成市场、商户、档口、商户类型、公告、营业时间和配送 profile 的数据模型落地 PR 拆分。
 
 ## Status Rules
 

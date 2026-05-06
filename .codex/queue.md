@@ -319,11 +319,21 @@
 第二十六轮建议：
 
 1. `vendor-market-context-post-merge-validation`: done，对 PR AL-AP 合并后的 Vendor lint/build 做总验证报告。
-2. `vendor-market-context-next-plan`: pending，规划后续真正 Vendor API route/builder 和页面细节拆分。
+2. `vendor-market-context-next-plan`: done，规划后续真正 Vendor API route/builder 和页面细节拆分。
 
 第二十六轮进度：
 
 - `vendor-market-context-post-merge-validation`: done，Vendor lint/build 和 diff check 均通过；已确认 PR AL-AP 只读接入没有触碰 `packages/api/**`、订单、支付、退款、结算、佣金、权限、真实履约或真实 provider。
+- `vendor-market-context-next-plan`: done，已拆出 PR AS-AV：builder、readonly route、Vendor client API 状态 polish 和四页视觉 QA。
+
+第二十六轮队列已清空。
+
+第二十七轮建议：
+
+1. `vendor-market-context-builder`: pending，实现 Vendor market context builder 和单元测试，不注册 route。
+2. `vendor-market-context-readonly-route`: pending，实现只读 Vendor route 和鉴权边界。
+3. `vendor-market-context-client-api-polish`: pending，Vendor client 对接真实 route 的可用/空/fallback 状态。
+4. `vendor-market-context-visual-qa`: pending，四个 Vendor 页面做 API 状态视觉 QA。
 
 ## Status Rules
 

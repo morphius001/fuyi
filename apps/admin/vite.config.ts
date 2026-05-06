@@ -8,6 +8,13 @@ export default defineConfig({
     react(),
     mercurDashboardPlugin({
       medusaConfigPath: '../../packages/api/medusa-config.ts',
+      backendUrl: process.env.VITE_MEDUSA_BACKEND_URL ?? 'http://127.0.0.1:9000',
+      components: {
+        MainSidebar: 'components/ChinaAdminSidebar.tsx',
+      },
+      i18n: {
+        defaultLanguage: 'zhCN',
+      },
     }),
   ],
 })

@@ -3,5 +3,1339 @@
     "title": "Custom Fields",
     "description": "Manage your custom fields and configurations",
     "noFields": "No custom fields configured yet"
+  },
+  "chinaAdmin": {
+    "app": {
+      "title": "China Marketplace Ops",
+      "subtitle": "Mainland China multi-vendor admin"
+    },
+    "nav": {
+      "ariaLabel": "China marketplace operations navigation",
+      "home": "Home",
+      "sections": {
+        "platformOps": "Platform Ops",
+        "merchantGoods": "Merchants & Goods",
+        "tradeFulfillment": "Trade & Fulfillment",
+        "financeRisk": "Finance & Risk",
+        "system": "System"
+      },
+      "operations": {
+        "title": "Platform Settings"
+      },
+      "merchants": {
+        "title": "Merchant Management"
+      },
+      "products": {
+        "title": "Product Management"
+      },
+      "orders": {
+        "title": "Order Management"
+      },
+      "afterSales": {
+        "title": "After-sales Management"
+      },
+      "pickupCards": {
+        "title": "Pickup Card Management"
+      },
+      "payments": {
+        "title": "Payments & Reconciliation"
+      },
+      "settlements": {
+        "title": "Settlement Management"
+      },
+      "marketing": {
+        "title": "Marketing Center"
+      },
+      "messages": {
+        "title": "Service & Messages"
+      },
+      "risk": {
+        "title": "Risk Management"
+      },
+      "system": {
+        "title": "System Configuration"
+      }
+    },
+    "shell": {
+      "platformName": "Fuyi Marketplace Platform",
+      "phaseBadge": "Admin UI baseline",
+      "searchPlaceholder": "Search merchants, products, orders, pickup card numbers",
+      "todo": "Todos 23",
+      "messages": "Messages 8",
+      "admin": "Platform admin",
+      "location": "Current location"
+    },
+    "actions": {
+      "export": "Export",
+      "batchPlaceholder": "Batch actions",
+      "createPlaceholder": "Create placeholder",
+      "view": "View",
+      "review": "Review",
+      "edit": "Edit",
+      "disable": "Disable",
+      "copy": "Copy",
+      "remark": "Remark",
+      "freeze": "Freeze",
+      "void": "Void",
+      "viewRedeemRecord": "View redemption",
+      "viewBatch": "View batch",
+      "activateBatch": "Activate batch",
+      "pauseBatch": "Pause batch",
+      "exportCardNumbers": "Export card numbers",
+      "createCardType": "Create card type",
+      "createBatch": "Create batch",
+      "createChannel": "Create channel"
+    },
+    "dashboard": {
+      "title": "Operations Dashboard",
+      "description": "Placeholder metrics for mainland China marketplace operations. No real backend API is connected in this phase.",
+      "metrics": {
+        "todayGmv": {
+          "label": "Today's GMV",
+          "value": "¥128,560",
+          "hint": "Mock CNY amount"
+        },
+        "todayOrders": {
+          "label": "Today's Orders",
+          "value": "1,286",
+          "hint": "Mock order count"
+        },
+        "pendingMerchants": {
+          "label": "Merchants Pending Review",
+          "value": "18",
+          "hint": "Onboarding queue"
+        },
+        "listedProducts": {
+          "label": "Listed Products",
+          "value": "18,642",
+          "hint": "Mock listed product count"
+        },
+        "pendingAfterSales": {
+          "label": "After-sales Pending",
+          "value": "27",
+          "hint": "Refund and intervention queue"
+        },
+        "activeMerchants": {
+          "label": "Active Merchants",
+          "value": "326",
+          "hint": "Merchants with sales in 30 days"
+        },
+        "pickupCardPending": {
+          "label": "Pickup Card Pending Items",
+          "value": "19",
+          "hint": "Pickup, freeze, and expiring soon"
+        },
+        "serviceNoticeExceptions": {
+          "label": "Service Notice Exceptions",
+          "value": "8",
+          "hint": "SMS / IM / inbox placeholder"
+        }
+      },
+      "mockSource": {
+        "title": "Data Source",
+        "message": "Dashboard metrics come from static frontend mock constants in apps/admin. They are only for admin shell validation and do not read real order, payment, inventory, settlement, or permission data."
+      },
+      "todo": {
+        "title": "Operational Queue",
+        "description": "Daily review, exception, and service queues are kept in the first viewport.",
+        "merchantReview": "Merchant onboarding review",
+        "merchantReviewHint": "32 merchants submitted qualification or stall profile updates",
+        "productReview": "Product listing review",
+        "productReviewHint": "368 products are waiting for platform review",
+        "pickupCardPending": "Pickup card pending items",
+        "paymentException": "Payment exception follow-up",
+        "serviceNoticeException": "Service notice exception follow-up",
+        "serviceNoticeExceptionHint": "Mock SMS / IM / inbox delivery exceptions"
+      },
+      "risk": {
+        "title": "Risk Reminders",
+        "description": "Read-only mock signals that platform operators should review first.",
+        "deliveryDelay": {
+          "level": "High",
+          "message": "Delivery timeout rate in East Sea New District is above threshold",
+          "time": "10 minutes ago"
+        },
+        "merchantGrowth": {
+          "level": "Medium",
+          "message": "Some merchants show rising negative review rates",
+          "time": "35 minutes ago"
+        },
+        "inventoryWarning": {
+          "level": "Medium",
+          "message": "Hot fresh categories show inventory warnings that may affect fulfillment",
+          "time": "1 hour ago"
+        },
+        "liveDrop": {
+          "level": "Low",
+          "message": "Live room engagement is down and needs content follow-up",
+          "time": "3 hours ago"
+        }
+      },
+      "quickActions": {
+        "title": "Quick Actions",
+        "description": "Only frequent operations are shown here. Configuration remains in the sidebar and advanced settings.",
+        "reviewProduct": "Review products",
+        "configureMarket": "Configure market",
+        "reviewMerchant": "View merchants",
+        "orderMonitor": "Order monitor",
+        "moduleSwitches": "Module switches"
+      },
+      "focus": {
+        "title": "Business Entry Responsibilities",
+        "description": "Clarifies platform, merchant, and consumer boundaries so capabilities do not get mixed together.",
+        "columns": {
+          "module": "Module",
+          "owner": "Responsibility",
+          "status": "Status",
+          "next": "Next step"
+        },
+        "merchant": {
+          "module": "Merchant management",
+          "owner": "Onboarding, qualification review, stalls, and operating status",
+          "status": "Normal",
+          "next": "Watch new merchant reviews"
+        },
+        "product": {
+          "module": "Product review",
+          "owner": "Product information, spec templates, and compliant listing",
+          "status": "Normal",
+          "next": "Handle high-risk products first"
+        },
+        "delivery": {
+          "module": "Delivery management",
+          "owner": "Market delivery, merchant self-delivery, and delivery suppliers",
+          "status": "Normal",
+          "next": "Refine exception-area delivery strategy"
+        },
+        "order": {
+          "module": "Order monitor",
+          "owner": "Monitor order status without changing payment or fulfillment source of truth",
+          "status": "Normal",
+          "next": "Watch timeout and exception orders"
+        },
+        "settlement": {
+          "module": "Settlement",
+          "owner": "Reconciliation, settlement, and financial reporting plan",
+          "status": "Normal",
+          "next": "Connect real settlement later as serial high-risk work"
+        }
+      },
+      "safety": {
+        "title": "Phase 1 Safety Boundary",
+        "message": "This dashboard only contains static UI placeholders. Payment, order, refund, settlement, commission, and permission source-of-truth logic remains untouched."
+      }
+    },
+    "pages": {
+      "moduleSwitches": {
+        "title": "Module Switches",
+        "description": "Placeholder for platform-level module switches that plan which capabilities are enabled, in pilot, under review, or paused. This does not affect Vendor menus yet."
+      },
+      "marketCapabilities": {
+        "title": "Market Settings",
+        "description": "Placeholder for market-level capability configuration, including business hours, announcements, delivery, pickup, and supported capabilities."
+      },
+      "roleEnablement": {
+        "title": "Merchant Type Switches",
+        "description": "Placeholder for merchant and supplier role enablement, showing qualification review, market, stall or service scope, module visibility, and status."
+      },
+      "merchantList": {
+        "title": "Merchant List",
+        "description": "Basic merchant list skeleton for platform operators to scan merchant status and ownership."
+      },
+      "merchantOnboarding": {
+        "title": "Onboarding Review",
+        "description": "Placeholder queue for merchant onboarding review. No real approval action is implemented."
+      },
+      "merchantLegalProfiles": {
+        "title": "Legal Entity Profiles",
+        "description": "Skeleton for company identity, license, and registration profile review."
+      },
+      "merchantStoreProfiles": {
+        "title": "Store Profiles",
+        "description": "Skeleton for storefront profile, category, and display information governance."
+      },
+      "merchantViolationRecords": {
+        "title": "Merchant Violation Records",
+        "description": "Placeholder for recording risk and violation cases without changing enforcement logic."
+      },
+      "productList": {
+        "title": "Product List",
+        "description": "Basic product list skeleton with China marketplace review status placeholders."
+      },
+      "productReview": {
+        "title": "Product Review",
+        "description": "Placeholder queue for product audit work. No listing or delisting action is connected."
+      },
+      "categoryManagement": {
+        "title": "Category Management",
+        "description": "Skeleton for China-local category operation and future category governance."
+      },
+      "productSpecTemplates": {
+        "title": "Spec Templates",
+        "description": "Read-only placeholder for product spec templates, unit separation, display rules, versions, and audit planning."
+      },
+      "brandManagement": {
+        "title": "Brand Management",
+        "description": "Skeleton for brand qualification and brand display governance."
+      },
+      "prohibitedRules": {
+        "title": "Prohibited Rules",
+        "description": "Placeholder for prohibited item rule descriptions without enforcement logic."
+      },
+      "allOrders": {
+        "title": "All Orders",
+        "description": "Order scanning skeleton with Chinese order statuses. No order state logic is changed."
+      },
+      "pendingPaymentOrders": {
+        "title": "Pending Payment",
+        "description": "Placeholder view for pending payment orders. Payment success remains backend notification based."
+      },
+      "pendingShipmentOrders": {
+        "title": "Pending Shipment",
+        "description": "Placeholder view for shipment follow-up. No fulfillment logic is connected."
+      },
+      "pendingReceiptOrders": {
+        "title": "Pending Receipt",
+        "description": "Placeholder view for delivery and receipt tracking."
+      },
+      "completedOrders": {
+        "title": "Completed",
+        "description": "Placeholder view for completed orders."
+      },
+      "closedOrders": {
+        "title": "Closed",
+        "description": "Placeholder view for closed and cancelled orders."
+      },
+      "exceptionOrders": {
+        "title": "Exception Orders",
+        "description": "Placeholder view for abnormal order monitoring without changing order ownership rules."
+      },
+      "refundRequests": {
+        "title": "Refund Requests",
+        "description": "Skeleton for refund request intake. No refund action or state change is implemented."
+      },
+      "returnRefunds": {
+        "title": "Return & Refund",
+        "description": "Placeholder for return refund workflows and logistics evidence."
+      },
+      "platformInterventions": {
+        "title": "Platform Intervention",
+        "description": "Skeleton for dispute escalation and platform intervention records."
+      },
+      "afterSalesReasons": {
+        "title": "After-sales Reason Settings",
+        "description": "Placeholder for future after-sales reason configuration."
+      },
+      "paymentTransactions": {
+        "title": "Payment Transactions",
+        "description": "Placeholder payment ledger. No real provider, webhook, or reconciliation logic is connected."
+      },
+      "refundTransactions": {
+        "title": "Refund Transactions",
+        "description": "Placeholder refund ledger. No refund execution logic is implemented."
+      },
+      "reconciliationStatements": {
+        "title": "Reconciliation Statements",
+        "description": "Skeleton for future daily reconciliation statement imports and checks."
+      },
+      "abnormalBills": {
+        "title": "Abnormal Bills",
+        "description": "Placeholder for abnormal payment and reconciliation records."
+      },
+      "merchantPendingSettlement": {
+        "title": "Merchants Pending Settlement",
+        "description": "Settlement queue skeleton. No settlement, payout, or commission logic is changed."
+      },
+      "settledRecords": {
+        "title": "Settled",
+        "description": "Placeholder view for settled batch records."
+      },
+      "commissionRules": {
+        "title": "Commission Rules",
+        "description": "Read-only placeholder for commission rule planning. No rule execution is changed."
+      },
+      "withdrawalRequests": {
+        "title": "Withdrawal Requests",
+        "description": "Placeholder view for merchant withdrawal review without payout logic."
+      },
+      "coupons": {
+        "title": "Coupons",
+        "description": "Skeleton for coupon operations and future China-local marketing campaigns."
+      },
+      "fullReductionActivities": {
+        "title": "Full Reduction",
+        "description": "Placeholder for spend-and-save promotion management."
+      },
+      "flashSaleActivities": {
+        "title": "Flash Sales",
+        "description": "Placeholder for flash sale scheduling and review."
+      },
+      "homeBanners": {
+        "title": "Home Banner",
+        "description": "Skeleton for homepage banner slot planning."
+      },
+      "marketingDashboard": {
+        "title": "Marketing Dashboard",
+        "description": "Placeholder dashboard for regular marketing activities. Pickup cards are separate from coupons and marketing vouchers."
+      },
+      "recommendationSlots": {
+        "title": "Recommendation Slots",
+        "description": "Placeholder for homepage, channel, and topic recommendation slots."
+      },
+      "pickupCardDashboard": {
+        "title": "Pickup Card Dashboard",
+        "description": "Mock dashboard for offline physical pickup card issuance, activation, redemption, fulfillment, and exceptions."
+      },
+      "pickupCardTypes": {
+        "title": "Card Type Management",
+        "description": "Configure redeemable products or bundles, validity, delivery date, and exchange rule placeholders."
+      },
+      "pickupCardBatches": {
+        "title": "Batch Management",
+        "description": "Manage mock card production batches, issuance quantity, channels, validity, and batch states."
+      },
+      "pickupCardNumbers": {
+        "title": "Card Number Query",
+        "description": "View masked card numbers, activation, binding, redemption, freeze, and void status. Plain card secrets are never shown."
+      },
+      "pickupCardChannels": {
+        "title": "Channel Management",
+        "description": "Placeholder for offline issuance channels and channel overview. No channel settlement is implemented."
+      },
+      "pickupCardRedemptions": {
+        "title": "Pickup Records",
+        "description": "View mock online pickup records, masked phone numbers, receiver info, products, and processing status."
+      },
+      "pickupCardOrders": {
+        "title": "Pickup Orders",
+        "description": "Mock fulfillment orders generated by pickup card redemption. No real order, inventory, or shipment logic is connected."
+      },
+      "pickupCardFreezeVoid": {
+        "title": "Risk & Freeze",
+        "description": "Placeholder for freeze and void operations. No real risk control or card state mutation is implemented."
+      },
+      "pickupCardOperationLogs": {
+        "title": "Operation Logs",
+        "description": "Placeholder for pickup card operation logs. Audit logging should be connected in a future task."
+      },
+      "userConversations": {
+        "title": "User Conversations",
+        "description": "Placeholder for user service conversations. No IM provider is connected."
+      },
+      "merchantConversations": {
+        "title": "Merchant Conversations",
+        "description": "Placeholder for merchant service conversations. No IM provider is connected."
+      },
+      "platformAnnouncements": {
+        "title": "Platform Announcements",
+        "description": "Skeleton for platform announcement drafting and publishing planning."
+      },
+      "complaintRecords": {
+        "title": "Complaint Records",
+        "description": "Placeholder for complaint intake and handling records."
+      },
+      "riskDashboard": {
+        "title": "Risk Dashboard",
+        "description": "Placeholder dashboard for platform risk alerts, abnormal queues, and handling records. No permission, order, payment, or enforcement logic is changed."
+      },
+      "merchantRisk": {
+        "title": "Merchant Risk",
+        "description": "Placeholder list for abnormal merchant operations, qualification risk, and violation leads. No freeze or enforcement action is executed."
+      },
+      "productRisk": {
+        "title": "Product Risk",
+        "description": "Placeholder list for prohibited items, sensitive terms, and product violation leads. No real rule engine is connected."
+      },
+      "orderRisk": {
+        "title": "Order Risk",
+        "description": "Placeholder list for abnormal orders and after-sales risk leads. No order state or ownership is changed."
+      },
+      "pickupCardRisk": {
+        "title": "Pickup Card Risk",
+        "description": "Placeholder list for duplicate attempts, expired redemptions, and channel anomalies. No card state is changed."
+      },
+      "riskOperationLogs": {
+        "title": "Risk Operation Logs",
+        "description": "Placeholder page for risk audit records. Real audit logging should be connected in a future task."
+      },
+      "platformInformation": {
+        "title": "Platform Information",
+        "description": "Skeleton for mainland China platform basic information."
+      },
+      "icpFiling": {
+        "title": "ICP Filing Number",
+        "description": "Placeholder for ICP filing display configuration. No production value is stored."
+      },
+      "businessLicenseDisplay": {
+        "title": "Business License Display",
+        "description": "Placeholder for business license display requirements."
+      },
+      "userAgreement": {
+        "title": "User Agreement",
+        "description": "Placeholder for future user agreement content management."
+      },
+      "privacyPolicy": {
+        "title": "Privacy Policy",
+        "description": "Placeholder for future privacy policy content management."
+      },
+      "paymentConfigPlaceholder": {
+        "title": "Payment Config Placeholder",
+        "description": "Placeholder only. No Stripe, WeChat Pay, Alipay, or production credentials are changed."
+      },
+      "smsConfigPlaceholder": {
+        "title": "SMS Config Placeholder",
+        "description": "Placeholder only. No real SMS provider or credentials are configured."
+      },
+      "logisticsConfigPlaceholder": {
+        "title": "Logistics Config Placeholder",
+        "description": "Placeholder only. No real logistics provider or credentials are configured."
+      },
+      "imConfigPlaceholder": {
+        "title": "IM Config Placeholder",
+        "description": "Placeholder only. No real IM provider or credentials are configured."
+      }
+    },
+    "tables": {
+      "title": "Operations List",
+      "description": "China-ops style list view for key statuses, owners, amounts, and business fields. All data is mocked.",
+      "mockHint": "Static placeholder data, no backend API",
+      "summary": {
+        "total": "Records",
+        "totalHint": "Mock records under current filters",
+        "attention": "Needs attention",
+        "attentionHint": "Pending / exception status records",
+        "latest": "Latest update",
+        "latestHint": "Sorted by mock update time"
+      },
+      "moduleOverview": {
+        "currentModule": "Current module",
+        "currentPage": "Current page",
+        "description": "Use this area to understand module coverage and mock-only boundaries before real workflows are connected.",
+        "mockMode": "Mock data",
+        "recordCount": "Visible records",
+        "safetyLabel": "Business safety boundary",
+        "safetyMessage": "This phase only adjusts the China operations UI and information architecture. It does not change order, payment, refund, settlement, commission, or permission logic.",
+        "scopeLabel": "Module pages",
+        "scopeUnit": "entries",
+        "statusLabel": "Real APIs, approval flows, payment notifications, and fulfillment are separate follow-up tasks."
+      },
+      "columns": {
+        "id": "ID",
+        "name": "Name",
+        "type": "Type",
+        "status": "Status",
+        "owner": "Owner",
+        "amount": "Amount",
+        "market": "Market",
+        "stallNo": "Stall No.",
+        "merchantType": "Merchant Type",
+        "deliveryMode": "Delivery Mode",
+        "paymentMethod": "Payment Method",
+        "paymentState": "Payment State",
+        "fulfillmentState": "Fulfillment State",
+        "receiverArea": "Receiver Area",
+        "deliveryWindow": "Delivery Window",
+        "exceptionReason": "Exception Reason",
+        "afterSalesType": "After-sales Type",
+        "orderNo": "Order No.",
+        "buyer": "Buyer",
+        "merchant": "Merchant",
+        "evidence": "Evidence",
+        "resolution": "Resolution",
+        "reasonScope": "Reason Scope",
+        "refundBoundary": "Refund Boundary",
+        "providerEventId": "Provider Event ID",
+        "notificationState": "Notification State",
+        "idempotencyKey": "Idempotency Key",
+        "verifyState": "Signature State",
+        "safeBoundary": "Safety Boundary",
+        "statementNo": "Statement No.",
+        "billDate": "Bill Date",
+        "reconcileState": "Reconcile State",
+        "differenceReason": "Difference Reason",
+        "settlementPeriod": "Settlement Period",
+        "commissionRate": "Commission Basis",
+        "settlementBoundary": "Settlement Boundary",
+        "withdrawalMethod": "Withdrawal Method",
+        "marketingChannel": "Marketing Channel",
+        "placement": "Placement",
+        "audience": "Audience",
+        "campaignPeriod": "Campaign Period",
+        "promoBoundary": "Marketing Boundary",
+        "messageChannel": "Message Channel",
+        "conversationRole": "Conversation Role",
+        "serviceBoundary": "Service Boundary",
+        "complaintType": "Complaint Type",
+        "riskObject": "Risk Object",
+        "riskType": "Risk Type",
+        "triggerRule": "Trigger Rule",
+        "riskBoundary": "Risk Boundary",
+        "riskAction": "Risk Action",
+        "operator": "Operator",
+        "configScope": "Config Scope",
+        "configOwner": "Config Owner",
+        "configBoundary": "Config Boundary",
+        "secretPolicy": "Secret Policy",
+        "capabilities": "Capabilities",
+        "category": "Category",
+        "spec": "Spec",
+        "legalEntity": "Legal Entity",
+        "licenseNoMasked": "License No. (masked)",
+        "contactMobile": "Contact Mobile",
+        "reviewItems": "Review Items",
+        "storeDecoration": "Store Decoration",
+        "violationType": "Violation Type",
+        "riskLevel": "Risk Level",
+        "consumerPlacement": "Consumer Placement",
+        "vendorPlacement": "Vendor Placement",
+        "updatedAt": "Updated at",
+        "createdAt": "Created at",
+        "actions": "Actions"
+      }
+    },
+    "specTemplates": {
+      "actions": {
+        "exportPlaceholder": "Export templates placeholder",
+        "createPlaceholder": "Create template placeholder"
+      },
+      "mockNotice": {
+        "title": "Read-only spec template console",
+        "message": "This page only displays product spec template planning. It does not save templates, publish products, change inventory, or affect orders, payments, settlement, or permissions."
+      },
+      "summary": {
+        "activeTemplates": {
+          "title": "Active Templates",
+          "description": "Readable by merchant drafts"
+        },
+        "pilotMarkets": {
+          "title": "Pilot Markets",
+          "description": "Scoped by market or role"
+        },
+        "draftVersions": {
+          "title": "Draft Versions",
+          "description": "Pending ops review"
+        },
+        "pausedTemplates": {
+          "title": "Paused Templates",
+          "description": "History preserved"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "pilot": "Pilot",
+        "draft": "Draft",
+        "paused": "Paused"
+      },
+      "templateTable": {
+        "title": "Category Spec Templates",
+        "description": "Spec templates define fields merchants fill during listing. Price, inventory, and fulfillment hints stay separate."
+      },
+      "fieldTable": {
+        "title": "Standard Field Boundaries",
+        "description": "Admin templates, merchant quick listing, and consumer display share field boundaries so price is not treated as a spec."
+      },
+      "boundary": {
+        "title": "Three-surface Boundary",
+        "description": "Admin manages templates, Vendor fills drafts, and Storefront reads display views."
+      },
+      "columns": {
+        "template": "Template",
+        "scope": "Scope",
+        "merchantTypes": "Merchant types",
+        "required": "Required rule",
+        "display": "Display rule",
+        "version": "Version",
+        "status": "Status",
+        "fieldGroup": "Field group",
+        "fields": "Fields",
+        "consumer": "Consumer display",
+        "vendor": "Vendor usage"
+      },
+      "templates": {
+        "seafoodLive": "Live Seafood Template",
+        "fruitVegetable": "Fruit & Vegetable Template",
+        "marketMaterials": "Market Materials Template",
+        "seedlingWholesale": "Seedling Wholesale Template",
+        "regionalWholesaler": "Regional Wholesale Template"
+      },
+      "categories": {
+        "seafoodLive": "Seafood / Aquatic products",
+        "fruitVegetable": "Fruit and vegetables",
+        "marketMaterials": "Merchant B2B materials",
+        "seedlingWholesale": "Seedling supply",
+        "regionalWholesaler": "Cross-region supply"
+      },
+      "scopes": {
+        "platform": "Platform-wide",
+        "marketAndMerchantType": "Market + merchant type",
+        "rolePilot": "Role pilot",
+        "marketPilot": "Market pilot"
+      },
+      "merchantTypes": {
+        "seafoodStall": "Seafood stall / frozen / dried goods",
+        "fruitVegetableMerchant": "Fruit and vegetable merchant",
+        "materialsSupplier": "Materials supplier",
+        "seedlingSupplier": "Seedling supplier",
+        "regionalWholesaler": "Regional wholesaler"
+      },
+      "required": {
+        "yes": "Required",
+        "conditional": "Category-based",
+        "seafoodRequired": "Spec, item weight, minimum order, units",
+        "produceRequired": "Origin, grade, box spec, harvest date",
+        "materialsRequired": "Size, capacity, quantity, minimum order",
+        "seedlingRequired": "Variety, seedling age, minimum order, transport",
+        "regionalRequired": "Source region, box spec, arrival time, cold chain"
+      },
+      "display": {
+        "seafoodDisplay": "Name + spec + price/unit + stall inventory",
+        "produceDisplay": "Variety + grade + box spec + harvest date",
+        "materialsDisplay": "Material type + size + quantity/group",
+        "seedlingDisplay": "Variety + seedling age + minimum order",
+        "regionalDisplay": "Source region + box spec + arrival time"
+      },
+      "fieldGroups": {
+        "base": "Base info",
+        "spec": "Spec info",
+        "unit": "Unit info",
+        "price": "Price info",
+        "fulfillment": "Fulfillment hints"
+      },
+      "fields": {
+        "base": "Product name, category, market, merchant, stall",
+        "spec": "Spec name, grade/size, package spec, minimum order",
+        "unit": "Sales unit, price unit, stock unit, package unit",
+        "price": "Price type, fixed price, range price, tier price, market price",
+        "fulfillment": "Product hint, stall delivery, unified delivery, pickup rules"
+      },
+      "consumer": {
+        "titleMarketStall": "Identify product, market, and stall",
+        "oneLineSpec": "One-line key spec on product cards",
+        "unitLine": "Price unit, minimum order, and stock basis",
+        "priceLine": "Price display, not a spec",
+        "stallCapability": "Fulfillment options in stall capability area"
+      },
+      "vendor": {
+        "quickListing": "Mobile quick listing base fields",
+        "templateFields": "Common templates and copy yesterday spec",
+        "unitSplit": "Unit separation preview",
+        "priceType": "Today price, range price, or market price draft",
+        "merchantConfig": "Read fulfillment capability from merchant/market config"
+      },
+      "surfaces": {
+        "admin": "Admin platform backend",
+        "vendor": "Vendor merchant backend",
+        "storefront": "Storefront consumer frontend"
+      },
+      "boundaryKeys": {
+        "admin": "Config source",
+        "vendor": "Draft source",
+        "storefront": "Display source"
+      },
+      "reads": {
+        "readTemplates": "Reads templates, versions, fields, scope, and audit state.",
+        "readAvailableTemplates": "Reads only templates available to the current market and merchant type.",
+        "readSpecView": "Reads only the trimmed product spec display view."
+      },
+      "writes": {
+        "versionedAudit": "Future writes must be versioned and audited.",
+        "draftOnly": "Can only write product drafts, not publish products directly.",
+        "noWrite": "Storefront cannot write templates."
+      },
+      "guardrails": {
+        "noProductPublish": "Template configuration is not product review or publishing.",
+        "merchantConfirm": "AI drafts require merchant confirmation and never auto-list.",
+        "hideInternalRules": "Do not expose internal rules, risk reasons, or permission config."
+      },
+      "safety": {
+        "title": "Safety Boundary",
+        "message": "Spec templates are not inventory, order, payment, refund, or settlement rules. Unified market delivery is a market or merchant capability, not a product attribute."
+      }
+    },
+    "pickupCards": {
+      "definition": "Pickup cards are physical offline cards. Users redeem designated products or bundles online with a card number, secret, or QR code, then submit a shipping address. They are not coupons, discounts, stored-value cards, payment methods, or regular marketing vouchers.",
+      "metrics": {
+        "totalIssued": {
+          "label": "Total issued",
+          "value": "128,000",
+          "hint": "Total produced cards"
+        },
+        "activated": {
+          "label": "Activated cards",
+          "value": "96,420",
+          "hint": "Ready for online pickup"
+        },
+        "redeemed": {
+          "label": "Redeemed cards",
+          "value": "58,216",
+          "hint": "Completed redemptions"
+        },
+        "unredeemed": {
+          "label": "Unredeemed cards",
+          "value": "38,204",
+          "hint": "Waiting for users"
+        },
+        "todayRedemptions": {
+          "label": "Today's pickups",
+          "value": "386",
+          "hint": "Today"
+        },
+        "pendingShipmentOrders": {
+          "label": "Pickup orders pending shipment",
+          "value": "74",
+          "hint": "Fulfillment queue"
+        },
+        "expiringSoon": {
+          "label": "Expiring soon",
+          "value": "1,208",
+          "hint": "Within 30 days"
+        },
+        "abnormalRecords": {
+          "label": "Abnormal pickup records",
+          "value": "9",
+          "hint": "Needs review"
+        }
+      },
+      "dashboard": {
+        "title": "Consumer Pickup Card Operations",
+        "recentRedemptions": "Recent pickup records",
+        "recentRedemptionsHint": "Phone numbers and card numbers are masked.",
+        "overview": {
+          "title": "Operations Overview",
+          "description": "Today, pending fulfillment, expiring, and abnormal counts are read-only and do not trigger real redemption."
+        },
+        "abnormalCards": {
+          "title": "Abnormal card reminders",
+          "message": "There are 9 duplicate attempts, expired redemptions, or channel anomalies today."
+        },
+        "expiringBatches": {
+          "title": "Batches expiring soon",
+          "message": "BATCH-202605-A01 expires on 2026-08-31. Operators should notify channels in advance."
+        },
+        "channelOverview": {
+          "title": "Channel issuance overview",
+          "message": "East China retail, corporate benefits, and offline stores are the major issuance channels."
+        }
+      },
+      "redemptionSteps": {
+        "offlineCard": "Receive physical card offline",
+        "verifyCard": "Enter card no. / secret / scan code",
+        "chooseEntitlement": "Choose entitled product or bundle",
+        "submitFulfillment": "Submit shipping or pickup information",
+        "createPickupOrder": "Create pickup order and fulfill"
+      },
+      "mockProducts": {
+        "freshGiftA": "Fresh gift bundle A",
+        "businessTeaGift": "Business tea gift box"
+      },
+      "sections": {
+        "cardTypes": {
+          "title": "Card Types / Entitlements Mock",
+          "description": "Card types only define redeemable entitlements. They do not define balance, discounts, payment, or cart deductions."
+        },
+        "batches": {
+          "title": "Batches / Channels Mock",
+          "description": "Future batch generation, export, activation, freeze, and void operations must go through backend permissions and audit."
+        },
+        "fulfillment": {
+          "title": "Merchant Pickup Fulfillment Mock",
+          "description": "Shows pending preparation, shipment, pickup verification, and exceptions without creating real shipments or deducting inventory."
+        },
+        "operationBoundary": {
+          "title": "Risk / Operation Log Boundary"
+        }
+      },
+      "cardTypes": {
+        "seafoodGiftA": {
+          "name": "Dragon Boat Seafood Gift Card",
+          "entitlement": "Choose one: yellow croaker gift box / frozen shrimp / dried seafood",
+          "status": "Enabled mock",
+          "note": "Fixed or selectable entitlement, no monetary balance"
+        },
+        "freshBundleB": {
+          "name": "Local Fresh Bundle Card",
+          "entitlement": "Fresh seafood + seasonal vegetable bundle",
+          "status": "Draft mock",
+          "note": "Future work connects card type versions and entitlement snapshots"
+        }
+      },
+      "channels": {
+        "corporateBenefits": "Offline corporate benefits channel",
+        "marketStores": "Sanmen seafood market stores"
+      },
+      "batchStatus": {
+        "expiringMock": "Expiring soon mock",
+        "activatingMock": "Activating mock"
+      },
+      "fulfillmentMerchants": {
+        "ahaiSeafood": "Ahai Fresh Seafood Stall",
+        "wankouFrozen": "Wankou Frozen Seafood"
+      },
+      "fulfillmentMethods": {
+        "marketPickup": "Market pickup",
+        "cityColdChain": "City cold-chain delivery"
+      },
+      "fulfillmentStatus": {
+        "preparingMock": "Preparing mock",
+        "exceptionReviewMock": "Exception review mock"
+      },
+      "operationBoundaries": {
+        "batchActions": "Freezing batches, voiding cards, and exporting production files must be high-risk backend tasks.",
+        "secretSafety": "This page does not show plain card secrets, generate real card numbers, or trigger real redemption.",
+        "businessBoundary": "Pickup card fulfillment must not write normal order payment success, refund, settlement, or commission state."
+      },
+      "columns": {
+        "cardTypeName": "Card type name",
+        "cardTypeCode": "Card type code",
+        "boundProduct": "Bound product / bundle",
+        "redeemQuantity": "Redeemable quantity",
+        "validityRule": "Validity rule",
+        "deliveryDateSupported": "Delivery date",
+        "exchangeSupported": "Exchange",
+        "batchNo": "Batch no.",
+        "cardType": "Card type",
+        "issuedQuantity": "Issued quantity",
+        "activatedQuantity": "Activated quantity",
+        "redeemedQuantity": "Redeemed quantity",
+        "unredeemedQuantity": "Unredeemed quantity",
+        "channel": "Channel",
+        "producedAt": "Produced at",
+        "validity": "Validity",
+        "cardNoMasked": "Card no. (masked)",
+        "cardSecretMasked": "Card secret (masked)",
+        "activationStatus": "Activation status",
+        "boundUser": "Bound user",
+        "redeemStatus": "Pickup status",
+        "redeemOrderNo": "Pickup order no.",
+        "lastActionAt": "Last action at",
+        "userPhoneMasked": "User phone (masked)",
+        "receiver": "Receiver",
+        "receiverAddress": "Receiver address",
+        "redeemProduct": "Pickup product",
+        "redeemedAt": "Picked up at",
+        "logisticsStatus": "Logistics status",
+        "processStatus": "Processing status",
+        "productPackage": "Product / bundle",
+        "phoneMasked": "Phone (masked)",
+        "address": "Address",
+        "trackingNo": "Tracking no.",
+        "riskReason": "Risk reason",
+        "operationTarget": "Operation target",
+        "operationAction": "Operation action",
+        "entitlement": "Entitlement",
+        "boundary": "Boundary",
+        "quantity": "Quantity",
+        "pickupTicket": "Pickup ticket",
+        "merchantStall": "Merchant / stall",
+        "fulfillmentMethod": "Fulfillment method"
+      }
+    },
+    "operations": {
+      "actions": {
+        "mockConfigure": "Mock config placeholder"
+      },
+      "mockNotice": {
+        "title": "Mock Console Notice",
+        "message": "This is an Admin platform settings placeholder. A future task should connect backend feature flags / market settings as the real source of truth. This page does not write permissions, change RBAC, or call backend APIs."
+      },
+      "summary": {
+        "mockOnly": {
+          "title": "Read-only mock switches",
+          "description": "All from frontend placeholder constants"
+        },
+        "marketScoped": {
+          "title": "Market-level capabilities",
+          "description": "Need future market settings"
+        },
+        "roleScoped": {
+          "title": "Role-gated capabilities",
+          "description": "Need future role mapping"
+        },
+        "blockedRealProviders": {
+          "title": "Real service integrations",
+          "description": "No live, logistics, or AI service in this task"
+        }
+      },
+      "controlBlueprint": {
+        "title": "Capability Control Blueprint",
+        "description": "Separates platform switches, market defaults, and merchant choice so unified delivery, material orders, livestream, and express printing are not forced globally.",
+        "switchAriaLabel": "{{capability}} {{field}} mock read-only switch",
+        "fields": {
+          "platformDefault": "Platform switch",
+          "marketDefault": "Market default",
+          "merchantChoice": "Merchant choice",
+          "consumerPlacement": "Consumer placement",
+          "vendorPlacement": "Vendor placement"
+        },
+        "rows": {
+          "unifiedDelivery": {
+            "title": "Market unified delivery",
+            "description": "The platform can provide unified delivery while merchants choose unified, self-delivery, or mixed modes under market rules.",
+            "consumerPlacement": "Not on homepage. Show in stall / store pages and checkout delivery choices.",
+            "vendorPlacement": "Merchant delivery settings choose unified delivery, self-delivery, or mixed mode."
+          },
+          "merchantSelfDelivery": {
+            "title": "Merchant self-delivery",
+            "description": "Stalls can keep self-delivery for repeat customers, nearby orders, and special fresh products.",
+            "consumerPlacement": "Show in stall delivery notes and order delivery choices.",
+            "vendorPlacement": "Merchants maintain self-delivery coverage, hours, and notes."
+          },
+          "materialSupplierOrders": {
+            "title": "Material supplier orders",
+            "description": "Foam boxes, packaging boxes, ice packs, and ice are merchant-facing market materials and should stay out of the consumer homepage flow.",
+            "consumerPlacement": "Hidden from consumer homepage.",
+            "vendorPlacement": "Independent merchant material procurement entry; material suppliers can have an order workspace."
+          },
+          "livestreamStoreStatus": {
+            "title": "Stall livestream status",
+            "description": "Livestream is not placed on homepage. It only shows active livestream status near the stall or store.",
+            "consumerPlacement": "Store page, stall card, or merchant homepage shows live status.",
+            "vendorPlacement": "Merchant backend maintains mock livestream state until a real provider is connected."
+          },
+          "aiQuickListingDraft": {
+            "title": "AI quick listing draft",
+            "description": "Mobile and WeChat entry can generate product drafts from one sentence, but merchants must confirm before listing.",
+            "consumerPlacement": "Not visible to consumers.",
+            "vendorPlacement": "Merchant mobile quick listing and product draft box."
+          },
+          "expressPrintTool": {
+            "title": "Express print / e-waybill",
+            "description": "Keep the fulfillment tool entry only. It does not create real waybill numbers or confirm shipment.",
+            "consumerPlacement": "Consumers only see logistics status, not print tools.",
+            "vendorPlacement": "Merchant order fulfillment tools; future adapter can connect KDNiao, Kuaidi100, or e-waybill providers."
+          }
+        }
+      },
+      "moduleSwitches": {
+        "title": "Platform Module Switches",
+        "description": "Core capability states for the local fresh supply chain and multi-role commerce platform. All switches are read-only mock / configuration placeholders."
+      },
+      "marketCapabilities": {
+        "switchTitle": "Market Selection",
+        "switchDescription": "Multiple sample markets are shown. The current selection is frontend mock data, is not hardcoded to one market, and does not change tenant or market context.",
+        "currentMarket": "Current market configuration placeholder",
+        "capabilityTitle": "Current Market Capabilities",
+        "capabilityDescription": "Market-level capabilities can later become the control source for Vendor entry visibility and workflow availability.",
+        "fields": {
+          "hours": "Business hours",
+          "announcement": "Market announcement",
+          "deliveryRule": "Delivery rule",
+          "pickupRule": "Pickup rule",
+          "serviceRange": "Service range",
+          "supportedCapabilities": "Supported capabilities"
+        }
+      },
+      "marketPortfolio": {
+        "title": "Market Configuration Overview",
+        "description": "Shows multiple markets together so operators can compare hours, service range, and planned capabilities. A real version should be driven by market settings APIs.",
+        "capabilityCount": "Planned capabilities",
+        "capabilityUnit": "items",
+        "currentMock": "Current mock-selected market"
+      },
+      "roleEnablement": {
+        "title": "Merchant / Supplier Role Enablement",
+        "description": "Role enablement, qualification review, market, stall or service scope, and module visibility are all placeholder data. No real permission checks are implemented."
+      },
+      "rolePortfolio": {
+        "title": "Merchant Type Coverage",
+        "description": "Summarizes merchants, suppliers, origin suppliers, and remote wholesalers by role type before real permissions and qualification flows are connected.",
+        "typeBoundary": "Type boundary placeholder, no real RBAC writes",
+        "roleCount": "Roles",
+        "marketCount": "Markets",
+        "moduleCount": "Capabilities"
+      },
+      "columns": {
+        "module": "Module",
+        "switchPreview": "Switch placeholder",
+        "status": "Status",
+        "layer": "Control layer",
+        "scope": "Scope",
+        "vendorImpact": "Vendor impact",
+        "openPolicy": "Open policy",
+        "mockBoundary": "Mock / safety boundary",
+        "updatedAt": "Updated at",
+        "capability": "Capability",
+        "owner": "Owner team",
+        "role": "Role",
+        "roleType": "Role type",
+        "qualification": "Qualification",
+        "market": "Market",
+        "moduleVisibility": "Module visibility"
+      },
+      "status": {
+        "enabled": "Enabled",
+        "disabled": "Not enabled",
+        "pilot": "Pilot",
+        "reviewing": "Under review",
+        "paused": "Paused"
+      },
+      "layers": {
+        "platform": "Platform global",
+        "market": "Market level",
+        "role": "Merchant / supplier role"
+      },
+      "scopes": {
+        "freshTrade": "Local fresh trade",
+        "coldChain": "Frozen cold-chain trade",
+        "marketOps": "Market operations materials",
+        "deliveryNetwork": "Local delivery network",
+        "supplyChain": "Upstream supply collaboration",
+        "agriculture": "Agricultural materials",
+        "crossRegion": "Cross-region wholesale",
+        "contentSales": "Content sales",
+        "listingTools": "Listing tools",
+        "fulfillmentTools": "Fulfillment tools",
+        "pickupCard": "Pickup card business",
+        "stallStoreStatus": "Store / stall status display",
+        "storefrontTools": "Storefront display tools"
+      },
+      "policies": {
+        "open": "Open for display, placeholder only",
+        "marketPilot": "Pilot by market after market configuration",
+        "rolePilot": "Pilot by merchant / supplier role",
+        "reviewRequired": "Open only after qualification and ops review",
+        "notOpen": "Not open yet, planning entry only",
+        "placeholderOnly": "Placeholder status only, no real capability opened"
+      },
+      "guardrails": {
+        "noBusinessMutation": "Does not change order, payment, settlement, or permission state",
+        "requiresMarketSettings": "Must later be backed by market settings and audit logs",
+        "merchantOnly": "Merchant workspace only, not consumer purchase flow",
+        "noRealLogistics": "No real logistics service and no shipment confirmation",
+        "noRealLivestream": "No real livestream, IM, push stream, or payment",
+        "notPayment": "Pickup cards are not coupons, stored value, or payment methods",
+        "draftOnly": "AI creates drafts only and requires merchant confirmation before listing",
+        "noRealWaybill": "Does not create real tracking numbers or e-waybills"
+      },
+      "vendorImpact": {
+        "visible": "Can later show Vendor entry",
+        "marketPilot": "Visible only in pilot markets",
+        "afterReview": "Visible after review approval",
+        "hidden": "Remain hidden on Vendor side",
+        "rolePilot": "Visible only for enabled roles",
+        "storeStatusOnly": "Not on homepage, status only in store / stall",
+        "consumerEntitlement": "Consumer pickup entitlement, not payment or coupon"
+      },
+      "modules": {
+        "seafoodTrade": "Seafood Merchant",
+        "frozenGoods": "Frozen Goods Merchant",
+        "dryGoods": "Dry Goods Merchant",
+        "fruitsVegetables": "Fruits & Vegetables",
+        "marketMaterials": "Market Materials",
+        "deliverySuppliers": "Delivery Suppliers",
+        "upstreamSupply": "Upstream Supply",
+        "seedlingWholesale": "Seedling Wholesale",
+        "remoteWholesalers": "Remote Wholesalers",
+        "livestream": "Livestream",
+        "aiQuickListing": "AI Quick Listing",
+        "expressPrint": "Express Print / E-waybill",
+        "pickupCard": "Pickup Card",
+        "storeDecoration": "Store Decoration"
+      },
+      "switchPreview": {
+        "readonly": "Mock read-only placeholder",
+        "ariaLabel": "{{module}} mock read-only switch placeholder"
+      },
+      "integration": {
+        "title": "Backend Integration Boundary",
+        "description": "This page fixes the information architecture and operations vocabulary first. A real editable version should connect feature flags, market settings, role capability mappings, and audit logs in a later task.",
+        "columns": {
+          "item": "Integration item",
+          "source": "Suggested backend source"
+        },
+        "items": {
+          "featureFlags": "Module switch state",
+          "marketSettings": "Market hours / announcements / delivery rules",
+          "roleCapabilities": "Merchant type to capability mapping",
+          "mockProviders": "Livestream / logistics / AI mock provider",
+          "auditLogs": "Operation audit and change history"
+        },
+        "sources": {
+          "featureFlags": "feature_flags or equivalent config service",
+          "marketSettings": "market_settings / market_profiles",
+          "roleCapabilities": "role_capabilities / merchant_type_capabilities",
+          "mockProviders": "mock provider / adapter templates",
+          "auditLogs": "audit_log / operator_event_log"
+        }
+      },
+      "markets": {
+        "sanmenSeafood": {
+          "name": "Sanmen Seafood Market",
+          "hours": "05:00 - 18:00. Holiday hours are maintained by market operators.",
+          "announcement": "Seasonal seafood zone is in pilot. Stalls should complete origin and inspection documents.",
+          "deliveryRule": "Same-day local cold-chain delivery. Cross-district orders enter manual confirmation.",
+          "pickupRule": "Supports stall pickup and centralized pickup at the market service desk.",
+          "serviceRange": "Sanmen county center, Haiyou subdistrict, and nearby towns in pilot."
+        },
+        "northProduce": {
+          "name": "North Produce Wholesale Center",
+          "hours": "04:30 - 17:30, prioritizing early wholesale hours.",
+          "announcement": "Leafy vegetable prices fluctuate. Merchants should update inventory before 10:00 daily.",
+          "deliveryRule": "Local delivery pricing is segmented by temperature zone and route.",
+          "pickupRule": "Supports stall pickup and loading point pickup inside the park.",
+          "serviceRange": "North city area, school canteens, and community group-buying stations."
+        },
+        "coastalFrozen": {
+          "name": "Coastal Frozen Goods Distribution Market",
+          "hours": "06:00 - 20:00. Cold storage pickup requires advance booking.",
+          "announcement": "Remote wholesaler collaboration for frozen goods is under review.",
+          "deliveryRule": "Cold-chain trunk lines and local shuttles are configured separately.",
+          "pickupRule": "Supports cold storage appointment pickup.",
+          "serviceRange": "Coastal cold-chain warehouses and wholesale transfer points."
+        }
+      },
+      "owners": {
+        "platformOps": "Platform operations",
+        "deliveryOps": "Delivery operations",
+        "fulfillmentOps": "Fulfillment tooling",
+        "merchantOps": "Merchant operations",
+        "contentOps": "Content risk operations"
+      },
+      "roles": {
+        "seafoodStall": "Seafood Stall",
+        "frozenMerchant": "Frozen Goods Merchant",
+        "dryGoodsMerchant": "Dry Goods Merchant",
+        "produceMerchant": "Fruit & Vegetable Merchant",
+        "materialSupplier": "Material Supplier",
+        "deliverySupplier": "Delivery Supplier",
+        "aquacultureFarm": "Aquaculture Farmer",
+        "grower": "Grower",
+        "seedlingSupplier": "Seedling Supplier",
+        "remoteWholesaler": "Remote Wholesaler"
+      },
+      "qualifications": {
+        "draft": "Draft profile",
+        "pending": "Qualification under review",
+        "approved": "Qualification approved"
+      },
+      "roleTypes": {
+        "ordinaryMerchant": "Ordinary merchant",
+        "materialSupplier": "Material supplier",
+        "deliverySupplier": "Delivery supplier",
+        "originSupplier": "Origin supplier",
+        "seedlingSupplier": "Seedling supplier",
+        "remoteWholesaler": "Remote wholesaler"
+      },
+      "roleScopes": {
+        "stallA12": "Stall A12",
+        "coldChain": "Cold-chain service scope",
+        "stallB08": "Dry goods area B08",
+        "produceZone": "Produce trading area",
+        "materialSupply": "Market material supply scope",
+        "cityDelivery": "Local delivery service scope",
+        "originSupply": "Origin direct supply scope",
+        "seedlingArea": "Seedling service scope",
+        "crossRegion": "Cross-region wholesale scope"
+      }
+    },
+    "status": {
+      "order": {
+        "pendingPayment": "Pending payment",
+        "pendingShipment": "Pending shipment",
+        "pendingReceipt": "Pending receipt",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "refunding": "Refunding",
+        "refunded": "Refunded"
+      },
+      "merchant": {
+        "pending": "Pending review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "frozen": "Frozen"
+      },
+      "product": {
+        "draft": "Draft",
+        "pending": "Pending review",
+        "listed": "Listed",
+        "delisted": "Delisted",
+        "failed": "Review failed"
+      },
+      "afterSales": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "intervention": "Platform intervention",
+        "resolved": "Resolved",
+        "rejected": "Rejected"
+      },
+      "payment": {
+        "pendingReconcile": "Pending reconciliation",
+        "notified": "Notified",
+        "mockOnly": "Mock only",
+        "reconciled": "Reconciled",
+        "exception": "Exception"
+      },
+      "settlement": {
+        "pending": "Pending settlement",
+        "settled": "Settled",
+        "mockOnly": "Mock only",
+        "withdrawing": "Withdrawing",
+        "exception": "Settlement exception"
+      },
+      "marketing": {
+        "draft": "Draft",
+        "active": "Active",
+        "mockOnly": "Mock only"
+      },
+      "pickupCard": {
+        "unactivated": "Unactivated",
+        "pendingActivation": "Pending enablement",
+        "activated": "Activated",
+        "bound": "Bound",
+        "redeemed": "Redeemed",
+        "partiallyRedeemed": "Partially redeemed",
+        "unredeemed": "Unredeemed",
+        "frozen": "Frozen",
+        "voided": "Voided",
+        "expired": "Expired"
+      },
+      "pickupBatch": {
+        "pendingProduction": "Pending production",
+        "produced": "Produced",
+        "pendingActivation": "Pending activation",
+        "activated": "Activated",
+        "paused": "Paused",
+        "voided": "Voided",
+        "expired": "Expired"
+      },
+      "pickupOrder": {
+        "pendingConfirm": "Pending confirmation",
+        "pendingShipment": "Pending shipment",
+        "shipped": "Shipped",
+        "signed": "Signed",
+        "abnormal": "Abnormal",
+        "cancelled": "Cancelled"
+      },
+      "message": {
+        "pending": "Pending reply",
+        "processing": "Processing",
+        "resolved": "Resolved",
+        "draft": "Draft",
+        "closed": "Closed",
+        "exception": "Notice exception"
+      },
+      "risk": {
+        "pending": "Pending",
+        "processing": "Processing",
+        "closed": "Closed"
+      },
+      "settings": {
+        "placeholder": "Placeholder",
+        "draft": "Draft",
+        "active": "Active"
+      }
+    },
+    "empty": {
+      "title": "No records yet",
+      "message": "This phase uses static placeholders only and does not read backend data."
+    },
+    "placeholder": {
+      "title": "Next implementation placeholder",
+      "message": "Future work can connect real APIs, permissions, audit logs, and feature flags in a dedicated task. This page intentionally avoids real review, settlement, refund, payment, and permission actions."
+    },
+    "notFound": {
+      "title": "Page not configured",
+      "message": "The requested admin skeleton page is not in the current China localization menu."
+    }
   }
 }

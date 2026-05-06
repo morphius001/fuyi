@@ -1,0 +1,227 @@
+import { productColumns } from "./china-admin-table-columns"
+import {
+  cell,
+  statusCell,
+  type ChinaAdminTableData,
+} from "./china-admin-table-primitives"
+
+const productFilters = ["所属市场", "类目", "规格模板", "商户类型", "更新时间"]
+
+export const productTables: Record<string, ChinaAdminTableData> = {
+  productList: {
+    columns: productColumns,
+    filters: productFilters,
+    rows: [
+      {
+        id: "P-884201",
+        cells: {
+          id: cell("P-884201"),
+          name: cell("鲜活梭子蟹 500g/只起"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("鲜活海鲜"),
+          spec: cell("500g/只起，按斤计价，规格以后读取后台模板"),
+          market: cell("三门海鲜市场"),
+          owner: cell("A12 阿强鲜活海鲜"),
+          amount: cell("¥68-82/斤"),
+          updatedAt: cell("2026-05-03 10:08"),
+        },
+        actions: ["view", "edit", "remark"],
+      },
+      {
+        id: "P-884176",
+        cells: {
+          id: cell("P-884176"),
+          name: cell("泡沫箱 6 斤装 批发"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("市场物料"),
+          spec: cell("6 斤装，整箱起订"),
+          market: cell("城北果蔬批发中心"),
+          owner: cell("市场物料供应商"),
+          amount: cell("¥4.80/个"),
+          updatedAt: cell("2026-05-02 11:40"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  productReview: {
+    columns: productColumns,
+    filters: ["审核状态", "类目", "商户类型", "更新时间"],
+    rows: [
+      {
+        id: "REV-20260503001",
+        cells: {
+          id: cell("REV-20260503001"),
+          name: cell("今日活虾大规格临时上架"),
+          status: statusCell("chinaAdmin.status.product.pending", "orange"),
+          category: cell("鲜活海鲜"),
+          spec: cell("规格模板待商户补全"),
+          market: cell("三门海鲜市场"),
+          owner: cell("A18 海捕鲜货"),
+          amount: cell("¥39-46/斤"),
+          updatedAt: cell("2026-05-03 10:36"),
+        },
+        actions: ["view", "review", "remark"],
+      },
+      {
+        id: "REV-20260503002",
+        cells: {
+          id: cell("REV-20260503002"),
+          name: cell("AI 快速上架草稿：本地番茄"),
+          status: statusCell("chinaAdmin.status.product.draft", "grey"),
+          category: cell("水果蔬菜"),
+          spec: cell("AI 仅生成草稿，商户确认后再提交审核"),
+          market: cell("城北果蔬批发中心"),
+          owner: cell("B08 本地蔬果直供"),
+          amount: cell("待商户确认"),
+          updatedAt: cell("2026-05-03 10:28"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  categoryManagement: {
+    columns: productColumns,
+    filters: ["类目层级", "面向对象", "所属市场", "更新时间"],
+    rows: [
+      {
+        id: "CAT-SEAFOOD-001",
+        cells: {
+          id: cell("CAT-SEAFOOD-001"),
+          name: cell("鲜活海鲜"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("消费者前台类目"),
+          spec: cell("鱼 / 虾 / 蟹 / 贝 / 冰鲜"),
+          market: cell("三门海鲜市场"),
+          owner: cell("平台类目运营"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:18"),
+        },
+        actions: ["view", "edit", "remark"],
+      },
+      {
+        id: "CAT-MATERIAL-001",
+        cells: {
+          id: cell("CAT-MATERIAL-001"),
+          name: cell("市场物料"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("商户端 B 端类目"),
+          spec: cell("泡沫箱 / 包装箱 / 冰袋 / 冰块"),
+          market: cell("多市场"),
+          owner: cell("商户运营组"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:12"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  productSpecTemplates: {
+    columns: productColumns,
+    filters: ["模板状态", "适用类目", "适用市场", "更新时间"],
+    rows: [
+      {
+        id: "SPEC-SEAFOOD-001",
+        cells: {
+          id: cell("SPEC-SEAFOOD-001"),
+          name: cell("鲜活海鲜规格模板"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("鲜活海鲜"),
+          spec: cell("重量、只数、鲜活状态、计价单位、起售规格"),
+          market: cell("三门海鲜市场"),
+          owner: cell("平台商品运营"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:26"),
+        },
+        actions: ["view", "edit", "remark"],
+      },
+      {
+        id: "SPEC-MATERIAL-001",
+        cells: {
+          id: cell("SPEC-MATERIAL-001"),
+          name: cell("市场物料规格模板"),
+          status: statusCell("chinaAdmin.status.product.draft", "grey"),
+          category: cell("市场物料"),
+          spec: cell("容量、尺寸、保温时长、起订量、配送范围"),
+          market: cell("商户端"),
+          owner: cell("商户运营组"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:20"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  brandManagement: {
+    columns: productColumns,
+    filters: ["品牌状态", "经营类目", "所属市场", "更新时间"],
+    rows: [
+      {
+        id: "BRAND-20260503001",
+        cells: {
+          id: cell("BRAND-20260503001"),
+          name: cell("三门本港鲜"),
+          status: statusCell("chinaAdmin.status.product.pending", "orange"),
+          category: cell("市场公共品牌占位"),
+          spec: cell("品牌资质待审核"),
+          market: cell("三门海鲜市场"),
+          owner: cell("平台品牌运营"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:34"),
+        },
+        actions: ["view", "review", "remark"],
+      },
+      {
+        id: "BRAND-20260503002",
+        cells: {
+          id: cell("BRAND-20260503002"),
+          name: cell("本地蔬果直供"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("水果蔬菜"),
+          spec: cell("产地直供标签占位"),
+          market: cell("城北果蔬批发中心"),
+          owner: cell("生鲜品类运营"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:29"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+  prohibitedRules: {
+    columns: productColumns,
+    filters: ["规则状态", "适用类目", "风险等级", "更新时间"],
+    rows: [
+      {
+        id: "RULE-20260503001",
+        cells: {
+          id: cell("RULE-20260503001"),
+          name: cell("禁售水产和敏感词规则占位"),
+          status: statusCell("chinaAdmin.status.product.draft", "grey"),
+          category: cell("鲜活海鲜"),
+          spec: cell("只读规则说明，不接真实规则引擎"),
+          market: cell("平台全局"),
+          owner: cell("商品审核组"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:46"),
+        },
+        actions: ["view", "remark"],
+      },
+      {
+        id: "RULE-20260503002",
+        cells: {
+          id: cell("RULE-20260503002"),
+          name: cell("物料类目展示边界"),
+          status: statusCell("chinaAdmin.status.product.listed", "green"),
+          category: cell("市场物料"),
+          spec: cell("商户端可见，不进入消费者首页前排"),
+          market: cell("多市场"),
+          owner: cell("商户运营组"),
+          amount: cell("-"),
+          updatedAt: cell("2026-05-03 09:40"),
+        },
+        actions: ["view", "remark"],
+      },
+    ],
+  },
+}

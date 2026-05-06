@@ -330,10 +330,14 @@
 
 第二十七轮建议：
 
-1. `vendor-market-context-builder`: pending，实现 Vendor market context builder 和单元测试，不注册 route。
+1. `vendor-market-context-builder`: done，实现 Vendor market context builder 和单元测试，不注册 route。
 2. `vendor-market-context-readonly-route`: pending，实现只读 Vendor route 和鉴权边界。
 3. `vendor-market-context-client-api-polish`: pending，Vendor client 对接真实 route 的可用/空/fallback 状态。
 4. `vendor-market-context-visual-qa`: pending，四个 Vendor 页面做 API 状态视觉 QA。
+
+第二十七轮进度：
+
+- `vendor-market-context-builder`: done，新增 Vendor market context 只读 builder、类型和单元测试；不注册 route、不新增 migration、不影响 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 
 ## Status Rules
 

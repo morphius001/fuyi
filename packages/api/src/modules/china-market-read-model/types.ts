@@ -98,3 +98,77 @@ export type ChinaMarketReadModelSeed = {
   businessHours?: ChinaMarketBusinessHour[];
   deliveryProfiles?: ChinaMarketDeliveryProfile[];
 };
+
+export type ChinaVendorMarketContextMode =
+  | "vendor_market_context_read_only"
+  | "vendor_market_context_empty";
+
+export type ChinaVendorMarketContextSource = "china_market_read_model";
+
+export type ChinaVendorMarketMembershipView = {
+  id: string;
+  marketId: string;
+  marketName: string;
+  marketSlug: string;
+  province?: string;
+  city: string;
+  district?: string;
+  boothNo: string;
+  stallName?: string;
+  isPrimary: boolean;
+  status: ChinaMarketMembershipStatus;
+  businessHours?: string;
+  serviceRange?: string;
+  merchantTypeKeys: ChinaSellerRoleKey[];
+};
+
+export type ChinaVendorMarketAnnouncementView = {
+  id: string;
+  marketId: string;
+  title: string;
+  content: string;
+  severity: ChinaMarketAnnouncement["severity"];
+};
+
+export type ChinaVendorMarketDeliveryProfileView = {
+  id: string;
+  marketId: string;
+  deliveryType: ChinaMarketDeliveryType;
+  enabled: boolean;
+  displayName: string;
+  serviceAreaNote?: string;
+  cutoffTime?: string;
+  merchantSelectable: boolean;
+  runtimeEnabled: false;
+  checkoutImpact: "none";
+};
+
+export type ChinaVendorMarketModuleHintKey =
+  | "quick_listing"
+  | "store_decoration"
+  | "market_materials"
+  | "livestream_status"
+  | "ai_listing_draft"
+  | "express_print";
+
+export type ChinaVendorMarketModuleHintView = {
+  key: ChinaVendorMarketModuleHintKey;
+  label: string;
+  visible: boolean;
+  reason: string;
+  runtimeEnabled: false;
+};
+
+export type ChinaVendorMarketContextView = {
+  mode: ChinaVendorMarketContextMode;
+  source: ChinaVendorMarketContextSource;
+  sellerId: string;
+  sellerHandle?: string;
+  primaryMembership?: ChinaVendorMarketMembershipView;
+  memberships: ChinaVendorMarketMembershipView[];
+  announcements: ChinaVendorMarketAnnouncementView[];
+  deliveryProfiles: ChinaVendorMarketDeliveryProfileView[];
+  moduleHints: ChinaVendorMarketModuleHintView[];
+  runtimeEnabled: false;
+  note: string;
+};

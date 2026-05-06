@@ -35,6 +35,8 @@ export type ChinaMarketMembership = {
 
 export type ChinaSellerRoleKey =
   | "seafood_stall"
+  | "frozen_goods"
+  | "dry_goods"
   | "fruit_vegetable"
   | "materials_supplier"
   | "delivery_supplier"

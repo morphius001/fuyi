@@ -346,9 +346,13 @@
 
 第二十八轮建议：
 
-1. `vendor-market-context-post-api-validation`: pending，对 PR AS-AU 合并后的 API + Vendor 总验证。
+1. `vendor-market-context-post-api-validation`: done，对 PR AS-AU 合并后的 API + Vendor 总验证。
 2. `vendor-market-context-authenticated-browser-qa`: pending，在用户已登录 Vendor 后做真实浏览器截图 QA。
 3. `vendor-market-context-next-data-plan`: pending，规划从 static adapter 过渡到真实 market membership 数据源。
+
+第二十八轮进度：
+
+- `vendor-market-context-post-api-validation`: done，API typecheck、2 组单测 8/8、API build、Vendor lint/build 和 diff check 均通过；确认只读 Vendor market context 没有触碰 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 
 ## Status Rules
 

@@ -372,6 +372,16 @@
 - `market-read-model-repository-adapter`: done，新增真实表 row 到现有 China market read model seed 的纯 adapter 和单元测试；过滤软删除、未知枚举、缺失必填字段，不注册 route、不切 Vendor 数据源。
 - `vendor-market-context-data-source-switch`: done，`GET /vendor/china/market-context` 优先尝试真实 membership repository rows，表不存在、查询异常或当前 seller 无 membership 时回落 seller metadata static fallback；仍只读、不新增写接口、不影响 checkout、订单、支付、退款、结算、佣金、权限或真实履约。
 
+第三十轮建议：
+
+1. `market-membership-post-migration-validation`: done，对 PR AZ-BC 做合并后验证和下一步收口。
+2. `admin-market-membership-readonly-view`: pending，Admin 只读查看市场、商户市场关系、档口、公告、营业时间、配送 profile，不保存。
+3. `market-membership-db-dry-run-plan`: pending，设计本地/预发 migration dry-run、rollback、空表和兼容性检查。
+
+第三十轮进度：
+
+- `market-membership-post-migration-validation`: done，API read model 单测、Vendor route helper 单测、API typecheck、Medusa build 和 diff check 均通过；已记录 workspace PATH 验证注意事项。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

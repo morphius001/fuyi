@@ -66,3 +66,4 @@
 - 新增第十三轮任务文件：市场数据模型落地计划、Admin 模块开关只读模型、Vendor 快速上架草稿读写计划、Storefront 真实发现数据桥接计划。
 - 完成 `docs/market-data-model-implementation-plan.md`，把市场、商户、档口、商户类型、公告、营业时间和配送 profile 的真实数据落地拆成 K1-K8。
 - 完成 `docs/admin-module-config-read-model.md`，把 Admin 模块开关从静态 capability contract 到只读配置模型的落地拆成 L1-L7。
+- 完成 `docs/vendor-draft-product-readwrite-plan.md`，把快速上架草稿、规格模板、AI mock suggestion、平台审核候选和真实商品创建拆成 M1-M8。

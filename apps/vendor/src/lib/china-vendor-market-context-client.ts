@@ -1,5 +1,3 @@
-import { client } from "./client"
-
 export type VendorMarketContextMode =
   | "vendor_market_context_read_only"
   | "vendor_market_context_empty"
@@ -99,28 +97,42 @@ export type VendorMarketContextView = {
   note: string
 }
 
-type VendorMarketContextResponse = {
+export type VendorMarketContextResponse = {
   marketContext: VendorMarketContextView
 }
 
-type ChinaVendorMarketContextApiClient = {
-  vendor: {
-    china: {
-      marketContext: {
-        query: (input?: {
-          query?: VendorMarketContextQuery
-          fetchOptions?: RequestInit
-        }) => Promise<VendorMarketContextResponse>
-      }
-    }
-  }
-}
-
-const chinaVendorMarketContextApi =
-  client as unknown as ChinaVendorMarketContextApiClient
-
 const fallbackNote =
   "Vendor market context API is unavailable; using an empty read-only fallback that must not affect checkout, fulfillment, settlement, commission, or permissions."
+
+const getBackendUrl = () =>
+  (import.meta.env.VITE_MEDUSA_BACKEND_URL ?? "http://127.0.0.1:9000").replace(
+    /\/$/,
+    ""
+  )
+
+const buildQueryString = (query?: VendorMarketContextQuery) => {
+  if (!query) {
+    return ""
+  }
+
+  const params = new URLSearchParams()
+
+  if (query.marketId) {
+    params.set("marketId", query.marketId)
+  }
+
+  if (typeof query.includeAnnouncements === "boolean") {
+    params.set("includeAnnouncements", String(query.includeAnnouncements))
+  }
+
+  if (typeof query.includeDeliveryProfiles === "boolean") {
+    params.set("includeDeliveryProfiles", String(query.includeDeliveryProfiles))
+  }
+
+  const value = params.toString()
+
+  return value ? `?${value}` : ""
+}
 
 export const createVendorMarketContextFallback = (
   note = fallbackNote
@@ -139,15 +151,21 @@ export const createVendorMarketContextFallback = (
 export const retrieveChinaVendorMarketContext = async (
   query?: VendorMarketContextQuery
 ): Promise<VendorMarketContextView> => {
-  return Promise.resolve()
-    .then(() =>
-      chinaVendorMarketContextApi.vendor.china.marketContext.query({
-        query,
-        fetchOptions: {
-          cache: "no-cache",
-        },
-      })
-    )
+  return fetch(
+    `${getBackendUrl()}/vendor/china/market-context${buildQueryString(query)}`,
+    {
+      cache: "no-cache",
+      credentials: "include",
+      method: "GET",
+    }
+  )
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Vendor market context API ${response.status}`)
+      }
+
+      return (await response.json()) as VendorMarketContextResponse
+    })
     .then((response) => response.marketContext)
     .catch(() => createVendorMarketContextFallback())
 }

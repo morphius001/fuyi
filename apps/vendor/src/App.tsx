@@ -38,6 +38,10 @@ import {
   supplySummary,
   todayFreshItems,
 } from "./china/data/vendorMockData";
+import {
+  retrieveChinaVendorMarketContext,
+  type VendorMarketContextView,
+} from "./lib/china-vendor-market-context-client";
 
 const getRowsForStatus = (page: DashboardPage, statusKey: string) => {
   if (statusKey === "all") {
@@ -86,6 +90,10 @@ type CapabilityState =
   | { status: "loading" }
   | { status: "ready"; data: VendorCapabilityResponse["capabilities"] }
   | { status: "error"; message: string };
+
+type MarketContextState =
+  | { status: "loading" }
+  | { status: "ready"; data: VendorMarketContextView };
 
 const capabilityStatusLabels: Record<ChinaCapabilityStatus, string> = {
   enabled_baseline: "已开通基础版",
@@ -229,6 +237,10 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
           message: "缺少 VITE_MEDUSA_PUBLISHABLE_KEY，暂时显示本地静态矩阵。",
         }
   );
+  const [marketContextState, setMarketContextState] =
+    useState<MarketContextState>({
+      status: "loading",
+    });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -276,6 +288,23 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorMarketContext({
+      includeAnnouncements: true,
+      includeDeliveryProfiles: true,
+    }).then((data) => {
+      if (mounted) {
+        setMarketContextState({ status: "ready", data });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <div className="page-stack">
       <section className="mock-notice" aria-label="数据源说明">
@@ -285,24 +314,7 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
         </span>
       </section>
 
-      <section className="boundary-grid" aria-label="市场与角色边界">
-        {marketCards.map(([title, value, detail]) => (
-          <article className="boundary-card" key={title}>
-            <span>{title}</span>
-            <strong>{value}</strong>
-            <p>{detail}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="market-rule-grid" aria-label="当前市场规则摘要">
-        {marketSummary.map(([title, detail]) => (
-          <article className="market-rule-card" key={title}>
-            <strong>{title}</strong>
-            <p>{detail}</p>
-          </article>
-        ))}
-      </section>
+      <VendorMarketContextPanel state={marketContextState} />
 
       <section className="decoration-home-card" aria-label="店铺装修快捷维护">
         <div className="decoration-home-copy">
@@ -427,6 +439,129 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
         </Panel>
       </section>
     </div>
+  );
+}
+
+function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
+  if (state.status === "loading") {
+    return (
+      <section className="readonly-state" aria-label="市场上下文读取中">
+        <strong>市场上下文</strong>
+        <p>正在读取 Vendor market context，只用于首页展示，不影响订单、配送、结算或权限。</p>
+      </section>
+    );
+  }
+
+  const { data } = state;
+  const primaryMembership = data.primaryMembership ?? data.memberships[0];
+  const hasApiContext =
+    data.memberships.length > 0 ||
+    data.announcements.length > 0 ||
+    data.deliveryProfiles.length > 0 ||
+    data.moduleHints.length > 0;
+  const enabledDeliveryProfiles = data.deliveryProfiles.filter(
+    (profile) => profile.enabled
+  );
+  const cards = hasApiContext
+    ? [
+        [
+          "当前市场上下文",
+          primaryMembership?.marketName ?? "暂无市场",
+          primaryMembership
+            ? `${primaryMembership.city}${
+                primaryMembership.district ? ` / ${primaryMembership.district}` : ""
+              } · ${primaryMembership.businessHours ?? "营业时间待配置"}`
+            : "Vendor API 未返回主市场，商户后台继续显示只读空状态。",
+        ],
+        [
+          "档口号 / 市场位置",
+          primaryMembership?.boothNo ?? "暂无档口",
+          primaryMembership?.stallName ??
+            "档口归属只读展示，不允许在商户端修改市场关系。",
+        ],
+        [
+          "多市场经营",
+          `${data.memberships.length} 个市场关系`,
+          "切换只影响商户后台展示上下文，不决定订单、库存、配送或结算归属。",
+        ],
+        [
+          "配送展示能力",
+          `${enabledDeliveryProfiles.length} 项可见`,
+          enabledDeliveryProfiles.length > 0
+            ? enabledDeliveryProfiles.map((profile) => profile.displayName).join(" / ")
+            : "暂无配送 profile；checkout shipping options 不受影响。",
+        ],
+        [
+          "模块开通提示",
+          `${data.moduleHints.filter((hint) => hint.visible).length} 项可见`,
+          "Module hint 只解释页面入口，不作为 RBAC 或真实权限结果。",
+        ],
+        [
+          "只读运行边界",
+          data.runtimeEnabled ? "运行时生效" : "未运行时生效",
+          data.note,
+        ],
+      ]
+    : marketCards;
+  const summaries = hasApiContext
+    ? [
+        [
+          "市场公告",
+          data.announcements[0]?.content ??
+            "暂无商户侧市场公告；公告只读，不在 Vendor 端发布。",
+        ],
+        [
+          "营业时间",
+          primaryMembership?.businessHours ??
+            "营业时间未返回；不影响订单时间、发货时间或配送承诺。",
+        ],
+        [
+          "配送规则",
+          enabledDeliveryProfiles.length > 0
+            ? enabledDeliveryProfiles
+                .map((profile) => `${profile.displayName}：${profile.serviceAreaNote ?? "范围待配置"}`)
+                .join("；")
+            : "暂无可展示配送 profile；本页不修改 checkout shipping options。",
+        ],
+        [
+          "市场归属",
+          data.memberships
+            .map((membership) => `${membership.marketName} ${membership.boothNo}`)
+            .join("；") || "暂无市场归属数据。",
+        ],
+      ]
+    : marketSummary;
+
+  return (
+    <>
+      <section className="mock-notice" aria-label="市场上下文只读说明">
+        <strong>
+          {hasApiContext ? "Vendor 市场上下文已读取" : "Vendor 市场上下文未连接"}
+        </strong>
+        <span>
+          {data.source} · {data.mode}；本区只做首页展示，不影响订单、配送、结算、佣金或权限。
+        </span>
+      </section>
+
+      <section className="boundary-grid" aria-label="市场与角色边界">
+        {cards.map(([title, value, detail]) => (
+          <article className="boundary-card" key={title}>
+            <span>{title}</span>
+            <strong>{value}</strong>
+            <p>{detail}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="market-rule-grid" aria-label="当前市场规则摘要">
+        {summaries.map(([title, detail]) => (
+          <article className="market-rule-card" key={title}>
+            <strong>{title}</strong>
+            <p>{detail}</p>
+          </article>
+        ))}
+      </section>
+    </>
   );
 }
 

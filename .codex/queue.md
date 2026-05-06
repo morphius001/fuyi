@@ -294,8 +294,12 @@
 
 第二十四轮建议：
 
-1. `vendor-home-market-context`: pending，在 Vendor 首页展示市场/档口/公告只读摘要，不影响订单和履约。
+1. `vendor-home-market-context`: done，在 Vendor 首页展示市场/档口/公告只读摘要，不影响订单和履约。
 2. `vendor-profile-market-context`: pending，在 Vendor 店铺资料页展示市场归属，不提供保存。
+
+第二十四轮进度：
+
+- `vendor-home-market-context`: done，Vendor 首页接入 `retrieveChinaVendorMarketContext()`，API 有数据时展示市场、档口、公告和配送只读摘要；API 不可用时保留原静态市场 mock 展示。
 
 ## Status Rules
 

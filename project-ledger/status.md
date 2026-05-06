@@ -71,6 +71,11 @@
 - `storefront-connect-market-readonly-api-plan`: done，新增 `docs/storefront-connect-market-readonly-api-plan.md`，规划 Storefront 分阶段接入 markets API。
 - 第十七轮队列已清空；下一项建议为 `storefront-market-client`。
 
+## 第十八轮进度
+
+- `storefront-market-client`: done，新增 Storefront 中国市场只读 API client/fetcher，不改页面布局、不影响 checkout。
+- 下一项：`admin-market-readonly-ui-plan`。
+
 ## 已跑通
 
 - 本地服务：

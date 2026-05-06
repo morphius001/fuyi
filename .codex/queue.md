@@ -295,11 +295,19 @@
 第二十四轮建议：
 
 1. `vendor-home-market-context`: done，在 Vendor 首页展示市场/档口/公告只读摘要，不影响订单和履约。
-2. `vendor-profile-market-context`: pending，在 Vendor 店铺资料页展示市场归属，不提供保存。
+2. `vendor-profile-market-context`: done，在 Vendor 店铺资料页展示市场归属，不提供保存。
 
 第二十四轮进度：
 
 - `vendor-home-market-context`: done，Vendor 首页接入 `retrieveChinaVendorMarketContext()`，API 有数据时展示市场、档口、公告和配送只读摘要；API 不可用时保留原静态市场 mock 展示。
+- `vendor-profile-market-context`: done，Vendor 店铺资料页新增市场归属只读块，展示主市场、主档口、关联市场和 memberships；API 不可用时保留下方静态店铺资料表。
+
+第二十四轮队列已清空。
+
+第二十五轮建议：
+
+1. `vendor-fulfillment-context-readonly`: pending，在 Vendor 配送设置/物流页展示 delivery profiles，只读不影响 checkout。
+2. `vendor-announcements-readonly`: pending，在 Vendor 公告/服务页展示商户侧市场公告，只读不发布。
 
 ## Status Rules
 

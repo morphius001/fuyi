@@ -22,6 +22,38 @@
 - 不在低风险 UI PR 中修改支付、订单、退款、结算、佣金、权限逻辑。
 - 不把 `.agents/` 临时目录作为提交内容或依赖。
 
+## Batch 2: 数据跑通准备 PR
+
+### PR K: 市场数据模型落地计划
+
+Scope:
+
+- 新增 `docs/market-data-model-implementation-plan.md`。
+- 把市场、商户、档口、商户类型、营业时间、公告、配送 profile 从 metadata/read-only 过渡到真实数据模型的 PR 顺序写清楚。
+- 只做设计和拆分，不修改 `apps/**` 或 `packages/**`。
+
+Non-goals:
+
+- 不写 migration。
+- 不新增 API route。
+- 不让市场配送规则影响 checkout。
+- 不改变支付、订单、退款、结算、佣金、权限、履约逻辑。
+
+Verification:
+
+- `git diff --check -- docs/market-data-model-implementation-plan.md docs/china-localization-task-list.md project-ledger .codex/queue.md`
+- `git diff --name-status`
+
+Risk:
+
+- 低。仅文档和任务账本变更。
+
+Follow-up:
+
+- `admin-module-config-read-model`
+- `vendor-draft-product-readwrite-plan`
+- `storefront-real-discovery-bridge`
+
 ## Batch 0: 当前审计文档 PR
 
 ### PR 0: 中国本地化第一轮审计文档

@@ -64,6 +64,12 @@
 - `admin-market-readonly-api`: done，新增 Admin 端中国市场只读 API，覆盖市场列表和详情；不新增写接口、不改变权限。
 - 第十六轮队列已清空。
 
+## 第十七轮进度
+
+- `market-api-post-merge-validation`: done，新增 `docs/market-api-post-merge-validation.md`。
+- PR U-X 合并后验证通过：API typecheck、2 组单元测试 8/8、Medusa build。
+- 下一项：`storefront-connect-market-readonly-api-plan`。
+
 ## 已跑通
 
 - 本地服务：

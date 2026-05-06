@@ -144,7 +144,7 @@
 第十三轮任务文件准备：
 
 1. `market-data-model-implementation-plan`: done
-2. `admin-module-config-read-model`: pending
+2. `admin-module-config-read-model`: done
 3. `vendor-draft-product-readwrite-plan`: pending
 4. `storefront-real-discovery-bridge`: pending
 
@@ -158,6 +158,7 @@
 第十三轮进度：
 
 - `market-data-model-implementation-plan`: done，已形成市场、商户、档口、商户类型、公告、营业时间和配送 profile 的数据模型落地 PR 拆分。
+- `admin-module-config-read-model`: done，已形成 capability view、draft config、published config、effective config 的只读模型落地 PR 拆分。
 
 ## Status Rules
 

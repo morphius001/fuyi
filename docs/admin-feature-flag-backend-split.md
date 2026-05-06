@@ -34,6 +34,19 @@
 4. 配置发布必须可审计、幂等、可回滚，并保留 operator、原因、前后差异和生效范围。
 5. 默认关闭高风险或真实外部服务能力；第一阶段只允许 mock/provider boundary。
 
+## 与只读配置模型的关系
+
+后续落地时先执行 `docs/admin-module-config-read-model.md` 中的只读模型计划。
+
+分层关系：
+
+- `capability view`: 给 Admin/Vendor/Storefront 读取的只读结果。
+- `draft config`: Admin 编辑中的草稿，不生效。
+- `published config`: 已发布配置版本，可审计、可回滚。
+- `effective config`: platform、market、merchant type、seller 和 emergency block 合成后的结果。
+
+注意：`effective config` 仍然不是权限系统，也不是订单、支付、履约、结算的事实来源。任何 runtime 生效必须由对应业务 PR 显式接入。
+
 ## 模块目录
 
 建议先固化一份枚举式模块目录，避免前后端各自发明字符串。

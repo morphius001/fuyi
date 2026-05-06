@@ -56,6 +56,11 @@
 - `real-model-next-pr-plan`: done，新增 `docs/real-model-next-pr-plan.md`，明确下一轮 PR U-Z 的真实模型/API route 顺序和高风险门禁。
 - 第十五轮队列已清空；下一项建议为 `market-read-model-module-skeleton`。
 
+## 第十六轮进度
+
+- `market-read-model-module-skeleton`: done，新增未注册 `packages/api/src/modules/china-market-read-model/**` skeleton，覆盖市场、档口关系、商户角色、公告、营业时间和配送 profile 的只读 service。
+- 下一项：`market-read-model-static-adapter`。
+
 ## 已跑通
 
 - 本地服务：

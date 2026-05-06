@@ -282,8 +282,12 @@
 
 第二十三轮建议：
 
-1. `vendor-market-context-api-plan`: pending，设计 Vendor 专用市场上下文只读 API 合同，不改 UI。
+1. `vendor-market-context-api-plan`: done，设计 Vendor 专用市场上下文只读 API 合同，不改 UI。
 2. `vendor-market-context-client`: pending，新增 Vendor market context client/fallback，不改页面布局。
+
+第二十三轮进度：
+
+- `vendor-market-context-api-plan`: done，已规划 Vendor 专用 market context 只读路由、鉴权边界、响应结构、fallback、缓存、日志、PR 拆分和验证要求。
 
 ## Status Rules
 

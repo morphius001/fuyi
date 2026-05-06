@@ -1,12 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-07 01:30 Asia/Shanghai
+更新时间：2026-05-07 02:30 Asia/Shanghai
+
+## 主线合并状态
+
+- PR A-H 已经合并到 `main`。
+- 当前 `origin/main` 最新合并提交：`a945ceb` `[china] PR H Integration runbooks and env template notes`。
+- 合并后验证报告：`docs/post-merge-validation-report.md`。
+- `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
+- 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
 
 ## 当前分支
 
-- Worktree: `/home/codex/code/fuyi-integration-cn`
-- Branch: `china/integration-localization`
-- 目标：MercurJS 中国大陆多商户生鲜/海鲜本地化基础版集成收口
+- 主线基线：`origin/main`
+- 最近验证 worktree: `/home/codex/code/fuyi-pr-h-runbooks-cn`
+- 账本更新 worktree: `/home/codex/code/fuyi-pr-i-postmerge-cn`
+- 目标：MercurJS 中国大陆多商户生鲜/海鲜本地化基础版进入下一阶段数据落地准备
 
 ## 已跑通
 

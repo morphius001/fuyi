@@ -318,8 +318,12 @@
 
 第二十六轮建议：
 
-1. `vendor-market-context-post-merge-validation`: pending，对 PR AL-AP 合并后的 Vendor lint/build 做总验证报告。
+1. `vendor-market-context-post-merge-validation`: done，对 PR AL-AP 合并后的 Vendor lint/build 做总验证报告。
 2. `vendor-market-context-next-plan`: pending，规划后续真正 Vendor API route/builder 和页面细节拆分。
+
+第二十六轮进度：
+
+- `vendor-market-context-post-merge-validation`: done，Vendor lint/build 和 diff check 均通过；已确认 PR AL-AP 只读接入没有触碰 `packages/api/**`、订单、支付、退款、结算、佣金、权限、真实履约或真实 provider。
 
 ## Status Rules
 

@@ -3,6 +3,11 @@ import { Badge, Button, Container, Heading, StatusBadge, Table, Text } from "@me
 
 import { useChinaAdminTranslation } from "../i18n/use-china-admin-translation"
 import type { ChinaAdminPageMeta } from "../lib/china-admin-menu"
+import {
+  retrieveChinaAdminMarkets,
+  type ChinaAdminMarket,
+  type ChinaMarketStatus,
+} from "../lib/china-admin-market-client"
 import ChinaAdminShell from "./ChinaAdminShell"
 import {
   capabilityControlRows,
@@ -55,6 +60,14 @@ type AdminCapabilityState =
   | { status: "ready"; data: AdminCapabilityResponse["capabilities"] }
   | { status: "error"; message: string }
 
+type AdminMarketsState =
+  | { status: "loading" }
+  | {
+      status: "ready"
+      data: Awaited<ReturnType<typeof retrieveChinaAdminMarkets>>
+    }
+  | { status: "error"; message: string }
+
 const adminCapabilityStatusColors: Record<
   ChinaCapabilityStatus,
   "green" | "grey" | "blue" | "orange" | "red"
@@ -66,11 +79,30 @@ const adminCapabilityStatusColors: Record<
   high_risk_serial: "red",
 }
 
+const marketStatusColors: Record<
+  ChinaMarketStatus,
+  "green" | "grey" | "blue" | "orange" | "red"
+> = {
+  draft: "orange",
+  open: "green",
+  paused: "red",
+  closed: "grey",
+}
+
 const getBackendUrl = () =>
   (import.meta.env.VITE_MEDUSA_BACKEND_URL ?? "http://127.0.0.1:9000").replace(
     /\/$/,
     "",
   )
+
+const readMarketMetadataString = (
+  market: ChinaAdminMarket,
+  key: string,
+) => {
+  const value = market.metadata[key]
+
+  return typeof value === "string" && value.trim() ? value : "-"
+}
 
 const ControlSummary = () => {
   const { t } = useChinaAdminTranslation()
@@ -96,6 +128,165 @@ const ControlSummary = () => {
         </Container>
       ))}
     </div>
+  )
+}
+
+const MarketReadonlyApiPanel = () => {
+  const { t } = useChinaAdminTranslation()
+  const [marketState, setMarketState] = useState<AdminMarketsState>({
+    status: "loading",
+  })
+
+  useEffect(() => {
+    let mounted = true
+
+    retrieveChinaAdminMarkets()
+      .then((data) => {
+        if (mounted) {
+          setMarketState({ status: "ready", data })
+        }
+      })
+      .catch((error: unknown) => {
+        if (!mounted) {
+          return
+        }
+
+        setMarketState({
+          status: "error",
+          message:
+            error instanceof Error
+              ? error.message
+              : "unknown",
+        })
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  return (
+    <Container className="divide-y p-0">
+      <div className="flex flex-col gap-y-1 px-4 py-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Heading level="h2">
+            {t("chinaAdmin.operations.marketReadonlyApi.title")}
+          </Heading>
+          {marketState.status === "ready" ? (
+            <Badge size="2xsmall">{marketState.data.source}</Badge>
+          ) : null}
+        </div>
+        <Text size="small" className="text-ui-fg-subtle">
+          {t("chinaAdmin.operations.marketReadonlyApi.description")}
+        </Text>
+      </div>
+
+      {marketState.status === "loading" ? (
+        <div className="px-4 py-3">
+          <Text size="small" className="text-ui-fg-subtle">
+            {t("chinaAdmin.operations.marketReadonlyApi.loading")}
+          </Text>
+        </div>
+      ) : null}
+
+      {marketState.status === "error" ? (
+        <div className="flex flex-col gap-y-1 px-4 py-3">
+          <StatusBadge color="orange">
+            {t("chinaAdmin.operations.marketReadonlyApi.fallbackStatus")}
+          </StatusBadge>
+          <Text size="small" className="text-ui-fg-subtle">
+            {t("chinaAdmin.operations.marketReadonlyApi.errorMessage", {
+              message: marketState.message,
+            })}
+          </Text>
+        </div>
+      ) : null}
+
+      {marketState.status === "ready" ? (
+        <>
+          <div className="grid gap-3 px-4 py-3 md:grid-cols-3">
+            <div className="flex flex-col gap-y-0.5 rounded-md bg-ui-bg-subtle px-3 py-2">
+              <Text size="xsmall" className="text-ui-fg-muted">
+                {t("chinaAdmin.operations.marketReadonlyApi.summary.count")}
+              </Text>
+              <Heading level="h3">{marketState.data.items.length}</Heading>
+            </div>
+            <div className="flex flex-col gap-y-0.5 rounded-md bg-ui-bg-subtle px-3 py-2 md:col-span-2">
+              <Text size="xsmall" className="text-ui-fg-muted">
+                {t("chinaAdmin.operations.marketReadonlyApi.summary.note")}
+              </Text>
+              <Text size="small" className="line-clamp-2">
+                {marketState.data.note}
+              </Text>
+            </div>
+          </div>
+
+          {marketState.data.items.length > 0 ? (
+            <div className="overflow-x-auto">
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.name")}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.city")}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.hours")}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.notice")}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t("chinaAdmin.operations.marketReadonlyApi.columns.status")}
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {marketState.data.items.map((market) => (
+                    <Table.Row key={market.id}>
+                      <Table.Cell>
+                        <div className="flex min-w-[180px] flex-col gap-y-0.5">
+                          <Text size="small" weight="plus">
+                            {market.name}
+                          </Text>
+                          <Text size="xsmall" className="text-ui-fg-muted">
+                            {market.slug}
+                          </Text>
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>
+                        {[market.city, market.district].filter(Boolean).join(" / ") || "-"}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {readMarketMetadataString(market, "hours")}
+                      </Table.Cell>
+                      <Table.Cell className="max-w-[360px]">
+                        <Text size="small" className="line-clamp-2">
+                          {readMarketMetadataString(market, "notice")}
+                        </Text>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <StatusBadge color={marketStatusColors[market.status]}>
+                          {t(`chinaAdmin.operations.marketReadonlyApi.status.${market.status}`)}
+                        </StatusBadge>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </div>
+          ) : (
+            <div className="px-4 py-3">
+              <Text size="small" className="text-ui-fg-subtle">
+                {t("chinaAdmin.operations.marketReadonlyApi.empty")}
+              </Text>
+            </div>
+          )}
+        </>
+      ) : null}
+    </Container>
   )
 }
 
@@ -453,6 +644,7 @@ const MarketCapabilities = () => {
   return (
     <>
       <MockNotice />
+      <MarketReadonlyApiPanel />
       <Container className="p-0">
         <div className="flex flex-col gap-y-3 px-4 py-3">
           <div className="flex flex-col gap-y-1">

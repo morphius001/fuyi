@@ -197,13 +197,21 @@
 1. `market-read-model-module-skeleton`: done，新增市场 read model module skeleton，不新增 migration、不接 checkout。
 2. `market-read-model-static-adapter`: done，把当前静态市场/seller/category discovery 包装成 adapter。
 3. `market-readonly-store-api`: done，新增 Store 只读 markets API。
-4. `admin-market-readonly-api`: pending，新增 Admin 只读 markets API。
+4. `admin-market-readonly-api`: done，新增 Admin 只读 markets API。
 
 第十六轮进度：
 
 - `market-read-model-module-skeleton`: done，新增未注册 China market read model skeleton service 和单元测试。
 - `market-read-model-static-adapter`: done，新增 static adapter，将默认市场和 seller metadata 转为 read model seed，不影响 checkout。
 - `market-readonly-store-api`: done，新增 `/store/china/markets`、`/store/china/markets/:slug`、`/store/china/markets/:slug/sellers` 只读 API。
+- `admin-market-readonly-api`: done，新增 `/admin/china/markets` 和 `/admin/china/markets/:id` 只读 API。
+
+第十六轮队列已清空。
+
+第十七轮建议：
+
+1. `market-api-post-merge-validation`: pending，对 PR U-X 合并后的 API typecheck/build 和市场 read model 单测做总验证。
+2. `storefront-connect-market-readonly-api-plan`: pending，规划 Storefront 何时接入 markets API，不直接改 UI。
 
 ## Status Rules
 

@@ -46,7 +46,8 @@
 - 现有 `/store/china/discovery` 改为调用 read model builder；输出语义保持只读，不影响 checkout、订单、支付、退款、结算、佣金、权限或履约。
 - `storefront-discovery-view-shape`: done，新增 Storefront home/search/seller view shape builder，后续前端可按稳定合同读取，不重做 UI。
 - `vendor-draft-product-skeleton`: done，新增未注册 `packages/api/src/modules/china-product-drafts/**` skeleton，覆盖草稿、AI suggestion、审核候选和审计记录；不新增 route、不写库、不创建真实商品。
-- 下一项：`admin-config-readonly-api`。
+- `admin-config-readonly-api`: done，新增 `/admin/china/module-configs` 和 `/admin/china/module-configs/effective` 只读 GET endpoints，返回 static read model 和 effective capability view；不保存、不发布、不生效。
+- 第十四轮队列已清空。
 
 ## 已跑通
 

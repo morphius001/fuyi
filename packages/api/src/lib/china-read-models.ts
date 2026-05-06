@@ -341,6 +341,86 @@ export type ChinaModuleDefinitionReadModel = {
   allowSellerOverride: boolean;
 };
 
+export const defaultChinaModuleDefinitions: ChinaModuleDefinitionReadModel[] = [
+  {
+    key: "shop_decoration",
+    label: "店铺装修",
+    description: "商家主页装修入口，只控制展示和编辑入口，不放大商品或权限能力。",
+    riskLevel: "low",
+    runtimeScope: "display_only",
+    defaultState: "requestable",
+    allowMarketOverride: true,
+    allowMerchantTypeOverride: true,
+    allowSellerOverride: true,
+  },
+  {
+    key: "pickup_card",
+    label: "提货卡",
+    description: "提货卡为独立兑换入口，不是优惠券、满减券、储值卡或支付方式。",
+    riskLevel: "medium",
+    runtimeScope: "display_only",
+    defaultState: "mock_only",
+    allowMarketOverride: true,
+    allowMerchantTypeOverride: false,
+    allowSellerOverride: false,
+  },
+  {
+    key: "live_commerce",
+    label: "直播状态",
+    description: "直播只作为店铺/档口轻量状态，真实直播 provider 后续单独接入。",
+    riskLevel: "medium",
+    runtimeScope: "display_only",
+    defaultState: "visible_disabled",
+    allowMarketOverride: true,
+    allowMerchantTypeOverride: true,
+    allowSellerOverride: true,
+  },
+  {
+    key: "ai_quick_listing",
+    label: "AI 快速上架草稿",
+    description: "AI 只能生成草稿建议，商户确认和平台审核前不能创建真实商品。",
+    riskLevel: "medium",
+    runtimeScope: "menu",
+    defaultState: "mock_only",
+    allowMarketOverride: true,
+    allowMerchantTypeOverride: true,
+    allowSellerOverride: true,
+  },
+  {
+    key: "market_supplies",
+    label: "市场物料",
+    description: "泡沫箱、包装箱、冰袋、冰块等面向商户采购，不进入消费者主链路。",
+    riskLevel: "medium",
+    runtimeScope: "menu",
+    defaultState: "requestable",
+    allowMarketOverride: true,
+    allowMerchantTypeOverride: true,
+    allowSellerOverride: true,
+  },
+  {
+    key: "delivery_supplier",
+    label: "配送供应商",
+    description: "配送供应商工作台和接单能力必须与真实履约、物流和结算保持分离。",
+    riskLevel: "high",
+    runtimeScope: "fulfillment",
+    defaultState: "blocked_serial",
+    allowMarketOverride: false,
+    allowMerchantTypeOverride: false,
+    allowSellerOverride: false,
+  },
+  {
+    key: "wechat_pay_provider",
+    label: "微信支付 Provider",
+    description: "真实支付必须以后端异步通知、验签、幂等和重试为准。",
+    riskLevel: "blocked_serial",
+    runtimeScope: "payment",
+    defaultState: "blocked_serial",
+    allowMarketOverride: false,
+    allowMerchantTypeOverride: false,
+    allowSellerOverride: false,
+  },
+];
+
 export type ChinaModuleConfigReadModel = {
   moduleKey: string;
   scopeType: "platform" | "market" | "merchant_type" | "seller" | "emergency";
@@ -350,6 +430,58 @@ export type ChinaModuleConfigReadModel = {
   version: number;
   reason?: string;
 };
+
+export const defaultChinaModuleConfigs: ChinaModuleConfigReadModel[] = [
+  {
+    moduleKey: "shop_decoration",
+    scopeType: "platform",
+    state: "requestable",
+    status: "published",
+    version: 1,
+    reason: "基础店铺主页装修入口可先做展示和草稿。",
+  },
+  {
+    moduleKey: "pickup_card",
+    scopeType: "platform",
+    state: "mock_only",
+    status: "published",
+    version: 1,
+    reason: "提货卡保持独立 mock/read-only 入口。",
+  },
+  {
+    moduleKey: "ai_quick_listing",
+    scopeType: "platform",
+    state: "mock_only",
+    status: "published",
+    version: 1,
+    reason: "AI 上架仅允许生成草稿建议。",
+  },
+  {
+    moduleKey: "market_supplies",
+    scopeType: "merchant_type",
+    scopeId: "materials_supplier",
+    state: "requestable",
+    status: "published",
+    version: 1,
+    reason: "物料供应商可申请 B 端物料能力，不进入消费者主链路。",
+  },
+  {
+    moduleKey: "delivery_supplier",
+    scopeType: "emergency",
+    state: "blocked_serial",
+    status: "published",
+    version: 1,
+    reason: "配送供应商真实接单、履约、物流和结算必须串行。",
+  },
+  {
+    moduleKey: "wechat_pay_provider",
+    scopeType: "emergency",
+    state: "blocked_serial",
+    status: "published",
+    version: 1,
+    reason: "真实支付 provider 必须走专用高风险串行任务。",
+  },
+];
 
 export type ChinaModuleEffectiveCapability = {
   moduleKey: string;
@@ -373,6 +505,15 @@ export type ChinaModuleCapabilityView = {
   capabilities: ChinaModuleEffectiveCapability[];
 };
 
+export type ChinaModuleConfigListView = {
+  mode: "read_only_module_config";
+  source: "static_read_model";
+  definitions: ChinaModuleDefinitionReadModel[];
+  configs: ChinaModuleConfigReadModel[];
+  effective: ChinaModuleEffectiveCapability[];
+  note: string;
+};
+
 const scopePriority: Record<ChinaModuleConfigReadModel["scopeType"], number> = {
   platform: 1,
   market: 2,
@@ -382,14 +523,14 @@ const scopePriority: Record<ChinaModuleConfigReadModel["scopeType"], number> = {
 };
 
 export const buildChinaModuleCapabilityView = ({
-  definitions,
-  configs = [],
+  definitions = defaultChinaModuleDefinitions,
+  configs = defaultChinaModuleConfigs,
   context = {},
 }: {
-  definitions: ChinaModuleDefinitionReadModel[];
+  definitions?: ChinaModuleDefinitionReadModel[];
   configs?: ChinaModuleConfigReadModel[];
   context?: ChinaModuleCapabilityView["context"];
-}): ChinaModuleCapabilityView => {
+} = {}): ChinaModuleCapabilityView => {
   const publishedConfigs = configs
     .filter((config) => config.status === "published")
     .sort((left, right) => {
@@ -443,6 +584,31 @@ export const buildChinaModuleCapabilityView = ({
     source: "static_read_model",
     context,
     capabilities,
+  };
+};
+
+export const buildChinaModuleConfigListView = ({
+  definitions = defaultChinaModuleDefinitions,
+  configs = defaultChinaModuleConfigs,
+  context = {},
+}: {
+  definitions?: ChinaModuleDefinitionReadModel[];
+  configs?: ChinaModuleConfigReadModel[];
+  context?: ChinaModuleCapabilityView["context"];
+} = {}): ChinaModuleConfigListView => {
+  const effective = buildChinaModuleCapabilityView({
+    definitions,
+    configs,
+    context,
+  }).capabilities;
+
+  return {
+    mode: "read_only_module_config",
+    source: "static_read_model",
+    definitions,
+    configs,
+    effective,
+    note: CHINA_READ_MODEL_RUNTIME_NOTE,
   };
 };
 

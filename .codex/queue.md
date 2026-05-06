@@ -146,7 +146,7 @@
 1. `market-data-model-implementation-plan`: done
 2. `admin-module-config-read-model`: done
 3. `vendor-draft-product-readwrite-plan`: done
-4. `storefront-real-discovery-bridge`: pending
+4. `storefront-real-discovery-bridge`: done
 
 第十三轮原则：
 
@@ -160,6 +160,16 @@
 - `market-data-model-implementation-plan`: done，已形成市场、商户、档口、商户类型、公告、营业时间和配送 profile 的数据模型落地 PR 拆分。
 - `admin-module-config-read-model`: done，已形成 capability view、draft config、published config、effective config 的只读模型落地 PR 拆分。
 - `vendor-draft-product-readwrite-plan`: done，已形成快速上架草稿、规格模板、AI mock suggestion、审核候选和真实商品创建分离的 PR 拆分。
+- `storefront-real-discovery-bridge`: done，已形成首页、搜索、店铺页从 mock/read-only 过渡到真实 market/seller/category/product read model 的桥接计划。
+
+第十三轮队列已清空。
+
+第十四轮建议：
+
+1. `api-read-model-skeleton`: pending，小范围实现 market/module/draft/discovery 的只读类型和 builder。
+2. `storefront-discovery-view-shape`: pending，先定义 Storefront home/search/seller read model，不重做 UI。
+3. `vendor-draft-product-skeleton`: pending，先实现草稿模型 skeleton，不发布商品。
+4. `admin-config-readonly-api`: pending，先实现 Admin 模块配置只读 API，不保存不生效。
 
 ## Status Rules
 

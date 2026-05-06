@@ -67,3 +67,4 @@
 - 完成 `docs/market-data-model-implementation-plan.md`，把市场、商户、档口、商户类型、公告、营业时间和配送 profile 的真实数据落地拆成 K1-K8。
 - 完成 `docs/admin-module-config-read-model.md`，把 Admin 模块开关从静态 capability contract 到只读配置模型的落地拆成 L1-L7。
 - 完成 `docs/vendor-draft-product-readwrite-plan.md`，把快速上架草稿、规格模板、AI mock suggestion、平台审核候选和真实商品创建拆成 M1-M8。
+- 完成 `docs/storefront-real-discovery-bridge.md`，把 Storefront 首页、搜索、店铺页从 mock/read-only 到真实 market/seller/category/product read model 的桥接拆成 N1-N7。

@@ -4,6 +4,10 @@ import type { Metadata } from "next"
 
 import { ProductCard } from "@/components/organisms"
 import { retrieveChinaDiscovery } from "@/lib/data/china-discovery"
+import {
+  retrieveChinaMarkets,
+  type ChinaMarket,
+} from "@/lib/data/china-markets"
 import { listProducts } from "@/lib/data/products"
 
 export const metadata: Metadata = {
@@ -134,6 +138,24 @@ const fallbackCategoryResults = [
 
 const filters = ["今日到货", "鲜活", "价格优先", "附近档口"]
 
+const readMarketMetadataString = (
+  market: ChinaMarket,
+  key: string,
+  fallback: string
+) => {
+  const value = market.metadata[key]
+
+  return typeof value === "string" && value.trim() ? value : fallback
+}
+
+const toSearchMarketResult = (market: ChinaMarket) => ({
+  name: market.name,
+  city: [market.city, market.district].filter(Boolean).join(" / ") || market.city,
+  hours: readMarketMetadataString(market, "hours", "营业时间待配置"),
+  notice: readMarketMetadataString(market, "notice", "市场公告待配置"),
+  delivery: "市场履约展示，具体自提或配送以商家页和结算页为准",
+})
+
 export default async function SearchPage({
   params,
   searchParams,
@@ -156,12 +178,19 @@ export default async function SearchPage({
   })
   const shopResults =
     discovery.sellers.length > 0 ? discovery.sellers : fallbackShopResults
+  const chinaMarkets = await retrieveChinaMarkets()
+  const readonlyMarketResults = chinaMarkets.items.map(toSearchMarketResult)
   const marketResults =
-    discovery.markets.length > 0 ? discovery.markets : fallbackMarketResults
+    readonlyMarketResults.length > 0
+      ? readonlyMarketResults
+      : discovery.markets.length > 0
+        ? discovery.markets
+        : fallbackMarketResults
   const categoryResults =
     discovery.categories.length > 0
       ? discovery.categories
       : fallbackCategoryResults
+  const activeMarket = marketResults[0]
 
   return (
     <main className="w-screen max-w-[100vw] overflow-x-hidden bg-[#F6F8FB] px-3 pb-24 pt-3 text-primary lg:w-full lg:max-w-none lg:px-8 lg:py-6">
@@ -177,7 +206,7 @@ export default async function SearchPage({
                 “{query}”相关鲜货
               </h1>
               <p className="mt-2 text-md text-secondary">
-                真实商品可进入详情加购；店铺/档口和类目读取只读发现 API，市场先作为配置契约展示。
+                真实商品可进入详情加购；店铺/档口和类目读取只读发现 API，市场上下文读取只读市场 API 或 fallback。
               </p>
             </div>
             <form action={`/${locale}/search`} className="grid gap-2 sm:grid-cols-[minmax(260px,1fr)_auto]">
@@ -216,7 +245,9 @@ export default async function SearchPage({
           </div>
 
           <div className="mt-3 flex items-center justify-between rounded-lg bg-white px-3 py-2 text-[13px] leading-5 shadow-sm">
-            <span className="font-semibold">三门海鲜市场 · 台州城区</span>
+            <span className="font-semibold">
+              {activeMarket.name} · {activeMarket.city}
+            </span>
             <Link href={`/${locale}/categories`} className="text-[#155EEF]">
               切换
             </Link>
@@ -423,7 +454,12 @@ export default async function SearchPage({
 
           <aside className="hidden space-y-4 lg:block">
             <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
-              <p className="label-lg">市场配置</p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="label-lg">市场配置</p>
+                <span className="shrink-0 rounded-sm bg-[#F8FAFC] px-2 py-1 text-[12px] leading-4 text-secondary">
+                  {chinaMarkets.source}
+                </span>
+              </div>
               <div className="mt-3 grid gap-3">
                 {marketResults.map((market) => (
                   <div key={market.name} className="rounded-sm border border-[#E5E7EB] bg-[#F8FAFC] p-3">

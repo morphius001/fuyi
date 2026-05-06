@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@mercurjs/vendor/index.css";
-import App from "@mercurjs/vendor";
+import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

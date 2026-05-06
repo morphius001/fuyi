@@ -141,6 +141,20 @@
 3. `vendor-draft-product-readwrite-plan`: pending，拆分 Vendor 快速上架草稿 API 与规格模板读取，不直接发布真实商品。
 4. `storefront-real-discovery-bridge`: pending，把首页、搜索、店铺页继续从 mock/read-only 过渡到真实市场/商户/商品数据。
 
+第十三轮任务文件准备：
+
+1. `market-data-model-implementation-plan`: pending
+2. `admin-module-config-read-model`: pending
+3. `vendor-draft-product-readwrite-plan`: pending
+4. `storefront-real-discovery-bridge`: pending
+
+第十三轮原则：
+
+- 当前只是准备任务文件，让后续主 agent 或 subagents 能按文件执行。
+- 每个任务默认先做设计、拆分、风险和验收清单。
+- 真正修改 `apps/**` 或 `packages/**` 前，必须由对应任务文件明确允许。
+- 支付、订单、退款、结算、佣金、权限、真实履约和真实 Provider 仍然保持高风险串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

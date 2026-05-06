@@ -6,6 +6,7 @@
 
 - PR A-H 已经合并到 `main`。
 - 当前 `origin/main` 最新合并提交：`a945ceb` `[china] PR H Integration runbooks and env template notes`。
+- PR I post-merge handoff 已合并到 `main`，最新主线提交：`12bbde0` `[china] PR I Post-merge validation handoff`。
 - 合并后验证报告：`docs/post-merge-validation-report.md`。
 - `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
 - 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
@@ -16,6 +17,15 @@
 - 最近验证 worktree: `/home/codex/code/fuyi-pr-h-runbooks-cn`
 - 账本更新 worktree: `/home/codex/code/fuyi-pr-i-postmerge-cn`
 - 目标：MercurJS 中国大陆多商户生鲜/海鲜本地化基础版进入下一阶段数据落地准备
+
+## 下一阶段任务文件
+
+- `.codex/tasks/market-data-model-implementation-plan.md`
+- `.codex/tasks/admin-module-config-read-model.md`
+- `.codex/tasks/vendor-draft-product-readwrite-plan.md`
+- `.codex/tasks/storefront-real-discovery-bridge.md`
+
+下一阶段先做真实数据模型、只读配置模型、草稿商品读写计划和 Storefront discovery bridge 的拆分设计；在任务文件明确允许前，不直接修改 `apps/**` 或 `packages/**`。
 
 ## 已跑通
 

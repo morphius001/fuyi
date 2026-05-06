@@ -6,7 +6,7 @@
   "license": "MIT",
   "exports": {
     "./_generated": {
-      "types": "./.mercur/_generated/index.ts"
+      "types": "./.mercur/index.d.ts"
     }
   },
   "keywords": [
@@ -19,6 +19,8 @@
   ],
   "scripts": {
     "build": "medusa build",
+    "codegen": "mercurjs codegen",
+    "dev:codegen": "bun run codegen",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "medusa start",
     "dev": "medusa develop",

@@ -25,9 +25,24 @@ import {
   createTaxRegionsWorkflow,
   linkSalesChannelsToApiKeyWorkflow,
   linkSalesChannelsToStockLocationWorkflow,
+  updateProductsWorkflow,
+  updateProductVariantsWorkflow,
   updateStoresStep,
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows";
+import { MercurModules, SellerStatus } from "@mercurjs/types";
+
+type ChinaDemoSeller = {
+  id: string;
+  handle: string;
+  status?: string;
+};
+
+type SellerModuleServiceLike = {
+  createSellers(data: Record<string, unknown>): Promise<ChinaDemoSeller>;
+  listSellers(filters?: Record<string, unknown>): Promise<ChinaDemoSeller[]>;
+  updateSellers(data: Record<string, unknown>): Promise<ChinaDemoSeller>;
+};
 
 const updateStoreCurrencies = createWorkflow(
   "update-store-currencies",
@@ -60,12 +75,35 @@ const updateStoreCurrencies = createWorkflow(
 export default async function seedDemoData({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER);
   const link = container.resolve(ContainerRegistrationKeys.LINK);
+  const pg = container.resolve(ContainerRegistrationKeys.PG_CONNECTION);
   const query = container.resolve(ContainerRegistrationKeys.QUERY);
   const fulfillmentModuleService = container.resolve(Modules.FULFILLMENT);
   const salesChannelModuleService = container.resolve(Modules.SALES_CHANNEL);
+  const sellerModuleService = container.resolve(
+    MercurModules.SELLER
+  ) as SellerModuleServiceLike;
   const storeModuleService = container.resolve(Modules.STORE);
+  const createLinkIfMissing = async (
+    linkDefinition: Record<string, Record<string, string>>,
+    label: string
+  ) => {
+    try {
+      await link.create(linkDefinition as never);
+    } catch (error: unknown) {
+      const isExistingLinkError =
+        error instanceof Error &&
+        (error.message.includes("already") ||
+          error.message.includes("Cannot create multiple links"));
 
-  const countries = ["gb", "de", "dk", "se", "fr", "es", "it"];
+      if (!isExistingLinkError) {
+        throw error;
+      }
+
+      logger.info(`${label} already exists, skipping.`);
+    }
+  };
+
+  const countries = ["cn"];
 
   logger.info("Seeding store data...");
   const [store] = await storeModuleService.listStores();
@@ -94,11 +132,8 @@ export default async function seedDemoData({ container }: ExecArgs) {
       store_id: store.id,
       supported_currencies: [
         {
-          currency_code: "eur",
+          currency_code: "cny",
           is_default: true,
-        },
-        {
-          currency_code: "usd",
         },
       ],
     },
@@ -143,8 +178,8 @@ export default async function seedDemoData({ container }: ExecArgs) {
       input: {
         regions: [
           {
-            name: "Europe",
-            currency_code: "eur",
+            name: "China Mainland",
+            currency_code: "cny",
             countries: unassignedCountries,
             payment_providers: ["pp_system_default"],
           },
@@ -158,8 +193,8 @@ export default async function seedDemoData({ container }: ExecArgs) {
       input: {
         regions: [
           {
-            name: "Europe",
-            currency_code: "eur",
+            name: "China Mainland",
+            currency_code: "cny",
             countries,
             payment_providers: ["pp_system_default"],
           },
@@ -411,6 +446,160 @@ export default async function seedDemoData({ container }: ExecArgs) {
       ],
     });
   }
+  logger.info("Seeding China fulfillment data...");
+  const chinaFulfillmentSetName = "China Mainland delivery";
+  const existingChinaFulfillmentSets =
+    await fulfillmentModuleService.listFulfillmentSets({
+      name: chinaFulfillmentSetName,
+    });
+
+  let chinaFulfillmentSet = existingChinaFulfillmentSets[0];
+  if (!chinaFulfillmentSet) {
+    chinaFulfillmentSet = await fulfillmentModuleService.createFulfillmentSets({
+      name: chinaFulfillmentSetName,
+      type: "shipping",
+      service_zones: [
+        {
+          name: "China Mainland",
+          geo_zones: [
+            {
+              country_code: "cn",
+              type: "country",
+            },
+          ],
+        },
+      ],
+    });
+
+    await createLinkIfMissing(
+      {
+        [Modules.STOCK_LOCATION]: {
+          stock_location_id: stockLocation.id,
+        },
+        [Modules.FULFILLMENT]: {
+          fulfillment_set_id: chinaFulfillmentSet.id,
+        },
+      },
+      `Stock location ${stockLocation.id} China fulfillment set link`
+    );
+  }
+
+  const { data: [chinaFulfillmentSetWithZones] } = await query.graph({
+    entity: "fulfillment_set",
+    fields: [
+      "id",
+      "service_zones.id",
+      "service_zones.name",
+      "service_zones.geo_zones.country_code",
+    ],
+    filters: { id: chinaFulfillmentSet.id },
+  });
+
+  let chinaServiceZoneId =
+    chinaFulfillmentSetWithZones?.service_zones?.find((serviceZone) =>
+      serviceZone.geo_zones?.some((geoZone) => geoZone.country_code === "cn")
+    )?.id ?? chinaFulfillmentSetWithZones?.service_zones?.[0]?.id;
+
+  if (!chinaServiceZoneId) {
+    const createdChinaServiceZone = await fulfillmentModuleService.createServiceZones({
+      name: "China Mainland",
+      fulfillment_set_id: chinaFulfillmentSet.id,
+      geo_zones: [
+        {
+          country_code: "cn",
+          type: "country",
+        },
+      ],
+    });
+    chinaServiceZoneId = createdChinaServiceZone.id;
+  }
+
+  const chinaShippingOptionNames = ["本地统一配送", "档口自行配送"];
+  const existingChinaShippingOptions =
+    await fulfillmentModuleService.listShippingOptions({
+      name: chinaShippingOptionNames,
+    });
+
+  if (existingChinaShippingOptions.length < chinaShippingOptionNames.length) {
+    const existingNames = new Set(
+      existingChinaShippingOptions.map((option) => option.name)
+    );
+    const chinaShippingOptionsToCreate = [
+      {
+        name: "本地统一配送",
+        price_type: "flat" as const,
+        provider_id: "manual_manual",
+        service_zone_id: chinaServiceZoneId,
+        shipping_profile_id: shippingProfile.id,
+        type: {
+          label: "统一配送",
+          description: "市场统一配送 mock 选项",
+          code: "local-unified-delivery",
+        },
+        prices: [
+          {
+            currency_code: "cny",
+            amount: 12,
+          },
+          {
+            region_id: region.id,
+            amount: 12,
+          },
+        ],
+        rules: [
+          {
+            attribute: "enabled_in_store",
+            value: "true",
+            operator: "eq" as const,
+          },
+          {
+            attribute: "is_return",
+            value: "false",
+            operator: "eq" as const,
+          },
+        ],
+      },
+      {
+        name: "档口自行配送",
+        price_type: "flat" as const,
+        provider_id: "manual_manual",
+        service_zone_id: chinaServiceZoneId,
+        shipping_profile_id: shippingProfile.id,
+        type: {
+          label: "自行配送",
+          description: "档口自行配送 mock 选项",
+          code: "stall-self-delivery",
+        },
+        prices: [
+          {
+            currency_code: "cny",
+            amount: 0,
+          },
+          {
+            region_id: region.id,
+            amount: 0,
+          },
+        ],
+        rules: [
+          {
+            attribute: "enabled_in_store",
+            value: "true",
+            operator: "eq" as const,
+          },
+          {
+            attribute: "is_return",
+            value: "false",
+            operator: "eq" as const,
+          },
+        ],
+      },
+    ].filter((option) => !existingNames.has(option.name));
+
+    await createShippingOptionsWorkflow(container).run({
+      input: chinaShippingOptionsToCreate,
+    });
+  }
+  logger.info("Finished seeding China fulfillment data.");
   logger.info("Finished seeding fulfillment data.");
 
   // Link sales channel to stock location (idempotent - workflow handles duplicates)
@@ -477,28 +666,223 @@ export default async function seedDemoData({ container }: ExecArgs) {
   }
   logger.info("Finished seeding publishable API key data.");
 
+  logger.info("Seeding China demo seller data...");
+  const demoSellerHandle = "a-hai-xian-huo-dang";
+  const legacyDemoSellerHandle = "ahai-seafood-stall";
+  const chinaDemoSellerMetadata = {
+    market_code: "sanmen-seafood",
+    market_name: "三门海鲜市场",
+    booth_no: "A区 18号",
+    stall_no: "A-018",
+    merchant_type: "seafood_stall",
+    categories: ["梭子蟹", "皮皮虾", "花蛤", "活明虾"],
+    fulfillment_methods: ["市场统一配送", "档口自送", "到店自提"],
+    credentials: ["市场认证档口", "营业执照", "档口号已展示", "检测报告"],
+    headline: "今日鲜活梭子蟹、皮皮虾、花蛤现货",
+    announcement:
+      "今日 06:30 开市，梭子蟹午市补货。鲜活商品价格随到货波动，以商家确认和结算页为准。",
+    live_enabled: true,
+  };
+  const existingSellers = await sellerModuleService.listSellers({
+    handle: demoSellerHandle,
+  });
+  const legacyExistingSellers = existingSellers.length
+    ? []
+    : await sellerModuleService.listSellers({
+        handle: legacyDemoSellerHandle,
+      });
+  const emailExistingSellers =
+    existingSellers.length || legacyExistingSellers.length
+      ? []
+      : await sellerModuleService.listSellers({
+          email: "ahai-seafood@fuyi.local",
+        });
+  let demoSeller =
+    existingSellers[0] ?? legacyExistingSellers[0] ?? emailExistingSellers[0];
+
+  if (!demoSeller) {
+    demoSeller = await sellerModuleService.createSellers({
+      name: "阿海鲜活档",
+      handle: demoSellerHandle,
+      email: "ahai-seafood@fuyi.local",
+      phone: "13800000001",
+      description: "三门海鲜市场本地档口示例数据",
+      currency_code: "cny",
+      status: SellerStatus.OPEN,
+      approved_at: new Date(),
+      metadata: chinaDemoSellerMetadata,
+    });
+  } else if (
+    demoSeller.handle !== demoSellerHandle ||
+    demoSeller.status !== SellerStatus.OPEN
+  ) {
+    demoSeller = await sellerModuleService.updateSellers({
+      id: demoSeller.id,
+      handle: demoSellerHandle,
+      status: SellerStatus.OPEN,
+      approved_at: new Date(),
+    });
+  }
+  await pg("seller").where({ id: demoSeller.id }).update({
+    name: "阿海鲜活档",
+    description: "三门海鲜市场本地档口示例数据",
+    metadata: JSON.stringify(chinaDemoSellerMetadata),
+    updated_at: new Date(),
+  });
+  logger.info("Finished seeding China demo seller data.");
+
+  logger.info("Linking China demo seller to fulfillment data.");
+  await createLinkIfMissing(
+    {
+      [Modules.STOCK_LOCATION]: {
+        stock_location_id: stockLocation.id,
+      },
+      [MercurModules.SELLER]: {
+        seller_id: demoSeller.id,
+      },
+    },
+    `Stock location ${stockLocation.id} seller link`
+  );
+  await createLinkIfMissing(
+    {
+      [MercurModules.SELLER]: {
+        seller_id: demoSeller.id,
+      },
+      [Modules.FULFILLMENT]: {
+        fulfillment_set_id: chinaFulfillmentSet.id,
+      },
+    },
+    `Fulfillment set ${chinaFulfillmentSet.id} seller link`
+  );
+  await createLinkIfMissing(
+    {
+      [Modules.FULFILLMENT]: {
+        shipping_profile_id: shippingProfile.id,
+      },
+      [MercurModules.SELLER]: {
+        seller_id: demoSeller.id,
+      },
+    },
+    `Shipping profile ${shippingProfile.id} seller link`
+  );
+
+  const { data: demoShippingOptions } = await query.graph({
+    entity: "shipping_option",
+    fields: ["id", "service_zone_id"],
+    filters: {
+      name: chinaShippingOptionNames,
+    },
+  });
+  const serviceZoneIds = new Set<string>(
+    demoShippingOptions.map((option) => option.service_zone_id)
+  );
+
+  for (const serviceZoneId of serviceZoneIds) {
+    await createLinkIfMissing(
+      {
+        [MercurModules.SELLER]: {
+          seller_id: demoSeller.id,
+        },
+        [Modules.FULFILLMENT]: {
+          service_zone_id: serviceZoneId,
+        },
+      },
+      `Service zone ${serviceZoneId} seller link`
+    );
+  }
+
+  for (const shippingOption of demoShippingOptions) {
+    await createLinkIfMissing(
+      {
+        [Modules.FULFILLMENT]: {
+          shipping_option_id: shippingOption.id,
+        },
+        [MercurModules.SELLER]: {
+          seller_id: demoSeller.id,
+        },
+      },
+      `Shipping option ${shippingOption.id} seller link`
+    );
+  }
+  logger.info("Finished linking China demo seller fulfillment data.");
+
   logger.info("Seeding product data...");
 
   const productCategoryModule = container.resolve(Modules.PRODUCT);
-  const categoryNames = ["Shirts", "Sweatshirts", "Pants", "Merch"];
-  const existingCategories = await productCategoryModule.listProductCategories({
-    name: categoryNames,
-  });
+  const chinaCategoryDefinitions = [
+    {
+      legacyName: "Shirts",
+      name: "鲜活蟹类",
+      handle: "shirts",
+      description: "梭子蟹、青蟹等鲜活蟹类示例类目。",
+    },
+    {
+      legacyName: "Sweatshirts",
+      name: "鲜活虾类",
+      handle: "sweatshirts",
+      description: "皮皮虾、明虾等鲜活虾类示例类目。",
+    },
+    {
+      legacyName: "Pants",
+      name: "冰鲜鱼类",
+      handle: "pants",
+      description: "小黄鱼、带鱼等冰鲜鱼类示例类目。",
+    },
+    {
+      legacyName: "Merch",
+      name: "贝类净养",
+      handle: "merch",
+      description: "花蛤、蛏子等净养贝类示例类目。",
+    },
+  ];
+  const duplicateChinaCategoryHandles = [
+    "xian-huo-xie-lei",
+    "xian-huo-xia-lei",
+    "bing-xian-yu-lei",
+    "bei-lei-jing-yang",
+  ];
+  await pg("product_category")
+    .whereNull("deleted_at")
+    .whereIn("handle", duplicateChinaCategoryHandles)
+    .update({
+      is_active: false,
+      updated_at: new Date(),
+    });
+
+  const existingCategories = await pg("product_category")
+    .whereNull("deleted_at")
+    .whereIn(
+      "handle",
+      chinaCategoryDefinitions.map((category) => category.handle)
+    )
+    .select("id", "handle", "name");
 
   let categoryResult;
-  if (existingCategories.length === categoryNames.length) {
+  if (
+    chinaCategoryDefinitions.every((category) =>
+      existingCategories.find(
+        (existingCategory) =>
+          existingCategory.handle === category.handle
+      )
+    )
+  ) {
     categoryResult = existingCategories;
     logger.info("Product categories already exist, skipping.");
   } else {
-    const categoriesToCreate = categoryNames.filter(
-      (name) => !existingCategories.find((c) => c.name === name)
+    const categoriesToCreate = chinaCategoryDefinitions.filter(
+      (category) =>
+        !existingCategories.find(
+          (existingCategory) => existingCategory.handle === category.handle
+        )
     );
     const { result: newCategories } = await createProductCategoriesWorkflow(
       container
     ).run({
       input: {
-        product_categories: categoriesToCreate.map((name) => ({
-          name,
+        product_categories: categoriesToCreate.map((category) => ({
+          name: category.name,
+          handle: category.handle,
+          description: category.description,
           is_active: true,
         })),
       },
@@ -506,7 +890,74 @@ export default async function seedDemoData({ container }: ExecArgs) {
     categoryResult = [...existingCategories, ...newCategories];
   }
 
+  const chinaCategoryIdByLegacyName = new Map<string, string>();
+  for (const category of chinaCategoryDefinitions) {
+    const matchingCategory = categoryResult.find(
+      (existingCategory: { id: string; handle?: string; name: string }) =>
+        existingCategory.handle === category.handle ||
+        existingCategory.name === category.legacyName ||
+        existingCategory.name === category.name
+    );
+
+    if (!matchingCategory) {
+      throw new Error(`Missing China demo category ${category.name}`);
+    }
+
+    chinaCategoryIdByLegacyName.set(category.legacyName, matchingCategory.id);
+
+    await pg("product_category").where({ id: matchingCategory.id }).update({
+      name: category.name,
+      handle: category.handle,
+      description: category.description,
+      is_active: true,
+      updated_at: new Date(),
+    });
+  }
+
+  const getChinaCategoryId = (legacyName: string) => {
+    const categoryId = chinaCategoryIdByLegacyName.get(legacyName);
+
+    if (!categoryId) {
+      throw new Error(`Missing China demo category id for ${legacyName}`);
+    }
+
+    return categoryId;
+  };
+
   const productHandles = ["t-shirt", "sweatshirt", "sweatpants", "shorts"];
+  const chinaDemoProductsByHandle: Record<
+    string,
+    {
+      title: string;
+      description: string;
+      amount: number;
+    }
+  > = {
+    "t-shirt": {
+      title: "鲜活梭子蟹",
+      description:
+        "三门海鲜市场阿海鲜活档示例商品。规格、重量和库存以商家确认以及结算页为准。",
+      amount: 68,
+    },
+    sweatshirt: {
+      title: "皮皮虾",
+      description:
+        "本地鲜活皮皮虾示例商品，适合到店自提或商家确认后同城配送。",
+      amount: 48,
+    },
+    sweatpants: {
+      title: "东海小黄鱼",
+      description:
+        "冰鲜小黄鱼示例商品，冷链履约、称重和库存以后续商家确认为准。",
+      amount: 39,
+    },
+    shorts: {
+      title: "花蛤净养装",
+      description:
+        "净养吐沙花蛤示例商品，适合本地即时采购和档口自提。",
+      amount: 12,
+    },
+  };
   const existingProducts = await productCategoryModule.listProducts({
     handle: productHandles,
   });
@@ -516,11 +967,14 @@ export default async function seedDemoData({ container }: ExecArgs) {
   } else {
     await createProductsWorkflow(container).run({
       input: {
+        additional_data: {
+          seller_id: demoSeller.id,
+        },
         products: [
           {
             title: "Medusa T-Shirt",
             category_ids: [
-              categoryResult.find((cat: { name: string }) => cat.name === "Shirts")!.id,
+              getChinaCategoryId("Shirts"),
             ],
             description:
               "Reimagine the feeling of a classic T-shirt. With our cotton T-shirts, everyday essentials no longer have to be ordinary.",
@@ -707,7 +1161,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
           {
             title: "Medusa Sweatshirt",
             category_ids: [
-              categoryResult.find((cat: { name: string }) => cat.name === "Sweatshirts")!.id,
+              getChinaCategoryId("Sweatshirts"),
             ],
             description:
               "Reimagine the feeling of a classic sweatshirt. With our cotton sweatshirt, everyday essentials no longer have to be ordinary.",
@@ -808,7 +1262,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
           {
             title: "Medusa Sweatpants",
             category_ids: [
-              categoryResult.find((cat: { name: string }) => cat.name === "Pants")!.id,
+              getChinaCategoryId("Pants"),
             ],
             description:
               "Reimagine the feeling of classic sweatpants. With our cotton sweatpants, everyday essentials no longer have to be ordinary.",
@@ -909,7 +1363,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
           {
             title: "Medusa Shorts",
             category_ids: [
-              categoryResult.find((cat: { name: string }) => cat.name === "Merch")!.id,
+              getChinaCategoryId("Merch"),
             ],
             description:
               "Reimagine the feeling of classic shorts. With our cotton shorts, everyday essentials no longer have to be ordinary.",
@@ -1015,11 +1469,118 @@ export default async function seedDemoData({ container }: ExecArgs) {
 
   const { data: seededProducts } = await query.graph({
     entity: "product",
-    fields: ["id"],
+    fields: ["id", "handle"],
     filters: {
       handle: productHandles,
     },
   });
+
+  const chinaDemoProductUpdates = seededProducts.flatMap((product) => {
+    const productHandle =
+      typeof product.handle === "string" ? product.handle : "";
+    const demoProduct = chinaDemoProductsByHandle[productHandle];
+
+    if (!demoProduct || typeof product.id !== "string") {
+      return [];
+    }
+
+    return [
+      {
+        id: product.id,
+        title: demoProduct.title,
+        description: demoProduct.description,
+        images: [
+          {
+            url: "/images/local-market/seafood-market-hero.png",
+          },
+        ],
+        thumbnail: "/images/local-market/seafood-market-hero.png",
+        shipping_profile_id: shippingProfile.id,
+        status: ProductStatus.PUBLISHED,
+        sales_channels: [
+          {
+            id: defaultSalesChannel[0].id,
+          },
+        ],
+      },
+    ];
+  });
+
+  if (chinaDemoProductUpdates.length) {
+    await updateProductsWorkflow(container).run({
+      input: {
+        products: chinaDemoProductUpdates,
+        additional_data: {
+          seller_id: demoSeller.id,
+        },
+      },
+    });
+  }
+
+  logger.info("Linking seeded products to China demo seller.");
+  for (const product of seededProducts) {
+    await createLinkIfMissing(
+      {
+        [Modules.PRODUCT]: {
+          product_id: product.id,
+        },
+        [MercurModules.SELLER]: {
+          seller_id: demoSeller.id,
+        },
+      },
+      `Product ${product.id} seller link`
+    );
+  }
+
+  logger.info("Ensuring seeded product variants have CNY prices.");
+  const productHandleById = new Map<string, string>(
+    seededProducts.flatMap((product) => {
+      if (typeof product.id !== "string" || typeof product.handle !== "string") {
+        return [];
+      }
+
+      return [[product.id, product.handle]];
+    })
+  );
+  const { data: seededVariants } = await query.graph({
+    entity: "variant",
+    fields: ["id", "product_id"],
+    filters: {
+      product_id: seededProducts.map((product) => product.id),
+    },
+  });
+
+  if (seededVariants.length) {
+    await updateProductVariantsWorkflow(container).run({
+      input: {
+        product_variants: seededVariants.map((variant) => ({
+          id: variant.id,
+          prices: [
+            {
+              amount:
+                chinaDemoProductsByHandle[
+                  productHandleById.get(
+                    typeof variant.product_id === "string" ? variant.product_id : ""
+                  ) ?? ""
+                ]?.amount ?? 68,
+              currency_code: "cny",
+            },
+            {
+              amount: 10,
+              currency_code: "eur",
+            },
+            {
+              amount: 15,
+              currency_code: "usd",
+            },
+          ],
+        })),
+        additional_data: {
+          seller_id: demoSeller.id,
+        },
+      },
+    });
+  }
 
   logger.info("Seeding inventory levels.");
 
@@ -1027,6 +1588,21 @@ export default async function seedDemoData({ container }: ExecArgs) {
     entity: "inventory_item",
     fields: ["id"],
   });
+
+  logger.info("Linking seeded inventory items to China demo seller.");
+  for (const inventoryItem of inventoryItems) {
+    await createLinkIfMissing(
+      {
+        [Modules.INVENTORY]: {
+          inventory_item_id: inventoryItem.id,
+        },
+        [MercurModules.SELLER]: {
+          seller_id: demoSeller.id,
+        },
+      },
+      `Inventory item ${inventoryItem.id} seller link`
+    );
+  }
 
   const inventoryModule = container.resolve(Modules.INVENTORY);
   const existingLevels = await inventoryModule.listInventoryLevels({

@@ -8,7 +8,7 @@ module.exports = defineConfig({
     disable: true
   },
   projectConfig: {
-    databaseUrl: process.env.DATABASE_URL,
+    databaseUrl: process.env.CODEX_DATABASE_URL || process.env.DATABASE_URL,
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,

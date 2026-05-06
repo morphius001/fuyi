@@ -215,9 +215,11 @@ Risk:
 Scope:
 
 - 设计中国地址字段映射。
-- 设计 Admin/Vendor 地址展示格式。
-- 设计 Storefront checkout 地址表单需求，等待 Storefront 位置确认。
+- 第一轮先完成 Storefront 账户地址、结算地址、账单地址、订单地址展示的中国大陆 UI 基线。
+- Admin/Vendor 地址展示格式后续随商家资质、档口资料和配送设置任务落地。
+- 设计 Storefront checkout 地址表单需求，复用现有 Storefront 地址组件位置。
 - 复用 Medusa 标准字段和 `is_default_shipping` / `is_default_billing`。
+- 区县 / 街道第一阶段暂存到 Medusa 标准 `company` 字段，避免新增模型。
 
 Non-goals:
 
@@ -240,27 +242,209 @@ Risk:
 
 Scope:
 
-- 设计 `MockChatProvider`。
-- 设计 `MockSmsProvider`。
-- 设计 `MockLogisticsProvider`。
+- 设计并实现未注册的 `MockChatProvider`。
+- 设计并实现未注册的 `MockSmsProvider`。
+- 设计并实现未注册的 `MockLogisticsProvider`。
 - 明确 TalkJS、Resend、Algolia、对象存储/CDN 的保留关系。
+- 详见 `docs/mock-service-providers.md`。
 
 Non-goals:
 
 - 不删除 TalkJS、Resend、Algolia。
 - 不接真实腾讯 IM、环信、阿里云短信、快递100、菜鸟。
 - 不改订单、履约、退款、结算状态。
+- 不把 mock provider 注册到 `packages/api/medusa-config.ts`。
 
 Verification:
 
 - `bun run check-types`
 - `bun run lint`
 - provider 单元测试：成功、失败、重复幂等、错误映射。
+
+## Batch 2: 平台化本地市场能力 PR
+
+### PR 8: Admin 市场配置与模块开关骨架
+
+Scope:
+
+- 在 `apps/admin` 中增加市场配置、商户类型准入、模块开关的 UI 骨架。
+- 覆盖市场级、商户级、角色级能力展示。
+- 能力包含店铺装修、手机快速上架、AI 上架草稿、直播状态、物料接单、配送接单、快递打印、提货卡提货。
+- 后续后端 API 合同见 `docs/admin-feature-flag-api-design.md`。
+
+Non-goals:
+
+- 不接真实 API。
+- 不写真实 feature flag。
+- 不修改权限、支付、订单、退款、结算、佣金逻辑。
+
+Verification:
+
+- `bun --cwd apps/admin lint`
+- `bun --cwd apps/admin build`
+- 手动检查后台菜单入口和中文文案。
+
+Risk:
+
+- 中。后续真实接入时必须由后端配置、权限和审计日志共同控制，不能只靠前端隐藏入口。
+
+### PR 8A: Admin 模块开放控制后端落地拆分方案
+
+Scope:
+
+- 新增 `docs/admin-feature-flag-backend-split.md`。
+- 设计平台默认、市场配置、商户/供应方配置、角色能力四层配置模型。
+- 设计 Admin/Vendor/Storefront 能力视图 API。
+- 设计 Admin 草稿、校验、发布、回滚 API，以及幂等、审计日志和降级策略。
+- 明确 Vendor/Storefront 消费能力视图时的安全边界。
+
+Non-goals:
+
+- 不写业务代码。
+- 不修改 `apps/**`、`packages/**`、`package.json`、`bun.lock`。
+- 不替代 RBAC、商户归属、订单/支付/结算权限。
+- 不接真实支付、短信、IM、直播、物流、快递打印或 AI 服务。
+
+Verification:
+
+- `git diff -- docs/admin-feature-flag-backend-split.md docs/china-localization-task-list.md .codex/queue.md docs/china-localization-progress-board.md`
+- 人工确认未修改禁止范围。
+- 人工确认文档覆盖配置层级、能力视图 API、Admin 修改 API、幂等、审计、回滚、Vendor/Storefront 消费方式和安全边界。
+
+Risk:
+
+- 低。当前仅文档设计。
+- 后续实现为中高风险，必须避免把 feature flag 当作权限系统，且不能顺手修改支付、订单、退款、结算、佣金、payout 或权限业务逻辑。
+
+### PR 9: Vendor 手机快速上架与 AI 草稿骨架
+
+Scope:
+
+- 在 `apps/vendor` 中增加移动优先快速上架入口。
+- 增加 AI 一句话生成商品草稿占位。
+- 兼容市场物料供应商商品，如泡沫箱、包装箱、冰袋、冰块。
+
+Non-goals:
+
+- 不接真实 AI、微信、IM、短信、物流。
+- 不真实发布商品。
+- 不改库存、订单、支付、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- `bun --cwd apps/vendor lint`
+- `bun --cwd apps/vendor build`
+- 移动端检查快速上架页面不溢出。
+
+Risk:
+
+- 中。AI 输出必须保持草稿态，必须商户确认后才能进入真实发布链路。
+
+### PR 10: Storefront 店铺/搜索门户细化
+
+Scope:
+
+- 继续把 `apps/storefront` 首页调整为爱采购式找货、找店、找市场门户。
+- 强化搜索、类目、推荐档口、今日鲜货和本地履约信息。
+- 提货卡只保留轻入口。
+- 直播只在店铺/档口卡显示状态。
+
+Non-goals:
+
+- 不接真实直播、客服、物流、支付。
+- 不把物料采购放入消费者首页主链路。
+- 不改 checkout、order、payment、refund、settlement、permission 逻辑。
+
+Verification:
+
+- `bun --cwd apps/storefront build`
+- `git diff --check -- apps/storefront`
+- 桌面和移动端视觉检查 `http://127.0.0.1:3101/cn`。
+
+Risk:
+
+- 低到中。主要风险是消费者首页与商户物料采购链路混淆。
+
+### PR 11: Provider skeleton baseline
+
+Scope:
+
+- 基于 `docs/mock-service-providers.md` 建立 mock-only Provider 类型边界或 skeleton。
+- 覆盖 Chat、SMS、Logistics、Live、AI Listing。
+
+Non-goals:
+
+- 不注册真实 Provider。
+- 不接真实服务。
+- 不改订单、履约、支付、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- 如只改文档：`git diff --check -- docs .codex`
+- 如改 TypeScript：`bun run check-types`、`bun run lint`
+
+Risk:
+
+- 中。Provider skeleton 后续容易被误注册，需要明确 mock-only 边界。
+
+### PR 12: 提货卡三端 mock UI
+
+Scope:
+
+- Storefront 独立提货卡提货入口。
+- Vendor 提货备货/发货/自提核销占位。
+- Admin 卡种/批次/冻结/作废/风控/操作日志占位。
+
+Non-goals:
+
+- 不真实兑换。
+- 不真实扣库存。
+- 不真实生成订单、发货、物流、支付、退款、结算。
+
+Verification:
+
+- 按应用运行 build。
+- 人工确认提货卡没有进入 checkout/payment/coupon/cart discount 链路。
+
+Risk:
+
+- 高。提货卡必须保持权益提货凭证定义，不能误接入支付或优惠券链路。
 - 手动确认现有 Admin/Vendor 能打开。
+- 人工确认 `packages/api/medusa-config.ts` 未接入该 mock 模块。
 
 Risk:
 
 - 中。短信、物流、聊天涉及隐私、频控、对象存储和订单副作用。
+- 当前 mock 模块未注册，默认不改变运行时业务行为。
+
+### PR 13: Vendor 店铺/档口装修 API 设计
+
+Scope:
+
+- 新增 `docs/vendor-shop-decoration-api-design.md`。
+- 设计 Vendor 店铺/档口装修后端 API 和数据模型草案。
+- 覆盖草稿保存、发布审核、预览 token、资质展示、商品分组、公告、配送说明、直播状态、权限边界和审计日志。
+- 明确后续模型、Vendor API、Admin 审核、Storefront 公开读取和模块深化的 PR 拆分。
+
+Non-goals:
+
+- 不修改 `apps/**`、`packages/**`、`package.json`、`bun.lock`。
+- 不写业务代码。
+- 不新增 migration。
+- 不接真实文件上传、真实直播、IM、短信、物流或支付服务。
+- 不修改商品、库存、订单、支付、退款、结算、佣金或权限逻辑。
+
+Verification:
+
+- `git diff -- docs/vendor-shop-decoration-api-design.md docs/china-localization-task-list.md .codex/queue.md docs/china-localization-progress-board.md`
+- `git status --short`
+- 人工确认未修改禁止范围文件。
+- 人工确认文档未写入真实密钥、真实 provider 参数、真实直播推流地址或真实对象存储 URL。
+
+Risk:
+
+- 低。仅文档设计。
+- 后续真实 API 涉及商户数据隔离、公开内容审核和资质脱敏，应拆分为中风险 PR 独立验证。
 
 ## Batch 2: 高风险串行 PR
 
@@ -485,3 +669,299 @@ Risk:
 - Storefront 归属已指向 `apps/storefront`，后续中文化基线应在该目录内进行。
 - Admin/Vendor 中文化基线相对低风险，但能快速暴露 Mercur dashboard 的 i18n 扩展方式。
 - 支付、退款、对账、结算、佣金、权限和 migration 必须等文档和 mock provider 边界清楚后串行推进。
+
+## Batch 3: 提货卡系统 PR
+
+提货卡是消费者预先获得的指定权益提货凭证。用户在线上通过卡号 / 卡密 / 二维码识别可提权益，确认固定或可选提货内容、规格、数量、地址或自提时间后，提交提货申请并生成提货单，由平台或商家履约。
+
+提货卡不是支付方式、优惠券、满减券、折扣券、储值卡、余额或购物车抵扣。所有提货卡任务必须区分 consumer order 与 pickup fulfillment order，并保持普通订单、支付、退款、结算、佣金和权限逻辑隔离。
+
+### PR P0: 提货卡系统后端架构文档
+
+Scope:
+
+- 新增或重写 `docs/pickup-card-architecture.md`。
+- 设计消费者提货流程、三端职责、数据模型、状态机、安全、普通订单/支付关系、验证步骤和风险点。
+- 记录后续 PR 拆分。
+
+Non-goals:
+
+- 不修改 `apps/**`、`packages/**`、`package.json`、`bun.lock`。
+- 不写业务代码。
+- 不改支付、订单、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- `git diff -- docs/pickup-card-architecture.md docs/china-localization-task-list.md`
+- 人工确认仅允许的两个 docs 文件变化。
+
+Risk:
+
+- 低。仅文档设计。
+
+### PR P1: 模型与接口草案
+
+Scope:
+
+- 设计 `PickupCardType`、`PickupCardBatch`、`PickupCardCredential`、`PickupEntitlement`、`PickupRedemption`、`PickupFulfillmentOrder`、`PickupCardOperationLog`、`PickupCardRiskEvent`。
+- 设计 API 草案、workflow 草案、索引、唯一约束、状态机、审计字段和回滚策略。
+- 明确 consumer order 与 pickup fulfillment order 的隔离关系。
+
+Non-goals:
+
+- 不实现真实兑换。
+- 不写 UI。
+- 不修改普通订单、支付、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- 模型字段评审。
+- 状态机表格评审。
+- 幂等键、唯一约束、脱敏字段评审。
+
+Risk:
+
+- 中到高。模型一旦落库会成为长期约束。
+
+### PR P2: Mock UI
+
+Scope:
+
+- Storefront mock 提货入口：输入卡号/卡密/扫码占位、展示 mock 权益、确认地址或自提时间、提交 mock 提货申请。
+- Vendor mock 提货履约列表：备货、发货、自提核销占位。
+- Admin mock 卡种、批次、凭证、风控、日志页面。
+- 文案明确提货卡不是支付、优惠、储值、余额或抵扣。
+
+Non-goals:
+
+- 不连接真实兑换 API。
+- 不写真实卡密校验。
+- 不触发真实库存、订单、支付、物流。
+
+Verification:
+
+- 桌面和移动端检查。
+- 人工确认 mock UI 不进入 checkout/payment/coupon/cart discount 入口。
+- 人工确认 mock 数据不包含真实卡密。
+
+Risk:
+
+- 中。UI 入口和文案容易误导产品边界，必须单独评审。
+
+### PR P3: Mock provider 与 Mock workflow
+
+Scope:
+
+- 建立 mock entitlement lookup、mock risk decision、mock inventory reservation、mock fulfillment handoff。
+- 验证权益识别、提货申请、提货单生成、幂等、失败和异常状态。
+- 保持 mock-only、未接真实资产。
+
+Non-goals:
+
+- 不接真实卡密、库存、物流、支付、退款、结算、佣金。
+- 不创建真实普通订单。
+
+Verification:
+
+- 单元测试：成功、失败、幂等 replay、风控拒绝、库存异常。
+- 人工确认无真实 secrets、无真实 provider SDK。
+
+Risk:
+
+- 中。mock 是后续真实流程的边界验证，不能误接生产路径。
+
+### PR P4: 真实模型与卡密安全
+
+Scope:
+
+- 落地数据库 migration。
+- 实现卡密生成、慢 hash、salt、pepper version 和 constant-time compare。
+- 实现制卡导出安全、短期下载、强权限和操作日志。
+
+Non-goals:
+
+- 不开放消费者真实提货。
+- 不接支付、退款、结算、佣金。
+- 不保存或展示明文卡密查询能力。
+
+Verification:
+
+- migration dry-run。
+- 卡密 hash 单测。
+- 日志和错误脱敏检查。
+- 制卡导出文件生命周期检查。
+
+Risk:
+
+- 高。涉及真实卡资产和秘密凭据。
+
+### PR P5: 真实提货申请流程
+
+Scope:
+
+- Storefront 真实验卡、权益识别、选择内容、地址/自提时间确认、提交提货申请。
+- 创建 `PickupRedemption` 和 `PickupFulfillmentOrder`。
+- 接入风控、幂等和事务/补偿。
+
+Non-goals:
+
+- 不把提货卡接入 checkout。
+- 不创建 payment collection。
+- 不触发普通订单退款、结算、佣金。
+
+Verification:
+
+- 正确卡、错误卡密、重复提交、冻结、作废、过期、已兑换、并发兑换测试。
+- 消费者提货流程端到端手工验证。
+- 人工确认普通订单/支付状态未变化。
+
+Risk:
+
+- 高。直接影响权益核销。
+
+### PR P6: 真实履约流程
+
+Scope:
+
+- Vendor 备货、发货、自提核销。
+- Admin 派发、异常处理、操作日志。
+- 接入 mock logistics provider；真实物流服务必须另起任务。
+
+Non-goals:
+
+- 不直接接真实快递100、菜鸟或其他物流服务。
+- 不让物流状态触发退款、结算、佣金。
+- 不改变普通订单履约逻辑。
+
+Verification:
+
+- 商家数据隔离测试。
+- 自提重复核销测试。
+- 发货、签收、异常关闭测试。
+- 地址、手机号、面单脱敏检查。
+
+Risk:
+
+- 高。涉及履约、商家权限和敏感物流数据。
+
+### PR P7: 风控、审计和运营报表
+
+Scope:
+
+- 风控事件列表。
+- 批次异常预警。
+- 操作日志查询。
+- 人工审核和批量处置。
+
+Non-goals:
+
+- 不改变兑换成功语义。
+- 不改普通订单、支付、退款、结算、佣金、权限逻辑。
+
+Verification:
+
+- 风控命中测试。
+- 批量冻结/作废日志测试。
+- 脱敏和权限检查。
+
+Risk:
+
+- 中到高。涉及资产处置和高敏审计数据。
+
+### PR P8: 提货卡财务/渠道对账设计
+
+Scope:
+
+- 仅在确有线下渠道对账、商家履约费用或补贴结算需求时启动。
+- 独立设计渠道对账和履约费用，不复用普通订单支付事实。
+
+Non-goals:
+
+- 不直接实现资金结算。
+- 不改 seller payout、settlement、commission。
+- 不把提货卡线下售价写入普通订单金额。
+
+Verification:
+
+- 财务边界评审。
+- 与普通 settlement / payout / commission 隔离评审。
+
+Risk:
+
+- 最高。资金域必须在提货流程稳定后串行推进。
+
+## 商品规格模型后续任务
+
+### PR S1: Product Spec Model 文档
+
+Scope:
+
+- 设计商品规格模型、类目规格模板、价格类型、单位分离、前台展示规则、商户快速上架规则和 AI 草稿解析规则。
+- 覆盖海鲜/水产、水果蔬菜、市场物料、种苗、养殖户/种植户供货、外地批发商供货。
+- 仅文档和任务文件，不写业务代码。
+
+Non-goals:
+
+- 不实现数据库迁移。
+- 不实现真实商品发布、库存扣减、订单、支付、物流、结算。
+- 不接真实 AI、微信、IM、短信、物流或支付服务。
+
+Verification:
+
+- 文档明确 `¥68-82/斤` 是价格和计价单位，不是规格。
+- 文档明确销售单位、计价单位、库存单位、包装单位分离。
+- 文档明确 AI 只能生成草稿，必须人工确认发布。
+
+Risk:
+
+- 低。当前只做设计，但会影响后续后台字段、商户上架和前台展示。
+
+### PR S2: Product Spec Template Admin Design
+
+Scope:
+
+- 设计 Admin 商品规格模板配置、字段类型、必填规则、展示规则、版本和审计。
+- 设计 Vendor 读取模板用于手机快速上架和 AI 草稿。
+- 设计 Storefront 裁剪后的规格展示视图。
+- 覆盖海鲜/水产、水果蔬菜、市场物料、种苗、养殖户/种植户和外地批发商。
+
+Non-goals:
+
+- 不实现数据库迁移。
+- 不实现 Admin 写接口。
+- 不实现真实商品发布、库存扣减、订单、支付、退款、物流、结算。
+- 不接真实 AI、微信、IM、短信、物流或支付服务。
+
+Verification:
+
+- 文档明确规格、价格、库存、履约分离。
+- 文档明确模板版本、回滚和审计要求。
+- 文档明确 AI 草稿不能直接发布。
+
+Risk:
+
+- 低。当前只做设计；后续 Admin 写接口和商品创建 workflow 需要单独评审。
+
+### PR S3: Admin Product Spec Template UI
+
+Scope:
+
+- 在 Admin 商品管理菜单增加“规格模板”只读占位页。
+- 展示类目规格模板、单位拆分、字段边界、版本状态和三端读取边界。
+- 所有按钮保持占位或禁用，不接真实后端写入。
+
+Non-goals:
+
+- 不实现模板数据库、migration 或真实 Admin 写接口。
+- 不实现真实商品发布、库存扣减、订单、支付、退款、物流、结算。
+- 不接真实 AI、微信、IM、短信、物流或支付服务。
+
+Verification:
+
+- `bun --cwd apps/admin lint`
+- `bun --cwd apps/admin build`
+- 人工检查 Admin 商品管理菜单下“规格模板”页面。
+
+Risk:
+
+- 低。当前只读 UI；后续模板写接口、版本审计和商品创建 workflow 需单独任务。

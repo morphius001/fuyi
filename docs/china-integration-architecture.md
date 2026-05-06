@@ -19,7 +19,7 @@
 当前本地源码：
 
 - 没有自定义 payment/refund/commission/payout/order split 实现。
-- 没有本地 Chat/SMS/Logistics/Search/Storage provider。
+- 没有已注册的本地 Chat/SMS/Logistics/Search/Storage runtime provider；Chat/SMS/Logistics 仅有未注册的 mock-only 边界用于测试和后续 adapter 设计。
 - 没有真实 TalkJS、Resend、Algolia 运行时代码接入，但项目规则要求后续保留这些路径。
 - `packages/api/src/api` 只有两个 custom route，均返回 200。
 - `packages/api/src/api/middlewares.ts` 的 `routes` 为空。
@@ -69,6 +69,19 @@ External services
   object storage / CDN
 ```
 
+当前已新增未注册的 Chat/SMS/Logistics mock provider 边界，位于：
+
+```text
+packages/api/src/modules/china-service-providers/
+  types.ts
+  utils.ts
+  providers/mock-chat-provider.ts
+  providers/mock-sms-provider.ts
+  providers/mock-logistics-provider.ts
+```
+
+执行说明见 `docs/mock-service-providers.md`。该模块未加入 `packages/api/medusa-config.ts`，因此当前不改变运行时业务路径。
+
 ## Chat Provider
 
 接口草案：
@@ -76,19 +89,19 @@ External services
 ```ts
 interface ChatProvider {
   createOrGetConversation(input: CreateConversationInput): Promise<{
-    conversationId: string
-  }>
+    conversationId: string;
+  }>;
   sendMessage(input: SendMessageInput): Promise<{
-    messageId: string
-    status: "sent" | "failed"
-    reason?: string
-  }>
+    messageId: string;
+    status: "sent" | "failed";
+    reason?: string;
+  }>;
   listMessages(input: ListMessagesInput): Promise<{
-    messages: ChatMessage[]
-  }>
+    messages: ChatMessage[];
+  }>;
   getUnreadCount(input: UnreadCountInput): Promise<{
-    count: number
-  }>
+    count: number;
+  }>;
 }
 ```
 
@@ -113,14 +126,14 @@ TalkJS：
 ```ts
 interface SmsProvider {
   sendSms(input: SendSmsInput): Promise<{
-    providerMessageId: string
-    status: "queued" | "sent" | "failed"
-    reason?: string
-  }>
+    providerMessageId: string;
+    status: "queued" | "sent" | "failed";
+    reason?: string;
+  }>;
   getDeliveryStatus(input: DeliveryStatusInput): Promise<{
-    status: "queued" | "delivered" | "failed"
-    reason?: string
-  }>
+    status: "queued" | "delivered" | "failed";
+    reason?: string;
+  }>;
 }
 ```
 
@@ -151,16 +164,16 @@ Resend：
 ```ts
 interface LogisticsProvider {
   createShipment(input: CreateShipmentInput): Promise<{
-    shipmentId: string
-    trackingNo: string
-    carrierCode: string
-  }>
+    shipmentId: string;
+    trackingNo: string;
+    carrierCode: string;
+  }>;
   getTracking(input: TrackingInput): Promise<{
-    events: TrackingEvent[]
-  }>
+    events: TrackingEvent[];
+  }>;
   cancelShipment(input: CancelShipmentInput): Promise<{
-    canceled: boolean
-  }>
+    canceled: boolean;
+  }>;
 }
 ```
 

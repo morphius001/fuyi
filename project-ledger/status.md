@@ -68,7 +68,8 @@
 
 - `market-api-post-merge-validation`: done，新增 `docs/market-api-post-merge-validation.md`。
 - PR U-X 合并后验证通过：API typecheck、2 组单元测试 8/8、Medusa build。
-- 下一项：`storefront-connect-market-readonly-api-plan`。
+- `storefront-connect-market-readonly-api-plan`: done，新增 `docs/storefront-connect-market-readonly-api-plan.md`，规划 Storefront 分阶段接入 markets API。
+- 第十七轮队列已清空；下一项建议为 `storefront-market-client`。
 
 ## 已跑通
 

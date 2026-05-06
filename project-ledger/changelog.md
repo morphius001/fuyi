@@ -79,3 +79,4 @@
 - 完成 `market-readonly-store-api`，新增 Store 端中国市场只读 API，不影响 checkout 或交易链路。
 - 完成 `admin-market-readonly-api`，新增 Admin 端中国市场只读 API，不保存配置、不改变权限。
 - 完成 `market-api-post-merge-validation`，记录 PR U-X 合并后 API typecheck、市场 read model 单测和 Medusa build 通过。
+- 完成 `storefront-connect-market-readonly-api-plan`，规划 Storefront market client、首页、搜索和店铺页分阶段接入只读 markets API。

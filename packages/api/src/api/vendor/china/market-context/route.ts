@@ -5,7 +5,9 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
 
 import {
+  buildVendorMarketContextFromRepositoryRows,
   buildVendorMarketContextFromSellerRows,
+  readVendorMarketContextRepositoryRows,
   resolveVendorMarketContextSellerId,
   VENDOR_MARKET_CONTEXT_ROUTE_NOTE,
   VendorMarketContextSellerRow,
@@ -33,15 +35,47 @@ export const GET = async (
       "name",
       "metadata",
     )) as VendorMarketContextSellerRow[];
+  const seller = sellers.find((row) => row.id === sellerId);
 
-  const marketContext = buildVendorMarketContextFromSellerRows({
+  if (!seller) {
+    const marketContext = buildVendorMarketContextFromSellerRows({
+      sellerId,
+      marketId,
+      sellers,
+    });
+
+    res.json({
+      marketContext,
+      dataSource: "static_fallback",
+      note: VENDOR_MARKET_CONTEXT_ROUTE_NOTE,
+    });
+    return;
+  }
+
+  const repositoryRows = await readVendorMarketContextRepositoryRows({
+    pg,
     sellerId,
     marketId,
-    sellers,
-  });
+  }).catch(() => undefined);
+  const result = repositoryRows
+    ? await buildVendorMarketContextFromRepositoryRows({
+        seller,
+        sellerId,
+        marketId,
+        rows: repositoryRows,
+      })
+    : {
+        marketContext: buildVendorMarketContextFromSellerRows({
+          sellerId,
+          marketId,
+          sellers,
+        }),
+        dataSource: "static_fallback" as const,
+      };
 
   res.json({
-    marketContext,
+    marketContext: result.marketContext,
+    dataSource: result.dataSource,
     note: VENDOR_MARKET_CONTEXT_ROUTE_NOTE,
   });
 };

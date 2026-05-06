@@ -235,11 +235,12 @@
 第十九轮建议：
 
 1. `admin-market-client`: done，只新增 Admin markets API client，不改页面。
-2. `storefront-home-market-data-bridge`: pending，让首页读取 market client，但保持布局不重做。
+2. `storefront-home-market-data-bridge`: done，让首页读取 market client，但保持布局不重做。
 
 第十九轮进度：
 
 - `admin-market-client`: done，新增 `apps/admin/src/lib/china-admin-market-client.ts`，只封装 `/admin/china/markets*` 读取和空 fallback，不保存、不改权限、不影响运行时业务。
+- `storefront-home-market-data-bridge`: done，首页读取 `retrieveChinaMarkets()`，API 可用时替换市场名称、营业时间、公告和市场切换数据；API 不可用时保留静态 fallback。
 
 ## Status Rules
 

@@ -5,6 +5,7 @@ import { headers } from "next/headers"
 import Script from "next/script"
 
 import { listRegions } from "@/lib/data/regions"
+import { retrieveChinaMarkets } from "@/lib/data/china-markets"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import {
   freshProducts,
@@ -35,6 +36,15 @@ const productImagePositions = [
   "62% 36%",
   "32% 64%",
 ]
+
+const readMarketMetadataString = (
+  metadata: Record<string, unknown> | undefined,
+  key: string
+) => {
+  const value = metadata?.[key]
+
+  return typeof value === "string" && value.trim() ? value : undefined
+}
 
 export async function generateMetadata({
   params,
@@ -130,6 +140,32 @@ export default async function Home({
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Fuyi"
+  const chinaMarkets = await retrieveChinaMarkets()
+  const activeMarket = chinaMarkets.items[0]
+  const activeMarketName = activeMarket?.name ?? marketSwitches[0].name
+  const activeMarketCity = activeMarket
+    ? [activeMarket.city, activeMarket.district].filter(Boolean).join(" / ")
+    : "台州城区"
+  const activeMarketHours =
+    readMarketMetadataString(activeMarket?.metadata, "hours") ??
+    marketSwitches[0].open
+  const activeMarketNotice =
+    readMarketMetadataString(activeMarket?.metadata, "notice") ??
+    "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。"
+  const homeMarketSwitches =
+    chinaMarkets.items.length > 0
+      ? chinaMarkets.items.slice(0, 3).map((market) => ({
+          name: market.name,
+          area:
+            [market.city, market.district].filter(Boolean).join(" / ") ||
+            "本地市场",
+          open:
+            readMarketMetadataString(market.metadata, "hours") ??
+            "营业时间待配置",
+          delivery: "进店查看履约方式",
+          fresh: `${stalls.filter((stall) => stall.market === market.name).length || "多"}家档口`,
+        }))
+      : marketSwitches
 
   return (
     <main className="row-start-2 w-screen max-w-[100vw] overflow-x-hidden bg-[#F6F8FB] pb-16 text-primary lg:w-full lg:max-w-none lg:pb-0">
@@ -171,10 +207,10 @@ export default async function Home({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="truncate text-[18px] font-semibold leading-6 text-primary">
-              三门海鲜市场
+              {activeMarketName}
             </p>
             <p className="mt-0.5 text-[12px] leading-4 text-secondary">
-              开市 06:30-18:30 · 台州城区
+              开市 {activeMarketHours} · {activeMarketCity}
             </p>
           </div>
           <Link
@@ -356,7 +392,7 @@ export default async function Home({
           <div className="grid min-h-[500px] lg:grid-cols-[minmax(0,1fr)_42%]">
             <div className="flex flex-col justify-between gap-6 p-6 xl:p-8">
               <div>
-                <p className="label-md text-[#155EEF]">三门海鲜市场</p>
+                <p className="label-md text-[#155EEF]">{activeMarketName}</p>
                 <h1 className="mt-2 max-w-[820px] text-[26px] font-semibold leading-[34px] tracking-normal md:text-[44px] md:leading-[52px]">
                   今日鲜货开市
                 </h1>
@@ -396,7 +432,7 @@ export default async function Home({
               <div className="grid gap-3 rounded-sm border border-[#E5E7EB] bg-[#F5F7FA] p-4 text-sm text-secondary md:grid-cols-3">
                 <div>
                   <p className="label-md text-primary">开市时间</p>
-                  <p className="mt-1">06:30-18:30</p>
+                  <p className="mt-1">{activeMarketHours}</p>
                 </div>
                 <div>
                   <p className="label-md text-primary">主要品类</p>
@@ -420,9 +456,9 @@ export default async function Home({
                 className="object-cover"
               />
               <div className="absolute bottom-3 left-3 right-3 rounded-sm bg-white/92 p-3 backdrop-blur">
-                <p className="label-lg">三门海鲜市场今日开市</p>
+                <p className="label-lg">{activeMarketName}今日开市</p>
                 <p className="mt-1 text-sm text-secondary">
-                  鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。
+                  {activeMarketNotice}
                 </p>
               </div>
             </div>
@@ -485,7 +521,7 @@ export default async function Home({
               </div>
             </div>
 
-            {marketSwitches.slice(0, 1).map((market) => (
+            {homeMarketSwitches.slice(0, 1).map((market) => (
               <div
                 key={market.name}
                 className="mt-5 rounded-sm bg-[#F8FAFC] p-3 text-sm text-secondary"

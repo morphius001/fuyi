@@ -99,6 +99,7 @@ export type VendorMarketContextView = {
 
 export type VendorMarketContextResponse = {
   marketContext: VendorMarketContextView
+  note?: string
 }
 
 const fallbackNote =
@@ -118,15 +119,18 @@ const buildQueryString = (query?: VendorMarketContextQuery) => {
   const params = new URLSearchParams()
 
   if (query.marketId) {
-    params.set("marketId", query.marketId)
+    params.set("market_id", query.marketId)
   }
 
   if (typeof query.includeAnnouncements === "boolean") {
-    params.set("includeAnnouncements", String(query.includeAnnouncements))
+    params.set("include_announcements", String(query.includeAnnouncements))
   }
 
   if (typeof query.includeDeliveryProfiles === "boolean") {
-    params.set("includeDeliveryProfiles", String(query.includeDeliveryProfiles))
+    params.set(
+      "include_delivery_profiles",
+      String(query.includeDeliveryProfiles)
+    )
   }
 
   const value = params.toString()
@@ -148,6 +152,21 @@ export const createVendorMarketContextFallback = (
   note,
 })
 
+const normalizeVendorMarketContextResponse = (
+  response: VendorMarketContextResponse
+) => {
+  if (!response.marketContext) {
+    return createVendorMarketContextFallback(
+      "Vendor market context API returned no marketContext; using read-only fallback."
+    )
+  }
+
+  return {
+    ...response.marketContext,
+    note: response.marketContext.note || response.note || fallbackNote,
+  }
+}
+
 export const retrieveChinaVendorMarketContext = async (
   query?: VendorMarketContextQuery
 ): Promise<VendorMarketContextView> => {
@@ -166,6 +185,12 @@ export const retrieveChinaVendorMarketContext = async (
 
       return (await response.json()) as VendorMarketContextResponse
     })
-    .then((response) => response.marketContext)
-    .catch(() => createVendorMarketContextFallback())
+    .then(normalizeVendorMarketContextResponse)
+    .catch((error: unknown) =>
+      createVendorMarketContextFallback(
+        error instanceof Error
+          ? `${error.message}; using read-only fallback.`
+          : fallbackNote
+      )
+    )
 }

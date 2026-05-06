@@ -1,11 +1,13 @@
-import { HttpTypes } from "@medusajs/types"
-import { Container } from "@medusajs/ui"
-import { mapKeys } from "lodash"
-import React, { useEffect, useMemo, useState } from "react"
-import { Input } from "@/components/atoms"
-import AddressSelect from "@/components/cells/AddressSelect/AddressSelect"
-import CountrySelect from "@/components/cells/CountrySelect/CountrySelect"
-import { usePathname } from "next/navigation"
+import React, { useEffect, useMemo, useState } from "react";
+
+import { HttpTypes } from "@medusajs/types";
+import { Container } from "@medusajs/ui";
+import { mapKeys } from "lodash";
+import { usePathname } from "next/navigation";
+
+import { Input } from "@/components/atoms";
+import AddressSelect from "@/components/cells/AddressSelect/AddressSelect";
+import CountrySelect from "@/components/cells/CountrySelect/CountrySelect";
 
 const ShippingAddress = ({
   customer,
@@ -13,14 +15,14 @@ const ShippingAddress = ({
   checked,
   onChange,
 }: {
-  customer: HttpTypes.StoreCustomer | null
-  cart: HttpTypes.StoreCart | null
-  checked: boolean
-  onChange: () => void
+  customer: HttpTypes.StoreCustomer | null;
+  cart: HttpTypes.StoreCart | null;
+  checked: boolean;
+  onChange: () => void;
 }) => {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
-  const locale = pathname.split("/")[1]
+  const locale = pathname.split("/")[1];
   const [formData, setFormData] = useState<Record<string, any>>({
     "shipping_address.first_name": cart?.shipping_address?.first_name || "",
     "shipping_address.last_name": cart?.shipping_address?.last_name || "",
@@ -33,16 +35,16 @@ const ShippingAddress = ({
     "shipping_address.province": cart?.shipping_address?.province || "",
     "shipping_address.phone": cart?.shipping_address?.phone || "",
     email: cart?.email || "",
-  })
+  });
 
   // check if customer has saved addresses that are in the current region
   const addressesInRegion = useMemo(
     () =>
       customer?.addresses.filter(
-        (a) => a.country_code && a.country_code === locale
+        (a) => a.country_code && a.country_code === locale,
       ),
-    [customer?.addresses]
-  )
+    [customer?.addresses],
+  );
 
   // Create a stable reference that only changes when address data actually changes
   const addressSnapshot = useMemo(
@@ -63,12 +65,12 @@ const ShippingAddress = ({
       cart?.shipping_address?.phone,
       cart?.email,
       customer?.email,
-    ]
-  )
+    ],
+  );
 
   const setFormAddress = (
     address?: HttpTypes.StoreCartAddress,
-    email?: string
+    email?: string,
   ) => {
     address &&
       setFormData((prevState: Record<string, any>) => ({
@@ -82,49 +84,49 @@ const ShippingAddress = ({
         "shipping_address.country_code": address?.country_code || locale,
         "shipping_address.province": address?.province || "",
         "shipping_address.phone": address?.phone || "",
-      }))
+      }));
 
     email &&
       setFormData((prevState: Record<string, any>) => ({
         ...prevState,
         email: email,
-      }))
-  }
+      }));
+  };
 
   useEffect(() => {
     if (cart?.shipping_address) {
-      setFormAddress(cart.shipping_address, cart.email)
+      setFormAddress(cart.shipping_address, cart.email);
     }
 
     if (cart && !cart.email && customer?.email) {
-      setFormAddress(undefined, customer.email)
+      setFormAddress(undefined, customer.email);
     }
-  }, [addressSnapshot])
+  }, [addressSnapshot]);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLInputElement | HTMLSelectElement
-    >
+    >,
   ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <>
       {customer && (addressesInRegion?.length || 0) > 0 && (
         <Container className="mb-6 flex flex-col gap-y-4 p-0">
           <p className="text-small-regular">
-            {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
+            {`${customer.first_name}，是否使用已保存的收货地址？`}
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4">
+          <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-2">
             <AddressSelect
               addresses={addressesInRegion || []}
               addressInput={
                 mapKeys(formData, (_, key) =>
-                  key.replace("shipping_address.", "")
+                  key.replace("shipping_address.", ""),
                 ) as HttpTypes.StoreCartAddress
               }
               onSelect={setFormAddress}
@@ -132,9 +134,9 @@ const ShippingAddress = ({
           </div>
         </Container>
       )}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Input
-          label="First name"
+          label="收货人名"
           name="shipping_address.first_name"
           autoComplete="given-name"
           value={formData["shipping_address.first_name"]}
@@ -143,7 +145,7 @@ const ShippingAddress = ({
           data-testid="shipping-first-name-input"
         />
         <Input
-          label="Last name"
+          label="收货人姓"
           name="shipping_address.last_name"
           autoComplete="family-name"
           value={formData["shipping_address.last_name"]}
@@ -152,7 +154,43 @@ const ShippingAddress = ({
           data-testid="shipping-last-name-input"
         />
         <Input
-          label="Address"
+          label="手机号"
+          name="shipping_address.phone"
+          autoComplete="tel"
+          pattern="^1[3-9]\\d{9}$|^\\+861[3-9]\\d{9}$"
+          title="请输入中国大陆手机号，如 13800138000 或 +8613800138000。"
+          value={formData["shipping_address.phone"]}
+          onChange={handleChange}
+          required
+          data-testid="shipping-phone-input"
+        />
+        <Input
+          label="省 / 自治区 / 直辖市"
+          name="shipping_address.province"
+          autoComplete="address-level1"
+          value={formData["shipping_address.province"]}
+          onChange={handleChange}
+          data-testid="shipping-province-input"
+        />
+        <Input
+          label="城市"
+          name="shipping_address.city"
+          autoComplete="address-level2"
+          value={formData["shipping_address.city"]}
+          onChange={handleChange}
+          required
+          data-testid="shipping-city-input"
+        />
+        <Input
+          label="区县 / 街道（选填）"
+          name="shipping_address.company"
+          value={formData["shipping_address.company"]}
+          onChange={handleChange}
+          autoComplete="organization"
+          data-testid="shipping-company-input"
+        />
+        <Input
+          label="详细地址"
           name="shipping_address.address_1"
           autoComplete="address-line1"
           value={formData["shipping_address.address_1"]}
@@ -161,30 +199,13 @@ const ShippingAddress = ({
           data-testid="shipping-address-input"
         />
         <Input
-          label="Company"
-          name="shipping_address.company"
-          value={formData["shipping_address.company"]}
-          onChange={handleChange}
-          autoComplete="organization"
-          data-testid="shipping-company-input"
-        />
-        <Input
-          label="Postal code"
+          label="邮政编码"
           name="shipping_address.postal_code"
           autoComplete="postal-code"
           value={formData["shipping_address.postal_code"]}
           onChange={handleChange}
           required
           data-testid="shipping-postal-code-input"
-        />
-        <Input
-          label="City"
-          name="shipping_address.city"
-          autoComplete="address-level2"
-          value={formData["shipping_address.city"]}
-          onChange={handleChange}
-          required
-          data-testid="shipping-city-input"
         />
         <CountrySelect
           name="shipping_address.country_code"
@@ -196,37 +217,19 @@ const ShippingAddress = ({
           data-testid="shipping-country-select"
         />
         <Input
-          label="State / Province"
-          name="shipping_address.province"
-          autoComplete="address-level1"
-          value={formData["shipping_address.province"]}
-          onChange={handleChange}
-          data-testid="shipping-province-input"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4 my-4">
-        <Input
-          label="Email"
+          label="邮箱"
           name="email"
           type="email"
-          title="Enter a valid email address."
+          title="请输入有效邮箱地址。"
           autoComplete="email"
           value={formData.email}
           onChange={handleChange}
           required
           data-testid="shipping-email-input"
         />
-        <Input
-          label="Phone"
-          name="shipping_address.phone"
-          autoComplete="tel"
-          value={formData["shipping_address.phone"]}
-          onChange={handleChange}
-          data-testid="shipping-phone-input"
-        />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ShippingAddress
+export default ShippingAddress;

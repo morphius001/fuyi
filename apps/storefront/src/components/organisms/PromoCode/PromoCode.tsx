@@ -42,12 +42,12 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
       }
 
       if (!result.applied) {
-        toast.info({ title: 'Promotion code not found' });
+        toast.info({ title: '未找到可用优惠码' });
         setHasError(true);
         return;
       }
 
-      toast.success({ title: 'Promotion code applied' });
+      toast.success({ title: '优惠码已使用' });
       setPromoCode('');
       setHasError(false);
     });
@@ -59,9 +59,9 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
     startTransition(async () => {
       try {
         await deletePromotionCode(code);
-        toast.success({ title: 'Promotion code removed' });
+        toast.success({ title: '优惠码已移除' });
       } catch {
-        toast.info({ title: 'Failed to remove promotion code' });
+        toast.info({ title: '移除优惠码失败' });
       }
     });
   };
@@ -81,7 +81,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
       >
         <div className="flex items-center gap-2">
           <DiscountIcon size={20} />
-          <h4 className="label-md">Have promo code?</h4>
+          <h4 className="label-md">使用优惠码</h4>
         </div>
         <CollapseIcon
           size={20}
@@ -110,7 +110,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
                   setHasError(false);
                 }}
                 onKeyDown={handleKeyDown}
-                placeholder="Enter code"
+                placeholder="请输入优惠码"
                 error={hasError}
                 className="h-12 flex-grow"
               />
@@ -122,7 +122,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
                 className="mt-2 h-12"
                 variant="filled"
               >
-                ACTIVATE
+                使用
               </Button>
             </div>
           ) : (

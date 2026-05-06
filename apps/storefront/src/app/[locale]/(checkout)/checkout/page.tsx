@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import PaymentWrapper from '@/components/organisms/PaymentContainer/PaymentWrapper';
 import { CartAddressSection } from '@/components/sections/CartAddressSection/CartAddressSection';
@@ -14,36 +14,58 @@ import { listCartShippingMethods } from '@/lib/data/fulfillment';
 import { listCartPaymentMethods } from '@/lib/data/payment';
 
 export const metadata: Metadata = {
-  title: 'Checkout',
-  description: 'My cart page - Checkout'
+  title: '结账',
+  description: '购物车结账'
 };
 
-export default async function CheckoutPage({}) {
+export default async function CheckoutPage({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const cart = await retrieveCart();
+
+  if (!cart) {
+    redirect(`/${locale}/cart`);
+  }
+
   return (
     <Suspense
-      fallback={<div className="container flex items-center justify-center" data-testid="checkout-page-loading">Loading...</div>}
+      fallback={
+        <div
+          className="container flex items-center justify-center"
+          data-testid="checkout-page-loading"
+        >
+          加载中...
+        </div>
+      }
     >
-      <CheckoutPageContent />
+      <CheckoutPageContent cart={cart} />
     </Suspense>
   );
 }
 
-async function CheckoutPageContent({}) {
-  const cart = await retrieveCart();
-
-  if (!cart) {
-    return notFound();
-  }
-
+async function CheckoutPageContent({
+  cart
+}: {
+  cart: NonNullable<Awaited<ReturnType<typeof retrieveCart>>>;
+}) {
   const shippingMethods = await listCartShippingMethods(cart.id, false);
   const paymentMethods = await listCartPaymentMethods(cart.region?.id ?? '');
   const customer = await retrieveCustomer();
 
   return (
     <PaymentWrapper cart={cart}>
-      <main className="container" data-testid="checkout-page">
+      <main
+        className="container"
+        data-testid="checkout-page"
+      >
         <div className="grid gap-8 lg:grid-cols-11">
-          <div className="flex flex-col gap-4 lg:col-span-6" data-testid="checkout-steps-container">
+          <div
+            className="flex flex-col gap-4 lg:col-span-6"
+            data-testid="checkout-steps-container"
+          >
             <CartAddressSection
               cart={cart}
               customer={customer}
@@ -58,7 +80,10 @@ async function CheckoutPageContent({}) {
             />
           </div>
 
-          <div className="lg:col-span-5" data-testid="checkout-review-container">
+          <div
+            className="lg:col-span-5"
+            data-testid="checkout-review-container"
+          >
             <CartReview cart={cart} />
           </div>
         </div>

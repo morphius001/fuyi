@@ -54,7 +54,7 @@ const Form = () => {
       router.push('/user');
       await transferCart();
     } else {
-      toast.error({ title: res.message || 'An error occurred. Please try again.' });
+      toast.error({ title: res.message || '发生错误，请稍后重试。' });
     }
 
     setIsAuthError(false);
@@ -67,10 +67,10 @@ const Form = () => {
 
   const getAuthMessage = () => {
     if (isSessionExpired) {
-      return 'Your session has expired. Please log in to continue.';
+      return '登录状态已过期，请重新登录。';
     }
     if (isSessionRequired) {
-      return 'Please log in to continue.';
+      return '请先登录后继续操作。';
     }
     return null;
   };
@@ -95,15 +95,15 @@ const Form = () => {
           className="rounded-sm border p-4"
           data-testid="login-form-container"
         >
-          <h1 className="heading-md mb-8 uppercase text-primary">Log in</h1>
+          <h1 className="heading-md mb-8 uppercase text-primary">登录</h1>
           <form
             onSubmit={handleSubmit(submit)}
             data-testid="login-form"
           >
             <div className="space-y-4">
               <LabeledInput
-                label="E-mail"
-                placeholder="Your e-mail address"
+                label="邮箱"
+                placeholder="请输入邮箱地址"
                 error={
                   (errors.email as FieldError) ||
                   (isAuthError ? ({ message: '' } as FieldError) : undefined)
@@ -114,8 +114,8 @@ const Form = () => {
                 })}
               />
               <LabeledInput
-                label="Password"
-                placeholder="Your password"
+                label="密码"
+                placeholder="请输入密码"
                 type="password"
                 error={
                   (errors.password as FieldError) ||
@@ -133,7 +133,7 @@ const Form = () => {
               className="label-md mt-4 block text-right uppercase text-action-on-secondary"
               data-testid="login-forgot-password-link"
             >
-              Forgot your password?
+              忘记密码？
             </Link>
 
             <Button
@@ -141,15 +141,13 @@ const Form = () => {
               disabled={isSubmitting}
               data-testid="login-submit-button"
             >
-              Log in
+              登录
             </Button>
           </form>
         </div>
 
         <div className="rounded-sm border p-4">
-          <h2 className="heading-md mb-4 uppercase text-primary">
-            Don&apos;t have an account yet?
-          </h2>
+          <h2 className="heading-md mb-4 uppercase text-primary">还没有账户？</h2>
           <Link
             href="/register"
             data-testid="login-register-link"
@@ -158,7 +156,7 @@ const Form = () => {
               variant="tonal"
               className="mt-8 flex w-full justify-center uppercase"
             >
-              Create account
+              创建账户
             </Button>
           </Link>
         </div>

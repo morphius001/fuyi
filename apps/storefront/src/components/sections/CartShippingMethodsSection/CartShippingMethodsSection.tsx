@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { Fragment, useEffect, useState, useTransition, type FC } from 'react';
+import { Fragment, useEffect, useState, useTransition, type FC } from "react";
 
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckCircleSolid, ChevronUpDown, Loader } from '@medusajs/icons';
-import type { HttpTypes } from '@medusajs/types';
-import { clx, Heading, Text } from '@medusajs/ui';
-import clsx from 'clsx';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckCircleSolid, ChevronUpDown, Loader } from "@medusajs/icons";
+import type { HttpTypes } from "@medusajs/types";
+import { clx, Heading, Text } from "@medusajs/ui";
+import clsx from "clsx";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Button } from '@/components/atoms';
-import ErrorMessage from '@/components/molecules/ErrorMessage/ErrorMessage';
-import { removeShippingMethod, setShippingMethod } from '@/lib/data/cart';
-import { calculatePriceForShippingOption } from '@/lib/data/fulfillment';
-import { convertToLocale } from '@/lib/helpers/money';
+import { Button } from "@/components/atoms";
+import ErrorMessage from "@/components/molecules/ErrorMessage/ErrorMessage";
+import { removeShippingMethod, setShippingMethod } from "@/lib/data/cart";
+import { calculatePriceForShippingOption } from "@/lib/data/fulfillment";
+import { convertToLocale } from "@/lib/helpers/money";
 
-import { CartShippingMethodRow } from './CartShippingMethodRow';
+import { CartShippingMethodRow } from "./CartShippingMethodRow";
 
 // Extended cart item product type to include seller
 type ExtendedStoreProduct = HttpTypes.StoreProduct & {
@@ -41,7 +41,7 @@ export type StoreCardShippingMethod = HttpTypes.StoreCartShippingOption & {
 };
 
 type ShippingProps = {
-  cart: Omit<HttpTypes.StoreCart, 'items'> & {
+  cart: Omit<HttpTypes.StoreCart, "items"> & {
     items?: CartItem[];
   };
   availableShippingMethods:
@@ -56,9 +56,14 @@ type ShippingProps = {
     | null;
 };
 
-const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShippingMethods }) => {
+const CartShippingMethodsSection: FC<ShippingProps> = ({
+  cart,
+  availableShippingMethods,
+}) => {
   const [isLoadingPrices, setIsLoadingPrices] = useState(false);
-  const [calculatedPricesMap, setCalculatedPricesMap] = useState<Record<string, number>>({});
+  const [calculatedPricesMap, setCalculatedPricesMap] = useState<
+    Record<string, number>
+  >({});
   const [error, setError] = useState<string | null>(null);
   const [isPendingDeleteRow, startTransitionDeleteRow] = useTransition();
 
@@ -66,17 +71,17 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
   const router = useRouter();
   const pathname = usePathname();
 
-  const isOpen = searchParams.get('step') === 'delivery';
-
-  console.log(availableShippingMethods);
+  const isOpen = searchParams.get("step") === "delivery";
 
   const _shippingMethods = availableShippingMethods?.filter(
-    sm => sm.rules?.find((rule: any) => rule.attribute === 'is_return')?.value !== 'true'
+    (sm) =>
+      sm.rules?.find((rule: any) => rule.attribute === "is_return")?.value !==
+      "true",
   );
 
   useEffect(() => {
     const set = new Set<string>();
-    cart.items?.forEach(item => {
+    cart.items?.forEach((item) => {
       if (item?.product?.seller?.id) {
         set.add(item.product.seller.id);
       }
@@ -86,15 +91,15 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
   useEffect(() => {
     if (_shippingMethods?.length) {
       const promises = _shippingMethods
-        .filter(sm => sm.price_type === 'calculated')
-        .map(sm => calculatePriceForShippingOption(sm.id, cart.id));
+        .filter((sm) => sm.price_type === "calculated")
+        .map((sm) => calculatePriceForShippingOption(sm.id, cart.id));
 
       if (promises.length) {
-        Promise.allSettled(promises).then(res => {
+        Promise.allSettled(promises).then((res) => {
           const pricesMap: Record<string, number> = {};
           res
-            .filter(r => r.status === 'fulfilled')
-            .forEach(p => (pricesMap[p.value?.id || ''] = p.value?.amount!));
+            .filter((r) => r.status === "fulfilled")
+            .forEach((p) => (pricesMap[p.value?.id || ""] = p.value?.amount!));
 
           setCalculatedPricesMap(pricesMap);
           setIsLoadingPrices(false);
@@ -104,7 +109,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
   }, [availableShippingMethods, _shippingMethods, cart.id]);
 
   const handleSubmit = () => {
-    router.push(pathname + '?step=payment', { scroll: false });
+    router.push(pathname + "?step=payment", { scroll: false });
   };
 
   const handleSetShippingMethod = async (id: string | null) => {
@@ -117,14 +122,15 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
       setIsLoadingPrices(true);
       const res = await setShippingMethod({
         cartId: cart.id,
-        shippingMethodId: id
+        shippingMethodId: id,
       });
       if (!res.ok) {
         return setError(res.error?.message);
       }
     } catch (error: any) {
       setError(
-        error?.message?.replace('Error setting up the request: ', '') || 'An error occurred'
+        error?.message?.replace("Error setting up the request: ", "") ||
+          "发生错误",
       );
     } finally {
       setIsLoadingPrices(false);
@@ -151,7 +157,9 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
     }
 
     const amount = Number(
-      method.price_type === 'flat' ? method.amount : calculatedPricesMap[method.id]
+      method.price_type === "flat"
+        ? method.amount
+        : calculatedPricesMap[method.id],
     );
 
     if (!isNaN(amount)) {
@@ -162,12 +170,12 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
   }, {});
 
   const handleEdit = () => {
-    router.replace(pathname + '?step=delivery');
+    router.replace(pathname + "?step=delivery");
   };
   const isEditEnabled = !isOpen && !!cart?.shipping_methods?.length;
 
   const filteredGroupedBySellerId = Object.keys(groupedBySellerId || {}).filter(
-    key => groupedBySellerId?.[key]?.[0]?.seller_name
+    (key) => groupedBySellerId?.[key]?.[0]?.seller_name,
   );
 
   return (
@@ -177,57 +185,58 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
           level="h2"
           className="text-3xl-regular flex flex-row items-baseline gap-x-2"
         >
-          {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && <CheckCircleSolid />}
-          Delivery
+          {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && (
+            <CheckCircleSolid />
+          )}
+          配送方式
         </Heading>
         {isEditEnabled && (
           <Text>
-            <Button
-              onClick={handleEdit}
-              variant="tonal"
-            >
-              Edit
+            <Button onClick={handleEdit} variant="tonal">
+              编辑
             </Button>
           </Text>
         )}
       </div>
       {isOpen ? (
         <>
+          <p className="mb-4 text-sm text-secondary">
+            请选择每个商家的配送或自提方式；市场营业时间、商家备货时间和配送范围可能影响可选服务。
+          </p>
           <div className="grid">
             <div data-testid="delivery-options-container">
               <div className="pb-8 pt-2 md:pt-0">
                 {filteredGroupedBySellerId.length === 0
-                  ? 'No shipping options available'
-                  : filteredGroupedBySellerId.map(key => (
-                      <div
-                        key={key}
-                        className="mb-4"
-                      >
-                        <Heading
-                          level="h3"
-                          className="mb-2"
-                        >
+                  ? "暂无可用配送方式，请返回确认收货地址或稍后再试。"
+                  : filteredGroupedBySellerId.map((key) => (
+                      <div key={key} className="mb-4">
+                        <Heading level="h3" className="mb-2">
                           {groupedBySellerId[key][0].seller_name}
                         </Heading>
                         <Listbox
                           value={cart.shipping_methods?.[0]?.id}
-                          onChange={value => {
+                          onChange={(value) => {
                             handleSetShippingMethod(value);
                           }}
                         >
                           <div className="relative">
                             <Listbox.Button
                               className={clsx(
-                                'text-base-regular relative flex h-12 w-full cursor-default items-center justify-between rounded-lg border bg-component-secondary px-4 text-left focus:outline-none focus-visible:border-gray-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-300'
+                                "text-base-regular relative flex h-12 w-full cursor-default items-center justify-between rounded-lg border bg-component-secondary px-4 text-left focus:outline-none focus-visible:border-gray-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-300",
                               )}
                             >
                               {({ open }) => (
                                 <>
-                                  <span className="block truncate">Choose delivery option</span>
+                                  <span className="block truncate">
+                                    选择配送方式
+                                  </span>
                                   <ChevronUpDown
-                                    className={clx('transition-rotate duration-200', {
-                                      'rotate-180 transform': open
-                                    })}
+                                    className={clx(
+                                      "transition-rotate duration-200",
+                                      {
+                                        "rotate-180 transform": open,
+                                      },
+                                    )}
                                   />
                                 </>
                               )}
@@ -249,21 +258,21 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
                                     key={option.id}
                                   >
                                     {option.name}
-                                    {' - '}
-                                    {option.price_type === 'flat' ? (
+                                    {" - "}
+                                    {option.price_type === "flat" ? (
                                       convertToLocale({
                                         amount: option.amount!,
-                                        currency_code: cart?.currency_code
+                                        currency_code: cart?.currency_code,
                                       })
                                     ) : calculatedPricesMap[option.id] ? (
                                       convertToLocale({
                                         amount: calculatedPricesMap[option.id],
-                                        currency_code: cart?.currency_code
+                                        currency_code: cart?.currency_code,
                                       })
                                     ) : isLoadingPrices ? (
                                       <Loader />
                                     ) : (
-                                      '-'
+                                      "-"
                                     )}
                                   </Listbox.Option>
                                 ))}
@@ -275,7 +284,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
                     ))}
                 {!!cart?.shipping_methods?.length && (
                   <div className="flex flex-col">
-                    {cart.shipping_methods?.map(method => (
+                    {cart.shipping_methods?.map((method) => (
                       <CartShippingMethodRow
                         key={method.id}
                         method={method}
@@ -299,7 +308,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
               disabled={!cart.shipping_methods?.[0] || isPendingDeleteRow}
               loading={isLoadingPrices}
             >
-              Continue to payment
+              继续选择支付
             </Button>
           </div>
         </>
@@ -308,18 +317,20 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
           <div className="text-small-regular">
             {cart && (cart.shipping_methods?.length ?? 0) > 0 && (
               <div className="flex flex-col">
-                {cart.shipping_methods?.map(method => (
-                  <div
-                    key={method.id}
-                    className="mb-4 rounded-md border p-4"
-                  >
-                    <Text className="txt-medium-plus text-ui-fg-base mb-1">Method</Text>
+                {cart.shipping_methods?.map((method) => (
+                  <div key={method.id} className="mb-4 rounded-md border p-4">
+                    <Text className="txt-medium-plus text-ui-fg-base mb-1">
+                      配送方式
+                    </Text>
                     <Text className="txt-medium text-ui-fg-subtle">
-                      {method.name}{' '}
+                      {method.name}{" "}
                       {convertToLocale({
                         amount: method.amount!,
-                        currency_code: cart?.currency_code
+                        currency_code: cart?.currency_code,
                       })}
+                    </Text>
+                    <Text className="txt-small text-ui-fg-muted mt-2">
+                      跨商家订单可能分包裹发出，实际时效以商家接单和市场规则为准。
                     </Text>
                   </div>
                 ))}

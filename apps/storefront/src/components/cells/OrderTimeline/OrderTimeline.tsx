@@ -1,10 +1,10 @@
 // OrderTimeline.tsx
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-type OrderStatus = "received" | "preparing" | "shipped" | "delivered"
+type OrderStatus = "received" | "preparing" | "shipped" | "delivered";
 
 interface OrderTimelineProps {
-  currentStatus: OrderStatus
+  currentStatus: OrderStatus;
 }
 
 export const OrderTimeline = ({ currentStatus }: OrderTimelineProps) => {
@@ -13,8 +13,14 @@ export const OrderTimeline = ({ currentStatus }: OrderTimelineProps) => {
     "preparing",
     "shipped",
     "delivered",
-  ]
-  const currentIndex = statuses.findIndex((status) => status === currentStatus)
+  ];
+  const statusLabels: Record<OrderStatus, string> = {
+    received: "已下单",
+    preparing: "商家备货",
+    shipped: "已发货",
+    delivered: "已签收",
+  };
+  const currentIndex = statuses.findIndex((status) => status === currentStatus);
 
   return (
     <div className="w-full pt-6 pb-4">
@@ -35,7 +41,7 @@ export const OrderTimeline = ({ currentStatus }: OrderTimelineProps) => {
 
         {/* Status points */}
         {statuses.map((status, index) => {
-          const isActive = index <= currentIndex
+          const isActive = index <= currentIndex;
 
           return (
             <div
@@ -48,21 +54,21 @@ export const OrderTimeline = ({ currentStatus }: OrderTimelineProps) => {
               <span
                 className={cn(
                   "heading-xs text-primary -translate-y-4 uppercase whitespace-nowrap",
-                  isActive ? "text-[#1B1B1B]" : "text-[#EEEEEE]"
+                  isActive ? "text-[#1B1B1B]" : "text-[#EEEEEE]",
                 )}
               >
-                {status}
+                {statusLabels[status]}
               </span>
               <div
                 className={cn(
                   "size-2.5 rounded-full transition-colors duration-300 -translate-y-2.5",
-                  isActive ? "bg-[#1B1B1B]" : "bg-[#EEEEEE]"
+                  isActive ? "bg-[#1B1B1B]" : "bg-[#EEEEEE]",
                 )}
               />
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
-}
+  );
+};

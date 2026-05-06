@@ -1,46 +1,54 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/atoms"
-import { SearchIcon } from "@/icons"
-import { useSearchParams } from "next/navigation"
-import { useState } from "react"
-import { redirect } from "next/navigation"
-import clsx from "clsx"
+import { useState } from "react";
+
+import clsx from "clsx";
+import { useRouter, useSearchParams } from "next/navigation";
+
+import { Input } from "@/components/atoms";
+import { SearchIcon } from "@/icons";
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 export const NavbarSearch = ({ className }: Props) => {
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const [search, setSearch] = useState(searchParams.get("query") || "")
+  const [search, setSearch] = useState(searchParams.get("query") || "");
 
   const handleSearch = () => {
-    if (search) {
-      redirect(`/categories?query=${search}`)
+    const keyword = search.trim();
+
+    if (keyword) {
+      router.push(`/categories?query=${encodeURIComponent(keyword)}`);
     } else {
-      redirect(`/categories`)
+      router.push(`/categories`);
     }
-  }
+  };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    handleSearch()
-  }
+    e.preventDefault();
+    handleSearch();
+  };
 
   return (
-    <form className={clsx("w-full", className)} method="POST" onSubmit={submitHandler}>
+    <form
+      className={clsx("w-full", className)}
+      method="POST"
+      onSubmit={submitHandler}
+    >
       <Input
         icon={<SearchIcon />}
         onIconClick={handleSearch}
-        iconAriaLabel="Search"
-        placeholder="Search product"
+        iconAriaLabel="搜索"
+        placeholder="搜索商品、品牌、商家"
         value={search}
         changeValue={setSearch}
         type="search"
       />
       <input type="submit" className="hidden" />
     </form>
-  )
-}
+  );
+};

@@ -1,42 +1,36 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/atoms"
-import { BinIcon } from "@/icons"
-import { useCartContext } from "@/components/providers"
-import { toast } from "@/lib/helpers/toast"
+import { Button } from '@/components/atoms';
+import { useCartContext } from '@/components/providers';
+import { BinIcon } from '@/icons';
+import { toast } from '@/lib/helpers/toast';
 
-export const DeleteCartItemButton = ({
-  id,
-  disabled,
-}: {
-  id: string
-  disabled?: boolean
-}) => {
-  const { removeCartItem, isRemovingItem } = useCartContext()
+export const DeleteCartItemButton = ({ id, disabled }: { id: string; disabled?: boolean }) => {
+  const { removeCartItem, isRemovingItem } = useCartContext();
 
   const handleDelete = async (id: string) => {
     try {
-      await removeCartItem(id)
+      await removeCartItem(id);
     } catch (error) {
-      console.error("Error deleting cart item:", error)
+      console.error('Error deleting cart item:', error);
       toast.error({
-        title: "Failed to remove item from cart",
-      })
+        title: '移除商品失败'
+      });
     }
-  }
+  };
 
-  const isBtnDisabled = isRemovingItem || disabled || !id
+  const isBtnDisabled = isRemovingItem || disabled || !id;
 
   return (
     <Button
       variant="text"
-      className="w-10 h-10 flex items-center justify-center p-0"
+      className="flex h-10 w-10 items-center justify-center p-0"
       onClick={() => handleDelete(id)}
       loading={isRemovingItem}
       disabled={isBtnDisabled}
-      aria-label="Remove item from cart"
+      aria-label="从购物车移除商品"
     >
       <BinIcon size={20} />
     </Button>
-  )
-}
+  );
+};

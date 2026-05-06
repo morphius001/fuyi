@@ -44,7 +44,7 @@ export const MobileNavbar = ({
         onClick={() => setIsOpen(true)}
         data-testid="mobile-menu-toggle"
       >
-        <HamburgerMenuIcon />
+        <HamburgerMenuIcon size={22} />
       </div>
       {isOpen && (
         <div
@@ -55,7 +55,7 @@ export const MobileNavbar = ({
             className="flex items-center justify-between border-b p-4"
             data-testid="mobile-menu-header"
           >
-            <h2 className="heading-md uppercase text-primary">Menu</h2>
+            <h2 className="heading-md uppercase text-primary">菜单</h2>
             <IconButton
               icon={<CloseIcon size={20} />}
               onClick={() => closeMenuHandler()}

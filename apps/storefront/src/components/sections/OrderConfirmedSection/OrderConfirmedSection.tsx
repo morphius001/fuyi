@@ -1,40 +1,36 @@
-import OrderDetails from "@/components/organisms/OrderDefails/OrderDetails"
-import OrderShipping from "@/components/organisms/OrderDefails/OrderShipping"
-import OrderTotals from "@/components/organisms/OrderDefails/OrderTotals"
-import OrderItems from "@/components/organisms/OrderItems/OrderItems"
-import { HttpTypes } from "@medusajs/types"
-import { Heading, Text } from "@medusajs/ui"
+import { HttpTypes } from "@medusajs/types";
+import { Heading, Text } from "@medusajs/ui";
 
 export const OrderConfirmedSection = ({
   order,
 }: {
-  order: HttpTypes.StoreOrder
+  order: HttpTypes.StoreOrder;
 }) => {
   return (
     <div className="py-6">
-      <div className="content-container flex flex-col justify-center items-center gap-y-10 max-w-4xl h-full w-full mx-auto">
+      <div className="content-container mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center gap-y-10">
         <div
-          className="flex flex-col gap-4 max-w-4xl h-full bg-white w-full py-10"
+          className="flex h-full w-full max-w-4xl flex-col gap-4 bg-white py-10"
           data-testid="order-complete-container"
         >
-          <div className="text-center w-full">
+          <div className="w-full text-center">
             <Heading
               level="h1"
-              className="flex flex-col gap-y-3 text-ui-fg-base text-3xl mb-4"
+              className="mb-4 flex flex-col gap-y-3 text-3xl text-ui-fg-base"
             >
-              <span>Thank you!</span>
-              <span>Your order was placed successfully.</span>
+              <span>订单已提交</span>
+              <span>请以订单状态和支付服务端通知结果为准。</span>
             </Heading>
 
             <Text>
-              We have sent the order confirmation details to{" "}
+              订单确认信息将发送至{" "}
               <span
-                className="text-ui-fg-medium-plus font-semibold"
+                className="font-semibold text-ui-fg-medium-plus"
                 data-testid="order-email"
               >
                 {order.email}
               </span>
-              .
+              。
             </Text>
           </div>
           {/* <OrderDetails order={order} />
@@ -46,5 +42,5 @@ export const OrderConfirmedSection = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

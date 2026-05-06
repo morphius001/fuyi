@@ -1,82 +1,47 @@
-'use client';
-
-import { useState } from 'react';
-
-import { Button } from '@/components/atoms';
-import { ColorFilter, ConditionFilter, PriceFilter, SizeFilter } from '@/components/cells';
-import { ProductListingActiveFilters } from '@/components/organisms';
-import useFilters from '@/hooks/useFilters';
-import { CloseIcon } from '@/icons';
-import { cn } from '@/lib/utils';
-
 export const ProductSidebar = () => {
-  const [filterModal, setFilterModal] = useState(false);
-  const { clearAllFilters } = useFilters('');
+  const marketFilters = ['三门海鲜市场', '舟山沈家门市场', '宁波路林水产市场'];
+  const fulfillmentFilters = ['今日到货', '门店自提', '同城配送', '冷链可约'];
+  const categoryFilters = ['鲜活水产', '冰鲜冻品', '海产干货', '水果蔬菜'];
 
   return (
     <aside
-      className="relative w-full"
+      className="w-full rounded-sm border bg-ui-bg-base p-4"
       data-testid="sidebar"
     >
-      <div
-        className={cn(
-          'pointer-events-none left-0 top-0 h-full w-full bg-primary blur-sm transition-opacity duration-100 md:relative',
-          filterModal ? 'opacity-1 z-20' : '-z-10 opacity-0 md:z-10 md:opacity-100'
-        )}
-      >
-        {filterModal && (
-          <div className="md:hidden">
-            <div
-              className="mb-4 flex items-center justify-between border-y p-4"
-              data-testid="sidebar-filter-header"
-            >
-              <h3 className="heading-md uppercase">Filters</h3>
-              <div
-                onClick={() => setFilterModal(false)}
-                className="cursor-pointer"
-                data-testid="sidebar-close-button"
-              >
-                <CloseIcon size={20} />
+      <div className="space-y-5" data-testid="sidebar-filters">
+        <div>
+          <h2 className="heading-sm text-primary">市场筛选</h2>
+          <div className="mt-3 space-y-2">
+            {marketFilters.map((label) => (
+              <div key={label} className="rounded-sm bg-ui-bg-subtle px-3 py-2 text-sm text-secondary">
+                {label}
               </div>
-            </div>
-            <div className="mb-4 px-2 md:mb-0">
-              <ProductListingActiveFilters />
-            </div>
+            ))}
           </div>
-        )}
-
-        <div
-          className="no-scrollbar h-[calc(100vh-200px)] overflow-y-scroll px-2 md:h-full md:overflow-y-auto md:px-0"
-          data-testid="sidebar-filters"
-        >
-          <PriceFilter />
-          <SizeFilter />
-          <ColorFilter />
-          <ConditionFilter />
         </div>
-        <div
-          className="absolute bottom-0 left-0 flex w-full items-center gap-2 border-y bg-primary px-4 py-4 md:hidden"
-          data-testid="sidebar-actions"
-        >
-          <Button
-            className="label-sm w-1/2 uppercase"
-            variant="tonal"
-            onClick={() => clearAllFilters()}
-            data-testid="sidebar-clear-all-button"
-          >
-            Clear all
-          </Button>
-          <Button
-            className="label-sm w-1/2 uppercase"
-            onClick={() => setFilterModal(false)}
-            data-testid="sidebar-view-listings-button"
-          >
-            View 222 listings
-          </Button>
+        <div>
+          <h2 className="heading-sm text-primary">履约方式</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {fulfillmentFilters.map((label) => (
+              <span key={label} className="rounded-sm bg-ui-bg-subtle px-2 py-1 text-xs text-secondary">
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="heading-md absolute top-4 z-10 w-full rounded-lg bg-primary p-8 text-center shadow-md">
-        Set your Algolia ID and configure filters to enable product filtering
+        <div>
+          <h2 className="heading-sm text-primary">类目</h2>
+          <div className="mt-3 space-y-2">
+            {categoryFilters.map((label) => (
+              <div key={label} className="rounded-sm bg-ui-bg-subtle px-3 py-2 text-sm text-secondary">
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-sm border border-ui-border-base bg-ui-bg-subtle p-3 text-xs text-secondary">
+          当前为本地市场筛选占位；后续接 Algolia 或 Store API 时，不改变支付、订单或库存逻辑。
+        </div>
       </div>
     </aside>
   );

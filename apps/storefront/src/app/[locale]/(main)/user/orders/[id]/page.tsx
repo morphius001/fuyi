@@ -1,24 +1,24 @@
-import { UserNavigation } from "@/components/molecules"
-import { retrieveCustomer } from "@/lib/data/customer"
-import { Button } from "@/components/atoms"
-import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
-import { ArrowLeftIcon } from "@/icons"
-import { redirect } from "next/navigation"
-import { format } from "date-fns"
-import { retrieveOrderSet } from "@/lib/data/orders"
-import { OrderDetailsSection } from "@/components/sections/OrderDetailsSection/OrderDetailsSection"
+import { UserNavigation } from "@/components/molecules";
+import { retrieveCustomer } from "@/lib/data/customer";
+import { Button } from "@/components/atoms";
+import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink";
+import { ArrowLeftIcon } from "@/icons";
+import { redirect } from "next/navigation";
+import { format } from "date-fns";
+import { retrieveOrderSet } from "@/lib/data/orders";
+import { OrderDetailsSection } from "@/components/sections/OrderDetailsSection/OrderDetailsSection";
 
 export default async function UserPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params
+  const { id } = await params;
 
-  const user = await retrieveCustomer()
-  const orderSet = await retrieveOrderSet(id)
+  const user = await retrieveCustomer();
+  const orderSet = await retrieveOrderSet(id);
 
-  if (!user) return redirect("/login")
+  if (!user) return redirect("/login");
 
   return (
     <main className="container">
@@ -31,15 +31,15 @@ export default async function UserPage({
               className="label-md text-action-on-secondary uppercase flex items-center gap-2"
             >
               <ArrowLeftIcon className="size-4" />
-              All orders
+              返回订单列表
             </Button>
           </LocalizedClientLink>
           <div className="sm:flex items-center justify-between">
             <h1 className="heading-md uppercase my-8">
-              Order set #{orderSet.display_id}
+              合并订单 #{orderSet.display_id}
             </h1>
             <p className="label-md text-secondary">
-              Order date:{" "}
+              下单时间：{" "}
               <span className="text-primary">
                 {format(orderSet.created_at || "", "yyyy-MM-dd")}
               </span>
@@ -49,5 +49,5 @@ export default async function UserPage({
         </div>
       </div>
     </main>
-  )
+  );
 }

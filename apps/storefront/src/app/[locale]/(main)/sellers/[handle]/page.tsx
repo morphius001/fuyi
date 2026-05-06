@@ -3,6 +3,11 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 import { ProductCard } from "@/components/organisms"
+import {
+  retrieveChinaMarketDetail,
+  retrieveChinaMarkets,
+  type ChinaMarket,
+} from "@/lib/data/china-markets"
 import { retrieveChinaSeller } from "@/lib/data/china-sellers"
 import { listProducts } from "@/lib/data/products"
 
@@ -177,6 +182,15 @@ const readMetadataList = (
   return undefined
 }
 
+const readMarketMetadataText = (
+  market: ChinaMarket | undefined,
+  key: string
+) => {
+  const value = market?.metadata[key]
+
+  return typeof value === "string" && value.trim() ? value : undefined
+}
+
 const resolveShopProfile = (
   base: StaticShopProfile,
   seller?: {
@@ -250,6 +264,22 @@ export default async function SellerPage({
     shopProfiles["a-hai-xian-huo-dang"]
   const sellerResponse = await retrieveChinaSeller(handle)
   const shop = resolveShopProfile(baseShop, sellerResponse?.seller)
+  const chinaMarkets = await retrieveChinaMarkets()
+  const matchedMarket = chinaMarkets.items.find(
+    (market) => market.name === shop.market
+  )
+  const marketDetail = matchedMarket
+    ? await retrieveChinaMarketDetail(matchedMarket.slug)
+    : undefined
+  const marketHours =
+    readMarketMetadataText(matchedMarket, "hours") ?? shop.metrics[3][0]
+  const marketNotice =
+    readMarketMetadataText(matchedMarket, "notice") ??
+    "市场公告后续由后台市场配置维护。"
+  const marketDeliveryProfiles = marketDetail?.deliveryProfiles ?? []
+  const marketDeliveryNames = marketDeliveryProfiles.map(
+    (profile) => profile.displayName
+  )
   const sellerProductIds = sellerResponse?.product_ids ?? []
   const {
     response: { products: realProducts, count: realProductCount },
@@ -326,6 +356,11 @@ export default async function SellerPage({
                 ? "配送/自提来自商家只读配置，真实履约仍以结算页和商家确认为准。"
                 : "市场统一配送为市场能力，商家可自行选择是否加入。"}
             </p>
+            {marketDeliveryNames.length > 0 ? (
+              <p className="mt-1 text-[11px] leading-4 text-secondary">
+                市场能力：{marketDeliveryNames.join("、")}
+              </p>
+            ) : null}
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2">
             <div className="rounded-lg bg-[#F5F7FA] p-2">
@@ -351,6 +386,9 @@ export default async function SellerPage({
 
         <div className="mt-3 rounded-lg border border-[#FEF3C7] bg-[#FFFBEB] px-3 py-2 text-[12px] leading-5 text-[#92400E] shadow-sm">
           {shop.announcement}
+          <p className="mt-1">
+            市场公告：{marketNotice}
+          </p>
         </div>
 
         <nav className="sticky top-0 z-20 mt-3 flex gap-2 border-b border-[#E5E7EB] bg-[#F6F8FB] py-2">
@@ -545,8 +583,8 @@ export default async function SellerPage({
                 <p className="label-lg">{shop.market}</p>
                 <p className="mt-1 text-sm text-secondary">
                   {shop.dataSource === "seller_metadata"
-                    ? "档口信息和履约方式来自商家只读配置。"
-                    : "档口信息、营业时间和履约方式可由后台维护。"}
+                    ? "档口信息和履约方式来自商家只读配置。市场上下文为只读展示。"
+                    : "档口信息、营业时间和履约方式可由后台维护。市场上下文为只读展示。"}
                 </p>
               </div>
             </div>
@@ -663,10 +701,29 @@ export default async function SellerPage({
                 </p>
               ))}
             </div>
+            {marketDeliveryNames.length > 0 ? (
+              <div className="mt-3 grid gap-2 border-t border-[#E5E7EB] pt-3">
+                <p className="text-sm font-semibold text-primary">
+                  市场展示能力
+                </p>
+                {marketDeliveryProfiles.map((profile) => (
+                  <p
+                    key={profile.id}
+                    className="rounded-sm bg-[#EFF6FF] px-3 py-2 text-sm text-[#1D4ED8]"
+                  >
+                    {profile.displayName}
+                    {profile.serviceAreaNote ? ` · ${profile.serviceAreaNote}` : ""}
+                  </p>
+                ))}
+              </div>
+            ) : null}
             <p className="mt-3 text-sm text-secondary">
               {shop.dataSource === "seller_metadata"
                 ? "当前展示来自商家 metadata，只读展示不改变配送服务或运费。"
                 : "当前为静态回退展示，后续应由商家配置读取。"}
+            </p>
+            <p className="mt-2 text-sm text-secondary">
+              市场营业时间：{marketHours}；市场配送能力仅展示，不影响结算页配送方式。
             </p>
           </div>
           <div className="rounded-sm border border-[#F59E0B] bg-[#FFFBEB] p-4 shadow-sm">

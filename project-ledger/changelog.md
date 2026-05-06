@@ -71,3 +71,4 @@
 - 完成 `api-read-model-skeleton`，新增 API 只读 read model builder 和单元测试，现有 discovery route 改为调用 builder，保持不触碰交易链路。
 - 完成 `storefront-discovery-view-shape`，新增 Storefront home/search/seller view shape builder 和单元测试，不修改前端 UI。
 - 完成 `vendor-draft-product-skeleton`，新增未注册 Vendor product draft skeleton service 和单元测试，不创建真实商品。
+- 完成 `admin-config-readonly-api`，新增 Admin 模块配置只读 GET endpoints 和默认 static read model，不提供写入。

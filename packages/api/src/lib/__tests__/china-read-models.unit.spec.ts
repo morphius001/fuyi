@@ -1,6 +1,7 @@
 import {
   buildChinaDiscoveryReadModel,
   buildChinaModuleCapabilityView,
+  buildChinaModuleConfigListView,
   buildChinaStorefrontHomeView,
   buildChinaStorefrontSearchView,
   buildChinaStorefrontSellerView,
@@ -101,6 +102,26 @@ describe("China read model builders", () => {
         runtimeEnabled: false,
       }),
     ]);
+  });
+
+  it("exposes default Admin module configs as read-only static view", () => {
+    const listView = buildChinaModuleConfigListView();
+
+    expect(listView).toMatchObject({
+      mode: "read_only_module_config",
+      source: "static_read_model",
+    });
+    expect(listView.definitions.map((definition) => definition.key)).toContain(
+      "wechat_pay_provider"
+    );
+    expect(
+      listView.effective.find(
+        (capability) => capability.moduleKey === "wechat_pay_provider"
+      )
+    ).toMatchObject({
+      state: "blocked_serial",
+      runtimeEnabled: false,
+    });
   });
 
   it("keeps vendor product draft read models separate from product creation", () => {

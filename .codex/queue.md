@@ -195,13 +195,14 @@
 第十六轮建议：
 
 1. `market-read-model-module-skeleton`: done，新增市场 read model module skeleton，不新增 migration、不接 checkout。
-2. `market-read-model-static-adapter`: pending，把当前静态市场/seller/category discovery 包装成 adapter。
+2. `market-read-model-static-adapter`: done，把当前静态市场/seller/category discovery 包装成 adapter。
 3. `market-readonly-store-api`: pending，新增 Store 只读 markets API。
 4. `admin-market-readonly-api`: pending，新增 Admin 只读 markets API。
 
 第十六轮进度：
 
 - `market-read-model-module-skeleton`: done，新增未注册 China market read model skeleton service 和单元测试。
+- `market-read-model-static-adapter`: done，新增 static adapter，将默认市场和 seller metadata 转为 read model seed，不影响 checkout。
 
 ## Status Rules
 

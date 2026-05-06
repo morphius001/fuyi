@@ -59,7 +59,8 @@
 ## 第十六轮进度
 
 - `market-read-model-module-skeleton`: done，新增未注册 `packages/api/src/modules/china-market-read-model/**` skeleton，覆盖市场、档口关系、商户角色、公告、营业时间和配送 profile 的只读 service。
-- 下一项：`market-read-model-static-adapter`。
+- `market-read-model-static-adapter`: done，新增 static adapter，把默认市场和 seller metadata 转成 market read model seed；仍不新增 route、不接 migration、不影响 checkout。
+- 下一项：`market-readonly-store-api`。
 
 ## 已跑通
 

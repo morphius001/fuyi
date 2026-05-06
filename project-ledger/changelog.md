@@ -75,3 +75,4 @@
 - 完成 `api-post-merge-validation`，记录 PR O-R 合并后 API typecheck、单元测试和 Medusa build 通过。
 - 完成 `real-model-next-pr-plan`，固化下一轮真实模型/API route 的 PR U-Z 拆分和风险门禁。
 - 完成 `market-read-model-module-skeleton`，新增未注册 China market read model skeleton service 和单元测试，不新增 migration 或 route。
+- 完成 `market-read-model-static-adapter`，新增 static adapter，将默认市场和 seller metadata 包装成 market read model seed。

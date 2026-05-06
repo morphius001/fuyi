@@ -63,3 +63,4 @@
 - PR A-H 已拆分合并到 `main`，覆盖 Codex 工作流、API 只读契约、Storefront、Admin、Vendor、Mock provider skeleton、架构文档和本地运行手册。
 - 合并后验证通过：API typecheck/build、Mock provider unit test、Admin lint/build、Vendor lint/build、Storefront build。
 - 新增 `docs/post-merge-validation-report.md`，记录已合并 PR、验证命令、残留 warning、临时 WSL GitHub 代理清理状态和下一阶段高风险边界。
+- 新增第十三轮任务文件：市场数据模型落地计划、Admin 模块开关只读模型、Vendor 快速上架草稿读写计划、Storefront 真实发现数据桥接计划。

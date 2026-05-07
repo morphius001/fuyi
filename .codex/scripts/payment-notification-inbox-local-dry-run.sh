@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 pg_host="${CODEX_PG_HOST:-127.0.0.1}"
 pg_port="${CODEX_PG_PORT:-15432}"
 pg_user="${CODEX_PG_USER:-$USER}"
 db_name="${CODEX_DRY_RUN_DB:-fuyi_payment_notification_inbox_dry_run_$(date +%Y%m%d%H%M%S)}"
+migration_file="$root/packages/api/src/modules/china-payment-notification/migrations/Migration20260507000200.ts"
+work_dir="${TMPDIR:-/tmp}/fuyi-payment-notification-inbox-dry-run"
+up_sql="$work_dir/up.sql"
+down_sql="$work_dir/down.sql"
 created_db=0
+
+mkdir -p "$work_dir"
 
 case "$db_name" in
   fuyi_payment_notification_inbox_dry_run_*) ;;
@@ -47,11 +54,43 @@ command -v dropdb >/dev/null || {
   exit 1
 }
 
+command -v node >/dev/null || {
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  if [ -s "$NVM_DIR/nvm.sh" ]; then
+    # shellcheck source=/dev/null
+    source "$NVM_DIR/nvm.sh"
+    nvm use >/tmp/fuyi-nvm-use-payment-inbox-dry-run.log
+  fi
+}
+
+command -v node >/dev/null || {
+  echo "node not found after loading nvm. Cannot extract migration SQL." >&2
+  exit 1
+}
+
 pg_isready -h "$pg_host" -p "$pg_port" -U "$pg_user" >/dev/null || {
   echo "PostgreSQL is not ready at ${pg_host}:${pg_port}." >&2
   echo "Start local services with .codex/scripts/start-dev.sh start, then rerun this script." >&2
   exit 1
 }
+
+node - "$migration_file" "$up_sql" "$down_sql" <<'NODE'
+const fs = require("fs")
+
+const [, , migrationFile, upSql, downSql] = process.argv
+const source = fs.readFileSync(migrationFile, "utf8")
+const blocks = Array.from(source.matchAll(/this\.addSql\(`([\s\S]*?)`\)/g)).map(
+  (match) => match[1].trim(),
+)
+
+if (blocks.length !== 9) {
+  throw new Error(`Expected 9 migration SQL blocks, got ${blocks.length}`)
+}
+
+const downCount = 2
+fs.writeFileSync(upSql, `${blocks.slice(0, -downCount).join("\n\n")}\n`)
+fs.writeFileSync(downSql, `${blocks.slice(-downCount).join("\n")}\n`)
+NODE
 
 echo "CREATE disposable dry-run database: $db_name"
 createdb -h "$pg_host" -p "$pg_port" -U "$pg_user" "$db_name"
@@ -59,100 +98,8 @@ created_db=1
 
 psql_base=(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -v ON_ERROR_STOP=1)
 
-echo "APPLY inbox model up SQL"
-"${psql_base[@]}" >/dev/null <<'SQL'
-create table payment_notification_inbox (
-  id text primary key,
-  provider text not null,
-  event_id text,
-  event_type text not null,
-  idempotency_key text not null,
-  merchant_order_ref text not null,
-  payment_session_id text,
-  provider_transaction_id text,
-  provider_refund_id text,
-  amount_value integer not null,
-  currency text not null default 'CNY',
-  signature_status text not null,
-  raw_payload_digest text not null,
-  raw_payload_ref text,
-  processing_status text not null,
-  retry_count integer not null default 0,
-  last_error_code text,
-  last_error_message text,
-  occurred_at timestamptz,
-  received_at timestamptz not null default now(),
-  processed_at timestamptz,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  constraint payment_notification_inbox_provider_check
-    check (provider in ('mock_china_pay', 'alipay', 'wechat_pay')),
-  constraint payment_notification_inbox_event_type_check
-    check (event_type in (
-      'payment.succeeded',
-      'payment.closed',
-      'payment.failed',
-      'refund.succeeded',
-      'refund.failed',
-      'reconciliation.adjusted'
-    )),
-  constraint payment_notification_inbox_currency_check
-    check (currency = 'CNY'),
-  constraint payment_notification_inbox_signature_status_check
-    check (signature_status in ('verified', 'invalid', 'missing', 'unsupported')),
-  constraint payment_notification_inbox_processing_status_check
-    check (processing_status in (
-      'received',
-      'verified',
-      'processing',
-      'processed',
-      'retryable_failed',
-      'terminal_failed',
-      'ignored_duplicate'
-    )),
-  constraint payment_notification_inbox_retry_count_check
-    check (retry_count >= 0),
-  constraint payment_notification_inbox_unique_idempotency
-    unique (provider, idempotency_key)
-);
-
-create index payment_notification_inbox_event_idx
-  on payment_notification_inbox (provider, event_id);
-
-create index payment_notification_inbox_merchant_ref_idx
-  on payment_notification_inbox (merchant_order_ref);
-
-create index payment_notification_inbox_status_received_idx
-  on payment_notification_inbox (processing_status, received_at);
-
-create table payment_notification_event_log (
-  id text primary key,
-  inbox_id text not null references payment_notification_inbox(id) on delete cascade,
-  action text not null,
-  actor_type text not null,
-  message text not null,
-  metadata jsonb not null default '{}'::jsonb,
-  created_at timestamptz not null default now(),
-  constraint payment_notification_event_log_action_check
-    check (action in (
-      'received',
-      'verified',
-      'dedupe_hit',
-      'handler_started',
-      'processed',
-      'retry_scheduled',
-      'failed'
-    )),
-  constraint payment_notification_event_log_actor_type_check
-    check (actor_type in ('system', 'provider', 'operator'))
-);
-
-create index payment_notification_event_log_inbox_created_idx
-  on payment_notification_event_log (inbox_id, created_at);
-
-create index payment_notification_event_log_action_created_idx
-  on payment_notification_event_log (action, created_at);
-SQL
+echo "APPLY inbox migration skeleton up SQL"
+"${psql_base[@]}" -f "$up_sql" >/dev/null
 
 echo "CHECK tables and fixtures"
 "${psql_base[@]}" >/dev/null <<'SQL'
@@ -256,11 +203,8 @@ select
   (select count(*) from payment_notification_event_log) as log_rows;
 "
 
-echo "APPLY inbox model down SQL"
-"${psql_base[@]}" >/dev/null <<'SQL'
-drop table if exists payment_notification_event_log;
-drop table if exists payment_notification_inbox;
-SQL
+echo "APPLY inbox migration skeleton down SQL"
+"${psql_base[@]}" -f "$down_sql" >/dev/null
 
 echo "CHECK rollback removed dry-run tables"
 "${psql_base[@]}" >/dev/null <<'SQL'
@@ -279,4 +223,4 @@ begin
 end $$;
 SQL
 
-echo "PASS payment notification inbox local dry-run completed and disposable database will be dropped."
+echo "PASS payment notification inbox migration skeleton local dry-run completed and disposable database will be dropped."

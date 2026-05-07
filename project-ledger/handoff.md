@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 14:30 Asia/Shanghai
+更新时间：2026-05-07 14:46 Asia/Shanghai
 
 ## 当前上下文
 
@@ -108,3 +108,11 @@
 - 验证通过：`bunx tsc --noEmit -p packages/api/tsconfig.json`；本地 dry-run 脚本再次通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507134145` 已删除并复查无残留。
 - 未修改 `packages/api/medusa-config.ts`，未注册生产 migration，未接 webhook/provider runtime，未改变交易状态。
 - 下一步如果继续，应做 repository/test harness，或把 dry-run 脚本改为从 migration skeleton 提取 SQL；仍不得连接预发/生产数据库。
+
+## Round 45 更新
+
+- `payment-inbox-dry-run-from-skeleton` 已完成。
+- `.codex/scripts/payment-notification-inbox-local-dry-run.sh` 现在从 `Migration20260507000200.ts` 提取 up/down SQL，再应用到 disposable DB。
+- 验证通过：本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507134820` 跑通 up/down、fixtures、唯一约束、CNY 约束、event log action 约束和 rollback；临时库已删除并复查无残留。
+- 未注册 migration，未接 runtime，未改变交易状态。
+- 下一步如果继续，应考虑 repository/test harness；仍不接 webhook runtime 或真实 Provider。

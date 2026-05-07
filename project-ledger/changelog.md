@@ -102,3 +102,4 @@
 - 完成 `payment-notification-idempotency-harness`，新增本地验证脚本，串联 mock payment notification 单测、inbox migration skeleton dry-run、未注册检查和 staged 禁止范围检查。
 - 完成 `payment-notification-edge-case-tests`，补齐 mock payment notification missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测。
 - 完成 `payment-notification-inbox-repository`，新增未注册 in-memory inbox repository 和单元测试，覆盖通知接收、幂等 replay、retryable failure 和 invalid signature audit；未连接数据库或接 runtime。
+- 完成 `payment-notification-post-merge-validation`，记录支付通知 PR 串合并后的 harness、API typecheck、未注册 grep 和 disposable DB 无残留验证。

@@ -224,6 +224,7 @@
 - `payment-notification-idempotency-harness` 已完成：本地 harness 验证通过，串联 mock 单测、inbox dry-run、未注册检查和 staged 禁止范围检查；临时库 `fuyi_payment_notification_inbox_dry_run_20260507135217` 已删除并复查无残留。
 - `payment-notification-edge-case-tests` 已完成：补齐 missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测；mock payment notification 单测 10/10 通过。
 - `payment-notification-inbox-repository` 已完成：新增未注册 in-memory repository 和单元测试，不连接数据库，不改变交易状态；payment notification 单测 14/14 通过，API typecheck 通过。
+- `payment-notification-post-merge-validation` 已完成：harness 通过、API typecheck 通过、runtime grep 无注册、临时库 `fuyi_payment_notification_inbox_dry_run_20260507140449` 已删除并复查无残留。
 
 ## 仍需注意
 

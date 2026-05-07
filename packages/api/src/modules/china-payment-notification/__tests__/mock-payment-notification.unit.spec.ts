@@ -71,6 +71,22 @@ describe("mock China payment notification skeleton", () => {
     expect(envelope.eventType).toBe("payment.succeeded");
   });
 
+  it("marks missing signatures without entering verified status", () => {
+    const rawBody = stringify(validPayload);
+    const envelope = normalizeMockPaymentNotification({
+      rawBody,
+      secret,
+      headers: {},
+    });
+
+    expect(envelope.signature).toMatchObject({
+      status: "missing",
+      failureCode: "MOCK_SIGNATURE_MISSING",
+    });
+    expect(envelope).not.toHaveProperty("paymentStateCommand");
+    expect(envelope).not.toHaveProperty("orderStateCommand");
+  });
+
   it("builds stable idempotency keys for duplicate provider events", () => {
     const rawBody = stringify(validPayload);
     const signature = buildMockPaymentSignature(rawBody, secret);
@@ -153,5 +169,53 @@ describe("mock China payment notification skeleton", () => {
 
     expect(envelope.merchantOrderRef).toBe("unknown");
     expect(envelope.riskFlags).toContain("unknown_merchant_order_ref");
+  });
+
+  it("rejects malformed JSON payloads before normalization", () => {
+    expect(() =>
+      normalizeMockPaymentNotification({
+        rawBody: "{not-json",
+        secret,
+        headers: {
+          signature: "sha256=bad",
+        },
+      }),
+    ).toThrow();
+  });
+
+  it("rejects non-CNY payloads before building a trusted envelope", () => {
+    const rawBody = stringify({
+      ...validPayload,
+      currency: "USD",
+    });
+
+    expect(() =>
+      normalizeMockPaymentNotification({
+        rawBody,
+        secret,
+        headers: {
+          signature: buildMockPaymentSignature(rawBody, secret),
+        },
+      }),
+    ).toThrow("MOCK_PAYMENT_PAYLOAD_INVALID");
+  });
+
+  it("flags weak idempotency sources when no event or transaction id exists", () => {
+    const rawBody = stringify({
+      ...validPayload,
+      event_id: undefined,
+      provider_transaction_id: undefined,
+    });
+    const envelope = normalizeMockPaymentNotification({
+      rawBody,
+      secret,
+      headers: {
+        signature: buildMockPaymentSignature(rawBody, secret),
+      },
+    });
+
+    expect(envelope.eventId).toBe("missing_event_id");
+    expect(envelope.idempotencyKey).toContain("missing_transaction");
+    expect(envelope.riskFlags).toContain("weak_idempotency_source");
   });
 });

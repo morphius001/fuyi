@@ -584,6 +584,15 @@
 - 只新增验证脚本、docs、task 和 ledger。
 - 不接真实 Provider，不注册 migration，不改变交易状态。
 
+第四十七轮 edge-case tests:
+
+1. `payment-notification-edge-case-tests`: done，补齐 missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测。
+
+第四十七轮原则：
+
+- 只补测试、task 和 ledger。
+- 不改 runtime 注册，不改交易链路。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

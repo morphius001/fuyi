@@ -100,3 +100,4 @@
 - 完成 `payment-notification-inbox-migration-skeleton`，新增未注册支付通知 inbox / event log migration skeleton；未修改 `medusa-config.ts`，未接 runtime 或交易状态推进。
 - 完成 `payment-inbox-dry-run-from-skeleton`，将本地 dry-run 脚本改为从未注册 migration skeleton 提取 up/down SQL，避免脚本 SQL 与 skeleton SQL 分叉。
 - 完成 `payment-notification-idempotency-harness`，新增本地验证脚本，串联 mock payment notification 单测、inbox migration skeleton dry-run、未注册检查和 staged 禁止范围检查。
+- 完成 `payment-notification-edge-case-tests`，补齐 mock payment notification missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测。

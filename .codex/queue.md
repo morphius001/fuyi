@@ -719,6 +719,16 @@
 - 只记录验证。
 - 不修改业务代码。
 
+第六十一轮 runtime disabled 计划:
+
+1. `payment-runtime-disabled-plan`: done，规划支付通知 runtime 接入前的默认关闭、mock-only、migration/webhook/workflow 门禁和回滚策略。
+
+第六十一轮原则：
+
+- 只做文档。
+- 不接 runtime，不注册 migration。
+- 不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

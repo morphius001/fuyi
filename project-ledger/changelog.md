@@ -114,3 +114,4 @@
 - 完成 `payment-event-log-actions-migration-skeleton`，扩展未注册 event log action 白名单和本地 dry-run fixture，仍不注册 migration 或接 runtime。
 - 完成 `payment-command-mapper-audit-tests`，新增 command decision 到 event log audit action 的纯函数映射和单元测试。
 - 完成 `payment-command-audit-post-merge-validation`，记录 command audit PR 串合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
+- 完成 `payment-runtime-disabled-plan`，以 docs-only 方式规划支付通知 runtime 接入前的默认关闭、mock-only 门禁和回滚策略。

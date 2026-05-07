@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 16:30 Asia/Shanghai
+更新时间：2026-05-07 16:45 Asia/Shanghai
 
 ## 当前上下文
 
@@ -164,3 +164,9 @@
 - `.codex/scripts/payment-notification-idempotency-harness.sh` 现在运行 mock notification、inbox repository 和 state guard 全量 payment notification 单测。
 - 验证通过：payment notification 单测 21/21；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507141523` dry-run 通过并已删除，复查无残留。
 - 未接 runtime，未注册 migration，未改变交易状态。
+
+## Round 53 更新
+
+- `payment-workflow-command-adapter-plan` 已完成，见 `docs/payment-workflow-command-adapter-plan.md`。
+- 本轮只规划 command DTO、映射、幂等、审计和后续 PR 拆分。
+- 未实现 adapter，未调用 payment workflow，未改变交易状态。

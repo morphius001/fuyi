@@ -642,6 +642,16 @@
 - 只改本地验证脚本和文档。
 - 不接 runtime，不注册 migration。
 
+第五十三轮 workflow command adapter 计划:
+
+1. `payment-workflow-command-adapter-plan`: done，规划 state guard 输出到未来 payment workflow command adapter 的 DTO、映射、幂等、审计和 PR 拆分。
+
+第五十三轮原则：
+
+- 只做文档。
+- 不实现 adapter，不调用 payment workflow。
+- 不改交易状态。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

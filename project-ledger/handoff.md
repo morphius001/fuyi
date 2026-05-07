@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 16:00 Asia/Shanghai
+更新时间：2026-05-07 16:18 Asia/Shanghai
 
 ## 当前上下文
 
@@ -150,3 +150,10 @@
 - `payment-notification-state-guard-plan` 已完成，见 `docs/payment-notification-state-guard-plan.md`。
 - 本轮只规划未来 handler 进入 payment workflow 前的 guard 输入输出、阻断场景和 PR 拆分。
 - 未写 handler，未调用 payment workflow，未改变交易状态。
+
+## Round 51 更新
+
+- `payment-notification-state-guard-contract` 已完成。
+- 新增纯函数 `guardPaymentNotificationState` 和单元测试，覆盖 capture allowed、duplicate no-op、invalid signature、provider mismatch、amount mismatch、unknown reference 和 terminal order。
+- 验证通过：payment notification 单测 21/21，API typecheck 通过。
+- 未调用 payment workflow，未接 runtime，未连接数据库，未改变交易状态。

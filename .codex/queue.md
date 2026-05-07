@@ -623,6 +623,16 @@
 - 不写 handler，不调用 payment workflow。
 - 不修改交易状态。
 
+第五十一轮 state guard contract:
+
+1. `payment-notification-state-guard-contract`: done，新增纯函数 guard contract 和单元测试，覆盖 capture allowed、duplicate no-op、invalid signature、provider mismatch、amount mismatch、unknown reference、terminal order。
+
+第五十一轮原则：
+
+- 纯函数。
+- 不调用 payment workflow。
+- 不接 runtime，不连接数据库。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -104,3 +104,4 @@
 - 完成 `payment-notification-inbox-repository`，新增未注册 in-memory inbox repository 和单元测试，覆盖通知接收、幂等 replay、retryable failure 和 invalid signature audit；未连接数据库或接 runtime。
 - 完成 `payment-notification-post-merge-validation`，记录支付通知 PR 串合并后的 harness、API typecheck、未注册 grep 和 disposable DB 无残留验证。
 - 完成 `payment-notification-state-guard-plan`，以 docs-only 方式规划支付通知 handler 进入 payment workflow 前的状态机守卫、阻断场景和后续 PR 拆分。
+- 完成 `payment-notification-state-guard-contract`，新增支付通知状态机守卫纯函数和单元测试，覆盖 capture allowed、duplicate no-op、invalid signature、provider mismatch、amount mismatch、unknown reference 和 terminal order。

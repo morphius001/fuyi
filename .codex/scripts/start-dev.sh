@@ -116,12 +116,12 @@ case "${1:-start}" in
 
     start_service "admin-7000" "7000" "$root/apps/admin" \
       env \
-        VITE_MEDUSA_BACKEND_URL="http://127.0.0.1:9000" \
+        VITE_MEDUSA_BACKEND_URL="http://localhost:9000" \
         "$root/node_modules/.bin/vite" --host 0.0.0.0 --port 7000
 
     start_service "vendor-7001" "7001" "$root/apps/vendor" \
       env \
-        VITE_MEDUSA_BACKEND_URL="http://127.0.0.1:9000" \
+        VITE_MEDUSA_BACKEND_URL="http://localhost:9000" \
         VITE_MEDUSA_PUBLISHABLE_KEY="$publishable_key" \
         "$root/node_modules/.bin/vite" --host 0.0.0.0 --port 7001
 
@@ -138,9 +138,9 @@ case "${1:-start}" in
     status_service "admin-7000" "7000"
     status_service "vendor-7001" "7001"
     status_service "storefront-3101" "3101"
-    echo "OPEN Admin China home http://127.0.0.1:7000/dashboard/cn"
-    echo "OPEN Vendor Panel      http://127.0.0.1:7001/"
-    echo "OPEN Storefront        http://127.0.0.1:3101/cn"
+    echo "OPEN Admin China home http://localhost:7000/dashboard/cn"
+    echo "OPEN Vendor Panel      http://localhost:7001/"
+    echo "OPEN Storefront        http://localhost:3101/cn"
     ;;
 
   status)
@@ -148,9 +148,9 @@ case "${1:-start}" in
     status_service "admin-7000" "7000"
     status_service "vendor-7001" "7001"
     status_service "storefront-3101" "3101"
-    echo "OPEN Admin China home http://127.0.0.1:7000/dashboard/cn"
-    echo "OPEN Vendor Panel      http://127.0.0.1:7001/"
-    echo "OPEN Storefront        http://127.0.0.1:3101/cn"
+    echo "OPEN Admin China home http://localhost:7000/dashboard/cn"
+    echo "OPEN Vendor Panel      http://localhost:7001/"
+    echo "OPEN Storefront        http://localhost:3101/cn"
     ;;
 
   *)

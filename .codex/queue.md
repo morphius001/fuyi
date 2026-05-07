@@ -846,6 +846,16 @@
 - 不新增 API route。
 - 不接 runtime，不调用 payment workflow。
 
+第七十四轮 mock webhook response contract:
+
+1. `mock-webhook-route-response-contract`: done，新增 mock webhook response mapper 纯函数和单元测试，固定 disabled/accepted/duplicate/rejected 响应语义。
+
+第七十四轮原则：
+
+- 只做纯函数和测试。
+- 不新增 API route。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

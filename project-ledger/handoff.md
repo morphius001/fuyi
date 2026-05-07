@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 18:45 Asia/Shanghai
+更新时间：2026-05-07 19:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -222,3 +222,9 @@
 - `payment-runtime-disabled-plan` 已完成，见 `docs/payment-runtime-disabled-plan.md`。
 - 明确未来 runtime 必须默认关闭，先 mock-only，且 webhook / migration / workflow execution 分阶段拆 PR。
 - 本轮未修改 `packages/**` 或 `apps/**`，未接真实支付宝、微信支付、退款、对账或结算。
+
+## Round 62 更新
+
+- `mock-payment-webhook-inbox-route-plan` 已完成，见 `docs/mock-payment-webhook-inbox-route-plan.md`。
+- 本轮只规划 mock webhook inbox-only route 的 feature flag、请求响应、错误码、幂等和测试边界。
+- 未新增 API route，未接 runtime，未调用 payment workflow。

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 15:00 Asia/Shanghai
+更新时间：2026-05-07 15:12 Asia/Shanghai
 
 ## 当前上下文
 
@@ -124,3 +124,10 @@
 - 验证通过：mock payment notification 单测 6/6；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507135217` dry-run 通过并已删除，复查无残留。
 - 未注册 Provider 或 migration，未接 webhook runtime，未改变交易状态。
 - 下一步如果继续，可以做 repository/test harness 的代码层拆分，但仍保持未注册和测试优先。
+
+## Round 47 更新
+
+- `payment-notification-edge-case-tests` 已完成。
+- 补齐 missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测。
+- 验证通过：mock payment notification 单测 10/10。
+- 未注册 Provider 或 migration，未接 webhook runtime，未改变交易状态。

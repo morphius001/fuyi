@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 13:28 Asia/Shanghai
+更新时间：2026-05-07 13:36 Asia/Shanghai
 
 ## 当前上下文
 
@@ -72,3 +72,10 @@
 - 本轮定义 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 职责边界。
 - 未实现 Provider，未新增 migration，未连接数据库，未改变交易状态。
 - 下一步若继续支付方向，应先做 mock skeleton 设计或 fake signed payload test harness，仍不得接真实支付宝/微信支付。
+
+## Round 40 更新
+
+- `mock-payment-notification-skeleton-plan` 已完成，见 `docs/mock-payment-notification-skeleton-plan.md`。
+- 本轮只规划未注册 mock skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单。
+- 未修改 `apps/**` 或 `packages/**`，未接 Provider runtime，未改变 checkout、order、payment、refund、settlement、commission 或 permission。
+- 下一步如果继续，应进入单独 PR：`mock-payment-notification-skeleton`，并保持未注册、mock-only、测试优先。

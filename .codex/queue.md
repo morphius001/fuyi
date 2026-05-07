@@ -387,13 +387,14 @@
 第三十一轮建议：
 
 1. `market-membership-local-migration-dry-run`: done，本地可丢弃数据库 dry-run 脚本和执行记录。
-2. `market-membership-seed-fixture`: pending，只做测试 fixture，不进生产 seed。
+2. `market-membership-seed-fixture`: done，只做测试 fixture，不进生产 seed。
 3. `vendor-market-context-db-qa`: pending，用 dry-run fixture 验证 Vendor route repository/fallback 三态。
 4. `admin-market-membership-browser-qa`: pending，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
 
 第三十一轮进度：
 
 - `market-membership-local-migration-dry-run`: done，新增 `.codex/scripts/market-membership-local-dry-run.sh`，从 migration skeleton 提取 SQL，在 `fuyi_market_membership_dry_run_*` 临时库验证 up/down、6 张表、约束拒绝和最小 fixture，并自动清理临时库。
+- `market-membership-seed-fixture`: done，新增只用于单元测试和本地 QA 的 market membership repository rows fixture；adapter 与 Vendor route helper 单测复用它，不进入生产 seed、不写真实业务数据库。
 
 ## Status Rules
 

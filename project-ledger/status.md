@@ -289,6 +289,7 @@
 - `mock-webhook-db-backed-route-local-script-plan` 已完成：docs-only 规划 neutral route local disposable DB smoke wrapper，不新增脚本、不改 route。
 - `mock-webhook-db-backed-route-local-script` 已完成：新增 local disposable DB preflight smoke wrapper，验证 migration up/down、临时 API disabled route 和无残留；不改 route runtime。
 - `mock-webhook-db-backed-route-skeleton` 已完成：neutral route 增加 local DB resolver skeleton；repository unavailable 时仍 disabled、不读 body、不写库、不调用 workflow。
+- `mock-webhook-db-backed-route-transaction-plan` 已完成：docs-only 规划 route-level transaction client injection、local-only DB adapter、accepted/duplicate smoke 和后续串行 PR。
 
 ## 仍需注意
 

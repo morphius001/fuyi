@@ -569,3 +569,10 @@
 - neutral route 增加 local DB resolver skeleton；没有 transaction/repository injection 时仍返回 disabled。
 - local DB env 下 route 不读取 body、不写库、不调用 payment workflow。
 - 下一步只能先规划 `mock-webhook-db-backed-route-transaction-plan`，再考虑 local DB accepted/duplicate smoke。
+
+## Round 112 更新
+
+- `mock-webhook-db-backed-route-transaction-plan` 已完成，见 `docs/mock-webhook-db-backed-route-transaction-plan.md`。
+- 本轮只规划 route-level transaction client injection、local-only disposable DB adapter、repository factory 组合和 accepted/duplicate smoke。
+- 未修改 `packages/**` 或 `apps/**`，未连接数据库，未注册 migration，未调用 payment workflow。
+- 下一步建议做 `mock-webhook-db-client-contract-plan`，先规划 local disposable Postgres adapter 的接口和 SQL 映射，不接 route。

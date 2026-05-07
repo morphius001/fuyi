@@ -1054,7 +1054,8 @@
 4. `mock-webhook-neutral-route-inmemory-plan`: done，规划 neutral route 的 local-only in-memory 分支，仍不连接 DB、不执行 workflow。
 5. `mock-webhook-neutral-route-inmemory-skeleton`: done，按计划接入 neutral route local-only in-memory 分支，继续默认/prod disabled。
 6. `mock-webhook-neutral-route-inmemory-post-validation`: done，记录合并后 harness、typecheck、runtime 入口和 DB 无残留验证。
-7. `mock-webhook-neutral-route-smoke-script-plan`: pending，规划只针对 neutral route 的本地 smoke 脚本。
+7. `mock-webhook-neutral-route-smoke-script-plan`: done，规划只针对 neutral route 的本地 smoke 脚本。
+8. `mock-webhook-neutral-route-smoke-script`: pending，新增本地 smoke 脚本，不启动/停止服务，不连接 DB，不执行 workflow。
 
 第九十三轮原则：
 

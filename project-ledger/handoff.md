@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 13:52 Asia/Shanghai
+更新时间：2026-05-07 14:02 Asia/Shanghai
 
 ## 当前上下文
 
@@ -86,3 +86,10 @@
 - 当前 skeleton 只导出 fake signature、mock payload normalizer、idempotency key 和类型；未注册到 `medusa-config.ts`，未接 API route、workflow、subscriber、job、checkout 或真实 Provider。
 - 单元测试覆盖验签通过、验签失败、重复 event key、fallback key、金额异常和 unknown merchant order reference。
 - 下一步如果继续支付方向，应先做 `payment-notification-inbox-model-design` 或 fake signed payload harness；仍不要接真实支付宝、微信支付、退款、对账或结算。
+
+## Round 42 更新
+
+- `payment-notification-inbox-model-design` 已完成，见 `docs/payment-notification-inbox-model-design.md`。
+- 本轮只设计 inbox / event log、幂等唯一约束、状态流转、本地 disposable DB dry-run 和后续 PR 拆分。
+- 未新增 migration，未连接数据库，未实现 repository 或 runtime，未改变支付/订单状态。
+- 下一步如果继续，应先做 migration skeleton + local disposable dry-run 脚本，不注册生产 migration。

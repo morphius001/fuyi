@@ -532,6 +532,17 @@
 - 不修改 checkout、cart、order、payment、refund、payout、settlement、commission 或 permission 运行时。
 - 不接真实支付宝、微信支付或任何真实密钥。
 
+第四十二轮 docs-only inbox model:
+
+1. `payment-notification-inbox-model-design`: done，设计支付通知 inbox / event log 模型、唯一约束、状态流转、dry-run 清单和后续 PR 拆分；不新增 migration，不连接数据库。
+
+第四十二轮原则：
+
+- 只做文档和 ledger。
+- 不新增 migration，不写 repository，不接 runtime。
+- 不让 inbox 直接代表支付/订单状态。
+- 真实 DB dry-run、runtime switch、支付宝/微信支付、退款、对账和结算继续串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

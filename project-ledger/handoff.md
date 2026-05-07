@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 21:30 Asia/Shanghai
+更新时间：2026-05-07 21:45 Asia/Shanghai
 
 ## 当前上下文
 
@@ -291,3 +291,9 @@
 - `payment-repository-disposable-db-script-validation` 已完成，见 `docs/payment-repository-disposable-db-script-validation.md`。
 - 合并后验证通过：repository disposable DB script row count 3|6、payment notification harness 46/46、runtime grep 无注册、dry-run DB 无残留。
 - 当前仍未新增 webhook route，未注册 migration，未调用 payment workflow。
+
+## Round 73 更新
+
+- `mock-webhook-inbox-only-route-readiness` 已完成，见 `docs/mock-webhook-inbox-only-route-readiness.md`。
+- 本轮只记录 route 前置条件、允许文件边界、response contract、测试清单和仍未满足项。
+- 未新增 API route，未接 runtime，未调用 payment workflow。

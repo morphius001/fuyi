@@ -836,6 +836,16 @@
 - 只记录验证。
 - 不修改业务代码。
 
+第七十三轮 mock webhook route readiness:
+
+1. `mock-webhook-inbox-only-route-readiness`: done，记录 mock webhook inbox-only route 前置条件、文件边界、response contract、测试清单和仍未满足项。
+
+第七十三轮原则：
+
+- 只做文档。
+- 不新增 API route。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

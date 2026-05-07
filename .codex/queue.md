@@ -921,6 +921,17 @@
 - 不新增 API route。
 - 不接 runtime，不创建 DB 连接，不调用 payment workflow。
 
+第八十一轮 mock webhook composition post-validation:
+
+1. `mock-webhook-composition-post-validation`: done，记录 PR #124/#125 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
+
+第八十一轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+- 不新增 API route。
+- 不接 runtime，不创建 DB 连接，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

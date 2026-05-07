@@ -680,6 +680,15 @@
 - 只记录验证。
 - 不修改业务代码。
 
+第五十七轮 event log action 计划:
+
+1. `payment-notification-event-log-actions-plan`: done，规划 event log action 白名单扩展、metadata 安全规则、migration/dry-run 拆分和后续测试。
+
+第五十七轮原则：
+
+- 只做文档。
+- 不改 migration，不接 runtime。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -398,6 +398,12 @@
 - `vendor-market-context-db-qa`: done，Vendor route helper 单测新增 in-memory DB reader QA，覆盖 repository ready、owned market filter、required table missing 和 no membership fallback；同时最小修复 `china_market` 只读查询应按 `id` 过滤的问题，不改 route handler、写接口或业务状态。
 - `admin-market-membership-browser-qa`: blocked-manual，Admin 浏览器 QA 需要用户已登录的 Codex App 浏览器会话；当前只固化三态 QA 清单，不伪造截图、不标记 done。
 
+第三十一轮收口：
+
+1. `market-membership-round31-post-merge-validation`: done，对 PR #61-#64 做合并后 API 单测、API tsc、本地 disposable DB dry-run 和 diff check 总验证。
+
+第三十一轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -562,3 +562,10 @@
 - 新增 `.codex/scripts/mock-webhook-db-backed-route-local-smoke.sh`。
 - 当前脚本是 preflight smoke：验证 disposable DB migration up/down、临时 API 启停、neutral route 在 local DB env 下仍 disabled。
 - 当前仍不修改 neutral route，不写 inbox runtime，不注册 migration，不调用 payment workflow。
+
+## Round 111 更新
+
+- `mock-webhook-db-backed-route-skeleton` 已完成，见 `docs/mock-webhook-db-backed-route-skeleton.md`。
+- neutral route 增加 local DB resolver skeleton；没有 transaction/repository injection 时仍返回 disabled。
+- local DB env 下 route 不读取 body、不写库、不调用 payment workflow。
+- 下一步只能先规划 `mock-webhook-db-backed-route-transaction-plan`，再考虑 local DB accepted/duplicate smoke。

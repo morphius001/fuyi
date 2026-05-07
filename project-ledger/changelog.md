@@ -166,3 +166,4 @@
 - 完成 `mock-webhook-db-backed-route-resolver-contract`，新增 mock webhook repository resolver 纯 helper 和单测，并纳入 payment notification harness；仍不接 route、不接 DB、不调用 workflow。
 - 完成 `mock-webhook-db-backed-route-local-script-plan`，以 docs-only 方式规划 neutral route local disposable DB smoke wrapper 的临时 API、disposable DB、smoke 场景和无残留规则。
 - 完成 `mock-webhook-db-backed-route-local-script`，新增 local disposable DB preflight smoke wrapper，验证 migration up/down、临时 API disabled route 和 DB 无残留；仍不改 route runtime。
+- 完成 `mock-webhook-db-backed-route-skeleton`，neutral route 增加 local DB resolver skeleton；repository unavailable 时仍 disabled、不读 body、不写库、不调用 workflow。

@@ -6,6 +6,7 @@ import {
   mapMockPaymentWebhookResponse,
   parsePaymentNotificationRuntimeConfig,
   PaymentNotificationInboxRepositoryContract,
+  resolveMockWebhookInboxRepository,
 } from "../../../../modules/china-payment-notification";
 
 const buildRuntimeConfigInput = () => ({
@@ -15,6 +16,8 @@ const buildRuntimeConfigInput = () => ({
     process.env.CHINA_PAYMENT_NOTIFICATION_WEBHOOK_MODE,
   CHINA_PAYMENT_NOTIFICATION_PROVIDER:
     process.env.CHINA_PAYMENT_NOTIFICATION_PROVIDER,
+  CHINA_PAYMENT_NOTIFICATION_LOCAL_DB:
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB,
 });
 
 const buildHeadersRecord = (
@@ -76,6 +79,9 @@ const isLocalInMemoryEnabled = () =>
   process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_INMEMORY === "true" &&
   process.env.NODE_ENV !== "production";
 
+const isLocalDbRequested = () =>
+  process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB === "true";
+
 const readRawBody = async (req: MedusaRequest): Promise<string | null> => {
   if (typeof (req as unknown as { text?: unknown }).text === "function") {
     return (req as unknown as { text: () => Promise<string> }).text();
@@ -118,6 +124,19 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
   const runtimeConfig = parsePaymentNotificationRuntimeConfig(
     buildRuntimeConfigInput(),
   );
+  if (isLocalDbRequested()) {
+    const repositoryResolution = resolveMockWebhookInboxRepository({
+      runtimeConfigInput: buildRuntimeConfigInput(),
+      nodeEnv: process.env.NODE_ENV,
+    });
+
+    if (repositoryResolution.status !== "available") {
+      const disabled = disabledResponse(runtimeConfig.enabled);
+
+      return res.status(disabled.response.httpStatus).json(disabled.body);
+    }
+  }
+
   const routeEnabled =
     runtimeConfig.enabled &&
     runtimeConfig.mode === "mock_inbox_only" &&

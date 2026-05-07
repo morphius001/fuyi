@@ -317,3 +317,9 @@
 - `mock-webhook-request-post-merge-validation` 已完成，见 `docs/mock-webhook-request-post-merge-validation.md`。
 - 合并后验证通过：payment notification harness 57/57、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未写 DB，未调用 payment workflow。
+
+## Round 77 更新
+
+- `mock-webhook-handler-composition-plan` 已完成，见 `docs/mock-webhook-handler-composition-plan.md`。
+- 本轮只规划未来 mock webhook inbox-only handler 的组合顺序：runtime gate、request contract、normalizer、repository、state guard、command/audit mapper 和 response mapper。
+- 未新增 handler、API route、runtime、DB 连接或 workflow 调用。

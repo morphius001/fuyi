@@ -118,6 +118,46 @@ describe("neutral china mock payment webhook disabled route", () => {
     );
   });
 
+  it("accepts local in-memory parsed JSON bodies when framework body parsing ran first", async () => {
+    const secret = "neutral_local_inmemory_secret";
+    const parsedBody = {
+      event_id: "evt_neutral_inmemory_parsed_001",
+      event_type: "payment.succeeded",
+      merchant_order_ref: "pay_neutral_inmemory_parsed_001",
+      payment_session_id: "payses_neutral_inmemory_parsed_001",
+      provider_transaction_id: "mock_txn_neutral_inmemory_parsed_001",
+      amount: 128560,
+      currency: "CNY",
+    };
+    const rawBody = JSON.stringify(parsedBody);
+    process.env.CHINA_PAYMENT_NOTIFICATION_RUNTIME_ENABLED = "true";
+    process.env.CHINA_PAYMENT_NOTIFICATION_WEBHOOK_MODE = "mock_inbox_only";
+    process.env.CHINA_PAYMENT_NOTIFICATION_PROVIDER = "mock_china_pay";
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_INMEMORY = "true";
+    process.env.CHINA_PAYMENT_NOTIFICATION_MOCK_SECRET = secret;
+    process.env.NODE_ENV = "development";
+
+    const req = {
+      body: parsedBody,
+      headers: {
+        "x-mock-payment-signature": buildMockPaymentSignature(rawBody, secret),
+        "x-mock-payment-event-id": "evt_neutral_inmemory_parsed_001",
+      },
+    } as unknown as MedusaRequest;
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "accepted",
+        mode: "mock_inbox_only",
+        route: "mock_payment_webhook_neutral_local_inmemory",
+      }),
+    );
+  });
+
   it("rejects local in-memory requests without signatures", async () => {
     process.env.CHINA_PAYMENT_NOTIFICATION_RUNTIME_ENABLED = "true";
     process.env.CHINA_PAYMENT_NOTIFICATION_WEBHOOK_MODE = "mock_inbox_only";

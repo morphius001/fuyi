@@ -124,9 +124,7 @@ run_disabled_case() {
 }
 
 write_valid_payload() {
-  cat >"$payload_file" <<'JSON'
-{"event_id":"evt_neutral_smoke_001","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_smoke_001","payment_session_id":"payses_neutral_smoke_001","provider_transaction_id":"mock_txn_neutral_smoke_001","amount":128560,"currency":"CNY"}
-JSON
+  printf '%s' '{"event_id":"evt_neutral_smoke_001","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_smoke_001","payment_session_id":"payses_neutral_smoke_001","provider_transaction_id":"mock_txn_neutral_smoke_001","amount":128560,"currency":"CNY"}' >"$payload_file"
 }
 
 run_local_inmemory_cases() {
@@ -167,7 +165,7 @@ run_local_inmemory_cases() {
   printf '{"event_id":' >"$malformed_file"
   signature="$(build_signature "$malformed_file")"
   status="$(http_post "$body_file" \
-    -H "content-type: application/json" \
+    -H "content-type: text/plain" \
     -H "x-mock-payment-signature: $signature" \
     --data-binary "@$malformed_file")"
 

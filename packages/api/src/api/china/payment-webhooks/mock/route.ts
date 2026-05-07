@@ -76,6 +76,28 @@ const isLocalInMemoryEnabled = () =>
   process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_INMEMORY === "true" &&
   process.env.NODE_ENV !== "production";
 
+const readRawBody = async (req: MedusaRequest): Promise<string | null> => {
+  if (typeof (req as unknown as { text?: unknown }).text === "function") {
+    return (req as unknown as { text: () => Promise<string> }).text();
+  }
+
+  const body = (req as unknown as { body?: unknown }).body;
+
+  if (typeof body === "string") {
+    return body;
+  }
+
+  if (Buffer.isBuffer(body)) {
+    return body.toString("utf8");
+  }
+
+  if (body && typeof body === "object") {
+    return JSON.stringify(body);
+  }
+
+  return null;
+};
+
 const disabledResponse = (runtimeRequested: boolean) => {
   const response = mapMockPaymentWebhookResponse({
     status: "disabled",
@@ -107,7 +129,9 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.status(disabled.response.httpStatus).json(disabled.body);
   }
 
-  if (typeof (req as unknown as { text?: unknown }).text !== "function") {
+  const rawBody = await readRawBody(req);
+
+  if (rawBody === null) {
     const response = mapMockPaymentWebhookResponse({
       status: "rejected",
       code: "PAYLOAD_INVALID",
@@ -119,7 +143,6 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     });
   }
 
-  const rawBody = await (req as unknown as { text: () => Promise<string> }).text();
   const result = await handleMockPaymentWebhookNotification({
     runtimeConfigInput: buildRuntimeConfigInput(),
     rawBody,

@@ -592,3 +592,10 @@
 - 验证通过：payment notification harness 16 suites / 105 tests、API typecheck。
 - 本轮不接 route、不连接真实 DB、不新增依赖、不注册 migration、不调用 payment workflow。
 - 下一步建议做 `mock-webhook-db-client-contract-validation`，记录合并后验证结果。
+
+## Round 115 更新
+
+- `mock-webhook-db-client-contract-validation` 已完成，见 `docs/mock-webhook-db-client-contract-validation.md`。
+- PR #161 合并后验证通过：payment notification harness 16 suites / 105 tests、API typecheck、runtime grep、DB/端口无残留。
+- 当前 adapter 仍未接 route，仍不连接真实 DB，不执行 payment workflow。
+- 下一步建议做 `mock-webhook-db-backed-route-local-accepted-plan`，先规划 route 注入 local adapter 和 accepted/duplicate smoke。

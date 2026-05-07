@@ -343,3 +343,9 @@
 - composition helper 现在把 repository unique conflict 映射为 duplicate，把 retryable/unknown repository failure 映射为 `INBOX_RETRYABLE`，terminal failure 映射为 `INBOX_UNAVAILABLE`。
 - 验证通过：payment notification harness 69/69、dry-run row count 2|9、API typecheck。
 - 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。
+
+## Round 81 更新
+
+- `mock-webhook-composition-post-validation` 已完成，见 `docs/mock-webhook-composition-post-validation.md`。
+- 合并后验证通过：payment notification harness 69/69、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。

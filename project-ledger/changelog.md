@@ -134,3 +134,4 @@
 - 完成 `mock-webhook-handler-composition-harness-plan`，以 docs-only 方式规划纯函数 composition harness 的测试路径和后续 PR 拆分。
 - 完成 `mock-webhook-composition-helper`，新增未注册纯函数 composition helper 和单元测试，不新增 API route 或 runtime。
 - 完成 `mock-webhook-composition-error-tests`，补齐 composition helper repository 错误映射单测和安全响应码。
+- 完成 `mock-webhook-composition-post-validation`，记录 PR #124/#125 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。

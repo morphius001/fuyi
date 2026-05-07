@@ -441,7 +441,7 @@
 
 第三十三轮建议任务：
 
-1. `local-disposable-migration-registration-rehearsal`: pending，仅使用本地 disposable DB 模拟 migration 注册前检查，不注册生产 migration。
+1. `local-disposable-migration-registration-rehearsal`: done，仅使用本地 disposable DB 模拟 migration 注册前检查，不注册生产 migration。
 2. `migration-registration-design-review`: pending，docs-only，评审真实 migration 注册点、rollback、部署顺序和 PR 拆分。
 3. `admin-write-api-runtime-switch-plan`: pending，docs-only，设计 Admin 写接口和 runtime switch 的分离、审计、幂等和回滚。
 4. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话。
@@ -455,6 +455,10 @@
 - 不实现 Admin 写接口。
 - 不让模块开关影响真实 runtime、权限、checkout、订单、履约或支付。
 - 支付、退款、对账、商家结算、权限、真实履约和真实 provider 继续保持高风险串行。
+
+第三十三轮进度：
+
+- `local-disposable-migration-registration-rehearsal`: done，新增本地 rehearsal 脚本，确认 migration skeleton 未注册到 `medusa-config.ts`，连续执行本地 up/down dry-run 和 repository integration，并确认 disposable DB 无残留。
 
 ## Status Rules
 

@@ -12,3 +12,4 @@ export * from "./db-inbox-repository";
 export * from "./mock-webhook-response";
 export * from "./mock-webhook-request";
 export * from "./mock-webhook-composition";
+export * from "./mock-webhook-handler";

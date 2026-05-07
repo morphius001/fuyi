@@ -355,3 +355,10 @@
 - `mock-webhook-handler-skeleton-plan` 已完成，见 `docs/mock-webhook-handler-skeleton-plan.md`。
 - 本轮只规划未来未注册 handler skeleton 的允许路径、禁止路径、输入输出、安全 metadata 和后续 PR 拆分。
 - 未修改 `packages/**` 或 `apps/**`，未新增 API route，未接 runtime。
+
+## Round 83 更新
+
+- `mock-webhook-handler-skeleton` 已完成，见 `docs/mock-webhook-handler-skeleton.md`。
+- 新增未注册 `handleMockPaymentWebhookNotification()` 和单元测试，只接受显式注入参数并调用 composition helper。
+- 验证通过：payment notification harness 73/73、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。

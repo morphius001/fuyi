@@ -258,6 +258,7 @@
 - `mock-webhook-composition-error-tests` 已完成：补齐 repository receive/appendEvent 错误映射和单测；harness 69/69、API typecheck 通过。
 - `mock-webhook-composition-post-validation` 已完成：记录 PR #124/#125 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
 - `mock-webhook-handler-skeleton-plan` 已完成：docs-only 规划未注册 handler skeleton 边界，不新增 route 或 runtime。
+- `mock-webhook-handler-skeleton` 已完成：新增未注册 handler skeleton 和单测；harness 73/73、API typecheck、runtime grep 和 DB 无残留复查通过。
 
 ## 仍需注意
 

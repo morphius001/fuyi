@@ -37,7 +37,8 @@ echo "RUN payment notification unit tests"
     src/modules/china-payment-notification/__tests__/payment-db-inbox-repository.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-response.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-request.unit.spec.ts \
-    src/modules/china-payment-notification/__tests__/mock-payment-webhook-composition.unit.spec.ts
+    src/modules/china-payment-notification/__tests__/mock-payment-webhook-composition.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/mock-payment-webhook-handler.unit.spec.ts
 )
 
 echo "RUN payment notification inbox migration skeleton dry-run"

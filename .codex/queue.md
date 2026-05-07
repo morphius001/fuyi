@@ -975,6 +975,17 @@
 - 不新增 API route。
 - 不接 runtime，不创建 DB 连接，不调用 payment workflow。
 
+第八十六轮 mock webhook local route disabled skeleton:
+
+1. `mock-webhook-local-route-disabled-skeleton`: done，新增默认 disabled Admin route skeleton 和单元测试。
+
+第八十六轮原则：
+
+- 只新增 disabled-only route。
+- 不调用 handler。
+- 不创建 repository 或 DB 连接。
+- 不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

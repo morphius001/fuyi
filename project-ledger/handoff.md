@@ -541,3 +541,10 @@
 - 本轮只规划 resolver contract、disabled/unavailable fallback 和 local disposable injection。
 - resolver 默认 disabled，production disabled；route 不能直接 import production DB client，也不能调用 payment workflow。
 - 下一步可做 `mock-webhook-db-backed-route-resolver-contract`，只新增纯类型、纯 helper 和 mocked tests，不接 route、不接 DB。
+
+## Round 108 更新
+
+- `mock-webhook-db-backed-route-resolver-contract` 已完成，见 `docs/mock-webhook-db-backed-route-resolver-contract.md`。
+- 新增 `resolveMockWebhookInboxRepository()` 纯 helper，默认 disabled、production disabled，只在 local DB flag + transaction client + repository factory 都存在时返回 local disposable repository。
+- Resolver 单测已纳入 payment notification harness。
+- 当前仍不接 neutral route，不连接 DB，不注册 migration，不调用 payment workflow。

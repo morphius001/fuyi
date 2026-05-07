@@ -1065,7 +1065,8 @@
 15. `mock-webhook-admin-route-disabled-validation`: done，记录旧 Admin route disabled-only 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
 16. `mock-webhook-db-backed-route-plan`: done，规划 neutral mock webhook route 接 DB-backed inbox skeleton 的后续拆分，仍不修改 runtime。
 17. `mock-webhook-db-backed-route-resolver-plan`: done，规划 route-level repository resolver contract、disabled fallback 和 local disposable injection。
-18. `mock-webhook-db-backed-route-resolver-contract`: pending，新增 resolver contract / pure helpers / mocked tests，不接 route、不接 DB。
+18. `mock-webhook-db-backed-route-resolver-contract`: done，新增 resolver contract / pure helpers / mocked tests，不接 route、不接 DB。
+19. `mock-webhook-db-backed-route-local-script-plan`: pending，规划 neutral route local disposable DB smoke wrapper，不新增脚本。
 
 第九十三轮原则：
 

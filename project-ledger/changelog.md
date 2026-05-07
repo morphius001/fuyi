@@ -163,3 +163,4 @@
 - 完成 `mock-webhook-admin-route-disabled-validation`，记录 PR #151 合并后 harness 83/83、API typecheck、runtime grep 和 disposable DB 无残留验证。
 - 完成 `mock-webhook-db-backed-route-plan`，以 docs-only 方式规划 neutral mock webhook route 接 DB-backed inbox skeleton 的 Layer 0-4、feature flag、repository resolver、测试清单和 PR 拆分。
 - 完成 `mock-webhook-db-backed-route-resolver-plan`，以 docs-only 方式规划 route-level repository resolver contract、disabled fallback、local disposable injection 和后续 resolver contract PR。
+- 完成 `mock-webhook-db-backed-route-resolver-contract`，新增 mock webhook repository resolver 纯 helper 和单测，并纳入 payment notification harness；仍不接 route、不接 DB、不调用 workflow。

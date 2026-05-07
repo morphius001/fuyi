@@ -13,3 +13,4 @@ export * from "./mock-webhook-response";
 export * from "./mock-webhook-request";
 export * from "./mock-webhook-composition";
 export * from "./mock-webhook-handler";
+export * from "./mock-webhook-repository-resolver";

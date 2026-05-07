@@ -221,6 +221,7 @@
 - `payment-notification-inbox-local-dry-run` 已完成：本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507133751` 验证 inbox/event log up/down、约束和 rollback 通过，临时库已删除并复查无残留。
 - `payment-notification-inbox-migration-skeleton` 已完成：新增未注册 migration skeleton，不修改 `medusa-config.ts`，不接 runtime；本地 dry-run 脚本再次通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507134145` 已删除并复查无残留。
 - `payment-inbox-dry-run-from-skeleton` 已完成：dry-run 脚本已改为从未注册 migration skeleton 提取 up/down SQL；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507134820` 验证通过，临时库已删除并复查无残留。
+- `payment-notification-idempotency-harness` 已完成：本地 harness 验证通过，串联 mock 单测、inbox dry-run、未注册检查和 staged 禁止范围检查；临时库 `fuyi_payment_notification_inbox_dry_run_20260507135217` 已删除并复查无残留。
 
 ## 仍需注意
 

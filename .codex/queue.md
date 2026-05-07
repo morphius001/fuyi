@@ -575,6 +575,15 @@
 - 不修改 `apps/**`。
 - 不注册 migration，不接 runtime。
 
+第四十六轮支付通知验证 harness:
+
+1. `payment-notification-idempotency-harness`: done，新增本地 harness 串联 mock notification 单测、inbox migration skeleton dry-run、未注册检查和 staged 禁止范围检查。
+
+第四十六轮原则：
+
+- 只新增验证脚本、docs、task 和 ledger。
+- 不接真实 Provider，不注册 migration，不改变交易状态。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

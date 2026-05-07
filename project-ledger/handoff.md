@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 18:15 Asia/Shanghai
+更新时间：2026-05-07 18:30 Asia/Shanghai
 
 ## 当前上下文
 
@@ -210,3 +210,9 @@
 - 新增 `mapWorkflowCommandDecisionToAuditEvent()` 纯函数，覆盖 prepared、skipped、blocked 和 manual-review audit action。
 - Harness 已纳入新增单测。
 - 未写 DB，未接 runtime，未调用 payment workflow。
+
+## Round 60 更新
+
+- `payment-command-audit-post-merge-validation` 已完成，见 `docs/payment-command-audit-post-merge-validation.md`。
+- 合并后验证通过：payment notification harness 31/31、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前支付通知链路仍未注册 runtime，command audit mapper 仍只输出 DTO。

@@ -278,6 +278,7 @@
 - `mock-webhook-neutral-route-smoke-script` 已完成：新增本地 neutral route smoke 脚本，支持 auto/disabled/local-inmemory/production-disabled 模式。
 - `mock-webhook-neutral-route-smoke-validation` 已完成：记录 PR #145 合并后 disabled smoke、harness 83/83 和 DB 无残留验证。
 - `mock-webhook-neutral-local-inmemory-devserver-plan` 已完成：docs-only 规划临时 dev server 运行 local-inmemory smoke，不新增脚本。
+- `mock-webhook-neutral-local-inmemory-devserver-script` 已完成：新增临时 API dev server smoke wrapper，不修改现有服务或 `.env`；neutral route 已补齐框架已解析 JSON body 读取兜底。
 
 ## 仍需注意
 

@@ -489,3 +489,11 @@
 - 本轮只规划临时 API dev server smoke wrapper：使用单独端口、临时 mock env、跑 `local-inmemory` smoke 后关闭自己启动的进程。
 - 未新增脚本，未启动服务，未修改 `apps/**` 或 `packages/**`。
 - 下一步可写 `mock-webhook-neutral-local-inmemory-devserver-script`。
+
+## Round 103 更新
+
+- `mock-webhook-neutral-local-inmemory-devserver-script` 已完成，见 `docs/mock-webhook-neutral-local-inmemory-devserver-script.md`。
+- 新增 `.codex/scripts/mock-webhook-neutral-local-inmemory-devserver-smoke.sh`。
+- 脚本使用单独端口、临时 mock env、本地 DB，只关闭自己启动的临时 API 进程。
+- 不修改 `.env`，不关闭现有 9000 服务，不接真实 Provider，不执行 payment workflow。
+- 实际 devserver smoke 发现 Medusa 请求不一定提供 `req.text()`，本轮已补齐 neutral route 对 `req.body` 字符串、Buffer 和 JSON object 的 mock raw body 读取兜底。

@@ -329,3 +329,10 @@
 - `mock-webhook-handler-composition-harness-plan` 已完成，见 `docs/mock-webhook-handler-composition-harness-plan.md`。
 - 本轮只规划纯函数 composition harness 的路径、fixtures、repository double、错误映射和审计断言。
 - 未新增 handler、API route、runtime、DB 连接或 workflow 调用。
+
+## Round 79 更新
+
+- `mock-webhook-composition-helper` 已完成，见 `docs/mock-webhook-composition-helper.md`。
+- 新增 `composeMockPaymentWebhookInboxOnly()` 纯函数 helper 和 composition 单测，覆盖 disabled、request reject、payload invalid、invalid signature、duplicate、accepted、guard blocked 和 command prepared。
+- 验证通过：payment notification harness 65/65、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。

@@ -599,3 +599,10 @@
 - PR #161 合并后验证通过：payment notification harness 16 suites / 105 tests、API typecheck、runtime grep、DB/端口无残留。
 - 当前 adapter 仍未接 route，仍不连接真实 DB，不执行 payment workflow。
 - 下一步建议做 `mock-webhook-db-backed-route-local-accepted-plan`，先规划 route 注入 local adapter 和 accepted/duplicate smoke。
+
+## Round 116 更新
+
+- `mock-webhook-db-backed-route-local-accepted-plan` 已完成，见 `docs/mock-webhook-db-backed-route-local-accepted-plan.md`。
+- 本轮只规划 neutral route 接 local adapter 后的 accepted、duplicate 和 rejected smoke。
+- 未修改 `packages/**` 或 `apps/**`，未接 route，未连接数据库，未执行 payment workflow。
+- 下一步可做 `mock-webhook-db-backed-route-local-accepted`，但必须保持 local disposable DB、mock provider、inbox-only 和 production disabled。

@@ -293,6 +293,7 @@
 - `mock-webhook-db-client-contract-plan` 已完成：docs-only 规划 local disposable Postgres adapter contract、SQL 映射、错误映射和 mocked tests；仍不接 route。
 - `mock-webhook-db-client-contract` 已完成：新增 local disposable Postgres adapter skeleton 和 mocked unit tests；不接 route、不连接真实 DB、不调用 workflow。
 - `mock-webhook-db-client-contract-validation` 已完成：记录 PR #161 合并后的 harness 16/105、API typecheck、runtime grep 和 DB/端口无残留验证。
+- `mock-webhook-db-backed-route-local-accepted-plan` 已完成：docs-only 规划 neutral route 接 local adapter 的 accepted/duplicate/rejected smoke；仍不执行 workflow。
 
 ## 仍需注意
 

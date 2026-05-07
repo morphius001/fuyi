@@ -374,3 +374,10 @@
 - `mock-webhook-local-route-disabled-plan` 已完成，见 `docs/mock-webhook-local-route-disabled-plan.md`。
 - 本轮只规划未来 mock webhook local route 的默认 disabled 接入条件、raw body、env gate、repository 策略、验证清单和回滚策略。
 - 未修改 `packages/**` 或 `apps/**`，未新增 API route，未接 runtime。
+
+## Round 86 更新
+
+- `mock-webhook-local-route-disabled-skeleton` 已完成，见 `docs/mock-webhook-local-route-disabled-skeleton.md`。
+- 新增 Admin 侧 `POST /admin/china/mock-payment-webhooks` disabled-only route skeleton 和单测；默认和 env requested 情况都返回 disabled。
+- 验证通过：payment notification harness 75/75、dry-run row count 2|9、API typecheck、DB 无残留。
+- Runtime grep 现在预期只命中新 disabled route；仍未调用 handler、repository、DB 或 payment workflow。

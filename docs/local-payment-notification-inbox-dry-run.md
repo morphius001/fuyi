@@ -22,6 +22,7 @@
 ## 验证内容
 
 - 创建 disposable dry-run database。
+- 从 `packages/api/src/modules/china-payment-notification/migrations/Migration20260507000200.ts` 提取 up/down SQL。
 - 应用 inbox / event log up SQL。
 - 验证 `payment_notification_inbox` 和 `payment_notification_event_log` 表存在。
 - 插入 verified 和 invalid fixture。
@@ -55,6 +56,21 @@ APPLY inbox model down SQL
 CHECK rollback removed dry-run tables
 PASS payment notification inbox local dry-run completed and disposable database will be dropped.
 ```
+
+2026-05-07 13:46 Asia/Shanghai 后，脚本改为从 migration skeleton 提取 SQL。最新输出文案为：
+
+```text
+CREATE disposable dry-run database: fuyi_payment_notification_inbox_dry_run_20260507134820
+APPLY inbox migration skeleton up SQL
+CHECK tables and fixtures
+CHECK row counts
+2|2
+APPLY inbox migration skeleton down SQL
+CHECK rollback removed dry-run tables
+PASS payment notification inbox migration skeleton local dry-run completed and disposable database will be dropped.
+```
+
+临时库 `fuyi_payment_notification_inbox_dry_run_20260507134820` 已删除，并复查无残留。
 
 无残留复查：
 

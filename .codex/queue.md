@@ -565,6 +565,16 @@
 - 不接 webhook、provider runtime、checkout、payment/order 状态推进。
 - 真实 migration 注册、repository、runtime switch、支付宝/微信支付、退款、对账和结算继续串行。
 
+第四十五轮 dry-run 脚本对齐 skeleton:
+
+1. `payment-inbox-dry-run-from-skeleton`: done，将本地 dry-run 脚本改为从未注册 migration skeleton 提取 up/down SQL，避免脚本 SQL 和 skeleton SQL 分叉。
+
+第四十五轮原则：
+
+- 只修改 `.codex/scripts`、docs 和 ledger。
+- 不修改 `apps/**`。
+- 不注册 migration，不接 runtime。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

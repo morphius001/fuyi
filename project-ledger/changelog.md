@@ -98,3 +98,4 @@
 - 完成 `payment-notification-inbox-model-design`，以 docs-only 方式设计支付通知 inbox / event log、幂等唯一约束、状态流转、本地 disposable DB dry-run 和后续 PR 拆分；未新增 migration 或数据库连接。
 - 完成 `payment-notification-inbox-local-dry-run`，新增本地 disposable DB dry-run 脚本和记录文档，验证支付通知 inbox / event log up/down SQL、唯一约束、CNY 约束、event log action 约束和 rollback；未修改 `packages/**`。
 - 完成 `payment-notification-inbox-migration-skeleton`，新增未注册支付通知 inbox / event log migration skeleton；未修改 `medusa-config.ts`，未接 runtime 或交易状态推进。
+- 完成 `payment-inbox-dry-run-from-skeleton`，将本地 dry-run 脚本改为从未注册 migration skeleton 提取 up/down SQL，避免脚本 SQL 与 skeleton SQL 分叉。

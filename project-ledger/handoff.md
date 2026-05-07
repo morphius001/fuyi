@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 14:02 Asia/Shanghai
+更新时间：2026-05-07 14:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -93,3 +93,10 @@
 - 本轮只设计 inbox / event log、幂等唯一约束、状态流转、本地 disposable DB dry-run 和后续 PR 拆分。
 - 未新增 migration，未连接数据库，未实现 repository 或 runtime，未改变支付/订单状态。
 - 下一步如果继续，应先做 migration skeleton + local disposable dry-run 脚本，不注册生产 migration。
+
+## Round 43 更新
+
+- `payment-notification-inbox-local-dry-run` 已完成，新增 `.codex/scripts/payment-notification-inbox-local-dry-run.sh` 和 `docs/local-payment-notification-inbox-dry-run.md`。
+- 脚本使用本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507133751` 验证 inbox/event log up/down SQL、唯一约束、CNY 约束、event log action 约束和 rollback；临时库已删除并复查无残留。
+- 未新增真实 migration，未修改 `apps/**` 或 `packages/**`，未连接预发/生产数据库，未改变交易状态。
+- 下一步如果继续，可以考虑 migration skeleton PR，但仍不注册生产 migration，不接 runtime，不连接预发/生产数据库。

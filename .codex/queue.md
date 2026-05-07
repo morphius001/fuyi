@@ -543,6 +543,17 @@
 - 不让 inbox 直接代表支付/订单状态。
 - 真实 DB dry-run、runtime switch、支付宝/微信支付、退款、对账和结算继续串行。
 
+第四十三轮本地 inbox dry-run:
+
+1. `payment-notification-inbox-local-dry-run`: done，新增本地 disposable DB dry-run 脚本，验证支付通知 inbox / event log up/down SQL、唯一约束、状态约束、CNY 约束和 rollback；不新增真实 migration。
+
+第四十三轮原则：
+
+- 只新增 `.codex/scripts`、docs、task 和 ledger。
+- 不修改 `apps/**` 或 `packages/**`。
+- 不连接预发或生产数据库。
+- 脚本默认只允许本地 PostgreSQL，远程必须显式设置 approved disposable DB。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

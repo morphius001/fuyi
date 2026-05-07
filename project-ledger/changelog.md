@@ -94,3 +94,4 @@
 - 完成 `payment-notification-idempotency-plan`，以 docs-only 方式规划中国本地支付通知验签、幂等、可重试、审计和后续 PR 拆分；未实现真实支付 Provider，未修改支付、订单、退款、结算、佣金或权限逻辑。
 - 完成 `payment-notification-contract-docs`，以 docs-only 方式定义支付通知 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 边界；未实现 Provider 或交易状态变更。
 - 完成 `mock-payment-notification-skeleton-plan`，以 docs-only 方式规划未注册 mock payment notification skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单；未修改 `packages/**` 或交易链路。
+- 完成 `mock-payment-notification-skeleton`，新增未注册 mock-only payment notification skeleton 和单元测试，覆盖 fake signature、payload normalize、idempotency key、金额异常和 unknown reference；未接 runtime，未修改交易状态。

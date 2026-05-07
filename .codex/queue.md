@@ -521,6 +521,17 @@
 - 不注册 Provider，不接 checkout，不改交易状态。
 - 下一步真正写 skeleton 时必须单独 PR，并保持未注册、mock-only、单元测试优先。
 
+第四十一轮 mock payment skeleton：
+
+1. `mock-payment-notification-skeleton`: done，新增未注册 `china-payment-notification` mock-only skeleton，覆盖 fake signature、payload normalize、idempotency key 和单元测试；不接 runtime，不修改支付/订单/退款/结算/佣金/权限逻辑。
+
+第四十一轮原则：
+
+- 只允许新增未注册 mock-only skeleton。
+- 不修改 `medusa-config.ts`。
+- 不修改 checkout、cart、order、payment、refund、payout、settlement、commission 或 permission 运行时。
+- 不接真实支付宝、微信支付或任何真实密钥。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

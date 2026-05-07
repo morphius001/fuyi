@@ -85,3 +85,5 @@
 - 重启后恢复本地开发服务，并修正 `.codex/scripts/start-dev.sh` 的 Admin/Vendor 本地 API 地址为 `http://localhost:9000`，解决 Windows 浏览器登录页 `Failed to fetch`。
 - 补齐 WSL Playwright 浏览器 QA 依赖和中文字体，生成 Admin 登录态市场配置页截图与 JSON 检查结果。
 - Admin 登录态 QA 通过：`/dashboard/cn/operations/market-capabilities` 可访问，页面包含中国后台壳、市场配置、配送能力和只读 mock 边界，未出现 `Failed to fetch`。
+- 修复本地启动脚本缺少 CORS env 的问题，为 API dev server 注入 `ADMIN_CORS`、`AUTH_CORS`、`STORE_CORS` 和 `VENDOR_CORS` 默认值。
+- 完成 `admin-market-membership-browser-qa` 登录态补测：Admin 市场详情页读取 `/admin/china/markets` 返回 200，ready 状态展示市场、档口、配送 profile 和只读边界，无保存/发布/生效按钮。

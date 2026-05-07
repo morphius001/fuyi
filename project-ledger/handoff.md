@@ -418,3 +418,10 @@
 - `mock-webhook-route-auth-boundary-review` 已完成，见 `docs/mock-webhook-route-auth-boundary-review.md`。
 - 记录当前 mock route 位于 `/admin/**`，不应直接视为真实 provider webhook callback 路径。
 - 下一步建议先规划 neutral provider callback route，再写 smoke script。
+
+## Round 93 更新
+
+- `mock-webhook-route-path-migration-plan` 已完成，见 `docs/mock-webhook-route-path-migration-plan.md`。
+- 本轮只规划 neutral provider callback route 路径、Admin route 保留/降级策略、默认 disabled 安全要求和后续 PR 拆分。
+- 未新增 API route，未修改 `packages/**` 或 `apps/**`，未连接 DB，未执行 payment workflow。
+- 下一步应先做 `mock-webhook-neutral-route-disabled-skeleton`，不要继续给 `/admin/**` route 写 provider callback smoke script。

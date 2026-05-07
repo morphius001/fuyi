@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-07 12:20 Asia/Shanghai
+更新时间：2026-05-07 18:30 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -268,6 +268,7 @@
 - `mock-webhook-inmemory-route-post-validation` 已完成：记录 PR #134 合并后验证；runtime 正式入口仍只有 Admin mock webhook route。
 - `mock-webhook-local-route-smoke-script-plan` 已完成：docs-only 规划本地 route smoke 脚本，不新增脚本。
 - `mock-webhook-route-auth-boundary-review` 已完成：docs-only 记录 Admin route 不适合作为真实 provider callback 的路径风险。
+- `mock-webhook-route-path-migration-plan` 已完成：docs-only 规划 neutral provider callback route 路径和后续 PR 拆分，不新增 route 或 runtime。
 
 ## 仍需注意
 

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 20:45 Asia/Shanghai
+更新时间：2026-05-07 21:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -273,3 +273,9 @@
 - `payment-db-adapter-post-merge-validation` 已完成，见 `docs/payment-db-adapter-post-merge-validation.md`。
 - 合并后验证通过：payment notification harness 46/46、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前 DB adapter skeleton 仍未接真实数据库或 webhook runtime。
+
+## Round 70 更新
+
+- `payment-inbox-repository-disposable-db-test-plan` 已完成，见 `docs/payment-inbox-repository-disposable-db-test-plan.md`。
+- 本轮只规划本地 disposable DB integration test 的命名、连接限制、schema up/down、测试用例和无残留检查。
+- 未写 integration test，未连接数据库，未新增 webhook route。

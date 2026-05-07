@@ -807,6 +807,16 @@
 - 只记录验证。
 - 不修改业务代码。
 
+第七十轮 repository disposable DB test 计划:
+
+1. `payment-inbox-repository-disposable-db-test-plan`: done，规划 repository 本地 disposable DB integration test 的命名、连接限制、schema up/down、测试用例和无残留检查。
+
+第七十轮原则：
+
+- 只做文档。
+- 不写 integration test。
+- 不连接数据库，不新增 webhook route。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

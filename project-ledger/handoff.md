@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 16:18 Asia/Shanghai
+更新时间：2026-05-07 16:30 Asia/Shanghai
 
 ## 当前上下文
 
@@ -157,3 +157,10 @@
 - 新增纯函数 `guardPaymentNotificationState` 和单元测试，覆盖 capture allowed、duplicate no-op、invalid signature、provider mismatch、amount mismatch、unknown reference 和 terminal order。
 - 验证通过：payment notification 单测 21/21，API typecheck 通过。
 - 未调用 payment workflow，未接 runtime，未连接数据库，未改变交易状态。
+
+## Round 52 更新
+
+- `payment-notification-harness-full-tests` 已完成。
+- `.codex/scripts/payment-notification-idempotency-harness.sh` 现在运行 mock notification、inbox repository 和 state guard 全量 payment notification 单测。
+- 验证通过：payment notification 单测 21/21；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507141523` dry-run 通过并已删除，复查无残留。
+- 未接 runtime，未注册 migration，未改变交易状态。

@@ -186,3 +186,53 @@ export type PaymentNotificationStateGuardResult =
       reason: string;
       auditMetadata: Record<string, unknown>;
     };
+
+export type PaymentWorkflowCommand =
+  | {
+      type: "no_op";
+      reason: string;
+      idempotencyKey: string;
+      inboxId: string;
+      auditMetadata: Record<string, unknown>;
+    }
+  | {
+      type: "capture_payment";
+      paymentSessionId: string;
+      orderId: string;
+      amount: ChinaPaymentNotificationMoney;
+      idempotencyKey: string;
+      inboxId: string;
+      auditMetadata: Record<string, unknown>;
+    }
+  | {
+      type: "close_payment";
+      paymentSessionId: string;
+      orderId: string;
+      idempotencyKey: string;
+      inboxId: string;
+      auditMetadata: Record<string, unknown>;
+    }
+  | {
+      type: "mark_failed";
+      paymentSessionId: string;
+      orderId: string;
+      errorCode: string;
+      idempotencyKey: string;
+      inboxId: string;
+      auditMetadata: Record<string, unknown>;
+    };
+
+export type PaymentWorkflowCommandDecision =
+  | {
+      executable: true;
+      command: PaymentWorkflowCommand;
+    }
+  | {
+      executable: false;
+      reason: string;
+      blockType: PaymentNotificationStateGuardBlockType;
+      retryable: boolean;
+      idempotencyKey: string;
+      inboxId: string;
+      auditMetadata: Record<string, unknown>;
+    };

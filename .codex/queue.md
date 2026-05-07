@@ -652,6 +652,16 @@
 - 不实现 adapter，不调用 payment workflow。
 - 不改交易状态。
 
+第五十四轮 workflow command contract:
+
+1. `payment-workflow-command-contract`: done，新增 command DTO 和纯函数 mapper，覆盖 capture、no-op、blocked audit-only、missing snapshot。
+
+第五十四轮原则：
+
+- 纯函数。
+- 不调用 payment workflow。
+- 不接 runtime，不连接数据库。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 16:45 Asia/Shanghai
+更新时间：2026-05-07 17:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -170,3 +170,10 @@
 - `payment-workflow-command-adapter-plan` 已完成，见 `docs/payment-workflow-command-adapter-plan.md`。
 - 本轮只规划 command DTO、映射、幂等、审计和后续 PR 拆分。
 - 未实现 adapter，未调用 payment workflow，未改变交易状态。
+
+## Round 54 更新
+
+- `payment-workflow-command-contract` 已完成。
+- 新增 `mapGuardResultToWorkflowCommand` 纯函数，把 guard result 转成 command DTO 或 audit-only decision。
+- 验证通过：payment notification 单测 25/25，API typecheck 通过。
+- 未调用 payment workflow，未接 runtime，未连接数据库，未改变交易状态。

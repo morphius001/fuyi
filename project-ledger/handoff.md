@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 21:45 Asia/Shanghai
+更新时间：2026-05-07 22:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -296,4 +296,10 @@
 
 - `mock-webhook-inbox-only-route-readiness` 已完成，见 `docs/mock-webhook-inbox-only-route-readiness.md`。
 - 本轮只记录 route 前置条件、允许文件边界、response contract、测试清单和仍未满足项。
+- 未新增 API route，未接 runtime，未调用 payment workflow。
+
+## Round 74 更新
+
+- `mock-webhook-route-response-contract` 已完成，见 `docs/mock-webhook-route-response-contract.md`。
+- 新增 `mapMockPaymentWebhookResponse()` 纯函数和单元测试，固定 disabled、accepted、duplicate、rejected 响应语义。
 - 未新增 API route，未接 runtime，未调用 payment workflow。

@@ -82,3 +82,48 @@ export type NormalizeMockPaymentNotificationInput = {
   receivedAt?: string;
   expectedAmount?: ChinaPaymentNotificationMoney;
 };
+
+export type PaymentNotificationProcessingStatus =
+  | "received"
+  | "verified"
+  | "processing"
+  | "processed"
+  | "retryable_failed"
+  | "terminal_failed"
+  | "ignored_duplicate";
+
+export type PaymentNotificationInboxRecord = {
+  id: string;
+  envelope: ChinaPaymentNotificationEnvelope;
+  processingStatus: PaymentNotificationProcessingStatus;
+  retryCount: number;
+  lastErrorCode?: string;
+  lastErrorMessage?: string;
+  createdAt: string;
+  updatedAt: string;
+  processedAt?: string;
+};
+
+export type PaymentNotificationEventLogAction =
+  | "received"
+  | "verified"
+  | "dedupe_hit"
+  | "handler_started"
+  | "processed"
+  | "retry_scheduled"
+  | "failed";
+
+export type PaymentNotificationEventLogRecord = {
+  id: string;
+  inboxId: string;
+  action: PaymentNotificationEventLogAction;
+  actorType: "system" | "provider" | "operator";
+  message: string;
+  metadata: Record<string, unknown>;
+  createdAt: string;
+};
+
+export type ReceivePaymentNotificationResult = {
+  record: PaymentNotificationInboxRecord;
+  replayed: boolean;
+};

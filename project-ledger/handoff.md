@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 15:12 Asia/Shanghai
+更新时间：2026-05-07 15:28 Asia/Shanghai
 
 ## 当前上下文
 
@@ -131,3 +131,10 @@
 - 补齐 missing signature、malformed JSON、non-CNY payload 和 weak idempotency source 单测。
 - 验证通过：mock payment notification 单测 10/10。
 - 未注册 Provider 或 migration，未接 webhook runtime，未改变交易状态。
+
+## Round 48 更新
+
+- `payment-notification-inbox-repository` 已完成。
+- 新增未注册 `InMemoryPaymentNotificationInboxRepository`，覆盖 receive、dedupe replay、retryable failure 和 invalid signature audit。
+- 验证通过：payment notification 单测 14/14，`bunx tsc --noEmit -p packages/api/tsconfig.json`。
+- 未连接数据库，未注册 runtime，未改变 checkout、order、payment、refund、settlement、commission 或 permission。

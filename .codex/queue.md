@@ -476,6 +476,12 @@
 
 第三十五轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
 
+第三十六轮收口：
+
+1. `round36-safe-next-execution-map`: done，docs-only，整理下一阶段安全执行图，明确可继续 docs-only、本地 rehearsal、blocked-external 和高风险串行任务边界。
+
+第三十六轮自动队列已清空。没有 disposable preprod DB 前，不自动进入 DB dry-run、真实 migration、Admin 写接口、runtime switch、支付、退款、结算、佣金、权限或真实履约。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

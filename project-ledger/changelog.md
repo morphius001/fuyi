@@ -89,3 +89,4 @@
 - 完成 `admin-market-membership-browser-qa` 登录态补测：Admin 市场详情页读取 `/admin/china/markets` 返回 200，ready 状态展示市场、档口、配送 profile 和只读边界，无保存/发布/生效按钮。
 - 完成 `round34-post-admin-qa-validation`，记录 PR #77/#78 合并后的本地验证和剩余 `blocked-external` 边界。
 - 完成 `preprod-dry-run-operator-pack`，以 docs-only 方式整理预发 disposable DB dry-run 操作包；未连接任何数据库。
+- 完成 `round36-safe-next-execution-map`，明确自动队列已到外部阻塞边界，后续只能等待 disposable preprod DB 或继续 docs-only 高风险拆分计划。

@@ -323,3 +323,9 @@
 - `mock-webhook-handler-composition-plan` 已完成，见 `docs/mock-webhook-handler-composition-plan.md`。
 - 本轮只规划未来 mock webhook inbox-only handler 的组合顺序：runtime gate、request contract、normalizer、repository、state guard、command/audit mapper 和 response mapper。
 - 未新增 handler、API route、runtime、DB 连接或 workflow 调用。
+
+## Round 78 更新
+
+- `mock-webhook-handler-composition-harness-plan` 已完成，见 `docs/mock-webhook-handler-composition-harness-plan.md`。
+- 本轮只规划纯函数 composition harness 的路径、fixtures、repository double、错误映射和审计断言。
+- 未新增 handler、API route、runtime、DB 连接或 workflow 调用。

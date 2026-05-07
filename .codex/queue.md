@@ -429,6 +429,12 @@
 - 不自动进入支付、订单、退款、结算、佣金、权限、真实履约或真实 provider 接入。
 - 涉及预发 DB 或生产 DB 的任务必须明确目标库可丢弃、可回滚。
 
+第三十二轮收口：
+
+1. `market-membership-round32-post-merge-validation`: done，对 PR #67-#70 做合并后单测、API tsc、本地 disposable DB repository integration 和 diff check 总验证。
+
+第三十二轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

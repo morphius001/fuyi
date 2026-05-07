@@ -273,6 +273,7 @@
 - PR #151 合并后验证通过：payment notification harness 83/83、API typecheck、runtime grep 和 disposable DB 无残留。
 - Runtime grep 只命中 Admin disabled route、neutral mock route 和 neutral route 单测；未命中 medusa-config、workflow、subscriber、job 或 link。
 - 下一步如果继续支付 mock route 方向，应先做 `mock-webhook-db-backed-route-plan`，只规划 neutral route 的 DB-backed inbox skeleton，不改 runtime。
+
 - 本轮只规划 DB adapter skeleton 文件边界、mocked ORM 测试、事务一致性和错误映射。
 - 未写 adapter 实现，未连接数据库，未新增 webhook route。
 
@@ -526,3 +527,10 @@
 - 推荐将旧 Admin mock route 降级为 disabled-only，避免它继续承担 provider callback 或 local in-memory smoke。
 - neutral route 是后续 mock provider callback 的唯一演进路径。
 - 下一步可做 `mock-webhook-admin-route-disabled-only`。
+
+## Round 106 更新
+
+- `mock-webhook-db-backed-route-plan` 已完成，见 `docs/mock-webhook-db-backed-route-plan.md`。
+- 文档把 neutral route 的后续演进拆成 disabled、local in-memory、local disposable DB inbox-only、DB-backed prepare-command 和 workflow execution 五层。
+- 下一步只允许做 `mock-webhook-db-backed-route-resolver-plan`，先规划 route-level repository resolver contract 和 disabled fallback。
+- Admin route 保持 disabled-only；neutral route `POST /china/payment-webhooks/mock` 是唯一 mock provider callback 演进路径。

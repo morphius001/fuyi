@@ -10,8 +10,10 @@ import {
 } from "./mock-webhook-response";
 import { normalizeMockPaymentNotification } from "./mock-payload-normalizer";
 import {
+  classifyPaymentNotificationRepositoryError,
   PaymentNotificationInboxRepositoryContract,
   PaymentNotificationInboxReceiveResult,
+  PaymentNotificationRepositoryErrorCode,
 } from "./inbox-repository-contract";
 import { guardPaymentNotificationState } from "./state-guard";
 import { mapGuardResultToWorkflowCommand } from "./workflow-command-mapper";
@@ -70,6 +72,49 @@ const mapSignatureStatusToRejectedCode = (
   return null;
 };
 
+const repositoryErrorCodes: PaymentNotificationRepositoryErrorCode[] = [
+  "SIGNATURE_MISSING",
+  "SIGNATURE_INVALID",
+  "PAYLOAD_INVALID",
+  "CURRENCY_UNSUPPORTED",
+  "EVENT_TYPE_UNSUPPORTED",
+  "DB_UNIQUE_CONFLICT",
+  "DB_LOCK_TIMEOUT",
+  "DB_CONNECTION_INTERRUPTED",
+];
+
+const getRepositoryErrorCode = (error: unknown): string => {
+  const message = error instanceof Error ? error.message : String(error);
+
+  return (
+    repositoryErrorCodes.find((code) => message.includes(code)) ??
+    "UNKNOWN_REPOSITORY_ERROR"
+  );
+};
+
+const mapRepositoryErrorToResponse = (
+  error: unknown,
+): MockPaymentWebhookResponse => {
+  const code = getRepositoryErrorCode(error);
+  const kind = classifyPaymentNotificationRepositoryError(code);
+
+  if (kind === "duplicate") {
+    return mapMockPaymentWebhookResponse({ status: "duplicate" });
+  }
+
+  if (kind === "retryable" || kind === "unknown") {
+    return mapMockPaymentWebhookResponse({
+      status: "rejected",
+      code: "INBOX_RETRYABLE",
+    });
+  }
+
+  return mapMockPaymentWebhookResponse({
+    status: "rejected",
+    code: "INBOX_UNAVAILABLE",
+  });
+};
+
 export const composeMockPaymentWebhookInboxOnly = async (
   input: MockPaymentWebhookCompositionInput,
 ): Promise<MockPaymentWebhookCompositionResult> => {
@@ -123,7 +168,16 @@ export const composeMockPaymentWebhookInboxOnly = async (
     };
   }
 
-  const receiveResult = await input.repository.receive(envelope);
+  let receiveResult: PaymentNotificationInboxReceiveResult;
+
+  try {
+    receiveResult = await input.repository.receive(envelope);
+  } catch (error) {
+    return {
+      envelope,
+      response: mapRepositoryErrorToResponse(error),
+    };
+  }
 
   if (receiveResult.status === "duplicate") {
     return {
@@ -154,13 +208,23 @@ export const composeMockPaymentWebhookInboxOnly = async (
   );
   const auditEvent = mapWorkflowCommandDecisionToAuditEvent(commandDecision);
 
-  await input.repository.appendEvent({
-    inboxId: receiveResult.record.id,
-    action: auditEvent.action,
-    actorType: auditEvent.actorType,
-    message: auditEvent.message,
-    metadata: auditEvent.metadata,
-  });
+  try {
+    await input.repository.appendEvent({
+      inboxId: receiveResult.record.id,
+      action: auditEvent.action,
+      actorType: auditEvent.actorType,
+      message: auditEvent.message,
+      metadata: auditEvent.metadata,
+    });
+  } catch (error) {
+    return {
+      envelope,
+      receiveResult,
+      commandDecision,
+      auditEvent,
+      response: mapRepositoryErrorToResponse(error),
+    };
+  }
 
   return {
     envelope,

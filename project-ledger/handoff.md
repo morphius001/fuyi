@@ -336,3 +336,10 @@
 - 新增 `composeMockPaymentWebhookInboxOnly()` 纯函数 helper 和 composition 单测，覆盖 disabled、request reject、payload invalid、invalid signature、duplicate、accepted、guard blocked 和 command prepared。
 - 验证通过：payment notification harness 65/65、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。
+
+## Round 80 更新
+
+- `mock-webhook-composition-error-tests` 已完成，见 `docs/mock-webhook-composition-error-tests.md`。
+- composition helper 现在把 repository unique conflict 映射为 duplicate，把 retryable/unknown repository failure 映射为 `INBOX_RETRYABLE`，terminal failure 映射为 `INBOX_UNAVAILABLE`。
+- 验证通过：payment notification harness 69/69、dry-run row count 2|9、API typecheck。
+- 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。

@@ -10,7 +10,9 @@ export type MockPaymentWebhookRejectedCode =
   | "SIGNATURE_MISSING"
   | "PAYLOAD_INVALID"
   | "CURRENCY_UNSUPPORTED"
-  | "EVENT_TYPE_UNSUPPORTED";
+  | "EVENT_TYPE_UNSUPPORTED"
+  | "INBOX_RETRYABLE"
+  | "INBOX_UNAVAILABLE";
 
 export type MockPaymentWebhookResponseDecision =
   | {
@@ -70,8 +72,10 @@ export const mapMockPaymentWebhookResponse = (
     };
   }
 
+  const httpStatus = decision.code === "INBOX_RETRYABLE" ? 503 : 400;
+
   return {
-    httpStatus: 400,
+    httpStatus,
     body: {
       status: "rejected",
       code: decision.code,

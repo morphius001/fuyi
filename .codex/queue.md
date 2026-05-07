@@ -1060,7 +1060,8 @@
 10. `mock-webhook-neutral-local-inmemory-devserver-plan`: done，规划临时 dev server 方式运行 local-inmemory smoke，不修改现有 `.env`。
 11. `mock-webhook-neutral-local-inmemory-devserver-script`: done，新增临时 dev server smoke wrapper，只管理自己启动的临时 API。
 12. `mock-webhook-neutral-local-inmemory-smoke-validation`: done，运行并记录临时 devserver local-inmemory smoke 结果。
-13. `mock-webhook-admin-route-deprecation-plan`: pending，规划旧 Admin mock route 的保留、降级或删除策略。
+13. `mock-webhook-admin-route-deprecation-plan`: done，规划旧 Admin mock route 的保留、降级或删除策略。
+14. `mock-webhook-admin-route-disabled-only`: pending，将旧 Admin mock route 降级为 disabled-only，不再保留 local in-memory 分支。
 
 第九十三轮原则：
 

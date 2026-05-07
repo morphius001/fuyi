@@ -504,3 +504,10 @@
 - PR #148 合并后验证通过：临时 9100 devserver local-inmemory smoke 覆盖 accepted、missing signature、malformed payload；payment notification harness 84/84；DB 残留为空。
 - 9100 端口复查无监听进程。
 - 下一步建议做 `mock-webhook-admin-route-deprecation-plan`，明确旧 Admin mock route 的保留、降级或删除策略。
+
+## Round 105 更新
+
+- `mock-webhook-admin-route-deprecation-plan` 已完成，见 `docs/mock-webhook-admin-route-deprecation-plan.md`。
+- 推荐将旧 Admin mock route 降级为 disabled-only，避免它继续承担 provider callback 或 local in-memory smoke。
+- neutral route 是后续 mock provider callback 的唯一演进路径。
+- 下一步可做 `mock-webhook-admin-route-disabled-only`。

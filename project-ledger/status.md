@@ -281,6 +281,7 @@
 - `mock-webhook-neutral-local-inmemory-devserver-script` 已完成：新增临时 API dev server smoke wrapper，不修改现有服务或 `.env`；neutral route 已补齐框架已解析 JSON body 读取兜底。
 - `mock-webhook-neutral-local-inmemory-smoke-validation` 已完成：记录 PR #148 合并后 local-inmemory smoke、harness 84/84、9100 端口清理和 DB 无残留验证。
 - `mock-webhook-admin-route-deprecation-plan` 已完成：docs-only 规划旧 Admin mock route 降级为 disabled-only，neutral route 作为唯一 mock provider callback 演进路径。
+- `mock-webhook-admin-route-disabled-only` 已完成：旧 Admin mock webhook route 降级为 disabled-only，不再读取 body、不处理 signature、不构造 in-memory repository、不调用 handler；neutral route 继续作为唯一 mock provider callback 演进路径。
 
 ## 仍需注意
 

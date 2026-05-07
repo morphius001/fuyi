@@ -61,6 +61,7 @@ PASS payment notification idempotency harness completed.
 - `mock-payment-notification.unit.spec.ts`
 - `payment-notification-inbox-repository.unit.spec.ts`
 - `payment-notification-state-guard.unit.spec.ts`
+- `payment-workflow-command-mapper.unit.spec.ts`
 
 验证结果：
 
@@ -76,6 +77,22 @@ PASS payment notification idempotency harness completed.
 ```
 
 临时库 `fuyi_payment_notification_inbox_dry_run_20260507141523` 已删除，并复查无残留。
+
+2026-05-07 14:27 Asia/Shanghai 后，harness 也覆盖 `payment-workflow-command-mapper.unit.spec.ts`。
+
+验证结果：
+
+```text
+PASS src/modules/china-payment-notification/__tests__/payment-workflow-command-mapper.unit.spec.ts
+PASS src/modules/china-payment-notification/__tests__/mock-payment-notification.unit.spec.ts
+PASS src/modules/china-payment-notification/__tests__/payment-notification-state-guard.unit.spec.ts
+PASS src/modules/china-payment-notification/__tests__/payment-notification-inbox-repository.unit.spec.ts
+Tests: 25 passed, 25 total
+CREATE disposable dry-run database: fuyi_payment_notification_inbox_dry_run_20260507142712
+PASS payment notification inbox migration skeleton local dry-run completed and disposable database will be dropped.
+```
+
+临时库 `fuyi_payment_notification_inbox_dry_run_20260507142712` 已删除，并复查无残留。
 
 ## 安全边界
 

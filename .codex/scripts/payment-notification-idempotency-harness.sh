@@ -29,7 +29,8 @@ echo "RUN payment notification unit tests"
   bun run test:unit --runTestsByPath \
     src/modules/china-payment-notification/__tests__/mock-payment-notification.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/payment-notification-inbox-repository.unit.spec.ts \
-    src/modules/china-payment-notification/__tests__/payment-notification-state-guard.unit.spec.ts
+    src/modules/china-payment-notification/__tests__/payment-notification-state-guard.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/payment-workflow-command-mapper.unit.spec.ts
 )
 
 echo "RUN payment notification inbox migration skeleton dry-run"

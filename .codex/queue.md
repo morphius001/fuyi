@@ -878,6 +878,17 @@
 - 不新增 API route。
 - 不接 runtime，不调用 payment workflow。
 
+第七十七轮 mock webhook handler composition plan:
+
+1. `mock-webhook-handler-composition-plan`: done，规划未来 mock webhook inbox-only handler 的组合顺序和禁止跨越边界。
+
+第七十七轮原则：
+
+- 只做文档。
+- 不新增 handler。
+- 不新增 API route。
+- 不接 runtime，不写 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

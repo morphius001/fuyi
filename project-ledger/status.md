@@ -269,6 +269,7 @@
 - `mock-webhook-local-route-smoke-script-plan` 已完成：docs-only 规划本地 route smoke 脚本，不新增脚本。
 - `mock-webhook-route-auth-boundary-review` 已完成：docs-only 记录 Admin route 不适合作为真实 provider callback 的路径风险。
 - `mock-webhook-route-path-migration-plan` 已完成：docs-only 规划 neutral provider callback route 路径和后续 PR 拆分，不新增 route 或 runtime。
+- `mock-webhook-neutral-route-disabled-skeleton` 已完成：新增 neutral mock webhook route disabled skeleton，不读取 body，不调用 handler，不连接 DB 或 workflow。
 
 ## 仍需注意
 

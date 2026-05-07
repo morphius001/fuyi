@@ -151,3 +151,4 @@
 - 完成 `mock-webhook-neutral-route-disabled-post-validation`，记录 PR #139 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。
 - 完成 `mock-webhook-neutral-route-inmemory-plan`，以 docs-only 方式规划 neutral route local-only in-memory 分支；明确仍不连接 DB、不执行 workflow。
 - 完成 `mock-webhook-neutral-route-inmemory-skeleton`，neutral route 新增 local-only in-memory 分支和单元测试；默认/prod disabled，不连接 DB 或 workflow。
+- 完成 `mock-webhook-neutral-route-inmemory-post-validation`，记录 PR #142 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。

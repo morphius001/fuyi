@@ -440,3 +440,10 @@
 - PR #139 合并后验证通过：payment notification harness 80/80、dry-run row count 2|9、API typecheck、runtime 入口检查和 disposable DB 无残留。
 - 当前 neutral route 仍默认 disabled，不读 body，不调用 handler，不连接 DB，不执行 payment workflow。
 - 下一步若继续，应先做 `mock-webhook-neutral-route-inmemory-plan`，再考虑 local-only in-memory skeleton。
+
+## Round 96 更新
+
+- `mock-webhook-neutral-route-inmemory-plan` 已完成，见 `docs/mock-webhook-neutral-route-inmemory-plan.md`。
+- 本轮只规划 neutral route local-only in-memory 分支的 env gate、handler 注入、repository 生命周期、安全响应和后续 PR 拆分。
+- 未修改 `packages/**` 或 `apps/**`，未接 handler、DB 或 workflow。
+- 下一步可做 `mock-webhook-neutral-route-inmemory-skeleton`，但仍必须默认/prod disabled，且不连接 DB、不执行 payment workflow。

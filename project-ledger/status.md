@@ -215,6 +215,7 @@
 - `local-preprod-sim-dry-run` 已完成：本机 WSL disposable DB `fuyi_market_membership_dry_run_preprod_sim_20260507130339` 上 migration up/down、fixture、约束拒绝、rollback 和无残留复查均通过。
 - `payment-notification-idempotency-plan` 已完成：以 docs-only 方式固化中国本地支付通知验签、幂等、重试、审计和后续 PR 拆分；未接真实支付 Provider，未修改交易链路。
 - `payment-notification-contract-docs` 已完成：以 docs-only 方式固化支付通知 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 边界。
+- `mock-payment-notification-skeleton-plan` 已完成：以 docs-only 方式规划未注册 mock skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单。
 
 ## 仍需注意
 

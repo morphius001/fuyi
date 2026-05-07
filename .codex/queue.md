@@ -511,6 +511,16 @@
 - 不新增 migration、不连接数据库、不接真实 Provider。
 - 后续 mock skeleton、inbox model、真实支付宝/微信支付、退款、对账和结算继续串行。
 
+第四十轮 docs-only mock skeleton 准备：
+
+1. `mock-payment-notification-skeleton-plan`: done，规划未注册 Mock China Payment notification skeleton 的文件边界、fake signature、fake payload、idempotency key 和单元测试清单；不写 `packages/**` 代码。
+
+第四十轮原则：
+
+- 当前仍是 docs-only。
+- 不注册 Provider，不接 checkout，不改交易状态。
+- 下一步真正写 skeleton 时必须单独 PR，并保持未注册、mock-only、单元测试优先。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

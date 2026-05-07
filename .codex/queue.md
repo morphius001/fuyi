@@ -470,6 +470,12 @@
 
 第三十四轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`，需要用户明确提供可丢弃预发目标库、备份和回滚确认后才可执行。
 
+第三十五轮收口：
+
+1. `preprod-dry-run-operator-pack`: done，docs-only，整理预发 disposable DB dry-run 的 Go/No-Go、变量模板、命令模板、日志目录、rollback 和退出标准；未连接任何数据库。
+
+第三十五轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

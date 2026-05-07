@@ -40,3 +40,9 @@
 - `round34-post-admin-qa-validation` 已记录本地验证结果。
 - 自动队列当前没有可继续执行的普通任务。
 - 剩余阻塞项是 `preprod-disposable-db-dry-run-execution`，需要用户提供可丢弃预发库、备份和回滚确认。
+
+## Round 35 更新
+
+- `preprod-dry-run-operator-pack` 已完成，见 `docs/preprod-dry-run-operator-pack.md`。
+- 当前仍未连接任何预发或生产数据库。
+- 如果用户后续提供 disposable preprod DB，先按 operator pack 做 Go/No-Go，不要直接执行。

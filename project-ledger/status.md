@@ -210,6 +210,7 @@
 - `.codex/scripts/start-dev.sh` 已为 API dev server 注入本地 CORS 默认值，覆盖 Admin、Vendor、Storefront 的 `localhost` 和 `127.0.0.1` 开发源。
 - `admin-market-membership-browser-qa` 登录态补测通过：`/admin/china/markets` 返回 200，市场详情页展示三门海鲜市场、阿海鲜活档、A区 18号、配送 profile 和只读边界；无保存/发布/生效按钮，无 `Failed to fetch`，无 `chinaAdmin.*` key 泄漏。
 - `round34-post-admin-qa-validation` 已记录 PR #77/#78 合并后的本地验证结果。
+- `preprod-dry-run-operator-pack` 已完成，预发 disposable DB dry-run 的 Go/No-Go、变量模板、日志目录、rollback 和退出标准已固化为文档。
 
 ## 仍需注意
 

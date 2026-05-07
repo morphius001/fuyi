@@ -817,6 +817,16 @@
 - 不写 integration test。
 - 不连接数据库，不新增 webhook route。
 
+第七十一轮 repository disposable DB test script:
+
+1. `payment-inbox-repository-disposable-db-test-script`: done，新增本地 disposable DB 验证脚本，覆盖 repository 合同级 schema 行为、约束、回滚和无残留检查。
+
+第七十一轮原则：
+
+- 只新增本地脚本和文档。
+- 只允许本地 disposable DB。
+- 不新增 webhook route，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

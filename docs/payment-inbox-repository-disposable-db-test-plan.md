@@ -87,6 +87,7 @@ PASS
 1. `payment-inbox-repository-disposable-db-test-script`
    - 新增本地脚本。
    - 仍不写 route。
+   - 脚本路径：`.codex/scripts/payment-inbox-repository-disposable-db-test.sh`。
 
 2. `payment-inbox-repository-disposable-db-test`
    - 新增 integration test。

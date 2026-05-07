@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 21:00 Asia/Shanghai
+更新时间：2026-05-07 21:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -279,3 +279,9 @@
 - `payment-inbox-repository-disposable-db-test-plan` 已完成，见 `docs/payment-inbox-repository-disposable-db-test-plan.md`。
 - 本轮只规划本地 disposable DB integration test 的命名、连接限制、schema up/down、测试用例和无残留检查。
 - 未写 integration test，未连接数据库，未新增 webhook route。
+
+## Round 71 更新
+
+- `payment-inbox-repository-disposable-db-test-script` 已完成，见 `docs/payment-inbox-repository-disposable-db-test-script.md`。
+- 新增 `.codex/scripts/payment-inbox-repository-disposable-db-test.sh`，只允许本地 disposable DB，覆盖 repository 合同级 schema 行为、约束、回滚和无残留检查。
+- 未新增 webhook route，未调用 payment workflow，未连接预发或生产数据库。

@@ -1036,6 +1036,16 @@
 - 不新增脚本。
 - 不修改 `packages/**` 或 `apps/**`。
 
+第九十二轮 mock webhook route auth boundary review:
+
+1. `mock-webhook-route-auth-boundary-review`: done，审查 Admin route 作为真实 provider callback 的认证边界风险。
+
+第九十二轮原则：
+
+- 只做文档。
+- 不修改 route 或脚本。
+- 不接 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -729,6 +729,16 @@
 - 不接 runtime，不注册 migration。
 - 不调用 payment workflow。
 
+第六十二轮 mock webhook inbox-only route 计划:
+
+1. `mock-payment-webhook-inbox-route-plan`: done，规划 mock payment webhook inbox-only route 的 feature flag、请求响应、错误码、幂等和测试边界。
+
+第六十二轮原则：
+
+- 只做文档。
+- 不新增 API route。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

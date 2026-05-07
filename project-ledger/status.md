@@ -237,6 +237,7 @@
 - `payment-command-mapper-audit-tests` 已完成：新增 command decision -> event log audit action 纯函数，不写 DB，不调用 payment workflow。
 - `payment-command-audit-post-merge-validation` 已完成：harness 31/31、API typecheck、runtime grep 无注册、dry-run 临时库无残留。
 - `payment-runtime-disabled-plan` 已完成：docs-only 规划 runtime 默认关闭、mock-only webhook 门禁、workflow 执行前置条件和回滚策略。
+- `mock-payment-webhook-inbox-route-plan` 已完成：docs-only 规划 mock webhook inbox-only route，不新增 API route，不接 runtime。
 
 ## 仍需注意
 

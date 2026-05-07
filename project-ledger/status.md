@@ -239,6 +239,7 @@
 - `payment-runtime-disabled-plan` 已完成：docs-only 规划 runtime 默认关闭、mock-only webhook 门禁、workflow 执行前置条件和回滚策略。
 - `mock-payment-webhook-inbox-route-plan` 已完成：docs-only 规划 mock webhook inbox-only route，不新增 API route，不接 runtime。
 - `payment-inbox-repository-db-contract-plan` 已完成：docs-only 规划 DB repository 合同，不写实现，不连接数据库。
+- `payment-inbox-repository-interface` 已完成：新增 repository contract 和 error classifier，不写 DB adapter，不接 webhook route。
 
 ## 仍需注意
 

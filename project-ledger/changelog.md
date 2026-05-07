@@ -117,3 +117,4 @@
 - 完成 `payment-runtime-disabled-plan`，以 docs-only 方式规划支付通知 runtime 接入前的默认关闭、mock-only 门禁和回滚策略。
 - 完成 `mock-payment-webhook-inbox-route-plan`，以 docs-only 方式规划 mock payment webhook inbox-only route、feature flag、响应语义和测试边界。
 - 完成 `payment-inbox-repository-db-contract-plan`，以 docs-only 方式规划 DB-backed inbox repository 的事务、幂等、event log 和错误映射合同。
+- 完成 `payment-inbox-repository-interface`，新增 payment notification inbox repository contract、错误码分类和单元测试。

@@ -6,3 +6,4 @@ export * from "./in-memory-inbox-repository";
 export * from "./state-guard";
 export * from "./workflow-command-mapper";
 export * from "./workflow-command-audit-mapper";
+export * from "./inbox-repository-contract";

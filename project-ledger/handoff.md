@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 19:15 Asia/Shanghai
+更新时间：2026-05-07 19:30 Asia/Shanghai
 
 ## 当前上下文
 
@@ -234,3 +234,10 @@
 - `payment-inbox-repository-db-contract-plan` 已完成，见 `docs/payment-inbox-repository-db-contract-plan.md`。
 - 本轮只规划 DB-backed inbox repository 方法、事务边界、幂等冲突、event log 一致性和错误映射。
 - 未写 repository 实现，未连接数据库，未接 runtime。
+
+## Round 64 更新
+
+- `payment-inbox-repository-interface` 已完成，见 `docs/payment-inbox-repository-interface.md`。
+- 新增 `PaymentNotificationInboxRepositoryContract`、repository error classifier 和单元测试。
+- Harness 已纳入新增单测。
+- 未写 DB adapter，未接 webhook route，未调用 payment workflow。

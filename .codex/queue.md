@@ -435,12 +435,34 @@
 
 第三十二轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
+第三十三轮入口：
+
+1. `round33-high-risk-entry-plan`: done，固化进入真实 DB、写接口和运行时开关前的门禁、任务顺序、暂停条件和高风险边界。
+
+第三十三轮建议任务：
+
+1. `local-disposable-migration-registration-rehearsal`: pending，仅使用本地 disposable DB 模拟 migration 注册前检查，不注册生产 migration。
+2. `migration-registration-design-review`: pending，docs-only，评审真实 migration 注册点、rollback、部署顺序和 PR 拆分。
+3. `admin-write-api-runtime-switch-plan`: pending，docs-only，设计 Admin 写接口和 runtime switch 的分离、审计、幂等和回滚。
+4. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话。
+5. `preprod-disposable-db-dry-run-execution`: blocked-external，需要用户明确提供可丢弃预发目标库、备份和回滚确认。
+
+第三十三轮原则：
+
+- 自动队列只能继续 docs-only 或本地 disposable DB 任务。
+- 不自动连接预发或生产 DB。
+- 不注册真实 migration。
+- 不实现 Admin 写接口。
+- 不让模块开关影响真实 runtime、权限、checkout、订单、履约或支付。
+- 支付、退款、对账、商家结算、权限、真实履约和真实 provider 继续保持高风险串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。
 - `pending`: 可执行。
 - `done`: 已完成。
 - `blocked-manual`: 需要用户登录态、视觉确认或外部条件，自动队列跳过。
+- `blocked-external`: 需要外部环境、目标库、凭据或明确人工确认，自动队列跳过。
 - 未显式标记的队列任务默认为 `pending`。
 
 ## Execution Rules

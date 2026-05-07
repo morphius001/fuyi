@@ -997,3 +997,80 @@ Verification:
 Risk:
 
 - 低。当前只读 UI；后续模板写接口、版本审计和商品创建 workflow 需单独任务。
+
+## Batch 3: Market Membership 高风险入口
+
+### PR BR: Round 33 High-Risk Entry Plan
+
+Scope:
+
+- 固化进入真实 DB、写接口和运行时开关前的门禁。
+- 明确 Admin 浏览器 QA、预发 disposable DB、migration 注册、Admin 写接口和 runtime switch 的顺序。
+- 只做文档和任务队列，不写业务代码。
+
+Non-goals:
+
+- 不连接预发或生产 DB。
+- 不注册真实 migration。
+- 不实现 Admin 写接口。
+- 不让模块开关影响真实 runtime、权限、checkout、订单、履约或支付。
+- 不接真实支付、退款、对账、结算、短信、IM、物流、直播或 AI provider。
+
+Verification:
+
+- `git diff --check`
+- `bun run prettier --check docs/round33-high-risk-entry-plan.md .codex/tasks/round33-high-risk-entry-plan.md .codex/queue.md docs/china-localization-task-list.md`
+
+Risk:
+
+- 低。当前仅规划；后续真实 DB、写接口和资金域必须串行执行。
+
+### PR BT: Local Disposable Migration Registration Rehearsal
+
+Scope:
+
+- 只在本地 disposable DB 模拟 migration 注册前检查。
+- 继续验证 up/down、约束、空表、fixture、repository reader 和 cleanup。
+
+Non-goals:
+
+- 不注册生产 migration。
+- 不连接预发或生产 DB。
+- 不写 production seed。
+
+Risk:
+
+- 中。虽然只在本地 disposable DB，但目标是为真实 migration 注册做前置证据。
+
+### PR BV: Migration Registration Design Review
+
+Scope:
+
+- docs-only 评审真实 migration 注册点、模块边界、rollback 策略和部署顺序。
+- 输出可执行 PR 拆分。
+
+Non-goals:
+
+- 不写 migration 注册代码。
+- 不改变运行时。
+
+Risk:
+
+- 中。后续会进入真实 DB schema 变化，必须保持串行。
+
+### PR BW: Admin Write API And Runtime Switch Plan
+
+Scope:
+
+- docs-only 设计 Admin 市场配置、模块开关、商户类型开关的写接口和审计。
+- 明确 write API 与 runtime effective config 分离。
+
+Non-goals:
+
+- 不实现写接口。
+- 不让开关真实生效。
+- 不修改权限、订单、支付、退款、结算、佣金或履约逻辑。
+
+Risk:
+
+- 中到高。后续写接口和 runtime switch 会影响运营后台与平台能力开放，必须独立评审和回滚。

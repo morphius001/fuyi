@@ -132,3 +132,4 @@
 - 完成 `mock-webhook-request-post-merge-validation`，记录 PR #120 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 - 完成 `mock-webhook-handler-composition-plan`，以 docs-only 方式规划未来 mock webhook inbox-only handler 的组合顺序和禁止跨越边界。
 - 完成 `mock-webhook-handler-composition-harness-plan`，以 docs-only 方式规划纯函数 composition harness 的测试路径和后续 PR 拆分。
+- 完成 `mock-webhook-composition-helper`，新增未注册纯函数 composition helper 和单元测试，不新增 API route 或 runtime。

@@ -901,6 +901,16 @@
 - 不新增 API route。
 - 不接 runtime，不写 DB，不调用 payment workflow。
 
+第七十九轮 mock webhook composition helper:
+
+1. `mock-webhook-composition-helper`: done，新增未注册纯函数 composition helper 和单元测试。
+
+第七十九轮原则：
+
+- 只在 `packages/api/src/modules/china-payment-notification/**` 内写纯函数和测试。
+- 不新增 API route。
+- 不接 runtime，不创建 DB 连接，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

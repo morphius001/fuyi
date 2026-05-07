@@ -125,3 +125,4 @@
 - 完成 `payment-db-adapter-post-merge-validation`，记录 DB adapter skeleton 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 - 完成 `payment-inbox-repository-disposable-db-test-plan`，以 docs-only 方式规划 repository 本地 disposable DB integration test 和安全边界。
 - 完成 `payment-inbox-repository-disposable-db-test-script`，新增本地 disposable DB 验证脚本，覆盖 repository 合同级 schema 行为和无残留检查。
+- 完成 `payment-repository-disposable-db-script-validation`，记录 repository disposable DB script 合并后的脚本、harness、runtime grep 和无残留验证。

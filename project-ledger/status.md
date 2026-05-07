@@ -247,6 +247,7 @@
 - `payment-db-adapter-post-merge-validation` 已完成：harness 46/46、API typecheck、runtime grep 无注册、dry-run 临时库无残留。
 - `payment-inbox-repository-disposable-db-test-plan` 已完成：docs-only 规划本地 disposable DB integration test，不连接数据库，不写测试。
 - `payment-inbox-repository-disposable-db-test-script` 已完成：新增本地 disposable DB 验证脚本，不连接预发/生产，不新增 webhook route。
+- `payment-repository-disposable-db-script-validation` 已完成：repository disposable DB script 3/6 row count 验证通过，harness 46/46，无残留，runtime grep 无注册。
 
 ## 仍需注意
 

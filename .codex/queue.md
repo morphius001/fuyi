@@ -827,6 +827,15 @@
 - 只允许本地 disposable DB。
 - 不新增 webhook route，不调用 payment workflow。
 
+第七十二轮 repository disposable DB script 验证:
+
+1. `payment-repository-disposable-db-script-validation`: done，记录 repository disposable DB script 合并后的脚本、harness、runtime grep 和无残留验证。
+
+第七十二轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

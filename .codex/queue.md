@@ -964,6 +964,17 @@
 - 不新增 API route。
 - 不接 runtime，不创建 DB 连接，不调用 payment workflow。
 
+第八十五轮 mock webhook local route disabled plan:
+
+1. `mock-webhook-local-route-disabled-plan`: done，规划未来默认关闭 mock webhook route 的接入条件。
+
+第八十五轮原则：
+
+- 只做文档。
+- 不修改 `packages/**` 或 `apps/**`。
+- 不新增 API route。
+- 不接 runtime，不创建 DB 连接，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -368,3 +368,9 @@
 - `mock-webhook-handler-post-validation` 已完成，见 `docs/mock-webhook-handler-post-validation.md`。
 - 合并后验证通过：payment notification harness 73/73、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。
+
+## Round 85 更新
+
+- `mock-webhook-local-route-disabled-plan` 已完成，见 `docs/mock-webhook-local-route-disabled-plan.md`。
+- 本轮只规划未来 mock webhook local route 的默认 disabled 接入条件、raw body、env gate、repository 策略、验证清单和回滚策略。
+- 未修改 `packages/**` 或 `apps/**`，未新增 API route，未接 runtime。

@@ -349,3 +349,9 @@
 - `mock-webhook-composition-post-validation` 已完成，见 `docs/mock-webhook-composition-post-validation.md`。
 - 合并后验证通过：payment notification harness 69/69、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。
+
+## Round 82 更新
+
+- `mock-webhook-handler-skeleton-plan` 已完成，见 `docs/mock-webhook-handler-skeleton-plan.md`。
+- 本轮只规划未来未注册 handler skeleton 的允许路径、禁止路径、输入输出、安全 metadata 和后续 PR 拆分。
+- 未修改 `packages/**` 或 `apps/**`，未新增 API route，未接 runtime。

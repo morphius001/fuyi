@@ -389,13 +389,14 @@
 1. `market-membership-local-migration-dry-run`: done，本地可丢弃数据库 dry-run 脚本和执行记录。
 2. `market-membership-seed-fixture`: done，只做测试 fixture，不进生产 seed。
 3. `vendor-market-context-db-qa`: done，用 dry-run fixture 验证 Vendor route repository/fallback 三态。
-4. `admin-market-membership-browser-qa`: pending，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
+4. `admin-market-membership-browser-qa`: blocked-manual，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
 
 第三十一轮进度：
 
 - `market-membership-local-migration-dry-run`: done，新增 `.codex/scripts/market-membership-local-dry-run.sh`，从 migration skeleton 提取 SQL，在 `fuyi_market_membership_dry_run_*` 临时库验证 up/down、6 张表、约束拒绝和最小 fixture，并自动清理临时库。
 - `market-membership-seed-fixture`: done，新增只用于单元测试和本地 QA 的 market membership repository rows fixture；adapter 与 Vendor route helper 单测复用它，不进入生产 seed、不写真实业务数据库。
 - `vendor-market-context-db-qa`: done，Vendor route helper 单测新增 in-memory DB reader QA，覆盖 repository ready、owned market filter、required table missing 和 no membership fallback；同时最小修复 `china_market` 只读查询应按 `id` 过滤的问题，不改 route handler、写接口或业务状态。
+- `admin-market-membership-browser-qa`: blocked-manual，Admin 浏览器 QA 需要用户已登录的 Codex App 浏览器会话；当前只固化三态 QA 清单，不伪造截图、不标记 done。
 
 ## Status Rules
 

@@ -911,6 +911,16 @@
 - 不新增 API route。
 - 不接 runtime，不创建 DB 连接，不调用 payment workflow。
 
+第八十轮 mock webhook composition error tests:
+
+1. `mock-webhook-composition-error-tests`: done，补齐 repository receive/appendEvent 错误映射和单元测试。
+
+第八十轮原则：
+
+- 只在 `packages/api/src/modules/china-payment-notification/**` 内写纯函数和测试。
+- 不新增 API route。
+- 不接 runtime，不创建 DB 连接，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

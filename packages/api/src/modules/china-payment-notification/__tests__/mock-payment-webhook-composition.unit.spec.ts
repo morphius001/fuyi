@@ -203,6 +203,44 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
     expect(repository.receive).toHaveBeenCalledTimes(1);
   });
 
+  it("maps repository unique conflicts to duplicate responses", async () => {
+    const repository = makeRepository();
+    repository.receive.mockRejectedValueOnce(new Error("DB_UNIQUE_CONFLICT"));
+
+    const result = await composeMockPaymentWebhookInboxOnly({
+      runtimeConfigInput: runtimeEnabled,
+      request: signedRequest(),
+      repository,
+    });
+
+    expect(result.response).toEqual({
+      httpStatus: 200,
+      body: {
+        status: "duplicate",
+        mode: "mock_inbox_only",
+      },
+    });
+  });
+
+  it("maps repository retryable receive failures without throwing", async () => {
+    const repository = makeRepository();
+    repository.receive.mockRejectedValueOnce(new Error("DB_LOCK_TIMEOUT"));
+
+    const result = await composeMockPaymentWebhookInboxOnly({
+      runtimeConfigInput: runtimeEnabled,
+      request: signedRequest(),
+      repository,
+    });
+
+    expect(result.response).toEqual({
+      httpStatus: 503,
+      body: {
+        status: "rejected",
+        code: "INBOX_RETRYABLE",
+      },
+    });
+  });
+
   it("accepts verified inbox-only notifications without preparing commands", async () => {
     const repository = makeRepository();
     const result = await composeMockPaymentWebhookInboxOnly({
@@ -287,5 +325,48 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
     });
     expect(result).not.toHaveProperty("workflowResult");
     expect(repository.appendEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it("maps audit append failures after command preparation without executing workflows", async () => {
+    const repository = makeRepository();
+    repository.appendEvent.mockRejectedValueOnce(
+      new Error("DB_CONNECTION_INTERRUPTED"),
+    );
+
+    const result = await composeMockPaymentWebhookInboxOnly({
+      runtimeConfigInput: runtimePrepareCommand,
+      request: signedRequest(),
+      repository,
+      paymentSession: {
+        id: "payses_mock_composition_001",
+        provider: "mock_china_pay",
+        amount: {
+          value: 128560,
+          currency: "CNY",
+        },
+        status: "pending",
+        fetchedAt: receivedAt,
+      },
+      order: {
+        id: "order_mock_composition_001",
+        status: "pending",
+        fetchedAt: receivedAt,
+      },
+    });
+
+    expect(result.response).toEqual({
+      httpStatus: 503,
+      body: {
+        status: "rejected",
+        code: "INBOX_RETRYABLE",
+      },
+    });
+    expect(result.commandDecision).toMatchObject({
+      executable: true,
+      command: {
+        type: "capture_payment",
+      },
+    });
+    expect(result).not.toHaveProperty("workflowResult");
   });
 });

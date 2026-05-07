@@ -46,6 +46,21 @@ describe("mapMockPaymentWebhookResponse", () => {
     });
   });
 
+  it("maps retryable inbox failures to 503 rejected responses", () => {
+    expect(
+      mapMockPaymentWebhookResponse({
+        status: "rejected",
+        code: "INBOX_RETRYABLE",
+      }),
+    ).toEqual({
+      httpStatus: 503,
+      body: {
+        status: "rejected",
+        code: "INBOX_RETRYABLE",
+      },
+    });
+  });
+
   it("does not include raw provider payload or secrets", () => {
     const response = mapMockPaymentWebhookResponse({
       status: "rejected",

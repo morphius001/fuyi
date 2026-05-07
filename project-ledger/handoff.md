@@ -406,3 +406,9 @@
 - `mock-webhook-inmemory-route-post-validation` 已完成，见 `docs/mock-webhook-inmemory-route-post-validation.md`。
 - 合并后验证通过：payment notification harness 78/78、dry-run row count 2|9、API typecheck、runtime 入口检查和 DB 无残留。
 - 当前 route 默认仍 disabled；local in-memory 分支不连接 DB、不执行 workflow。
+
+## Round 91 更新
+
+- `mock-webhook-local-route-smoke-script-plan` 已完成，见 `docs/mock-webhook-local-route-smoke-script-plan.md`。
+- 本轮只规划本地 smoke 脚本的 disabled、accepted、missing signature、malformed payload 和安全检查。
+- 未新增脚本，未修改 `packages/**` 或 `apps/**`。

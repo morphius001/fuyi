@@ -555,3 +555,10 @@
 - 本轮只规划 local disposable DB smoke wrapper，不新增脚本、不改 route。
 - 后续脚本必须只管理自己创建的 disposable DB 和临时 API，不关闭现有 9000 服务，不修改 `.env`。
 - 下一步可做 `mock-webhook-db-backed-route-local-script`，但仍不接 route runtime、不执行 payment workflow。
+
+## Round 110 更新
+
+- `mock-webhook-db-backed-route-local-script` 已完成，见 `docs/mock-webhook-db-backed-route-local-script.md`。
+- 新增 `.codex/scripts/mock-webhook-db-backed-route-local-smoke.sh`。
+- 当前脚本是 preflight smoke：验证 disposable DB migration up/down、临时 API 启停、neutral route 在 local DB env 下仍 disabled。
+- 当前仍不修改 neutral route，不写 inbox runtime，不注册 migration，不调用 payment workflow。

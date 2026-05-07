@@ -1067,7 +1067,8 @@
 17. `mock-webhook-db-backed-route-resolver-plan`: done，规划 route-level repository resolver contract、disabled fallback 和 local disposable injection。
 18. `mock-webhook-db-backed-route-resolver-contract`: done，新增 resolver contract / pure helpers / mocked tests，不接 route、不接 DB。
 19. `mock-webhook-db-backed-route-local-script-plan`: done，规划 neutral route local disposable DB smoke wrapper，不新增脚本。
-20. `mock-webhook-db-backed-route-local-script`: pending，新增 neutral route local disposable DB smoke wrapper，不修改 route runtime。
+20. `mock-webhook-db-backed-route-local-script`: done，新增 neutral route local disposable DB preflight smoke wrapper，不修改 route runtime。
+21. `mock-webhook-db-backed-route-skeleton`: pending，neutral route 在 local DB flag + resolver available 下接 inbox-only DB-backed skeleton。
 
 第九十三轮原则：
 

@@ -689,6 +689,17 @@
 - 只做文档。
 - 不改 migration，不接 runtime。
 
+第五十八轮 event log action migration skeleton:
+
+1. `payment-event-log-actions-migration-skeleton`: done，扩展未注册 migration skeleton 的 event log action 白名单，并让本地 disposable DB dry-run 覆盖新增 action 和未知 action 拒绝。
+
+第五十八轮原则：
+
+- 不注册 migration。
+- 不接 webhook runtime。
+- 不调用 payment workflow。
+- 不改变交易状态。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

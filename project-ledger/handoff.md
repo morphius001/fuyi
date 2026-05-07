@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 17:45 Asia/Shanghai
+更新时间：2026-05-07 18:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -196,3 +196,10 @@
 - `payment-notification-event-log-actions-plan` 已完成，见 `docs/payment-notification-event-log-actions-plan.md`。
 - 本轮只规划 event log action 白名单扩展、metadata 安全规则和后续 migration/dry-run 拆分。
 - 未修改 migration，未接 runtime，未调用 payment workflow。
+
+## Round 58 更新
+
+- `payment-event-log-actions-migration-skeleton` 已完成，见 `docs/payment-event-log-actions-migration-skeleton.md`。
+- 未注册 migration skeleton 新增 command / workflow / manual review audit action 白名单。
+- 本地 disposable DB dry-run 已插入新增 action fixture，并继续验证未知 action 被拒绝。
+- 未修改 `packages/api/medusa-config.ts`，未接 webhook runtime，未调用 payment workflow。

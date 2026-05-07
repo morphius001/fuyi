@@ -64,7 +64,7 @@ export class Migration20260507000200 extends Migration {
         "created_at" timestamptz not null default now(),
         constraint "payment_notification_event_log_pkey" primary key ("id"),
         constraint "payment_notification_event_log_inbox_fk" foreign key ("inbox_id") references "payment_notification_inbox" ("id") on delete cascade,
-        constraint "payment_notification_event_log_action_check" check ("action" in ('received', 'verified', 'dedupe_hit', 'handler_started', 'processed', 'retry_scheduled', 'failed')),
+        constraint "payment_notification_event_log_action_check" check ("action" in ('received', 'verified', 'dedupe_hit', 'handler_started', 'command_prepared', 'command_skipped', 'command_blocked', 'workflow_execution_started', 'workflow_execution_succeeded', 'workflow_execution_failed', 'manual_review_required', 'processed', 'retry_scheduled', 'failed')),
         constraint "payment_notification_event_log_actor_type_check" check ("actor_type" in ('system', 'provider', 'operator'))
       );
     `)

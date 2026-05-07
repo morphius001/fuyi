@@ -109,6 +109,13 @@ export type PaymentNotificationEventLogAction =
   | "verified"
   | "dedupe_hit"
   | "handler_started"
+  | "command_prepared"
+  | "command_skipped"
+  | "command_blocked"
+  | "workflow_execution_started"
+  | "workflow_execution_succeeded"
+  | "workflow_execution_failed"
+  | "manual_review_required"
   | "processed"
   | "retry_scheduled"
   | "failed";

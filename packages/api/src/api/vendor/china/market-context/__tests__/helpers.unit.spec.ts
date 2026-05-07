@@ -5,6 +5,11 @@ import {
   buildVendorMarketContextFromSellerRows,
   resolveVendorMarketContextSellerId,
 } from "../helpers";
+import {
+  buildMarketMembershipRepositoryRowsFixture,
+  marketMembershipFixtureSellerHandle,
+  marketMembershipFixtureSellerId,
+} from "../../../../../modules/china-market-read-model/__tests__/market-membership-test-fixture";
 
 describe("vendor market context route helpers", () => {
   it("resolves seller id from seller_context only", () => {
@@ -88,72 +93,32 @@ describe("vendor market context route helpers", () => {
 
   it("prefers repository rows when they contain current seller membership", async () => {
     const result = await buildVendorMarketContextFromRepositoryRows({
-      sellerId: "sel_1",
+      sellerId: marketMembershipFixtureSellerId,
       seller: {
-        id: "sel_1",
-        handle: "a-hai-xian-huo-dang",
-        name: "阿海鲜活档",
+        id: marketMembershipFixtureSellerId,
+        handle: marketMembershipFixtureSellerHandle,
+        name: "测试鲜活档",
       },
-      rows: {
-        markets: [
-          {
-            id: "market_sanmen",
-            name: "三门海鲜市场",
-            slug: "sanmen-seafood-market",
-            city: "台州",
-            status: "open",
-          },
-        ],
-        memberships: [
-          {
-            id: "membership_1",
-            market_id: "market_sanmen",
-            seller_id: "sel_1",
-            seller_handle: "a-hai-xian-huo-dang",
-            seller_name: "阿海鲜活档",
-            booth_no: "A区18号",
-            stall_name: "阿海一号档",
-            is_primary: true,
-            status: "open",
-          },
-        ],
-        roles: [
-          {
-            id: "role_1",
-            seller_id: "sel_1",
-            market_id: "market_sanmen",
-            role_key: "seafood_stall",
-            status: "active",
-          },
-        ],
-        deliveryProfiles: [
-          {
-            id: "delivery_1",
-            market_id: "market_sanmen",
-            delivery_type: "market_unified_delivery",
-            enabled: true,
-            display_name: "市场统一配送",
-            merchant_selectable: true,
-          },
-        ],
-      },
+      rows: buildMarketMembershipRepositoryRowsFixture(),
     });
 
     expect(result).toMatchObject({
       dataSource: "repository",
       marketContext: {
-        sellerId: "sel_1",
+        sellerId: marketMembershipFixtureSellerId,
         runtimeEnabled: false,
         primaryMembership: {
-          stallName: "阿海一号档",
-          merchantTypeKeys: ["seafood_stall"],
+          stallName: "测试鲜活一号档",
+          merchantTypeKeys: ["seafood_stall", "materials_supplier"],
         },
-        deliveryProfiles: [
-          {
+        deliveryProfiles: expect.arrayContaining([
+          expect.objectContaining({
+            deliveryType: "market_unified_delivery",
+            merchantSelectable: true,
             runtimeEnabled: false,
             checkoutImpact: "none",
-          },
-        ],
+          }),
+        ]),
       },
     });
   });

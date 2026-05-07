@@ -1050,7 +1050,8 @@
 
 1. `mock-webhook-route-path-migration-plan`: done，规划从 Admin 本地调试入口迁移到 neutral provider callback route。
 2. `mock-webhook-neutral-route-disabled-skeleton`: done，新增 neutral mock route，默认 disabled，不读取 body、不调用 handler、不连接 DB、不执行 workflow。
-3. `mock-webhook-neutral-route-disabled-post-validation`: pending，记录合并后 harness、typecheck、runtime 入口和 DB 无残留验证。
+3. `mock-webhook-neutral-route-disabled-post-validation`: done，记录合并后 harness、typecheck、runtime 入口和 DB 无残留验证。
+4. `mock-webhook-neutral-route-inmemory-plan`: pending，规划 neutral route 的 local-only in-memory 分支，仍不连接 DB、不执行 workflow。
 
 第九十三轮原则：
 

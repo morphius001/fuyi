@@ -1,7 +1,7 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 
 import {
-  buildStoreMarketReadModel,
+  buildStoreMarketReadModelResult,
   STORE_MARKET_READONLY_NOTE,
 } from "../../helpers";
 
@@ -15,7 +15,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     });
   }
 
-  const readModel = await buildStoreMarketReadModel(req);
+  const { readModel, dataSource } = await buildStoreMarketReadModelResult(req);
   const market = readModel.getMarketBySlug(slug);
 
   if (!market) {
@@ -28,7 +28,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   return res.json({
     sellers: {
       mode: "read_only_market_sellers",
-      source: "static_market_read_model",
+      source: dataSource,
       note: STORE_MARKET_READONLY_NOTE,
       market,
       items: readModel.listOpenMembershipsByMarket(market.id),

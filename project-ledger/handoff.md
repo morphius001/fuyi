@@ -425,3 +425,11 @@
 - 本轮只规划 neutral provider callback route 路径、Admin route 保留/降级策略、默认 disabled 安全要求和后续 PR 拆分。
 - 未新增 API route，未修改 `packages/**` 或 `apps/**`，未连接 DB，未执行 payment workflow。
 - 下一步应先做 `mock-webhook-neutral-route-disabled-skeleton`，不要继续给 `/admin/**` route 写 provider callback smoke script。
+
+## Round 94 更新
+
+- `mock-webhook-neutral-route-disabled-skeleton` 已完成，见 `docs/mock-webhook-neutral-route-disabled-skeleton.md`。
+- 新增 neutral mock payment webhook route `packages/api/src/api/china/payment-webhooks/mock/route.ts`，默认 disabled。
+- 单测确认默认和 env requested 情况都返回 disabled，且不读取 request body。
+- Harness 已纳入 neutral route 单测。
+- 当前仍未调用 handler，未连接 DB，未执行 payment workflow，未接支付宝或微信支付。

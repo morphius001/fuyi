@@ -287,6 +287,7 @@
 - `mock-webhook-db-backed-route-resolver-plan` 已完成：docs-only 规划 route-level repository resolver contract、disabled fallback、local disposable injection 和后续 resolver contract PR。
 - `mock-webhook-db-backed-route-resolver-contract` 已完成：新增 resolver 纯 helper 和 mocked tests，并纳入 payment notification harness；不接 route、不连接 DB、不调用 workflow。
 - `mock-webhook-db-backed-route-local-script-plan` 已完成：docs-only 规划 neutral route local disposable DB smoke wrapper，不新增脚本、不改 route。
+- `mock-webhook-db-backed-route-local-script` 已完成：新增 local disposable DB preflight smoke wrapper，验证 migration up/down、临时 API disabled route 和无残留；不改 route runtime。
 
 ## 仍需注意
 

@@ -404,6 +404,24 @@
 
 第三十一轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
+第三十二轮规划任务：
+
+1. `round32-next-stage-planning`: done，固化下一阶段 PR 顺序、系统架构图和上线前 Gate 0-6 门禁。
+
+第三十二轮建议任务：
+
+1. `preprod-market-membership-dry-run-checklist`: pending，docs-only，明确预发 disposable DB dry-run 的连接条件、备份、执行、回滚和验收。
+2. `market-membership-repository-integration-test`: pending，使用本地 disposable DB 验证 repository reader ready/empty/missing-table，不注册生产 migration。
+3. `admin-market-readonly-api-db-qa`: pending，只测 Admin market readonly API 的 DB/read model 三态。
+4. `storefront-market-readonly-api-db-qa`: pending，只测 Storefront markets API 的 DB/read model 三态。
+5. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话后截图验证。
+
+第三十二轮原则：
+
+- 先完成只读和 dry-run 证据，再考虑真实 migration 注册。
+- 不自动进入支付、订单、退款、结算、佣金、权限、真实履约或真实 provider 接入。
+- 涉及预发 DB 或生产 DB 的任务必须明确目标库可丢弃、可回滚。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

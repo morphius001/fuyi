@@ -262,6 +262,7 @@
 - `mock-webhook-handler-post-validation` 已完成：记录 PR #128 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
 - `mock-webhook-local-route-disabled-plan` 已完成：docs-only 规划未来默认关闭 route 接入条件，不新增 route。
 - `mock-webhook-local-route-disabled-skeleton` 已完成：新增默认 disabled Admin route skeleton；harness 75/75、API typecheck 和 DB 无残留复查通过。
+- `mock-webhook-disabled-route-post-validation` 已完成：记录 PR #131 合并后验证；runtime 入口检查只命中新 disabled route。
 
 ## 仍需注意
 

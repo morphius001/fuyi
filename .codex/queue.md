@@ -986,6 +986,16 @@
 - 不创建 repository 或 DB 连接。
 - 不调用 payment workflow。
 
+第八十七轮 mock webhook disabled route post-validation:
+
+1. `mock-webhook-disabled-route-post-validation`: done，记录 PR #131 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。
+
+第八十七轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+- 不接 repository、DB 或 workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

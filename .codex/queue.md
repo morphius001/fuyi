@@ -889,6 +889,18 @@
 - 不新增 API route。
 - 不接 runtime，不写 DB，不调用 payment workflow。
 
+第七十八轮 mock webhook handler composition harness plan:
+
+1. `mock-webhook-handler-composition-harness-plan`: done，规划纯函数 composition harness 的 fixtures、路径、错误映射和审计断言。
+
+第七十八轮原则：
+
+- 只做文档。
+- 不写 harness 代码。
+- 不新增 handler。
+- 不新增 API route。
+- 不接 runtime，不写 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

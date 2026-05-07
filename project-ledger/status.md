@@ -253,6 +253,7 @@
 - `mock-webhook-route-request-contract` 已完成：新增 request mapper 纯函数和单元测试，把 raw body/header/secret 规整为 normalizer input；harness 57/57、API typecheck、runtime grep 和 disposable DB 无残留复查均通过。
 - `mock-webhook-request-post-merge-validation` 已完成：记录 PR #120 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 - `mock-webhook-handler-composition-plan` 已完成：docs-only 规划未来 handler 组合顺序，不新增 handler、route、runtime、DB 连接或 workflow 调用。
+- `mock-webhook-handler-composition-harness-plan` 已完成：docs-only 规划纯函数 composition harness，不新增 handler、route、runtime、DB 连接或 workflow 调用。
 
 ## 仍需注意
 

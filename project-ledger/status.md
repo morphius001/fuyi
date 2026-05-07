@@ -251,6 +251,7 @@
 - `mock-webhook-inbox-only-route-readiness` 已完成：docs-only 记录 route 前置条件和仍未满足项，不新增 API route。
 - `mock-webhook-route-response-contract` 已完成：新增 response mapper 纯函数和单元测试，不新增 API route，不接 runtime。
 - `mock-webhook-route-request-contract` 已完成：新增 request mapper 纯函数和单元测试，把 raw body/header/secret 规整为 normalizer input；harness 57/57、API typecheck、runtime grep 和 disposable DB 无残留复查均通过。
+- `mock-webhook-request-post-merge-validation` 已完成：记录 PR #120 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 
 ## 仍需注意
 

@@ -311,3 +311,9 @@
 - 拒绝结果只暴露安全 metadata，不暴露 raw payload、签名、secret 或 payment/order mutation 字段。
 - 验证通过：`.codex/scripts/payment-notification-idempotency-harness.sh` 57/57，dry-run row count 2|9；`cd packages/api && bunx tsc --noEmit -p tsconfig.json`；runtime grep 无注册；disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未写 DB，未调用 payment workflow。
+
+## Round 76 更新
+
+- `mock-webhook-request-post-merge-validation` 已完成，见 `docs/mock-webhook-request-post-merge-validation.md`。
+- 合并后验证通过：payment notification harness 57/57、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未写 DB，未调用 payment workflow。

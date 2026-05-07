@@ -867,6 +867,17 @@
 - 不新增 API route。
 - 不接 runtime，不调用 payment workflow。
 
+第七十六轮 mock webhook request post-merge validation:
+
+1. `mock-webhook-request-post-merge-validation`: done，记录 PR #120 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
+
+第七十六轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+- 不新增 API route。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

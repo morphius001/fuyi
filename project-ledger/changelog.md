@@ -129,3 +129,4 @@
 - 完成 `mock-webhook-inbox-only-route-readiness`，以 docs-only 方式记录 mock webhook inbox-only route 前置条件、文件边界、测试清单和仍未满足项。
 - 完成 `mock-webhook-route-response-contract`，新增 mock webhook response mapper 纯函数和单元测试，不新增 API route。
 - 完成 `mock-webhook-route-request-contract`，新增 mock webhook request mapper 纯函数和单元测试，把 raw body/header/secret 规整为 normalizer input，不新增 API route。
+- 完成 `mock-webhook-request-post-merge-validation`，记录 PR #120 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。

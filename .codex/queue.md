@@ -749,6 +749,16 @@
 - 不写 repository 实现。
 - 不连接数据库，不接 runtime。
 
+第六十四轮 inbox repository interface:
+
+1. `payment-inbox-repository-interface`: done，新增 payment notification inbox repository contract、error classifier 和单元测试。
+
+第六十四轮原则：
+
+- 只做接口、类型和测试。
+- 不写 DB adapter。
+- 不连接数据库，不接 webhook route。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

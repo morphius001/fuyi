@@ -1046,6 +1046,17 @@
 - 不修改 route 或脚本。
 - 不接 DB，不调用 payment workflow。
 
+第九十三轮 mock webhook route path migration plan:
+
+1. `mock-webhook-route-path-migration-plan`: done，规划从 Admin 本地调试入口迁移到 neutral provider callback route。
+2. `mock-webhook-neutral-route-disabled-skeleton`: pending，下一步新增 neutral mock route，默认 disabled，不读取 body、不调用 handler、不连接 DB、不执行 workflow。
+
+第九十三轮原则：
+
+- 先规划 neutral provider callback route，再写 smoke script。
+- 不把 `/admin/**` route 当真实 provider callback。
+- 不接支付宝、微信支付、退款、对账、结算、佣金或权限。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

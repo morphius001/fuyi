@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 18:00 Asia/Shanghai
+更新时间：2026-05-07 18:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -203,3 +203,10 @@
 - 未注册 migration skeleton 新增 command / workflow / manual review audit action 白名单。
 - 本地 disposable DB dry-run 已插入新增 action fixture，并继续验证未知 action 被拒绝。
 - 未修改 `packages/api/medusa-config.ts`，未接 webhook runtime，未调用 payment workflow。
+
+## Round 59 更新
+
+- `payment-command-mapper-audit-tests` 已完成，见 `docs/payment-command-mapper-audit-tests.md`。
+- 新增 `mapWorkflowCommandDecisionToAuditEvent()` 纯函数，覆盖 prepared、skipped、blocked 和 manual-review audit action。
+- Harness 已纳入新增单测。
+- 未写 DB，未接 runtime，未调用 payment workflow。

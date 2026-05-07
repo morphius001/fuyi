@@ -243,3 +243,10 @@ export type PaymentWorkflowCommandDecision =
       inboxId: string;
       auditMetadata: Record<string, unknown>;
     };
+
+export type PaymentWorkflowCommandAuditEvent = {
+  action: PaymentNotificationEventLogAction;
+  actorType: "system";
+  message: string;
+  metadata: Record<string, unknown>;
+};

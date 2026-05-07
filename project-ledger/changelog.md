@@ -142,3 +142,4 @@
 - 完成 `mock-webhook-local-route-disabled-skeleton`，新增默认 disabled Admin route skeleton 和单元测试，不调用 handler、DB 或 workflow。
 - 完成 `mock-webhook-disabled-route-post-validation`，记录 PR #131 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。
 - 完成 `mock-webhook-local-route-inmemory-plan`，以 docs-only 方式规划 local-only in-memory mock webhook smoke。
+- 完成 `mock-webhook-local-route-inmemory-skeleton`，新增 Admin route local-only in-memory 分支和单元测试，不连接 DB 或执行 workflow。

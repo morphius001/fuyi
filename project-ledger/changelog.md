@@ -106,3 +106,4 @@
 - 完成 `payment-notification-state-guard-plan`，以 docs-only 方式规划支付通知 handler 进入 payment workflow 前的状态机守卫、阻断场景和后续 PR 拆分。
 - 完成 `payment-notification-state-guard-contract`，新增支付通知状态机守卫纯函数和单元测试，覆盖 capture allowed、duplicate no-op、invalid signature、provider mismatch、amount mismatch、unknown reference 和 terminal order。
 - 完成 `payment-notification-harness-full-tests`，升级本地 harness，使其运行 mock notification、inbox repository 和 state guard 全量支付通知单测。
+- 完成 `payment-workflow-command-adapter-plan`，以 docs-only 方式规划 state guard 输出到未来 payment workflow command adapter 的 DTO、映射、幂等、审计和 PR 拆分。

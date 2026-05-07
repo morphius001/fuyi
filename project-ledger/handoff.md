@@ -534,3 +534,10 @@
 - 文档把 neutral route 的后续演进拆成 disabled、local in-memory、local disposable DB inbox-only、DB-backed prepare-command 和 workflow execution 五层。
 - 下一步只允许做 `mock-webhook-db-backed-route-resolver-plan`，先规划 route-level repository resolver contract 和 disabled fallback。
 - Admin route 保持 disabled-only；neutral route `POST /china/payment-webhooks/mock` 是唯一 mock provider callback 演进路径。
+
+## Round 107 更新
+
+- `mock-webhook-db-backed-route-resolver-plan` 已完成，见 `docs/mock-webhook-db-backed-route-resolver-plan.md`。
+- 本轮只规划 resolver contract、disabled/unavailable fallback 和 local disposable injection。
+- resolver 默认 disabled，production disabled；route 不能直接 import production DB client，也不能调用 payment workflow。
+- 下一步可做 `mock-webhook-db-backed-route-resolver-contract`，只新增纯类型、纯 helper 和 mocked tests，不接 route、不接 DB。

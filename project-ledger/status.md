@@ -217,6 +217,7 @@
 - `payment-notification-contract-docs` 已完成：以 docs-only 方式固化支付通知 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 边界。
 - `mock-payment-notification-skeleton-plan` 已完成：以 docs-only 方式规划未注册 mock skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单。
 - `mock-payment-notification-skeleton` 已完成：新增未注册 mock-only skeleton 和单元测试，不接 runtime，不改变 checkout、order、payment、refund、settlement、commission 或 permission。
+- `payment-notification-inbox-model-design` 已完成：以 docs-only 方式设计 inbox / event log、唯一约束、状态流转、dry-run 和后续 PR 拆分。
 
 ## 仍需注意
 
@@ -246,3 +247,4 @@
 - 本地模拟不等于真实预发 dry-run；真实 `preprod-disposable-db-dry-run-execution` 仍需外部 disposable preprod DB、备份和回滚确认。
 - 支付通知计划仍只是文档；Mock PaymentProvider runtime、真实支付宝、微信支付、退款、对账、商家结算、佣金和权限必须继续单独串行处理。
 - 当前 mock payment notification skeleton 只用于测试和后续 adapter 评审；它没有注册 provider，也没有 inbox/model、runtime switch 或支付状态推进能力。
+- 支付通知 inbox 目前仍是设计文档；没有 migration、repository、runtime、状态推进或真实 Provider 接入。

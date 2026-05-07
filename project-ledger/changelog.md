@@ -95,3 +95,4 @@
 - 完成 `payment-notification-contract-docs`，以 docs-only 方式定义支付通知 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 边界；未实现 Provider 或交易状态变更。
 - 完成 `mock-payment-notification-skeleton-plan`，以 docs-only 方式规划未注册 mock payment notification skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单；未修改 `packages/**` 或交易链路。
 - 完成 `mock-payment-notification-skeleton`，新增未注册 mock-only payment notification skeleton 和单元测试，覆盖 fake signature、payload normalize、idempotency key、金额异常和 unknown reference；未接 runtime，未修改交易状态。
+- 完成 `payment-notification-inbox-model-design`，以 docs-only 方式设计支付通知 inbox / event log、幂等唯一约束、状态流转、本地 disposable DB dry-run 和后续 PR 拆分；未新增 migration 或数据库连接。

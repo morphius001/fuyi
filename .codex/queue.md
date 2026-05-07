@@ -710,6 +710,15 @@
 - 不写 DB。
 - 不接 runtime，不调用 payment workflow。
 
+第六十轮 command audit 合并后验证:
+
+1. `payment-command-audit-post-merge-validation`: done，记录 PR #102-#104 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
+
+第六十轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -613,6 +613,16 @@
 - 不修改业务代码。
 - 后续 runtime、真实 Provider、退款、对账、结算和佣金继续串行。
 
+第五十轮状态机守卫计划:
+
+1. `payment-notification-state-guard-plan`: done，规划未来 handler 进入 payment workflow 前的状态机守卫、输入输出、阻断场景和 PR 拆分。
+
+第五十轮原则：
+
+- 只做文档。
+- 不写 handler，不调用 payment workflow。
+- 不修改交易状态。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

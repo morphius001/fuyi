@@ -284,6 +284,7 @@
 - `mock-webhook-admin-route-disabled-only` 已完成：旧 Admin mock webhook route 降级为 disabled-only，不再读取 body、不处理 signature、不构造 in-memory repository、不调用 handler；neutral route 继续作为唯一 mock provider callback 演进路径。
 - `mock-webhook-admin-route-disabled-validation` 已完成：记录 PR #151 合并后 harness 83/83、API typecheck、runtime grep 和 disposable DB 无残留验证。
 - `mock-webhook-db-backed-route-plan` 已完成：docs-only 规划 neutral mock webhook route 接 DB-backed inbox skeleton 的分层、feature flag、repository resolver、测试清单和 PR 拆分。
+- `mock-webhook-db-backed-route-resolver-plan` 已完成：docs-only 规划 route-level repository resolver contract、disabled fallback、local disposable injection 和后续 resolver contract PR。
 
 ## 仍需注意
 

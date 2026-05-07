@@ -447,3 +447,10 @@
 - 本轮只规划 neutral route local-only in-memory 分支的 env gate、handler 注入、repository 生命周期、安全响应和后续 PR 拆分。
 - 未修改 `packages/**` 或 `apps/**`，未接 handler、DB 或 workflow。
 - 下一步可做 `mock-webhook-neutral-route-inmemory-skeleton`，但仍必须默认/prod disabled，且不连接 DB、不执行 payment workflow。
+
+## Round 97 更新
+
+- `mock-webhook-neutral-route-inmemory-skeleton` 已完成，见 `docs/mock-webhook-neutral-route-inmemory-skeleton.md`。
+- neutral route 新增 local-only in-memory 分支；默认和 production 仍 disabled。
+- 单测覆盖 signed payload accepted、missing signature rejected、production disabled 和 disabled 不读 body。
+- 当前仍未连接 DB，未执行 payment workflow，未接支付宝或微信支付。

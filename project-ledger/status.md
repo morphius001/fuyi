@@ -246,6 +246,7 @@
 - `payment-inbox-repository-db-adapter-skeleton` 已完成：新增注入式 DB adapter skeleton 和 mocked transaction 单测，不创建数据库连接，不接 webhook route。
 - `payment-db-adapter-post-merge-validation` 已完成：harness 46/46、API typecheck、runtime grep 无注册、dry-run 临时库无残留。
 - `payment-inbox-repository-disposable-db-test-plan` 已完成：docs-only 规划本地 disposable DB integration test，不连接数据库，不写测试。
+- `payment-inbox-repository-disposable-db-test-script` 已完成：新增本地 disposable DB 验证脚本，不连接预发/生产，不新增 webhook route。
 
 ## 仍需注意
 

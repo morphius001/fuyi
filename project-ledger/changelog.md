@@ -124,3 +124,4 @@
 - 完成 `payment-inbox-repository-db-adapter-skeleton`，新增注入式 DB adapter skeleton 和 mocked transaction 单元测试，仍不连接数据库或接 runtime。
 - 完成 `payment-db-adapter-post-merge-validation`，记录 DB adapter skeleton 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 - 完成 `payment-inbox-repository-disposable-db-test-plan`，以 docs-only 方式规划 repository 本地 disposable DB integration test 和安全边界。
+- 完成 `payment-inbox-repository-disposable-db-test-script`，新增本地 disposable DB 验证脚本，覆盖 repository 合同级 schema 行为和无残留检查。

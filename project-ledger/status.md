@@ -286,6 +286,7 @@
 - `mock-webhook-db-backed-route-plan` 已完成：docs-only 规划 neutral mock webhook route 接 DB-backed inbox skeleton 的分层、feature flag、repository resolver、测试清单和 PR 拆分。
 - `mock-webhook-db-backed-route-resolver-plan` 已完成：docs-only 规划 route-level repository resolver contract、disabled fallback、local disposable injection 和后续 resolver contract PR。
 - `mock-webhook-db-backed-route-resolver-contract` 已完成：新增 resolver 纯 helper 和 mocked tests，并纳入 payment notification harness；不接 route、不连接 DB、不调用 workflow。
+- `mock-webhook-db-backed-route-local-script-plan` 已完成：docs-only 规划 neutral route local disposable DB smoke wrapper，不新增脚本、不改 route。
 
 ## 仍需注意
 

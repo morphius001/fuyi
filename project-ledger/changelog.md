@@ -110,3 +110,4 @@
 - 完成 `payment-workflow-command-contract`，新增支付 workflow command DTO 和纯函数 mapper 单测，仍不调用 payment workflow 或 runtime。
 - 完成 `payment-harness-command-mapper`，将 payment workflow command mapper 单测纳入本地 idempotency harness。
 - 完成 `payment-notification-round55-validation`，记录 command mapper 合并后的 harness、API typecheck、runtime grep 和 disposable DB 无残留验证。
+- 完成 `payment-notification-event-log-actions-plan`，以 docs-only 方式规划支付通知 event log action 白名单扩展、metadata 安全规则和后续 migration/dry-run 拆分。

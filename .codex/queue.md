@@ -739,6 +739,16 @@
 - 不新增 API route。
 - 不接 runtime，不调用 payment workflow。
 
+第六十三轮 inbox DB repository contract 计划:
+
+1. `payment-inbox-repository-db-contract-plan`: done，规划 DB-backed inbox repository 的方法合同、事务边界、幂等冲突、event log 一致性和错误映射。
+
+第六十三轮原则：
+
+- 只做文档。
+- 不写 repository 实现。
+- 不连接数据库，不接 runtime。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

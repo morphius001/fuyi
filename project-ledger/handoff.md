@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 19:00 Asia/Shanghai
+更新时间：2026-05-07 19:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -228,3 +228,9 @@
 - `mock-payment-webhook-inbox-route-plan` 已完成，见 `docs/mock-payment-webhook-inbox-route-plan.md`。
 - 本轮只规划 mock webhook inbox-only route 的 feature flag、请求响应、错误码、幂等和测试边界。
 - 未新增 API route，未接 runtime，未调用 payment workflow。
+
+## Round 63 更新
+
+- `payment-inbox-repository-db-contract-plan` 已完成，见 `docs/payment-inbox-repository-db-contract-plan.md`。
+- 本轮只规划 DB-backed inbox repository 方法、事务边界、幂等冲突、event log 一致性和错误映射。
+- 未写 repository 实现，未连接数据库，未接 runtime。

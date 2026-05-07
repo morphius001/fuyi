@@ -362,3 +362,9 @@
 - 新增未注册 `handleMockPaymentWebhookNotification()` 和单元测试，只接受显式注入参数并调用 composition helper。
 - 验证通过：payment notification harness 73/73、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。
+
+## Round 84 更新
+
+- `mock-webhook-handler-post-validation` 已完成，见 `docs/mock-webhook-handler-post-validation.md`。
+- 合并后验证通过：payment notification harness 73/73、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未创建 DB 连接，未执行 payment workflow。

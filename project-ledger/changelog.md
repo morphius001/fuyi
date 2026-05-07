@@ -137,3 +137,4 @@
 - 完成 `mock-webhook-composition-post-validation`，记录 PR #124/#125 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
 - 完成 `mock-webhook-handler-skeleton-plan`，以 docs-only 方式规划未来未注册 handler skeleton 的文件边界和验收断言。
 - 完成 `mock-webhook-handler-skeleton`，新增未注册 handler skeleton 和单元测试，不新增 API route 或 runtime。
+- 完成 `mock-webhook-handler-post-validation`，记录 PR #128 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。

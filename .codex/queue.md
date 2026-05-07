@@ -769,6 +769,15 @@
 - 不接 runtime。
 - 不允许真实支付宝/微信支付 provider。
 
+第六十六轮 payment skeleton 阶段验证:
+
+1. `payment-notification-skeleton-stage-validation`: done，记录 PR #102-#110 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
+
+第六十六轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

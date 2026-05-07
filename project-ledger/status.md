@@ -271,6 +271,7 @@
 - `mock-webhook-route-path-migration-plan` 已完成：docs-only 规划 neutral provider callback route 路径和后续 PR 拆分，不新增 route 或 runtime。
 - `mock-webhook-neutral-route-disabled-skeleton` 已完成：新增 neutral mock webhook route disabled skeleton，不读取 body，不调用 handler，不连接 DB 或 workflow。
 - `mock-webhook-neutral-route-disabled-post-validation` 已完成：记录 PR #139 合并后 harness 80/80、API typecheck、runtime 入口检查和 DB 无残留验证。
+- `mock-webhook-neutral-route-inmemory-plan` 已完成：docs-only 规划 neutral route local-only in-memory 分支，不修改 runtime。
 
 ## 仍需注意
 

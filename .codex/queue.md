@@ -389,20 +389,20 @@
 1. `market-membership-local-migration-dry-run`: done，本地可丢弃数据库 dry-run 脚本和执行记录。
 2. `market-membership-seed-fixture`: done，只做测试 fixture，不进生产 seed。
 3. `vendor-market-context-db-qa`: done，用 dry-run fixture 验证 Vendor route repository/fallback 三态。
-4. `admin-market-membership-browser-qa`: blocked-manual，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
+4. `admin-market-membership-browser-qa`: done，用 dry-run fixture 验证 Admin 市场详情 ready/empty/fallback。
 
 第三十一轮进度：
 
 - `market-membership-local-migration-dry-run`: done，新增 `.codex/scripts/market-membership-local-dry-run.sh`，从 migration skeleton 提取 SQL，在 `fuyi_market_membership_dry_run_*` 临时库验证 up/down、6 张表、约束拒绝和最小 fixture，并自动清理临时库。
 - `market-membership-seed-fixture`: done，新增只用于单元测试和本地 QA 的 market membership repository rows fixture；adapter 与 Vendor route helper 单测复用它，不进入生产 seed、不写真实业务数据库。
 - `vendor-market-context-db-qa`: done，Vendor route helper 单测新增 in-memory DB reader QA，覆盖 repository ready、owned market filter、required table missing 和 no membership fallback；同时最小修复 `china_market` 只读查询应按 `id` 过滤的问题，不改 route handler、写接口或业务状态。
-- `admin-market-membership-browser-qa`: blocked-manual，Admin 浏览器 QA 需要用户已登录的 Codex App 浏览器会话；当前只固化三态 QA 清单，不伪造截图、不标记 done。
+- `admin-market-membership-browser-qa`: done，使用本地 Playwright 登录态 QA 验证 Admin 市场详情 ready、empty 和 fallback 边界；不伪造用户截图，不纳入视觉产物。
 
 第三十一轮收口：
 
 1. `market-membership-round31-post-merge-validation`: done，对 PR #61-#64 做合并后 API 单测、API tsc、本地 disposable DB dry-run 和 diff check 总验证。
 
-第三十一轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
+第三十一轮自动队列已清空。`admin-market-membership-browser-qa` 已在本地登录态 QA 中补测完成。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
 第三十二轮规划任务：
 
@@ -414,7 +414,7 @@
 2. `market-membership-repository-integration-test`: done，使用本地 disposable DB 验证 repository reader ready/empty/missing-table，不注册生产 migration。
 3. `admin-market-readonly-api-db-qa`: done，只测 Admin market readonly API 的 DB/read model 三态。
 4. `storefront-market-readonly-api-db-qa`: done，只测 Storefront markets API 的 DB/read model 三态。
-5. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话后截图验证。
+5. `admin-market-membership-browser-qa`: done，需要用户已登录 Admin 浏览器会话后截图验证。
 
 第三十二轮进度：
 
@@ -433,7 +433,7 @@
 
 1. `market-membership-round32-post-merge-validation`: done，对 PR #67-#70 做合并后单测、API tsc、本地 disposable DB repository integration 和 diff check 总验证。
 
-第三十二轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，需要用户确认已登录 Admin 浏览器后再执行。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
+第三十二轮自动队列已清空。`admin-market-membership-browser-qa` 已在本地登录态 QA 中补测完成。下一阶段如进入预发 DB dry-run、真实 migration 注册、Admin 写接口、模块开关生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
 第三十三轮入口：
 
@@ -444,7 +444,7 @@
 1. `local-disposable-migration-registration-rehearsal`: done，仅使用本地 disposable DB 模拟 migration 注册前检查，不注册生产 migration。
 2. `migration-registration-design-review`: done，docs-only，评审真实 migration 注册点、rollback、部署顺序和 PR 拆分。
 3. `admin-write-api-runtime-switch-plan`: done，docs-only，设计 Admin 写接口和 runtime switch 的分离、审计、幂等和回滚。
-4. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话。
+4. `admin-market-membership-browser-qa`: done，需要用户已登录 Admin 浏览器会话。
 5. `preprod-disposable-db-dry-run-execution`: blocked-external，需要用户明确提供可丢弃预发目标库、备份和回滚确认。
 
 第三十三轮原则：
@@ -462,7 +462,7 @@
 - `migration-registration-design-review`: done，完成真实 migration 注册前的 docs-only 评审，明确 registration PR 只能注册 migration/module，不写 seed、不切 runtime、不加 Admin 写接口。
 - `admin-write-api-runtime-switch-plan`: done，完成 Admin 写接口与 runtime switch 分离计划，明确 draft / published / effective 三层、审计、幂等、回滚和高风险串行边界。
 
-第三十三轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，`preprod-disposable-db-dry-run-execution` 为 `blocked-external`。下一阶段如进入真实 migration 注册、预发/生产 DB、Admin 写接口实现、runtime switch 生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
+第三十三轮自动队列已清空。`admin-market-membership-browser-qa` 已在本地登录态 QA 中补测完成；`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。下一阶段如进入真实 migration 注册、预发/生产 DB、Admin 写接口实现、runtime switch 生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
 ## Status Rules
 

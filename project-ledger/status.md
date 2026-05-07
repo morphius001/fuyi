@@ -207,6 +207,8 @@
 - 本地测试 Admin 账号 `admin@fuyi.local` 已可登录；密码仅用于本地测试，不写入仓库文档。
 - 已安装 WSL 浏览器 QA 必需系统库 `libnspr4`、`libnss3`、`libasound2t64` 和中文字体 `fonts-noto-cjk`，Playwright 截图不再出现中文方块。
 - Admin 登录态视觉 QA 通过：`/dashboard/cn/operations/market-capabilities` 可进入，页面包含中国后台壳、市场配置、统一配送/自行配送和 mock/只读边界说明，未发现 `Failed to fetch`。
+- `.codex/scripts/start-dev.sh` 已为 API dev server 注入本地 CORS 默认值，覆盖 Admin、Vendor、Storefront 的 `localhost` 和 `127.0.0.1` 开发源。
+- `admin-market-membership-browser-qa` 登录态补测通过：`/admin/china/markets` 返回 200，市场详情页展示三门海鲜市场、阿海鲜活档、A区 18号、配送 profile 和只读边界；无保存/发布/生效按钮，无 `Failed to fetch`，无 `chinaAdmin.*` key 泄漏。
 
 ## 仍需注意
 
@@ -231,3 +233,4 @@
 - 队列已到拆 PR / staging 准备边界；真实支付、退款、结算、佣金、权限、配送生效和模块开关生效都不能在当前低风险队列里继续混改。
 - 后续 staging 时仍必须精确 stage；第十一轮索引只解决“怎么拆”，不代表自动纳入所有未跟踪文档。
 - Codex in-app Browser Use 当前仍受系统级 `拒绝访问` 限制；本轮采用本地 Playwright 兜底生成登录态截图。
+- `preprod-disposable-db-dry-run-execution` 仍是 `blocked-external`，不能自动连接预发或生产 DB。

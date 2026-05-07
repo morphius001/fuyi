@@ -488,6 +488,18 @@
 
 第三十七轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
 
+第三十八轮 docs-only 高风险拆分任务：
+
+1. `payment-notification-idempotency-plan`: done，规划中国本地支付通知验签、幂等、重试、审计和后续 PR 拆分；不实现真实 Provider，不修改支付、订单、退款、结算、佣金或权限逻辑。
+
+第三十八轮原则：
+
+- 只做文档、任务文件和 ledger。
+- 不修改 `apps/**` 或 `packages/**`。
+- 不接真实支付宝、微信支付或 Mock PaymentProvider runtime。
+- 不改变 checkout、cart、order、payment、refund、payout、commission 或 permission 行为。
+- `preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

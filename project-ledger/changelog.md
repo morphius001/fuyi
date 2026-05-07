@@ -91,3 +91,4 @@
 - 完成 `preprod-dry-run-operator-pack`，以 docs-only 方式整理预发 disposable DB dry-run 操作包；未连接任何数据库。
 - 完成 `round36-safe-next-execution-map`，明确自动队列已到外部阻塞边界，后续只能等待 disposable preprod DB 或继续 docs-only 高风险拆分计划。
 - 完成 `local-preprod-sim-dry-run`，在本机 WSL PostgreSQL 可丢弃数据库中验证 market membership migration skeleton up/down、fixture、约束和 rollback，无残留。
+- 完成 `payment-notification-idempotency-plan`，以 docs-only 方式规划中国本地支付通知验签、幂等、可重试、审计和后续 PR 拆分；未实现真实支付 Provider，未修改支付、订单、退款、结算、佣金或权限逻辑。

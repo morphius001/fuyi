@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 11:55 Asia/Shanghai
+更新时间：2026-05-07 13:20 Asia/Shanghai
 
 ## 当前上下文
 
@@ -58,3 +58,10 @@
 - `local-preprod-sim-dry-run` 已完成，见 `docs/local-preprod-sim-dry-run.md`。
 - 本地 WSL disposable DB dry-run 通过，临时库已自动删除并复查无残留。
 - 这不是正式预发 dry-run；`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
+
+## Round 38 更新
+
+- `payment-notification-idempotency-plan` 已完成，见 `docs/payment-notification-idempotency-plan.md`。
+- 本轮只新增支付通知验签、幂等、重试、审计和 PR 拆分计划。
+- 未修改 `apps/**` 或 `packages/**`，未实现真实支付 Provider，未改变 checkout、cart、order、payment、refund、payout、commission 或 permission 行为。
+- 支付实现类任务下一步必须继续串行：先 mock notification skeleton，再 inbox/model dry-run，再 runtime；支付宝、微信支付、退款、对账和商家结算继续拆开。

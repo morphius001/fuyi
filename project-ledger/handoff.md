@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 13:36 Asia/Shanghai
+更新时间：2026-05-07 13:52 Asia/Shanghai
 
 ## 当前上下文
 
@@ -79,3 +79,10 @@
 - 本轮只规划未注册 mock skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单。
 - 未修改 `apps/**` 或 `packages/**`，未接 Provider runtime，未改变 checkout、order、payment、refund、settlement、commission 或 permission。
 - 下一步如果继续，应进入单独 PR：`mock-payment-notification-skeleton`，并保持未注册、mock-only、测试优先。
+
+## Round 41 更新
+
+- `mock-payment-notification-skeleton` 已完成，新增 `packages/api/src/modules/china-payment-notification/**`。
+- 当前 skeleton 只导出 fake signature、mock payload normalizer、idempotency key 和类型；未注册到 `medusa-config.ts`，未接 API route、workflow、subscriber、job、checkout 或真实 Provider。
+- 单元测试覆盖验签通过、验签失败、重复 event key、fallback key、金额异常和 unknown merchant order reference。
+- 下一步如果继续支付方向，应先做 `payment-notification-inbox-model-design` 或 fake signed payload harness；仍不要接真实支付宝、微信支付、退款、对账或结算。

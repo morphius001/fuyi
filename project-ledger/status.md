@@ -218,6 +218,7 @@
 - `mock-payment-notification-skeleton-plan` 已完成：以 docs-only 方式规划未注册 mock skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单。
 - `mock-payment-notification-skeleton` 已完成：新增未注册 mock-only skeleton 和单元测试，不接 runtime，不改变 checkout、order、payment、refund、settlement、commission 或 permission。
 - `payment-notification-inbox-model-design` 已完成：以 docs-only 方式设计 inbox / event log、唯一约束、状态流转、dry-run 和后续 PR 拆分。
+- `payment-notification-inbox-local-dry-run` 已完成：本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507133751` 验证 inbox/event log up/down、约束和 rollback 通过，临时库已删除并复查无残留。
 
 ## 仍需注意
 

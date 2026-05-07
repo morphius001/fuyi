@@ -96,3 +96,4 @@
 - 完成 `mock-payment-notification-skeleton-plan`，以 docs-only 方式规划未注册 mock payment notification skeleton 的文件边界、fake signature、fake payload、幂等 key 和单元测试清单；未修改 `packages/**` 或交易链路。
 - 完成 `mock-payment-notification-skeleton`，新增未注册 mock-only payment notification skeleton 和单元测试，覆盖 fake signature、payload normalize、idempotency key、金额异常和 unknown reference；未接 runtime，未修改交易状态。
 - 完成 `payment-notification-inbox-model-design`，以 docs-only 方式设计支付通知 inbox / event log、幂等唯一约束、状态流转、本地 disposable DB dry-run 和后续 PR 拆分；未新增 migration 或数据库连接。
+- 完成 `payment-notification-inbox-local-dry-run`，新增本地 disposable DB dry-run 脚本和记录文档，验证支付通知 inbox / event log up/down SQL、唯一约束、CNY 约束、event log action 约束和 rollback；未修改 `packages/**`。

@@ -230,6 +230,7 @@
 - `payment-notification-harness-full-tests` 已完成：idempotency harness 现在运行 payment notification 全量单测集合；验证 21/21 通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507141523` 已删除并复查无残留。
 - `payment-workflow-command-adapter-plan` 已完成：docs-only 规划 workflow command adapter DTO 和映射，不实现 adapter，不调用 payment workflow。
 - `payment-workflow-command-contract` 已完成：新增纯函数 command mapper，不调用 payment workflow，不改变交易状态；payment notification 单测 25/25 通过，API typecheck 通过。
+- `payment-harness-command-mapper` 已完成：idempotency harness 已覆盖 command mapper 单测；验证 25/25 通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507142712` 已删除并复查无残留。
 
 ## 仍需注意
 

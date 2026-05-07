@@ -662,6 +662,15 @@
 - 不调用 payment workflow。
 - 不接 runtime，不连接数据库。
 
+第五十五轮 harness 覆盖 command mapper:
+
+1. `payment-harness-command-mapper`: done，将 payment workflow command mapper 单测加入 idempotency harness。
+
+第五十五轮原则：
+
+- 只改本地验证脚本和文档。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

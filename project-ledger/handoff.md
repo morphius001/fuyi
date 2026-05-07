@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 17:00 Asia/Shanghai
+更新时间：2026-05-07 17:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -177,3 +177,10 @@
 - 新增 `mapGuardResultToWorkflowCommand` 纯函数，把 guard result 转成 command DTO 或 audit-only decision。
 - 验证通过：payment notification 单测 25/25，API typecheck 通过。
 - 未调用 payment workflow，未接 runtime，未连接数据库，未改变交易状态。
+
+## Round 55 更新
+
+- `payment-harness-command-mapper` 已完成。
+- `.codex/scripts/payment-notification-idempotency-harness.sh` 现在包含 `payment-workflow-command-mapper.unit.spec.ts`。
+- 验证通过：payment notification 单测 25/25；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507142712` dry-run 通过并已删除，复查无残留。
+- 未调用 payment workflow，未接 runtime，未改变交易状态。

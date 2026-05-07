@@ -211,6 +211,7 @@
 - `admin-market-membership-browser-qa` 登录态补测通过：`/admin/china/markets` 返回 200，市场详情页展示三门海鲜市场、阿海鲜活档、A区 18号、配送 profile 和只读边界；无保存/发布/生效按钮，无 `Failed to fetch`，无 `chinaAdmin.*` key 泄漏。
 - `round34-post-admin-qa-validation` 已记录 PR #77/#78 合并后的本地验证结果。
 - `preprod-dry-run-operator-pack` 已完成，预发 disposable DB dry-run 的 Go/No-Go、变量模板、日志目录、rollback 和退出标准已固化为文档。
+- `round36-safe-next-execution-map` 已完成，下一阶段 Gate 1-5 和高风险串行边界已固化为文档。
 
 ## 仍需注意
 
@@ -236,3 +237,4 @@
 - 后续 staging 时仍必须精确 stage；第十一轮索引只解决“怎么拆”，不代表自动纳入所有未跟踪文档。
 - Codex in-app Browser Use 当前仍受系统级 `拒绝访问` 限制；本轮采用本地 Playwright 兜底生成登录态截图。
 - `preprod-disposable-db-dry-run-execution` 仍是 `blocked-external`，不能自动连接预发或生产 DB。
+- 没有 disposable preprod DB 前，自动队列只能继续 docs-only 计划或本地 disposable rehearsal，不得进入真实 migration、Admin 写接口或 runtime switch。

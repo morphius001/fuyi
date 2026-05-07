@@ -46,3 +46,9 @@
 - `preprod-dry-run-operator-pack` 已完成，见 `docs/preprod-dry-run-operator-pack.md`。
 - 当前仍未连接任何预发或生产数据库。
 - 如果用户后续提供 disposable preprod DB，先按 operator pack 做 Go/No-Go，不要直接执行。
+
+## Round 36 更新
+
+- `round36-safe-next-execution-map` 已完成，见 `docs/round36-safe-next-execution-map.md`。
+- 自动队列没有可继续执行的普通任务。
+- 可选安全方向只有 docs-only 高风险拆分计划；真实 DB、migration、Admin 写接口、runtime switch、支付、退款、结算、佣金、权限和真实履约仍保持阻塞。

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 15:28 Asia/Shanghai
+更新时间：2026-05-07 15:45 Asia/Shanghai
 
 ## 当前上下文
 
@@ -138,3 +138,9 @@
 - 新增未注册 `InMemoryPaymentNotificationInboxRepository`，覆盖 receive、dedupe replay、retryable failure 和 invalid signature audit。
 - 验证通过：payment notification 单测 14/14，`bunx tsc --noEmit -p packages/api/tsconfig.json`。
 - 未连接数据库，未注册 runtime，未改变 checkout、order、payment、refund、settlement、commission 或 permission。
+
+## Round 49 更新
+
+- `payment-notification-post-merge-validation` 已完成，见 `docs/payment-notification-post-merge-validation.md`。
+- 验证通过：idempotency harness、API typecheck、runtime grep 未注册、disposable DB 无残留。
+- 当前支付通知链路仍是未注册 skeleton / repository / dry-run，不是可用支付 runtime。

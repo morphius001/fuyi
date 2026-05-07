@@ -603,6 +603,16 @@
 - 不注册 runtime。
 - 不改变 payment/order/refund/settlement/commission/permission。
 
+第四十九轮合并后验证:
+
+1. `payment-notification-post-merge-validation`: done，记录支付通知 PR 串合并后的 harness、typecheck、未注册 grep 和 disposable DB 无残留验证。
+
+第四十九轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+- 后续 runtime、真实 Provider、退款、对账、结算和佣金继续串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

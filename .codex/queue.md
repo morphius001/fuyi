@@ -412,7 +412,7 @@
 
 1. `preprod-market-membership-dry-run-checklist`: done，docs-only，明确预发 disposable DB dry-run 的连接条件、备份、执行、回滚和验收。
 2. `market-membership-repository-integration-test`: done，使用本地 disposable DB 验证 repository reader ready/empty/missing-table，不注册生产 migration。
-3. `admin-market-readonly-api-db-qa`: pending，只测 Admin market readonly API 的 DB/read model 三态。
+3. `admin-market-readonly-api-db-qa`: done，只测 Admin market readonly API 的 DB/read model 三态。
 4. `storefront-market-readonly-api-db-qa`: pending，只测 Storefront markets API 的 DB/read model 三态。
 5. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话后截图验证。
 
@@ -420,6 +420,7 @@
 
 - `preprod-market-membership-dry-run-checklist`: done，新增预发 disposable DB dry-run 清单，覆盖绝对前置条件、禁止事项、环境记录、migration up/down、fixture、Vendor/Admin/Storefront 只读验证、回滚和退出标准；当前没有执行任何预发 DB 命令。
 - `market-membership-repository-integration-test`: done，新增本地 disposable DB repository SQL 合同脚本，验证 missing-table、repository ready、seller-owned market filter、no-membership fallback、`checkout_impact = none`、`runtime_enabled = false` 和 down cleanup。
+- `admin-market-readonly-api-db-qa`: done，Admin markets readonly API 优先读取 repository rows，表缺失或无 repository markets 时保留 static fallback；单测覆盖 repository ready、required table missing 和 static fallback。
 
 第三十二轮原则：
 

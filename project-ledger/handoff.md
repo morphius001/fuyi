@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 14:46 Asia/Shanghai
+更新时间：2026-05-07 15:00 Asia/Shanghai
 
 ## 当前上下文
 
@@ -116,3 +116,11 @@
 - 验证通过：本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507134820` 跑通 up/down、fixtures、唯一约束、CNY 约束、event log action 约束和 rollback；临时库已删除并复查无残留。
 - 未注册 migration，未接 runtime，未改变交易状态。
 - 下一步如果继续，应考虑 repository/test harness；仍不接 webhook runtime 或真实 Provider。
+
+## Round 46 更新
+
+- `payment-notification-idempotency-harness` 已完成，新增 `.codex/scripts/payment-notification-idempotency-harness.sh`。
+- Harness 串联未注册检查、staged 禁止范围检查、mock payment notification 单测和 inbox migration skeleton dry-run。
+- 验证通过：mock payment notification 单测 6/6；本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507135217` dry-run 通过并已删除，复查无残留。
+- 未注册 Provider 或 migration，未接 webhook runtime，未改变交易状态。
+- 下一步如果继续，可以做 repository/test harness 的代码层拆分，但仍保持未注册和测试优先。

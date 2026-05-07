@@ -270,6 +270,7 @@
 - `mock-webhook-route-auth-boundary-review` 已完成：docs-only 记录 Admin route 不适合作为真实 provider callback 的路径风险。
 - `mock-webhook-route-path-migration-plan` 已完成：docs-only 规划 neutral provider callback route 路径和后续 PR 拆分，不新增 route 或 runtime。
 - `mock-webhook-neutral-route-disabled-skeleton` 已完成：新增 neutral mock webhook route disabled skeleton，不读取 body，不调用 handler，不连接 DB 或 workflow。
+- `mock-webhook-neutral-route-disabled-post-validation` 已完成：记录 PR #139 合并后 harness 80/80、API typecheck、runtime 入口检查和 DB 无残留验证。
 
 ## 仍需注意
 

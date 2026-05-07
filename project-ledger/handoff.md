@@ -433,3 +433,10 @@
 - 单测确认默认和 env requested 情况都返回 disabled，且不读取 request body。
 - Harness 已纳入 neutral route 单测。
 - 当前仍未调用 handler，未连接 DB，未执行 payment workflow，未接支付宝或微信支付。
+
+## Round 95 更新
+
+- `mock-webhook-neutral-route-disabled-post-validation` 已完成，见 `docs/mock-webhook-neutral-route-disabled-post-validation.md`。
+- PR #139 合并后验证通过：payment notification harness 80/80、dry-run row count 2|9、API typecheck、runtime 入口检查和 disposable DB 无残留。
+- 当前 neutral route 仍默认 disabled，不读 body，不调用 handler，不连接 DB，不执行 payment workflow。
+- 下一步若继续，应先做 `mock-webhook-neutral-route-inmemory-plan`，再考虑 local-only in-memory skeleton。

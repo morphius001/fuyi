@@ -454,3 +454,10 @@
 - neutral route 新增 local-only in-memory 分支；默认和 production 仍 disabled。
 - 单测覆盖 signed payload accepted、missing signature rejected、production disabled 和 disabled 不读 body。
 - 当前仍未连接 DB，未执行 payment workflow，未接支付宝或微信支付。
+
+## Round 98 更新
+
+- `mock-webhook-neutral-route-inmemory-post-validation` 已完成，见 `docs/mock-webhook-neutral-route-inmemory-post-validation.md`。
+- PR #142 合并后验证通过：payment notification harness 83/83、dry-run row count 2|9、API typecheck、runtime 入口检查和 disposable DB 无残留。
+- 当前 neutral route 仍是 local-only mock inbox-only，不连接 DB，不执行 payment workflow。
+- 下一步应规划 `mock-webhook-neutral-route-smoke-script-plan`，只针对 neutral route 做本地 smoke。

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 19:30 Asia/Shanghai
+更新时间：2026-05-07 19:45 Asia/Shanghai
 
 ## 当前上下文
 
@@ -241,3 +241,10 @@
 - 新增 `PaymentNotificationInboxRepositoryContract`、repository error classifier 和单元测试。
 - Harness 已纳入新增单测。
 - 未写 DB adapter，未接 webhook route，未调用 payment workflow。
+
+## Round 65 更新
+
+- `payment-runtime-disabled-config-skeleton` 已完成，见 `docs/payment-runtime-disabled-config-skeleton.md`。
+- 新增 `parsePaymentNotificationRuntimeConfig()` 纯函数，默认 disabled，只允许 mock inbox-only / mock prepare-command。
+- Harness 已纳入新增单测。
+- 未接 runtime，未新增 webhook route，未注册 migration。

@@ -759,6 +759,16 @@
 - 不写 DB adapter。
 - 不连接数据库，不接 webhook route。
 
+第六十五轮 runtime disabled config skeleton:
+
+1. `payment-runtime-disabled-config-skeleton`: done，新增支付通知 runtime disabled-by-default 配置解析纯函数和单元测试。
+
+第六十五轮原则：
+
+- 只做纯函数和测试。
+- 不接 runtime。
+- 不允许真实支付宝/微信支付 provider。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

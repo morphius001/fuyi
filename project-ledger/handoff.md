@@ -393,3 +393,10 @@
 - `mock-webhook-local-route-inmemory-plan` 已完成，见 `docs/mock-webhook-local-route-inmemory-plan.md`。
 - 本轮只规划 local-only in-memory route smoke 的 env gate、repository 生命周期、禁止行为和后续 PR 拆分。
 - 未修改 `packages/**` 或 `apps/**`，未接 handler、DB 或 workflow。
+
+## Round 89 更新
+
+- `mock-webhook-local-route-inmemory-skeleton` 已完成，见 `docs/mock-webhook-local-route-inmemory-skeleton.md`。
+- Admin mock webhook route 新增 local-only in-memory 分支；默认仍 disabled，production 强制 disabled。
+- 验证通过：payment notification harness 78/78、dry-run row count 2|9、API typecheck、DB 无残留。
+- 当前仍未连接 DB，未执行 payment workflow，未接真实 Provider。

@@ -1006,6 +1006,16 @@
 - 不修改 `packages/**` 或 `apps/**`。
 - 不接 DB，不调用 payment workflow。
 
+第八十九轮 mock webhook local route in-memory skeleton:
+
+1. `mock-webhook-local-route-inmemory-skeleton`: done，Admin route 增加 local-only in-memory 分支和单元测试。
+
+第八十九轮原则：
+
+- 默认仍 disabled。
+- 只允许 local in-memory。
+- 不连接 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

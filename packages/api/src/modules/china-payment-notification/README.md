@@ -11,3 +11,5 @@ Boundaries:
 - Mock notification output must stay as normalized envelopes and unit-test fixtures until a dedicated high-risk task introduces an inbox/model and runtime switch.
 
 The current exports only support fake signed payload normalization for tests and future adapter review.
+
+`migrations/Migration20260507000200.ts` is a skeleton only. It is not registered in `medusa-config.ts` in this phase and must not be applied to production or preprod without a separate approved high-risk task.

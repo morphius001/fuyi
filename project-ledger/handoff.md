@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 14:15 Asia/Shanghai
+更新时间：2026-05-07 14:30 Asia/Shanghai
 
 ## 当前上下文
 
@@ -100,3 +100,11 @@
 - 脚本使用本地 disposable DB `fuyi_payment_notification_inbox_dry_run_20260507133751` 验证 inbox/event log up/down SQL、唯一约束、CNY 约束、event log action 约束和 rollback；临时库已删除并复查无残留。
 - 未新增真实 migration，未修改 `apps/**` 或 `packages/**`，未连接预发/生产数据库，未改变交易状态。
 - 下一步如果继续，可以考虑 migration skeleton PR，但仍不注册生产 migration，不接 runtime，不连接预发/生产数据库。
+
+## Round 44 更新
+
+- `payment-notification-inbox-migration-skeleton` 已完成，新增 `packages/api/src/modules/china-payment-notification/migrations/Migration20260507000200.ts`。
+- Skeleton 创建 payment notification inbox / event log 表、约束和索引，并提供 down SQL。
+- 验证通过：`bunx tsc --noEmit -p packages/api/tsconfig.json`；本地 dry-run 脚本再次通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507134145` 已删除并复查无残留。
+- 未修改 `packages/api/medusa-config.ts`，未注册生产 migration，未接 webhook/provider runtime，未改变交易状态。
+- 下一步如果继续，应做 repository/test harness，或把 dry-run 脚本改为从 migration skeleton 提取 SQL；仍不得连接预发/生产数据库。

@@ -119,3 +119,4 @@
 - 完成 `payment-inbox-repository-db-contract-plan`，以 docs-only 方式规划 DB-backed inbox repository 的事务、幂等、event log 和错误映射合同。
 - 完成 `payment-inbox-repository-interface`，新增 payment notification inbox repository contract、错误码分类和单元测试。
 - 完成 `payment-runtime-disabled-config-skeleton`，新增支付通知 runtime 默认关闭配置解析纯函数和单元测试。
+- 完成 `payment-notification-skeleton-stage-validation`，记录 PR #102-#110 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。

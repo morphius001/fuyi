@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 20:30 Asia/Shanghai
+更新时间：2026-05-07 20:45 Asia/Shanghai
 
 ## 当前上下文
 
@@ -267,3 +267,9 @@
 - 新增 `DbPaymentNotificationInboxRepository` skeleton 和 mocked transaction 单测。
 - Harness 已纳入新增单测。
 - 未创建数据库连接，未新增 webhook route，未调用 payment workflow。
+
+## Round 69 更新
+
+- `payment-db-adapter-post-merge-validation` 已完成，见 `docs/payment-db-adapter-post-merge-validation.md`。
+- 合并后验证通过：payment notification harness 46/46、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
+- 当前 DB adapter skeleton 仍未接真实数据库或 webhook runtime。

@@ -10,3 +10,4 @@ export * from "./inbox-repository-contract";
 export * from "./runtime-config";
 export * from "./db-inbox-repository";
 export * from "./mock-webhook-response";
+export * from "./mock-webhook-request";

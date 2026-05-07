@@ -303,3 +303,11 @@
 - `mock-webhook-route-response-contract` 已完成，见 `docs/mock-webhook-route-response-contract.md`。
 - 新增 `mapMockPaymentWebhookResponse()` 纯函数和单元测试，固定 disabled、accepted、duplicate、rejected 响应语义。
 - 未新增 API route，未接 runtime，未调用 payment workflow。
+
+## Round 75 更新
+
+- `mock-webhook-route-request-contract` 已完成，见 `docs/mock-webhook-route-request-contract.md`。
+- 新增 `mapMockPaymentWebhookRequestToNormalizeInput()`，只负责未来 mock webhook route 的 raw body/header/secret 到 normalizer input 的纯函数规整。
+- 拒绝结果只暴露安全 metadata，不暴露 raw payload、签名、secret 或 payment/order mutation 字段。
+- 验证通过：`.codex/scripts/payment-notification-idempotency-harness.sh` 57/57，dry-run row count 2|9；`cd packages/api && bunx tsc --noEmit -p tsconfig.json`；runtime grep 无注册；disposable DB 无残留。
+- 当前仍未新增 API route，未接 runtime，未写 DB，未调用 payment workflow。

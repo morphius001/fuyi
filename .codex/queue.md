@@ -856,6 +856,17 @@
 - 不新增 API route。
 - 不接 runtime，不调用 payment workflow。
 
+第七十五轮 mock webhook request contract:
+
+1. `mock-webhook-route-request-contract`: done，新增 mock webhook request mapper 纯函数和单元测试，把 raw body/header/secret 规整为 normalizer input。
+
+第七十五轮原则：
+
+- 只做纯函数和测试。
+- 不解析 JSON，不验签，不写 inbox。
+- 不新增 API route。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

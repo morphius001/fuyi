@@ -128,3 +128,4 @@
 - 完成 `payment-repository-disposable-db-script-validation`，记录 repository disposable DB script 合并后的脚本、harness、runtime grep 和无残留验证。
 - 完成 `mock-webhook-inbox-only-route-readiness`，以 docs-only 方式记录 mock webhook inbox-only route 前置条件、文件边界、测试清单和仍未满足项。
 - 完成 `mock-webhook-route-response-contract`，新增 mock webhook response mapper 纯函数和单元测试，不新增 API route。
+- 完成 `mock-webhook-route-request-contract`，新增 mock webhook request mapper 纯函数和单元测试，把 raw body/header/secret 规整为 normalizer input，不新增 API route。

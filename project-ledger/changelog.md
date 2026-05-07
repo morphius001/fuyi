@@ -87,3 +87,4 @@
 - Admin 登录态 QA 通过：`/dashboard/cn/operations/market-capabilities` 可访问，页面包含中国后台壳、市场配置、配送能力和只读 mock 边界，未出现 `Failed to fetch`。
 - 修复本地启动脚本缺少 CORS env 的问题，为 API dev server 注入 `ADMIN_CORS`、`AUTH_CORS`、`STORE_CORS` 和 `VENDOR_CORS` 默认值。
 - 完成 `admin-market-membership-browser-qa` 登录态补测：Admin 市场详情页读取 `/admin/china/markets` 返回 200，ready 状态展示市场、档口、配送 profile 和只读边界，无保存/发布/生效按钮。
+- 完成 `round34-post-admin-qa-validation`，记录 PR #77/#78 合并后的本地验证和剩余 `blocked-external` 边界。

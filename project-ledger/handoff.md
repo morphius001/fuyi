@@ -387,3 +387,9 @@
 - `mock-webhook-disabled-route-post-validation` 已完成，见 `docs/mock-webhook-disabled-route-post-validation.md`。
 - 合并后验证通过：payment notification harness 75/75、dry-run row count 2|9、API typecheck、runtime 入口检查只命中新 disabled route、DB 无残留。
 - 当前 route 仍只返回 disabled，不调用 handler、repository、DB 或 payment workflow。
+
+## Round 88 更新
+
+- `mock-webhook-local-route-inmemory-plan` 已完成，见 `docs/mock-webhook-local-route-inmemory-plan.md`。
+- 本轮只规划 local-only in-memory route smoke 的 env gate、repository 生命周期、禁止行为和后续 PR 拆分。
+- 未修改 `packages/**` 或 `apps/**`，未接 handler、DB 或 workflow。

@@ -212,6 +212,7 @@
 - `round34-post-admin-qa-validation` 已记录 PR #77/#78 合并后的本地验证结果。
 - `preprod-dry-run-operator-pack` 已完成，预发 disposable DB dry-run 的 Go/No-Go、变量模板、日志目录、rollback 和退出标准已固化为文档。
 - `round36-safe-next-execution-map` 已完成，下一阶段 Gate 1-5 和高风险串行边界已固化为文档。
+- `local-preprod-sim-dry-run` 已完成：本机 WSL disposable DB `fuyi_market_membership_dry_run_preprod_sim_20260507130339` 上 migration up/down、fixture、约束拒绝、rollback 和无残留复查均通过。
 
 ## 仍需注意
 
@@ -238,3 +239,4 @@
 - Codex in-app Browser Use 当前仍受系统级 `拒绝访问` 限制；本轮采用本地 Playwright 兜底生成登录态截图。
 - `preprod-disposable-db-dry-run-execution` 仍是 `blocked-external`，不能自动连接预发或生产 DB。
 - 没有 disposable preprod DB 前，自动队列只能继续 docs-only 计划或本地 disposable rehearsal，不得进入真实 migration、Admin 写接口或 runtime switch。
+- 本地模拟不等于真实预发 dry-run；真实 `preprod-disposable-db-dry-run-execution` 仍需外部 disposable preprod DB、备份和回滚确认。

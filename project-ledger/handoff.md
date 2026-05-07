@@ -52,3 +52,9 @@
 - `round36-safe-next-execution-map` 已完成，见 `docs/round36-safe-next-execution-map.md`。
 - 自动队列没有可继续执行的普通任务。
 - 可选安全方向只有 docs-only 高风险拆分计划；真实 DB、migration、Admin 写接口、runtime switch、支付、退款、结算、佣金、权限和真实履约仍保持阻塞。
+
+## Round 37 更新
+
+- `local-preprod-sim-dry-run` 已完成，见 `docs/local-preprod-sim-dry-run.md`。
+- 本地 WSL disposable DB dry-run 通过，临时库已自动删除并复查无残留。
+- 这不是正式预发 dry-run；`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。

@@ -412,3 +412,9 @@
 - `mock-webhook-local-route-smoke-script-plan` 已完成，见 `docs/mock-webhook-local-route-smoke-script-plan.md`。
 - 本轮只规划本地 smoke 脚本的 disabled、accepted、missing signature、malformed payload 和安全检查。
 - 未新增脚本，未修改 `packages/**` 或 `apps/**`。
+
+## Round 92 更新
+
+- `mock-webhook-route-auth-boundary-review` 已完成，见 `docs/mock-webhook-route-auth-boundary-review.md`。
+- 记录当前 mock route 位于 `/admin/**`，不应直接视为真实 provider webhook callback 路径。
+- 下一步建议先规划 neutral provider callback route，再写 smoke script。

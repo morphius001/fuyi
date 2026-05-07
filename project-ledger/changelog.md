@@ -60,3 +60,6 @@
 - 记录高风险串行边界：支付、退款、对账、结算、佣金、权限、真实配送生效、Admin 模块开关真实落库和 checkout shipping options 生效。
 - 新增第十一轮 docs-only staging 准备任务，准备生成 PR A-G staging 索引。
 - 完成 `docs/integration-pr-staging-index.md`，记录 PR A-G 的候选文件、验证命令和禁止混入范围。
+- 重启后恢复本地开发服务，并修正 `.codex/scripts/start-dev.sh` 的 Admin/Vendor 本地 API 地址为 `http://localhost:9000`，解决 Windows 浏览器登录页 `Failed to fetch`。
+- 补齐 WSL Playwright 浏览器 QA 依赖和中文字体，生成 Admin 登录态市场配置页截图与 JSON 检查结果。
+- Admin 登录态 QA 通过：`/dashboard/cn/operations/market-capabilities` 可访问，页面包含中国后台壳、市场配置、配送能力和只读 mock 边界，未出现 `Failed to fetch`。

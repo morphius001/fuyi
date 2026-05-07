@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-07 01:30 Asia/Shanghai
+更新时间：2026-05-07 11:55 Asia/Shanghai
 
 ## 当前分支
 
@@ -133,6 +133,11 @@
 - `git diff --check -- docs/integration-release-readiness.md project-ledger .codex/queue.md` 通过。
 - `git diff --check -- docs/integration-pr-staging-index.md .codex/queue.md .codex/tasks/integration-pr-staging-index.md project-ledger` 通过。
 - 核心 ledger 编码复查通过：`AGENTS.md`、`.codex/queue.md`、`project-ledger/**`、`docs/china-localization-task-list.md`、`docs/integration-release-readiness.md` 均为 UTF-8，常见 mojibake 模式未命中。
+- 重启后本地服务恢复验证通过：API `http://localhost:9000/health` 返回 200，Admin `http://localhost:7000/dashboard/login` 返回 200，Admin 登录 POST 返回 200。
+- `.codex/scripts/start-dev.sh` 已把 Admin/Vendor 本地后端地址切到 `http://localhost:9000`，避免 Windows 浏览器访问 `127.0.0.1:9000` 时出现 `Failed to fetch`。
+- 本地测试 Admin 账号 `admin@fuyi.local` 已可登录；密码仅用于本地测试，不写入仓库文档。
+- 已安装 WSL 浏览器 QA 必需系统库 `libnspr4`、`libnss3`、`libasound2t64` 和中文字体 `fonts-noto-cjk`，Playwright 截图不再出现中文方块。
+- Admin 登录态视觉 QA 通过：`/dashboard/cn/operations/market-capabilities` 可进入，页面包含中国后台壳、市场配置、统一配送/自行配送和 mock/只读边界说明，未发现 `Failed to fetch`。
 
 ## 仍需注意
 
@@ -156,3 +161,4 @@
 - 当前 integration 范围很大，不能作为一个大 PR 直接合并；必须按 `docs/integration-release-readiness.md` 拆 PR。
 - 队列已到拆 PR / staging 准备边界；真实支付、退款、结算、佣金、权限、配送生效和模块开关生效都不能在当前低风险队列里继续混改。
 - 后续 staging 时仍必须精确 stage；第十一轮索引只解决“怎么拆”，不代表自动纳入所有未跟踪文档。
+- Codex in-app Browser Use 当前仍受系统级 `拒绝访问` 限制；本轮采用本地 Playwright 兜底生成登录态截图。

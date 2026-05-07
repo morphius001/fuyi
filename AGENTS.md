@@ -104,7 +104,9 @@ Development servers:
 
 ## Codex Task File Execution Rules
 
-- 开始连续任务前，优先读取 `.codex/memory.md`、`.codex/queue.md` 和相关 `.codex/tasks/<task>.md`.
+- 开始连续任务前，优先读取 `.codex/memory.md`、`project-ledger/status.md`、`project-ledger/tasks.md`、`project-ledger/handoff.md`、`memory/learned-rules.md` 和相关 `.codex/tasks/<task>.md`.
+- 如果用户说“继续”，先读取 `project-ledger/status.md`、`project-ledger/tasks.md`、`project-ledger/handoff.md`、`memory/learned-rules.md` 和当前任务相关文件，再判断下一步。
+- 如果用户说“执行下一个任务”，优先读取 `project-ledger/tasks.md`；如果任务来自旧队列，再读取 `.codex/queue.md`。
 - 如果用户说“执行 xxx”或“执行任务 xxx”，先在 `.codex/tasks/` 查找对应 markdown 文件，例如 `.codex/tasks/xxx.md`.
 - 执行任务前必须读取 `AGENTS.md` 和对应 task 文件.
 - 如果用户说“开始”、“继续”、“按照你的来”、“你来操作”、“任务完成了就继续下一轮”等连续执行指令，主 agent 应进入自动队列模式.
@@ -119,6 +121,7 @@ Development servers:
 - 如果任务文件和用户当前指令冲突，以用户当前指令为准.
 - 如果任务文件和 `AGENTS.md` 冲突，以 `AGENTS.md` 的安全边界为准.
 - 如果用户说“执行下一个任务”，读取 `.codex/queue.md`，选择第一个未完成且未标记 `local-wip` 或 `done` 的任务.
+- 每次完成实质任务后，更新 `project-ledger/changelog.md` 和 `project-ledger/handoff.md`；沉淀出的长期规则写入 `memory/learned-rules.md`，UI / 产品决策写入 `memory/ui-decisions.md`.
 
 ## Storefront China UX Rules
 

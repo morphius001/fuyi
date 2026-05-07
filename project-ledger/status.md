@@ -229,6 +229,7 @@
 - `payment-notification-state-guard-contract` 已完成：新增纯函数 guard contract 和单元测试，不调用 payment workflow，不改变交易状态；payment notification 单测 21/21 通过，API typecheck 通过。
 - `payment-notification-harness-full-tests` 已完成：idempotency harness 现在运行 payment notification 全量单测集合；验证 21/21 通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507141523` 已删除并复查无残留。
 - `payment-workflow-command-adapter-plan` 已完成：docs-only 规划 workflow command adapter DTO 和映射，不实现 adapter，不调用 payment workflow。
+- `payment-workflow-command-contract` 已完成：新增纯函数 command mapper，不调用 payment workflow，不改变交易状态；payment notification 单测 25/25 通过，API typecheck 通过。
 
 ## 仍需注意
 

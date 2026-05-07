@@ -169,3 +169,4 @@
 - 完成 `mock-webhook-db-backed-route-skeleton`，neutral route 增加 local DB resolver skeleton；repository unavailable 时仍 disabled、不读 body、不写库、不调用 workflow。
 - 完成 `mock-webhook-db-backed-route-transaction-plan`，以 docs-only 方式规划 route-level transaction client injection、local-only DB adapter 和 accepted/duplicate smoke；仍不写 runtime 代码。
 - 完成 `mock-webhook-db-client-contract-plan`，以 docs-only 方式规划 local disposable Postgres adapter 的接口、local-only gate、SQL 映射、错误映射和 mocked tests。
+- 完成 `mock-webhook-db-client-contract`，新增 local disposable Postgres adapter skeleton 和 mocked tests；adapter 只接受注入式 driver，不接 route、不连接真实 DB。

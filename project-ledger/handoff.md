@@ -468,3 +468,10 @@
 - 本轮只规划本地 smoke 脚本，目标固定为 neutral route `/china/payment-webhooks/mock`。
 - 明确不再把 Admin route 当 provider callback smoke 目标，不启动/停止服务，不改 `.env`，不连接 DB，不执行 workflow。
 - 下一步可以新增 `.codex/scripts/mock-webhook-neutral-route-smoke.sh`。
+
+## Round 100 更新
+
+- `mock-webhook-neutral-route-smoke-script` 已完成，见 `docs/mock-webhook-neutral-route-smoke-script.md`。
+- 新增 `.codex/scripts/mock-webhook-neutral-route-smoke.sh`，支持 `auto`、`disabled`、`local-inmemory`、`production-disabled` 模式。
+- 脚本只打 neutral route `/china/payment-webhooks/mock`，不启动/停止服务，不修改 `.env`。
+- 当前脚本不替代 DB-backed inbox、真实 Provider 或 payment workflow 验证。

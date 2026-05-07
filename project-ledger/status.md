@@ -275,6 +275,7 @@
 - `mock-webhook-neutral-route-inmemory-skeleton` 已完成：neutral route 新增 local-only in-memory 分支，默认/prod disabled，不连接 DB 或 workflow。
 - `mock-webhook-neutral-route-inmemory-post-validation` 已完成：记录 PR #142 合并后 harness 83/83、API typecheck、runtime 入口检查和 DB 无残留验证。
 - `mock-webhook-neutral-route-smoke-script-plan` 已完成：docs-only 规划 neutral route 本地 smoke 脚本，不新增脚本。
+- `mock-webhook-neutral-route-smoke-script` 已完成：新增本地 neutral route smoke 脚本，支持 auto/disabled/local-inmemory/production-disabled 模式。
 
 ## 仍需注意
 

@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 20:00 Asia/Shanghai
+更新时间：2026-05-07 20:15 Asia/Shanghai
 
 ## 当前上下文
 
@@ -254,3 +254,9 @@
 - `payment-notification-skeleton-stage-validation` 已完成，见 `docs/payment-notification-skeleton-stage-validation.md`。
 - 阶段验证通过：payment notification harness 41/41、dry-run row count 2|9、API typecheck、runtime grep 无注册、disposable DB 无残留。
 - 当前仍是未注册 skeleton，不是可用支付 runtime。
+
+## Round 67 更新
+
+- `payment-inbox-repository-db-adapter-skeleton-plan` 已完成，见 `docs/payment-inbox-repository-db-adapter-skeleton-plan.md`。
+- 本轮只规划 DB adapter skeleton 文件边界、mocked ORM 测试、事务一致性和错误映射。
+- 未写 adapter 实现，未连接数据库，未新增 webhook route。

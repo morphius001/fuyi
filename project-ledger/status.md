@@ -243,6 +243,7 @@
 - `payment-runtime-disabled-config-skeleton` 已完成：新增 runtime config parser 纯函数，默认 disabled，只允许 mock modes，不接 runtime。
 - `payment-notification-skeleton-stage-validation` 已完成：harness 41/41、API typecheck、runtime grep 无注册、dry-run 临时库无残留。
 - `payment-inbox-repository-db-adapter-skeleton-plan` 已完成：docs-only 规划 DB adapter skeleton，不写实现，不连接数据库。
+- `payment-inbox-repository-db-adapter-skeleton` 已完成：新增注入式 DB adapter skeleton 和 mocked transaction 单测，不创建数据库连接，不接 webhook route。
 
 ## 仍需注意
 

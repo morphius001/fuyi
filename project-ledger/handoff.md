@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 20:15 Asia/Shanghai
+更新时间：2026-05-07 20:30 Asia/Shanghai
 
 ## 当前上下文
 
@@ -260,3 +260,10 @@
 - `payment-inbox-repository-db-adapter-skeleton-plan` 已完成，见 `docs/payment-inbox-repository-db-adapter-skeleton-plan.md`。
 - 本轮只规划 DB adapter skeleton 文件边界、mocked ORM 测试、事务一致性和错误映射。
 - 未写 adapter 实现，未连接数据库，未新增 webhook route。
+
+## Round 68 更新
+
+- `payment-inbox-repository-db-adapter-skeleton` 已完成，见 `docs/payment-inbox-repository-db-adapter-skeleton.md`。
+- 新增 `DbPaymentNotificationInboxRepository` skeleton 和 mocked transaction 单测。
+- Harness 已纳入新增单测。
+- 未创建数据库连接，未新增 webhook route，未调用 payment workflow。

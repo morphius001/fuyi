@@ -121,3 +121,4 @@
 - 完成 `payment-runtime-disabled-config-skeleton`，新增支付通知 runtime 默认关闭配置解析纯函数和单元测试。
 - 完成 `payment-notification-skeleton-stage-validation`，记录 PR #102-#110 合并后的 harness、typecheck、runtime grep 和 disposable DB 无残留验证。
 - 完成 `payment-inbox-repository-db-adapter-skeleton-plan`，以 docs-only 方式规划 DB adapter skeleton 的文件边界、mocked ORM 测试和事务安全要求。
+- 完成 `payment-inbox-repository-db-adapter-skeleton`，新增注入式 DB adapter skeleton 和 mocked transaction 单元测试，仍不连接数据库或接 runtime。

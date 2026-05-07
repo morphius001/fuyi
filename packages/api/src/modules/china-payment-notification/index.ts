@@ -8,3 +8,4 @@ export * from "./workflow-command-mapper";
 export * from "./workflow-command-audit-mapper";
 export * from "./inbox-repository-contract";
 export * from "./runtime-config";
+export * from "./db-inbox-repository";

@@ -788,6 +788,16 @@
 - 不写 adapter 实现。
 - 不连接数据库，不新增 webhook route。
 
+第六十八轮 DB adapter skeleton:
+
+1. `payment-inbox-repository-db-adapter-skeleton`: done，新增 DB adapter skeleton、mocked transaction 单测，并纳入 payment notification harness。
+
+第六十八轮原则：
+
+- 只做 skeleton 和 mocked transaction 单测。
+- 不创建数据库连接。
+- 不新增 webhook route，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -482,3 +482,10 @@
 - PR #145 合并后验证通过：脚本语法检查、disabled smoke、payment notification harness 83/83、dry-run row count 2|9、DB 残留为空。
 - 当前未跑 `local-inmemory` smoke，因为脚本不会修改已运行 API 进程 env。
 - 下一步建议规划 `mock-webhook-neutral-local-inmemory-devserver-plan`，用临时 dev server 方式验证 local-inmemory smoke。
+
+## Round 102 更新
+
+- `mock-webhook-neutral-local-inmemory-devserver-plan` 已完成，见 `docs/mock-webhook-neutral-local-inmemory-devserver-plan.md`。
+- 本轮只规划临时 API dev server smoke wrapper：使用单独端口、临时 mock env、跑 `local-inmemory` smoke 后关闭自己启动的进程。
+- 未新增脚本，未启动服务，未修改 `apps/**` 或 `packages/**`。
+- 下一步可写 `mock-webhook-neutral-local-inmemory-devserver-script`。

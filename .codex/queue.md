@@ -1057,7 +1057,8 @@
 7. `mock-webhook-neutral-route-smoke-script-plan`: done，规划只针对 neutral route 的本地 smoke 脚本。
 8. `mock-webhook-neutral-route-smoke-script`: done，新增本地 smoke 脚本，不启动/停止服务，不连接 DB，不执行 workflow。
 9. `mock-webhook-neutral-route-smoke-validation`: done，记录 smoke 脚本 disabled 模式、harness 和 DB 无残留验证结果。
-10. `mock-webhook-neutral-local-inmemory-devserver-plan`: pending，规划临时 dev server 方式运行 local-inmemory smoke，不修改现有 `.env`。
+10. `mock-webhook-neutral-local-inmemory-devserver-plan`: done，规划临时 dev server 方式运行 local-inmemory smoke，不修改现有 `.env`。
+11. `mock-webhook-neutral-local-inmemory-devserver-script`: pending，新增临时 dev server smoke wrapper，只管理自己启动的临时 API。
 
 第九十三轮原则：
 

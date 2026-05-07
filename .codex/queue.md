@@ -932,6 +932,17 @@
 - 不新增 API route。
 - 不接 runtime，不创建 DB 连接，不调用 payment workflow。
 
+第八十二轮 mock webhook handler skeleton plan:
+
+1. `mock-webhook-handler-skeleton-plan`: done，规划未来未注册 handler skeleton 的文件边界、输入输出和验收断言。
+
+第八十二轮原则：
+
+- 只做文档。
+- 不修改 `packages/**` 或 `apps/**`。
+- 不新增 API route。
+- 不接 runtime，不创建 DB 连接，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

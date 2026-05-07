@@ -1016,6 +1016,16 @@
 - 只允许 local in-memory。
 - 不连接 DB，不调用 payment workflow。
 
+第九十轮 mock webhook in-memory route post-validation:
+
+1. `mock-webhook-inmemory-route-post-validation`: done，记录 PR #134 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。
+
+第九十轮原则：
+
+- 只记录验证。
+- 不修改业务代码。
+- 不接 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

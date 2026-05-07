@@ -400,3 +400,9 @@
 - Admin mock webhook route 新增 local-only in-memory 分支；默认仍 disabled，production 强制 disabled。
 - 验证通过：payment notification harness 78/78、dry-run row count 2|9、API typecheck、DB 无残留。
 - 当前仍未连接 DB，未执行 payment workflow，未接真实 Provider。
+
+## Round 90 更新
+
+- `mock-webhook-inmemory-route-post-validation` 已完成，见 `docs/mock-webhook-inmemory-route-post-validation.md`。
+- 合并后验证通过：payment notification harness 78/78、dry-run row count 2|9、API typecheck、runtime 入口检查和 DB 无残留。
+- 当前 route 默认仍 disabled；local in-memory 分支不连接 DB、不执行 workflow。

@@ -700,6 +700,16 @@
 - 不调用 payment workflow。
 - 不改变交易状态。
 
+第五十九轮 command audit mapper:
+
+1. `payment-command-mapper-audit-tests`: done，新增 command decision -> event log audit action 纯函数和单元测试，并纳入 idempotency harness。
+
+第五十九轮原则：
+
+- 只做纯函数和测试。
+- 不写 DB。
+- 不接 runtime，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -234,6 +234,7 @@
 - `payment-notification-round55-validation` 已完成：harness 25/25、API typecheck、runtime grep 无注册、临时库 `fuyi_payment_notification_inbox_dry_run_20260507142917` 已删除并复查无残留。
 - `payment-notification-event-log-actions-plan` 已完成：docs-only 规划 event log action 白名单扩展，不改 migration，不接 runtime。
 - `payment-event-log-actions-migration-skeleton` 已完成：未注册 migration skeleton 和本地 dry-run 已覆盖 command/workflow/manual-review audit action，不接 runtime，不改变交易状态。
+- `payment-command-mapper-audit-tests` 已完成：新增 command decision -> event log audit action 纯函数，不写 DB，不调用 payment workflow。
 
 ## 仍需注意
 

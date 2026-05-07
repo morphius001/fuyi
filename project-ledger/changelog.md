@@ -109,3 +109,4 @@
 - 完成 `payment-workflow-command-adapter-plan`，以 docs-only 方式规划 state guard 输出到未来 payment workflow command adapter 的 DTO、映射、幂等、审计和 PR 拆分。
 - 完成 `payment-workflow-command-contract`，新增支付 workflow command DTO 和纯函数 mapper 单测，仍不调用 payment workflow 或 runtime。
 - 完成 `payment-harness-command-mapper`，将 payment workflow command mapper 单测纳入本地 idempotency harness。
+- 完成 `payment-notification-round55-validation`，记录 command mapper 合并后的 harness、API typecheck、runtime grep 和 disposable DB 无残留验证。

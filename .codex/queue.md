@@ -554,6 +554,17 @@
 - 不连接预发或生产数据库。
 - 脚本默认只允许本地 PostgreSQL，远程必须显式设置 approved disposable DB。
 
+第四十四轮 inbox migration skeleton:
+
+1. `payment-notification-inbox-migration-skeleton`: done，新增未注册 payment notification inbox / event log migration skeleton；不注册生产 migration，不接 runtime。
+
+第四十四轮原则：
+
+- 只新增未注册 migration skeleton。
+- 不修改 `packages/api/medusa-config.ts`。
+- 不接 webhook、provider runtime、checkout、payment/order 状态推进。
+- 真实 migration 注册、repository、runtime switch、支付宝/微信支付、退款、对账和结算继续串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

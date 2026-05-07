@@ -497,3 +497,10 @@
 - 脚本使用单独端口、临时 mock env、本地 DB，只关闭自己启动的临时 API 进程。
 - 不修改 `.env`，不关闭现有 9000 服务，不接真实 Provider，不执行 payment workflow。
 - 实际 devserver smoke 发现 Medusa 请求不一定提供 `req.text()`，本轮已补齐 neutral route 对 `req.body` 字符串、Buffer 和 JSON object 的 mock raw body 读取兜底。
+
+## Round 104 更新
+
+- `mock-webhook-neutral-local-inmemory-smoke-validation` 已完成，见 `docs/mock-webhook-neutral-local-inmemory-smoke-validation.md`。
+- PR #148 合并后验证通过：临时 9100 devserver local-inmemory smoke 覆盖 accepted、missing signature、malformed payload；payment notification harness 84/84；DB 残留为空。
+- 9100 端口复查无监听进程。
+- 下一步建议做 `mock-webhook-admin-route-deprecation-plan`，明确旧 Admin mock route 的保留、降级或删除策略。

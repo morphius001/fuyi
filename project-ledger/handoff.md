@@ -266,6 +266,13 @@
 - Admin route 不再读取 request body，不再处理 signature/header，不再构造 in-memory repository，也不再调用 mock handler。
 - neutral route `POST /china/payment-webhooks/mock` 继续作为唯一 mock provider callback 演进路径。
 - 本轮不接 DB-backed repository，不注册 migration，不调用 payment workflow，不接支付宝或微信支付，不改变交易状态。
+
+## Round 95 更新
+
+- `mock-webhook-admin-route-disabled-validation` 已完成，见 `docs/mock-webhook-admin-route-disabled-validation.md`。
+- PR #151 合并后验证通过：payment notification harness 83/83、API typecheck、runtime grep 和 disposable DB 无残留。
+- Runtime grep 只命中 Admin disabled route、neutral mock route 和 neutral route 单测；未命中 medusa-config、workflow、subscriber、job 或 link。
+- 下一步如果继续支付 mock route 方向，应先做 `mock-webhook-db-backed-route-plan`，只规划 neutral route 的 DB-backed inbox skeleton，不改 runtime。
 - 本轮只规划 DB adapter skeleton 文件边界、mocked ORM 测试、事务一致性和错误映射。
 - 未写 adapter 实现，未连接数据库，未新增 webhook route。
 

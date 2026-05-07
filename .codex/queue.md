@@ -1062,7 +1062,8 @@
 12. `mock-webhook-neutral-local-inmemory-smoke-validation`: done，运行并记录临时 devserver local-inmemory smoke 结果。
 13. `mock-webhook-admin-route-deprecation-plan`: done，规划旧 Admin mock route 的保留、降级或删除策略。
 14. `mock-webhook-admin-route-disabled-only`: done，将旧 Admin mock route 降级为 disabled-only，不再保留 local in-memory 分支。
-15. `mock-webhook-admin-route-disabled-validation`: pending，记录旧 Admin route disabled-only 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
+15. `mock-webhook-admin-route-disabled-validation`: done，记录旧 Admin route disabled-only 合并后的 harness、typecheck、runtime grep 和 DB 无残留验证。
+16. `mock-webhook-db-backed-route-plan`: pending，规划 neutral mock webhook route 接 DB-backed inbox skeleton 的后续拆分，仍不修改 runtime。
 
 第九十三轮原则：
 

@@ -443,7 +443,7 @@
 
 1. `local-disposable-migration-registration-rehearsal`: done，仅使用本地 disposable DB 模拟 migration 注册前检查，不注册生产 migration。
 2. `migration-registration-design-review`: done，docs-only，评审真实 migration 注册点、rollback、部署顺序和 PR 拆分。
-3. `admin-write-api-runtime-switch-plan`: pending，docs-only，设计 Admin 写接口和 runtime switch 的分离、审计、幂等和回滚。
+3. `admin-write-api-runtime-switch-plan`: done，docs-only，设计 Admin 写接口和 runtime switch 的分离、审计、幂等和回滚。
 4. `admin-market-membership-browser-qa`: blocked-manual，需要用户已登录 Admin 浏览器会话。
 5. `preprod-disposable-db-dry-run-execution`: blocked-external，需要用户明确提供可丢弃预发目标库、备份和回滚确认。
 
@@ -460,6 +460,9 @@
 
 - `local-disposable-migration-registration-rehearsal`: done，新增本地 rehearsal 脚本，确认 migration skeleton 未注册到 `medusa-config.ts`，连续执行本地 up/down dry-run 和 repository integration，并确认 disposable DB 无残留。
 - `migration-registration-design-review`: done，完成真实 migration 注册前的 docs-only 评审，明确 registration PR 只能注册 migration/module，不写 seed、不切 runtime、不加 Admin 写接口。
+- `admin-write-api-runtime-switch-plan`: done，完成 Admin 写接口与 runtime switch 分离计划，明确 draft / published / effective 三层、审计、幂等、回滚和高风险串行边界。
+
+第三十三轮自动队列已清空。剩余 `admin-market-membership-browser-qa` 为 `blocked-manual`，`preprod-disposable-db-dry-run-execution` 为 `blocked-external`。下一阶段如进入真实 migration 注册、预发/生产 DB、Admin 写接口实现、runtime switch 生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
 ## Status Rules
 

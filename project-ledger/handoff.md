@@ -548,3 +548,10 @@
 - 新增 `resolveMockWebhookInboxRepository()` 纯 helper，默认 disabled、production disabled，只在 local DB flag + transaction client + repository factory 都存在时返回 local disposable repository。
 - Resolver 单测已纳入 payment notification harness。
 - 当前仍不接 neutral route，不连接 DB，不注册 migration，不调用 payment workflow。
+
+## Round 109 更新
+
+- `mock-webhook-db-backed-route-local-script-plan` 已完成，见 `docs/mock-webhook-db-backed-route-local-script-plan.md`。
+- 本轮只规划 local disposable DB smoke wrapper，不新增脚本、不改 route。
+- 后续脚本必须只管理自己创建的 disposable DB 和临时 API，不关闭现有 9000 服务，不修改 `.env`。
+- 下一步可做 `mock-webhook-db-backed-route-local-script`，但仍不接 route runtime、不执行 payment workflow。

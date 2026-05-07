@@ -475,3 +475,10 @@
 - 新增 `.codex/scripts/mock-webhook-neutral-route-smoke.sh`，支持 `auto`、`disabled`、`local-inmemory`、`production-disabled` 模式。
 - 脚本只打 neutral route `/china/payment-webhooks/mock`，不启动/停止服务，不修改 `.env`。
 - 当前脚本不替代 DB-backed inbox、真实 Provider 或 payment workflow 验证。
+
+## Round 101 更新
+
+- `mock-webhook-neutral-route-smoke-validation` 已完成，见 `docs/mock-webhook-neutral-route-smoke-validation.md`。
+- PR #145 合并后验证通过：脚本语法检查、disabled smoke、payment notification harness 83/83、dry-run row count 2|9、DB 残留为空。
+- 当前未跑 `local-inmemory` smoke，因为脚本不会修改已运行 API 进程 env。
+- 下一步建议规划 `mock-webhook-neutral-local-inmemory-devserver-plan`，用临时 dev server 方式验证 local-inmemory smoke。

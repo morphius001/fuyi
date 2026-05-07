@@ -778,6 +778,16 @@
 - 只记录验证。
 - 不修改业务代码。
 
+第六十七轮 DB adapter skeleton 计划:
+
+1. `payment-inbox-repository-db-adapter-skeleton-plan`: done，规划 DB adapter skeleton 文件边界、mocked ORM 测试、事务一致性、错误映射和后续 disposable DB test 拆分。
+
+第六十七轮原则：
+
+- 只做文档。
+- 不写 adapter 实现。
+- 不连接数据库，不新增 webhook route。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -1073,7 +1073,8 @@
 23. `mock-webhook-db-client-contract-plan`: done，规划 local disposable Postgres adapter 的接口、local-only gate、SQL 映射、错误映射和 mocked tests，不接 route。
 24. `mock-webhook-db-client-contract`: done，新增 local adapter skeleton 和 mocked unit tests；仍不接 route、不连接真实 DB。
 25. `mock-webhook-db-client-contract-validation`: done，记录 adapter skeleton 合并后的 harness、typecheck、runtime grep 和 DB/端口无残留验证。
-26. `mock-webhook-db-backed-route-local-accepted-plan`: pending，规划 neutral route 接 local adapter 后的 accepted/duplicate smoke，不直接实现。
+26. `mock-webhook-db-backed-route-local-accepted-plan`: done，规划 neutral route 接 local adapter 后的 accepted/duplicate/rejected smoke，不直接实现。
+27. `mock-webhook-db-backed-route-local-accepted`: pending，route 接 local-only adapter，并扩展 local smoke accepted/duplicate；仍不执行 workflow。
 
 第九十三轮原则：
 

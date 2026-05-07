@@ -500,6 +500,17 @@
 - 不改变 checkout、cart、order、payment、refund、payout、commission 或 permission 行为。
 - `preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
 
+第三十九轮 docs-only 支付合同任务：
+
+1. `payment-notification-contract-docs`: done，定义 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 边界；不实现 Provider，不修改交易链路。
+
+第三十九轮原则：
+
+- 只做支付通知合同文档。
+- 不修改 `apps/**` 或 `packages/**`。
+- 不新增 migration、不连接数据库、不接真实 Provider。
+- 后续 mock skeleton、inbox model、真实支付宝/微信支付、退款、对账和结算继续串行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

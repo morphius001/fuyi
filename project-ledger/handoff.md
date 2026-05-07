@@ -1,6 +1,6 @@
 # Handoff
 
-更新时间：2026-05-07 13:20 Asia/Shanghai
+更新时间：2026-05-07 13:28 Asia/Shanghai
 
 ## 当前上下文
 
@@ -65,3 +65,10 @@
 - 本轮只新增支付通知验签、幂等、重试、审计和 PR 拆分计划。
 - 未修改 `apps/**` 或 `packages/**`，未实现真实支付 Provider，未改变 checkout、cart、order、payment、refund、payout、commission 或 permission 行为。
 - 支付实现类任务下一步必须继续串行：先 mock notification skeleton，再 inbox/model dry-run，再 runtime；支付宝、微信支付、退款、对账和商家结算继续拆开。
+
+## Round 39 更新
+
+- `payment-notification-contract-docs` 已完成，见 `docs/payment-notification-contract.md`。
+- 本轮定义 normalized envelope、event type、signature result、idempotency key、raw payload 安全和 return/notify URL 职责边界。
+- 未实现 Provider，未新增 migration，未连接数据库，未改变交易状态。
+- 下一步若继续支付方向，应先做 mock skeleton 设计或 fake signed payload test harness，仍不得接真实支付宝/微信支付。

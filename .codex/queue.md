@@ -996,6 +996,16 @@
 - 不修改业务代码。
 - 不接 repository、DB 或 workflow。
 
+第八十八轮 mock webhook local route in-memory plan:
+
+1. `mock-webhook-local-route-inmemory-plan`: done，规划 local-only in-memory mock webhook smoke。
+
+第八十八轮原则：
+
+- 只做文档。
+- 不修改 `packages/**` 或 `apps/**`。
+- 不接 DB，不调用 payment workflow。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -209,6 +209,7 @@
 - Admin 登录态视觉 QA 通过：`/dashboard/cn/operations/market-capabilities` 可进入，页面包含中国后台壳、市场配置、统一配送/自行配送和 mock/只读边界说明，未发现 `Failed to fetch`。
 - `.codex/scripts/start-dev.sh` 已为 API dev server 注入本地 CORS 默认值，覆盖 Admin、Vendor、Storefront 的 `localhost` 和 `127.0.0.1` 开发源。
 - `admin-market-membership-browser-qa` 登录态补测通过：`/admin/china/markets` 返回 200，市场详情页展示三门海鲜市场、阿海鲜活档、A区 18号、配送 profile 和只读边界；无保存/发布/生效按钮，无 `Failed to fetch`，无 `chinaAdmin.*` key 泄漏。
+- `round34-post-admin-qa-validation` 已记录 PR #77/#78 合并后的本地验证结果。
 
 ## 仍需注意
 

@@ -33,3 +33,10 @@
 1. 将本地 CORS 启动脚本修复和 `admin-market-membership-browser-qa` 结果作为小 PR 提交。
 2. 继续跳过 `preprod-disposable-db-dry-run-execution`，除非用户明确提供可丢弃预发库和回滚确认。
 3. 下一批只能做 docs-only 或本地 disposable DB 验证；真实 migration 注册、Admin 写接口、runtime switch、支付/退款/结算/权限仍需单独串行。
+
+## Round 34 更新
+
+- PR #77 和 PR #78 已合并。
+- `round34-post-admin-qa-validation` 已记录本地验证结果。
+- 自动队列当前没有可继续执行的普通任务。
+- 剩余阻塞项是 `preprod-disposable-db-dry-run-execution`，需要用户提供可丢弃预发库、备份和回滚确认。

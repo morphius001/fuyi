@@ -464,6 +464,12 @@
 
 第三十三轮自动队列已清空。`admin-market-membership-browser-qa` 已在本地登录态 QA 中补测完成；`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。下一阶段如进入真实 migration 注册、预发/生产 DB、Admin 写接口实现、runtime switch 生效、支付/退款/结算/权限或真实履约，必须单独串行任务执行。
 
+第三十四轮收口：
+
+1. `round34-post-admin-qa-validation`: done，记录 PR #77/#78 合并后的本地 WSL dev、Admin 市场详情登录态 QA 和剩余 blocked-external 边界。
+
+第三十四轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`，需要用户明确提供可丢弃预发目标库、备份和回滚确认后才可执行。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

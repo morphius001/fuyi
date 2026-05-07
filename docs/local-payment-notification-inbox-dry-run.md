@@ -72,6 +72,14 @@ PASS payment notification inbox migration skeleton local dry-run completed and d
 
 临时库 `fuyi_payment_notification_inbox_dry_run_20260507134820` 已删除，并复查无残留。
 
+2026-05-07 18:00 Asia/Shanghai 后，脚本新增 command / workflow / manual-review action fixture，用于验证扩展后的 event log action 白名单。预期 row count 调整为：
+
+```text
+2|9
+```
+
+其中 2 条为 inbox fixture，9 条为 event log fixture；未知 action `state_mutated` 仍必须被 check constraint 拒绝。
+
 无残留复查：
 
 ```bash

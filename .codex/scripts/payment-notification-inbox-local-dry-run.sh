@@ -153,6 +153,45 @@ insert into payment_notification_event_log (
   'Mock payment notification signature verified.', '{"signature_status":"verified"}'::jsonb
 );
 
+insert into payment_notification_event_log (
+  id, inbox_id, action, actor_type, message, metadata
+) values
+  (
+    'plog_command_prepared', 'pinbox_001', 'command_prepared', 'system',
+    'Mock payment workflow command DTO prepared.',
+    '{"command_type":"capture_payment","idempotency_key":"payment_notify:mock_china_pay:evt_mock_001"}'::jsonb
+  ),
+  (
+    'plog_command_skipped', 'pinbox_001', 'command_skipped', 'system',
+    'Mock duplicate notification skipped before workflow execution.',
+    '{"reason":"duplicate","retryable":false}'::jsonb
+  ),
+  (
+    'plog_command_blocked', 'pinbox_001', 'command_blocked', 'system',
+    'Mock payment notification blocked by state guard.',
+    '{"block_type":"amount_mismatch","retryable":false}'::jsonb
+  ),
+  (
+    'plog_workflow_started', 'pinbox_001', 'workflow_execution_started', 'system',
+    'Mock workflow execution audit marker accepted by skeleton.',
+    '{"workflow":"payment_capture","runtime_enabled":false}'::jsonb
+  ),
+  (
+    'plog_workflow_succeeded', 'pinbox_001', 'workflow_execution_succeeded', 'system',
+    'Mock workflow success audit marker accepted by skeleton.',
+    '{"workflow":"payment_capture","runtime_enabled":false}'::jsonb
+  ),
+  (
+    'plog_workflow_failed', 'pinbox_001', 'workflow_execution_failed', 'system',
+    'Mock workflow failure audit marker accepted by skeleton.',
+    '{"workflow":"payment_capture","error_code":"MOCK_RUNTIME_DISABLED"}'::jsonb
+  ),
+  (
+    'plog_manual_review', 'pinbox_001', 'manual_review_required', 'operator',
+    'Mock manual review audit marker accepted by skeleton.',
+    '{"reason":"manual_review","contains_sensitive_payload":false}'::jsonb
+  );
+
 do $$
 begin
   begin

@@ -233,6 +233,7 @@
 - `payment-harness-command-mapper` 已完成：idempotency harness 已覆盖 command mapper 单测；验证 25/25 通过，临时库 `fuyi_payment_notification_inbox_dry_run_20260507142712` 已删除并复查无残留。
 - `payment-notification-round55-validation` 已完成：harness 25/25、API typecheck、runtime grep 无注册、临时库 `fuyi_payment_notification_inbox_dry_run_20260507142917` 已删除并复查无残留。
 - `payment-notification-event-log-actions-plan` 已完成：docs-only 规划 event log action 白名单扩展，不改 migration，不接 runtime。
+- `payment-event-log-actions-migration-skeleton` 已完成：未注册 migration skeleton 和本地 dry-run 已覆盖 command/workflow/manual-review audit action，不接 runtime，不改变交易状态。
 
 ## 仍需注意
 

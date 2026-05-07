@@ -127,3 +127,62 @@ export type ReceivePaymentNotificationResult = {
   record: PaymentNotificationInboxRecord;
   replayed: boolean;
 };
+
+export type PaymentNotificationPaymentSessionSnapshot = {
+  id: string;
+  provider: string;
+  amount: ChinaPaymentNotificationMoney;
+  status: "pending" | "authorized" | "captured" | "failed" | "canceled";
+  fetchedAt: string;
+};
+
+export type PaymentNotificationOrderSnapshot = {
+  id: string;
+  status:
+    | "pending"
+    | "completed"
+    | "canceled"
+    | "requires_action"
+    | "refund_pending"
+    | "refunded";
+  fetchedAt: string;
+};
+
+export type PaymentNotificationStateGuardInput = {
+  envelope: ChinaPaymentNotificationEnvelope;
+  inboxRecord: PaymentNotificationInboxRecord;
+  paymentSession?: PaymentNotificationPaymentSessionSnapshot;
+  order?: PaymentNotificationOrderSnapshot;
+};
+
+export type PaymentNotificationStateGuardCommandType =
+  | "capture_payment"
+  | "close_payment"
+  | "mark_failed"
+  | "no_op";
+
+export type PaymentNotificationStateGuardBlockType =
+  | "invalid_signature"
+  | "duplicate"
+  | "amount_mismatch"
+  | "currency_mismatch"
+  | "provider_mismatch"
+  | "state_conflict"
+  | "unknown_reference"
+  | "out_of_order"
+  | "manual_review";
+
+export type PaymentNotificationStateGuardResult =
+  | {
+      allowed: true;
+      commandType: PaymentNotificationStateGuardCommandType;
+      reason: string;
+      auditMetadata: Record<string, unknown>;
+    }
+  | {
+      allowed: false;
+      blockType: PaymentNotificationStateGuardBlockType;
+      retryable: boolean;
+      reason: string;
+      auditMetadata: Record<string, unknown>;
+    };

@@ -633,6 +633,15 @@
 - 不调用 payment workflow。
 - 不接 runtime，不连接数据库。
 
+第五十二轮 harness 全量测试:
+
+1. `payment-notification-harness-full-tests`: done，升级 idempotency harness，运行 mock notification、inbox repository 和 state guard 全量 payment notification 单测。
+
+第五十二轮原则：
+
+- 只改本地验证脚本和文档。
+- 不接 runtime，不注册 migration。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

@@ -18,7 +18,7 @@ if git diff --cached --name-only | grep -E '^(apps|packages/api/medusa-config.ts
   exit 1
 fi
 
-echo "RUN mock payment notification unit tests"
+echo "RUN payment notification unit tests"
 (
   cd packages/api
   if [ -s "$HOME/.nvm/nvm.sh" ]; then
@@ -26,7 +26,10 @@ echo "RUN mock payment notification unit tests"
     source "$HOME/.nvm/nvm.sh"
     nvm use 24 >/tmp/fuyi-nvm-use-payment-harness.log
   fi
-  bun run test:unit --runTestsByPath src/modules/china-payment-notification/__tests__/mock-payment-notification.unit.spec.ts
+  bun run test:unit --runTestsByPath \
+    src/modules/china-payment-notification/__tests__/mock-payment-notification.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/payment-notification-inbox-repository.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/payment-notification-state-guard.unit.spec.ts
 )
 
 echo "RUN payment notification inbox migration skeleton dry-run"

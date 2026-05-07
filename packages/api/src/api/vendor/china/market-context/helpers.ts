@@ -146,17 +146,19 @@ const selectRowsForMarkets = async ({
   pg,
   tableName,
   marketIds,
+  marketKey = "market_id",
 }: {
   pg: VendorMarketContextPgConnection;
   tableName: string;
   marketIds: string[];
+  marketKey?: string;
 }) => {
   if (!marketIds.length || !(await tableExists(pg, tableName))) {
     return [];
   }
 
   return (await selectVisibleRows(pg, tableName)
-    .whereIn("market_id", marketIds)
+    .whereIn(marketKey, marketIds)
     .select("*")) as Record<string, unknown>[];
 };
 
@@ -200,6 +202,7 @@ export const readVendorMarketContextRepositoryRows = async ({
       pg,
       tableName: "china_market",
       marketIds,
+      marketKey: "id",
     }),
     memberships,
     roles: (await tableExists(pg, "china_seller_role"))

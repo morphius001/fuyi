@@ -593,6 +593,16 @@
 - 只补测试、task 和 ledger。
 - 不改 runtime 注册，不改交易链路。
 
+第四十八轮 inbox repository:
+
+1. `payment-notification-inbox-repository`: done，新增未注册 in-memory inbox repository，覆盖 receive、dedupe replay、retryable failure 和 invalid signature audit tests。
+
+第四十八轮原则：
+
+- 不连接数据库。
+- 不注册 runtime。
+- 不改变 payment/order/refund/settlement/commission/permission。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

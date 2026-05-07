@@ -461,3 +461,10 @@
 - PR #142 合并后验证通过：payment notification harness 83/83、dry-run row count 2|9、API typecheck、runtime 入口检查和 disposable DB 无残留。
 - 当前 neutral route 仍是 local-only mock inbox-only，不连接 DB，不执行 payment workflow。
 - 下一步应规划 `mock-webhook-neutral-route-smoke-script-plan`，只针对 neutral route 做本地 smoke。
+
+## Round 99 更新
+
+- `mock-webhook-neutral-route-smoke-script-plan` 已完成，见 `docs/mock-webhook-neutral-route-smoke-script-plan.md`。
+- 本轮只规划本地 smoke 脚本，目标固定为 neutral route `/china/payment-webhooks/mock`。
+- 明确不再把 Admin route 当 provider callback smoke 目标，不启动/停止服务，不改 `.env`，不连接 DB，不执行 workflow。
+- 下一步可以新增 `.codex/scripts/mock-webhook-neutral-route-smoke.sh`。

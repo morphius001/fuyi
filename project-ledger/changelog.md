@@ -168,3 +168,4 @@
 - 完成 `mock-webhook-db-backed-route-local-script`，新增 local disposable DB preflight smoke wrapper，验证 migration up/down、临时 API disabled route 和 DB 无残留；仍不改 route runtime。
 - 完成 `mock-webhook-db-backed-route-skeleton`，neutral route 增加 local DB resolver skeleton；repository unavailable 时仍 disabled、不读 body、不写库、不调用 workflow。
 - 完成 `mock-webhook-db-backed-route-transaction-plan`，以 docs-only 方式规划 route-level transaction client injection、local-only DB adapter 和 accepted/duplicate smoke；仍不写 runtime 代码。
+- 完成 `mock-webhook-db-client-contract-plan`，以 docs-only 方式规划 local disposable Postgres adapter 的接口、local-only gate、SQL 映射、错误映射和 mocked tests。

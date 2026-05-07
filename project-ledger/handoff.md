@@ -576,3 +576,10 @@
 - 本轮只规划 route-level transaction client injection、local-only disposable DB adapter、repository factory 组合和 accepted/duplicate smoke。
 - 未修改 `packages/**` 或 `apps/**`，未连接数据库，未注册 migration，未调用 payment workflow。
 - 下一步建议做 `mock-webhook-db-client-contract-plan`，先规划 local disposable Postgres adapter 的接口和 SQL 映射，不接 route。
+
+## Round 113 更新
+
+- `mock-webhook-db-client-contract-plan` 已完成，见 `docs/mock-webhook-db-client-contract-plan.md`。
+- 本轮只规划 local disposable Postgres adapter contract：local-only gate、database name/host 限制、transaction contract、SQL 映射、错误映射和 mocked unit tests。
+- 未修改 `packages/**` 或 `apps/**`，未新增依赖，未接 route，未连接数据库，未注册 migration，未调用 payment workflow。
+- 下一步可做 `mock-webhook-db-client-contract`，新增 adapter skeleton 和 mocked unit tests；仍不得连接真实 DB 或接 route。

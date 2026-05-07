@@ -482,6 +482,12 @@
 
 第三十六轮自动队列已清空。没有 disposable preprod DB 前，不自动进入 DB dry-run、真实 migration、Admin 写接口、runtime switch、支付、退款、结算、佣金、权限或真实履约。
 
+第三十七轮收口：
+
+1. `local-preprod-sim-dry-run`: done，在本机 WSL PostgreSQL 可丢弃数据库中模拟 preprod dry-run，migration up/down、fixture、约束拒绝、rollback 和无残留复查均通过；未连接真实预发或生产 DB。
+
+第三十七轮自动队列已清空。`preprod-disposable-db-dry-run-execution` 仍为 `blocked-external`。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

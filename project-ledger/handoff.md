@@ -583,3 +583,12 @@
 - 本轮只规划 local disposable Postgres adapter contract：local-only gate、database name/host 限制、transaction contract、SQL 映射、错误映射和 mocked unit tests。
 - 未修改 `packages/**` 或 `apps/**`，未新增依赖，未接 route，未连接数据库，未注册 migration，未调用 payment workflow。
 - 下一步可做 `mock-webhook-db-client-contract`，新增 adapter skeleton 和 mocked unit tests；仍不得连接真实 DB 或接 route。
+
+## Round 114 更新
+
+- `mock-webhook-db-client-contract` 已完成，见 `docs/mock-webhook-db-client-contract.md`。
+- 新增 `local-postgres-db-client.ts`，把注入式 driver 包装成 `PaymentNotificationDbClient`。
+- 新增 mocked unit tests，并纳入 payment notification harness。
+- 验证通过：payment notification harness 16 suites / 105 tests、API typecheck。
+- 本轮不接 route、不连接真实 DB、不新增依赖、不注册 migration、不调用 payment workflow。
+- 下一步建议做 `mock-webhook-db-client-contract-validation`，记录合并后验证结果。

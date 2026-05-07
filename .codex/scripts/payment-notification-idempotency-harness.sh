@@ -35,6 +35,7 @@ echo "RUN payment notification unit tests"
     src/modules/china-payment-notification/__tests__/payment-inbox-repository-contract.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/payment-runtime-config.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/payment-db-inbox-repository.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/local-postgres-db-client.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-response.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-request.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-composition.unit.spec.ts \

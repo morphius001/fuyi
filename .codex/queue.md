@@ -1026,6 +1026,16 @@
 - 不修改业务代码。
 - 不接 DB，不调用 payment workflow。
 
+第九十一轮 mock webhook local route smoke script plan:
+
+1. `mock-webhook-local-route-smoke-script-plan`: done，规划本地 route smoke 脚本。
+
+第九十一轮原则：
+
+- 只做文档。
+- 不新增脚本。
+- 不修改 `packages/**` 或 `apps/**`。
+
 ## Status Rules
 
 - `local-wip`: 已经在本地有工作结果，等待人工确认或后续整理。

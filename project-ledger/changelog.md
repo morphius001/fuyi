@@ -144,3 +144,4 @@
 - 完成 `mock-webhook-local-route-inmemory-plan`，以 docs-only 方式规划 local-only in-memory mock webhook smoke。
 - 完成 `mock-webhook-local-route-inmemory-skeleton`，新增 Admin route local-only in-memory 分支和单元测试，不连接 DB 或执行 workflow。
 - 完成 `mock-webhook-inmemory-route-post-validation`，记录 PR #134 合并后的 harness、typecheck、runtime 入口和 DB 无残留验证。
+- 完成 `mock-webhook-local-route-smoke-script-plan`，以 docs-only 方式规划本地 route smoke 脚本。

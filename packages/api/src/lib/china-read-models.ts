@@ -109,6 +109,62 @@ export type ChinaStorefrontHomeBoundaryView = {
   reason: string;
 };
 
+export type ChinaStorefrontShopTemplateId = "storefront-shop-stall-v2";
+
+export type ChinaStorefrontShopVisibility =
+  | "consumer_default_visible"
+  | "role_gated_preview_only";
+
+export type ChinaStorefrontShopDataSourceView = {
+  key:
+    | "seller"
+    | "market_context"
+    | "products"
+    | "fulfillment_hint"
+    | "pickup_card_entry"
+    | "live_status";
+  source:
+    | ChinaReadModelSource
+    | "seller_summary"
+    | "market_contract"
+    | "static_read_model"
+    | "static_fallback";
+  fallbackUsed: boolean;
+};
+
+export type ChinaStorefrontShopFulfillmentHintView = {
+  placement: "shop_header";
+  text: string;
+  source: "seller_summary" | "market_contract" | "static_fallback";
+  affectsCheckoutShippingOptions: false;
+};
+
+export type ChinaStorefrontShopDisplayRuleView = {
+  key:
+    | "fulfillment_belongs_to_shop"
+    | "product_cards_are_readonly"
+    | "pickup_card_is_independent"
+    | "live_is_status_badge";
+  reason: string;
+};
+
+export type ChinaStorefrontShopBoundaryView = {
+  key:
+    | "checkout_shipping_options"
+    | "payment_success"
+    | "order_status"
+    | "refund_status"
+    | "settlement"
+    | "commission"
+    | "payout"
+    | "fulfillment"
+    | "pickup_card_checkout_discount"
+    | "live_provider_runtime"
+    | "real_provider_config";
+  status: "blocked_serial_work";
+  reason: string;
+};
+
 export type ChinaStorefrontHomeView = {
   mode: "storefront_home_view";
   templateId: ChinaStorefrontHomeTemplateId;
@@ -149,11 +205,26 @@ export type ChinaStorefrontSearchView = {
 
 export type ChinaStorefrontSellerView = {
   mode: "storefront_seller_view";
+  templateId: ChinaStorefrontShopTemplateId;
   source: ChinaReadModelSource;
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
   seller: ChinaSellerDiscoveryReadModel;
+  marketContext?: ChinaMarketReadModel;
   products: ChinaStorefrontProductCardReadModel[];
+  visibility: ChinaStorefrontShopVisibility;
+  consumerFacing: boolean;
+  fulfillmentHint: ChinaStorefrontShopFulfillmentHintView;
   pickupCardPlacement: "separate_entry";
   livePlacement: "seller_status_badge";
+  displayRules: ChinaStorefrontShopDisplayRuleView[];
+  dataSources: ChinaStorefrontShopDataSourceView[];
+  highRiskBoundaries: ChinaStorefrontShopBoundaryView[];
+  fallbackNotice?: string;
+  readOnly: true;
+  runtimeEnabled: false;
+  canWriteBusinessState: false;
   note: string;
 };
 
@@ -551,23 +622,199 @@ export const buildChinaStorefrontSearchView = ({
   };
 };
 
+const storefrontShopDisplayRules: ChinaStorefrontShopDisplayRuleView[] = [
+  {
+    key: "fulfillment_belongs_to_shop",
+    reason: "配送、自提、营业时间和公告属于店铺/档口头部能力，不放在商品卡里决定。",
+  },
+  {
+    key: "product_cards_are_readonly",
+    reason: "商品卡只展示规格、价格和库存提示，不创建购物车、订单或履约状态。",
+  },
+  {
+    key: "pickup_card_is_independent",
+    reason: "提货卡是独立提货入口，不作为优惠券、储值卡、支付方式或购物车抵扣。",
+  },
+  {
+    key: "live_is_status_badge",
+    reason: "直播只作为店铺状态或局部入口，不作为首页主入口或交易事实来源。",
+  },
+];
+
+const storefrontShopHighRiskBoundaries: ChinaStorefrontShopBoundaryView[] = [
+  {
+    key: "checkout_shipping_options",
+    status: "blocked_serial_work",
+    reason: "店铺履约提示不写入 checkout shipping options。",
+  },
+  {
+    key: "payment_success",
+    status: "blocked_serial_work",
+    reason: "店铺页不决定支付成功，支付成功必须以后端异步通知为准。",
+  },
+  {
+    key: "order_status",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不创建或修改订单状态。",
+  },
+  {
+    key: "refund_status",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不创建或修改退款状态。",
+  },
+  {
+    key: "settlement",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不改变商家结算规则。",
+  },
+  {
+    key: "commission",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不改变佣金规则。",
+  },
+  {
+    key: "payout",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不处理商家打款。",
+  },
+  {
+    key: "fulfillment",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不创建履约单、配送单、运单或面单。",
+  },
+  {
+    key: "pickup_card_checkout_discount",
+    status: "blocked_serial_work",
+    reason: "提货卡保持独立入口，不作为购物车抵扣。",
+  },
+  {
+    key: "live_provider_runtime",
+    status: "blocked_serial_work",
+    reason: "直播真实 provider 和 IM 互动必须后续单独接入。",
+  },
+  {
+    key: "real_provider_config",
+    status: "blocked_serial_work",
+    reason: "店铺页 mapper 不保存或启用真实 Provider 配置。",
+  },
+];
+
+const resolveStorefrontShopFulfillmentHint = ({
+  seller,
+  marketContext,
+}: {
+  seller: ChinaSellerDiscoveryReadModel;
+  marketContext?: ChinaMarketReadModel;
+}): ChinaStorefrontShopFulfillmentHintView => {
+  if (seller.summary) {
+    return {
+      placement: "shop_header",
+      text: seller.summary,
+      source: "seller_summary",
+      affectsCheckoutShippingOptions: false,
+    };
+  }
+
+  if (marketContext?.delivery) {
+    return {
+      placement: "shop_header",
+      text: marketContext.delivery,
+      source: "market_contract",
+      affectsCheckoutShippingOptions: false,
+    };
+  }
+
+  return {
+    placement: "shop_header",
+    text: "配送、自提和营业时间待后台运营配置。",
+    source: "static_fallback",
+    affectsCheckoutShippingOptions: false,
+  };
+};
+
 export const buildChinaStorefrontSellerView = ({
   seller,
   products = [],
+  markets = defaultChinaMarkets,
+  fallbackNotice,
 }: {
   seller: ChinaSellerDiscoveryReadModel;
   products?: ChinaStorefrontProductCardReadModel[];
-}): ChinaStorefrontSellerView => ({
-  mode: "storefront_seller_view",
-  source: "seller_and_category_tables",
-  seller,
-  products: products.filter(
+  markets?: ChinaMarketReadModel[];
+  fallbackNotice?: string;
+}): ChinaStorefrontSellerView => {
+  const marketContext = markets.find((market) => market.name === seller.market);
+  const sellerProducts = products.filter(
     (product) => !product.sellerId || product.sellerId === seller.id
-  ),
-  pickupCardPlacement: "separate_entry",
-  livePlacement: "seller_status_badge",
-  note: CHINA_READ_MODEL_RUNTIME_NOTE,
-});
+  );
+  const consumerFacing = isConsumerHomeSeller(seller);
+
+  return {
+    mode: "storefront_seller_view",
+    templateId: "storefront-shop-stall-v2",
+    source: "seller_and_category_tables",
+    locale: "zh-CN",
+    currency: "CNY",
+    timezone: "Asia/Shanghai",
+    seller,
+    marketContext,
+    products: sellerProducts,
+    visibility: consumerFacing
+      ? "consumer_default_visible"
+      : "role_gated_preview_only",
+    consumerFacing,
+    fulfillmentHint: resolveStorefrontShopFulfillmentHint({
+      seller,
+      marketContext,
+    }),
+    pickupCardPlacement: "separate_entry",
+    livePlacement: "seller_status_badge",
+    displayRules: storefrontShopDisplayRules,
+    dataSources: [
+      {
+        key: "seller",
+        source: "seller_and_category_tables",
+        fallbackUsed: false,
+      },
+      {
+        key: "market_context",
+        source: marketContext ? "market_contract" : "static_fallback",
+        fallbackUsed: !marketContext,
+      },
+      {
+        key: "products",
+        source: sellerProducts.length ? "static_read_model" : "static_fallback",
+        fallbackUsed: sellerProducts.length === 0,
+      },
+      {
+        key: "fulfillment_hint",
+        source: resolveStorefrontShopFulfillmentHint({
+          seller,
+          marketContext,
+        }).source,
+        fallbackUsed: !seller.summary && !marketContext?.delivery,
+      },
+      {
+        key: "pickup_card_entry",
+        source: "static_read_model",
+        fallbackUsed: false,
+      },
+      {
+        key: "live_status",
+        source: "static_read_model",
+        fallbackUsed: false,
+      },
+    ],
+    highRiskBoundaries: storefrontShopHighRiskBoundaries,
+    fallbackNotice:
+      fallbackNotice ??
+      (sellerProducts.length ? undefined : "店铺商品展示待后台运营配置。"),
+    readOnly: true,
+    runtimeEnabled: false,
+    canWriteBusinessState: false,
+    note: CHINA_READ_MODEL_RUNTIME_NOTE,
+  };
+};
 
 export type ChinaModuleRuntimeScope =
   | "display_only"

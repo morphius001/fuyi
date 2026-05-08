@@ -254,3 +254,4 @@
 - 完成 `storefront-template-data-source-plan`，docs-only 规划 Storefront 首页、搜索和店铺页从静态展示数据迁到 home/search/shop view model mapper 与只读 discovery/market/seller 数据源。
 - 完成 `template-registry-v2-contract`，新增四个 v2 template ids 到未注册只读 template registry contract，并补充 focused tests；仍不接 route、不接 DB、不改变三端页面或交易链路。
 - 完成 `storefront-home-view-model-mapper`，新增 Storefront 首页 v2 只读 mapper 契约、focused unit tests 和说明文档；消费者首页主路径收口为选市场、看类目、找店/档口、看今日鲜货、进店铺详情；物料/配送供应商、上游供给、种苗批发、外地批发商和直播主入口默认不进入消费者首页；未修改页面、route、DB 或交易链路。
+- 完成 `storefront-shop-view-model-mapper`，新增 Storefront 店铺 / 档口页 v2 只读 mapper 契约、focused unit tests 和说明文档；配送、自提、营业时间和公告归属店铺头部展示，商品卡保持只读，提货卡独立入口，直播仅作为店铺状态 badge；未修改页面、route、DB 或交易链路。

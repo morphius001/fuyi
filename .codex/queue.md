@@ -1216,7 +1216,7 @@
 
 1. `storefront-adapter-plan-validation`: done，验证 home/shop adapter plan 和 mapper 状态。
 2. `storefront-search-view-model-adapter-plan`: pending，docs-only 细化搜索 adapter 输入输出，不改页面。
-3. `storefront-home-view-model-adapter-skeleton`: pending，小范围实现首页 adapter skeleton，仍不改页面布局。
+3. `storefront-home-view-model-adapter-skeleton`: done，小范围实现首页 adapter skeleton，仍不改页面布局。
 
 第九十三轮原则：
 

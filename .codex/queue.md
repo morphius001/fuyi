@@ -1154,7 +1154,7 @@
 第九十七轮建议：
 
 1. `template-preview-backlog`: done，规划模板预览 backlog 和后续实现门槛。
-2. `storefront-home-template-v2-plan`: pending，规划消费者首页 v2 模板预览，不改页面。
+2. `storefront-home-template-v2-plan`: done，规划消费者首页 v2 模板预览，不改页面。
 3. `storefront-shop-template-v2-plan`: pending，规划店铺/档口主页 v2 模板预览，不改页面。
 4. `admin-dashboard-template-v2-plan`: pending，规划平台运营首页 v2 模板预览，不改页面。
 5. `vendor-role-workspace-template-v2-plan`: pending，规划商户角色工作台 v2 模板预览，不改页面。

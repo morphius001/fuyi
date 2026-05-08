@@ -1094,3 +1094,10 @@
 - 第九十七轮建议队列已建立：Storefront 首页 v2、Storefront 店铺页 v2、Admin 首页 v2、Vendor 角色工作台 v2 和 validation。
 - 明确实现前必须有模板 id、读取 view model、隐藏能力、桌面/移动验证和回滚方式。
 - 下一项建议继续 `storefront-home-template-v2-plan`。
+
+## Round 183 更新
+
+- `storefront-home-template-v2-plan` 已完成，见 `docs/storefront-home-template-v2-plan.md`。
+- 本轮只规划消费者首页 v2，不改 `apps/storefront/**`。
+- 明确首页主路径为选市场、找店/档口、看今日鲜货、加购/结算；物料供应商、配送供应商和上游供给默认不进入首页主路径。
+- 下一项建议继续 `storefront-shop-template-v2-plan`。

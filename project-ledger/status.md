@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 00:07 Asia/Shanghai
+更新时间：2026-05-09 00:16 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -365,7 +365,8 @@
 - `template-system-validation` 已完成：Template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 通过。
 - 第九十六轮队列已清空。
 - `template-preview-backlog` 已完成：规划第九十七轮模板预览 backlog 和实现门槛，不改页面或 runtime。
-- 队列下一项：`storefront-home-template-v2-plan`。
+- `storefront-home-template-v2-plan` 已完成：规划消费者首页 v2 模板预览，明确市场/店铺/今日鲜货主路径、移动端 App-like 布局和隐藏 B 端能力。
+- 队列下一项：`storefront-shop-template-v2-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

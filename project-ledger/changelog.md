@@ -185,3 +185,4 @@
 - 完成 `payment-preprod-db-script-post-validation`，记录 PR #171/#172 合并后脚本安全验证和 blocked-external 边界。
 - 完成 `payment-provider-adapter-contract-plan`，docs-only 规划中国本地支付 Provider / Adapter 合同和后续 mock/支付宝/微信支付拆分。
 - 完成 `mock-china-payment-provider-contract`，新增未注册 mock provider contract 和单元测试；不接 checkout runtime，不执行 payment workflow。
+- 完成 `mock-payment-provider-registry-contract`，新增 payment provider registry 纯函数 contract；默认 disabled，production blocked，仅 mock contract 可解析。

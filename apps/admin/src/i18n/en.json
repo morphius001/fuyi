@@ -77,6 +77,7 @@
       "remark": "Remark",
       "freeze": "Freeze",
       "void": "Void",
+      "readonlyAction": "Read-only placeholder. No real operation is executed.",
       "viewRedeemRecord": "View redemption",
       "viewBatch": "View batch",
       "activateBatch": "Activate batch",
@@ -139,7 +140,9 @@
       },
       "mockSource": {
         "title": "Data Source",
-        "message": "Dashboard metrics come from static frontend mock constants in apps/admin. They are only for admin shell validation and do not read real order, payment, inventory, settlement, or permission data."
+        "badge": "Display data",
+        "message": "Dashboard metrics come from frontend display constants only. They are only for admin shell validation and do not read real order, payment, inventory, settlement, or permission data.",
+        "hint": "Real data requires a separate backend task"
       },
       "todo": {
         "title": "Operational Queue",
@@ -184,7 +187,32 @@
         "configureMarket": "Configure market",
         "reviewMerchant": "View merchants",
         "orderMonitor": "Order monitor",
-        "moduleSwitches": "Module switches"
+        "moduleSwitches": "Module switches",
+        "capabilityContracts": "Capability contracts"
+      },
+      "focusModules": {
+        "title": "Recent Focus Modules",
+        "description": "Key modules operators should monitor are kept near the first viewport.",
+        "productAudit": {
+          "title": "Product review",
+          "description": "Prioritize fresh, frozen, and missing-spec products",
+          "status": "In progress"
+        },
+        "marketDelivery": {
+          "title": "Market delivery",
+          "description": "Check unified delivery, self-delivery, and pickup display wording",
+          "status": "Following"
+        },
+        "pickupCard": {
+          "title": "Pickup cards",
+          "description": "Watch abnormal pickups, expiring batches, and channel records",
+          "status": "Pending"
+        },
+        "serviceNotice": {
+          "title": "Service notices",
+          "description": "SMS, inbox, and service notification failure queue",
+          "status": "Exception"
+        }
       },
       "focus": {
         "title": "Business Entry Responsibilities",

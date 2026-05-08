@@ -1145,3 +1145,11 @@
 - 配送、自提、营业时间和市场能力继续归属店铺头部与侧栏；商品卡不作为配送规则事实来源。
 - 本轮未修改 API、Admin、Vendor、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 下一项建议继续 `admin-dashboard-template-v2`。
+
+## Round 190 更新
+
+- `admin-dashboard-template-v2` 已完成，见 `docs/admin-dashboard-template-v2.md`。
+- Admin 平台运营首页 v2 第一版已收紧 KPI 高度，新增数据来源条和近期重点模块，让首屏更像国内平台运营后台。
+- 顶部工具继续靠右；所有快捷入口保持禁用只读，不执行审核、退款、结算、打款、发货、冻结或配置生效。
+- 本轮未修改 API、Storefront、Vendor、RBAC、审计、订单、支付、退款、结算、佣金、打款、权限或履约 runtime。
+- 下一项建议继续 `vendor-role-workspace-template-v2`。

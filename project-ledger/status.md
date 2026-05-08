@@ -373,7 +373,8 @@
 - 第九十七轮队列已清空。
 - `storefront-home-template-v2` 已完成：消费者首页 v2 第一版已落地，主路径收口为市场、档口、今日鲜货；桌面/移动截图、Storefront build/lint、HTTP smoke 和 diff check 通过。
 - `storefront-shop-template-v2` 已完成：店铺 / 档口页 v2 第一版已把配送、自提、营业时间和公告放回店铺能力语境，去掉消费者页面上的工程化说明。
-- 第九十八轮已开始；下一项建议为 `admin-dashboard-template-v2`。
+- `admin-dashboard-template-v2` 已完成：Admin 平台运营首页 v2 第一版已收紧 KPI，新增数据来源条和近期重点模块，保持只读展示。
+- 第九十八轮已开始；下一项建议为 `vendor-role-workspace-template-v2`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

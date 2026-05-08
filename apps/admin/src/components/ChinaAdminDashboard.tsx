@@ -1,8 +1,9 @@
-import { Button, Container, Heading, StatusBadge, Table, Text } from "@medusajs/ui"
+import { Badge, Button, Container, Heading, StatusBadge, Table, Text } from "@medusajs/ui"
 
 import { useChinaAdminTranslation } from "../i18n/use-china-admin-translation"
 import {
   chinaAdminDashboardFocusRows,
+  chinaAdminDashboardFocusModuleRows,
   chinaAdminDashboardMetricKeys,
   chinaAdminDashboardQuickActionKeys,
   chinaAdminDashboardRiskRows,
@@ -25,7 +26,7 @@ const ChinaAdminDashboard = () => {
 
           return (
             <Container key={key} className="p-0">
-              <div className="flex min-h-[104px] items-center justify-between gap-x-3 px-4 py-3">
+              <div className="flex min-h-[88px] items-center justify-between gap-x-3 px-4 py-3">
                 <div className="flex min-w-0 flex-col gap-y-1">
                   <Text size="small" className="text-ui-fg-subtle">
                     {t(`chinaAdmin.dashboard.metrics.${key}.label`)}
@@ -44,7 +45,21 @@ const ChinaAdminDashboard = () => {
         })}
       </div>
 
-      <div className="grid gap-3 lg:grid-cols-2">
+      <Container className="p-0">
+        <div className="flex flex-col gap-2 px-4 py-2 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex min-w-0 items-center gap-2">
+            <Badge size="2xsmall">{t("chinaAdmin.dashboard.mockSource.badge")}</Badge>
+            <Text size="small" className="text-ui-fg-subtle">
+              {t("chinaAdmin.dashboard.mockSource.message")}
+            </Text>
+          </div>
+          <Text size="xsmall" className="shrink-0 text-ui-fg-muted">
+            {t("chinaAdmin.dashboard.mockSource.hint")}
+          </Text>
+        </div>
+      </Container>
+
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <Container className="divide-y p-0">
           <div className="flex flex-col gap-y-1 px-4 py-3">
             <Heading level="h2">{t("chinaAdmin.dashboard.todo.title")}</Heading>
@@ -94,7 +109,7 @@ const ChinaAdminDashboard = () => {
         </Container>
       </div>
 
-      <div className="grid gap-3 lg:grid-cols-2">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <Container className="p-0">
           <div className="flex flex-col gap-y-3 px-4 py-3">
             <div className="flex flex-col gap-y-1">
@@ -119,12 +134,32 @@ const ChinaAdminDashboard = () => {
           </div>
         </Container>
 
-        <Container className="p-0">
+        <Container className="divide-y p-0">
           <div className="flex flex-col gap-y-1 px-4 py-3">
-            <Heading level="h2">{t("chinaAdmin.dashboard.mockSource.title")}</Heading>
+            <Heading level="h2">{t("chinaAdmin.dashboard.focusModules.title")}</Heading>
             <Text size="small" className="text-ui-fg-subtle">
-              {t("chinaAdmin.dashboard.mockSource.message")}
+              {t("chinaAdmin.dashboard.focusModules.description")}
             </Text>
+          </div>
+          <div className="divide-y">
+            {chinaAdminDashboardFocusModuleRows.map((row, index) => (
+              <div key={row.key} className="grid gap-2 px-4 py-2 md:grid-cols-[44px_minmax(0,1fr)_88px] md:items-center">
+                <Text size="small" weight="plus" className="text-ui-fg-muted">
+                  {index + 1}
+                </Text>
+                <div className="min-w-0">
+                  <Text size="small" weight="plus">
+                    {t(`chinaAdmin.dashboard.focusModules.${row.key}.title`)}
+                  </Text>
+                  <Text size="xsmall" className="truncate text-ui-fg-muted">
+                    {t(`chinaAdmin.dashboard.focusModules.${row.key}.description`)}
+                  </Text>
+                </div>
+                <StatusBadge color={row.color}>
+                  {t(`chinaAdmin.dashboard.focusModules.${row.key}.status`)}
+                </StatusBadge>
+              </div>
+            ))}
           </div>
         </Container>
       </div>

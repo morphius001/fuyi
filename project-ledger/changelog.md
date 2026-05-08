@@ -247,3 +247,4 @@
 - 完成 `template-preview-validation`，记录第九十七轮模板预览规划验证通过：template registry focused unit test 和 `git diff --check` 通过，队列清空。
 - 完成 `storefront-home-template-v2`，消费者首页第一版 v2 模板落地为市场、档口、今日鲜货主路径；桌面/移动截图、Storefront build/lint、HTTP smoke 和 diff check 通过；未修改交易链路或高风险运行时。
 - 完成 `storefront-shop-template-v2`，店铺 / 档口主页第一版 v2 文案收口为消费者语言，配送/自提归属店铺能力，商品区只负责规格价格展示；未修改交易链路或高风险运行时。
+- 完成 `admin-dashboard-template-v2`，Admin 首页第一版 v2 收紧 KPI、增加数据来源条和近期重点模块；未修改权限、审计、订单、支付、退款、结算、佣金、打款或履约逻辑。

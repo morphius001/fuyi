@@ -1478,3 +1478,11 @@
 - Builder 支持 query、market、sellerHandle、categoryHandle 和 sellerProductIds 过滤，默认排除物料、配送供应商、上游、种苗、外地批发等 B 端内容。
 - 当前没有新增 API route、没有读 DB、没有注册 module、没有修改 Storefront 页面或 `ProductCard`。
 - 验证通过：focused unit test、API typecheck、`git diff --check`、子智能体只读复核；复核建议的 metadata / category B 端过滤已补强。
+
+## Round 231 更新
+
+- `product-discovery-store-api-readonly` 已完成，见 `docs/product-discovery-store-api-readonly.md`。
+- 新增 `/store/china/product-discovery` 只读 GET route，读取 open seller、seller product links 和 published products 后调用 `buildChinaProductDiscoveryReadModel()`。
+- 支持 `q`、`market`、`seller_handle`、`category_handle` 和 `limit` 作为展示过滤，`limit` 上限 24。
+- 本轮不修改 Storefront 页面、`ProductCard`、DB migration、写接口、module registration、cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 Provider。
+- 验证通过：focused helper unit test、builder unit test、API typecheck、`git diff --check`、子智能体只读复核。

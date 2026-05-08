@@ -1288,3 +1288,11 @@
 - 验证通过：Storefront build、首页 adapter focused TypeScript check、`git diff --check`。
 - Storefront build 仍有既有 React Hook dependency warning，本轮未改。
 - 下一项建议继续 `storefront-shop-view-model-adapter-skeleton`，小范围新增店铺 adapter skeleton，不改页面布局。
+
+## Round 209 更新
+
+- `storefront-shop-view-model-adapter-skeleton` 已完成，见 `docs/storefront-shop-view-model-adapter-skeleton.md`。
+- 新增 `apps/storefront/src/app/[locale]/(main)/data/china-shop-view-model.ts`，只提供本地纯函数 adapter skeleton，不改店铺页面。
+- Adapter 输出 `storefront-shop-stall-v2` 只读 view model，保留 static fallback、B-side role-gated preview、店铺头部履约提示和高风险 blocked serial work 边界。
+- 本轮不修改 `packages/api/**`，不接真实 API，不影响 cart、checkout、order、payment、refund、settlement、commission、permission 或 fulfillment。
+- 下一项建议实现 `storefront-search-view-model-adapter-skeleton` 或先做 skeleton validation。

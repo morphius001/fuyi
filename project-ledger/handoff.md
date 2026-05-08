@@ -892,3 +892,11 @@
 - 本轮整理普通商品商户、物料供应商、配送供应商、养殖户、种植户、种苗供应商和外地批发商的可见性、开通方式和禁止项。
 - 明确角色不影响权限、订单归属、结算、佣金、支付、退款或 checkout shipping options。
 - 推荐下一项：`merchant-role-capability-contract`。
+
+## Round 155 更新
+
+- `merchant-role-capability-contract` 已完成，见 `docs/merchant-role-capability-contract.md`。
+- 新增 `buildChinaMerchantRoleCapabilityContract()`，输出商户角色能力只读 view shape。
+- 合同明确普通商品商户进入消费者商品流，物料/配送/上游/外地批发默认保持商户侧或上游侧可见。
+- 合同继续把权限、订单归属、checkout shipping options、支付、退款、结算、佣金、打款、真实物流和快递打印标为串行阻塞工作。
+- 推荐下一项：`vendor-mobile-draft-product-readiness`。

@@ -4,6 +4,7 @@ import { Container, Heading, Text } from "@medusajs/ui"
 import ChinaAdminPageShell from "../../../components/ChinaAdminPageShell"
 import ChinaAdminOperationsConsole from "../../../components/ChinaAdminOperationsConsole"
 import ChinaAdminProductSpecTemplates from "../../../components/ChinaAdminProductSpecTemplates"
+import ChinaAdminReadonlyContractsPanel from "../../../components/ChinaAdminReadonlyContractsPanel"
 import PickupCardDashboard from "../../../components/PickupCardDashboard"
 import { useChinaAdminTranslation } from "../../../i18n/use-china-admin-translation"
 import { findChinaAdminPage } from "../../../lib/china-admin-menu"
@@ -28,6 +29,10 @@ const ChinaAdminDynamicPage = () => {
 
   if (pageMeta.key === "pickupCardDashboard") {
     return <PickupCardDashboard page={pageMeta} />
+  }
+
+  if (pageMeta.key === "capabilityContracts") {
+    return <ChinaAdminReadonlyContractsPanel page={pageMeta} />
   }
 
   if (pageMeta.tableKind === "operations") {

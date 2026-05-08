@@ -232,6 +232,10 @@
       }
     },
     "pages": {
+      "capabilityContracts": {
+        "title": "Capability Contract Overview",
+        "description": "Readonly overview for China localization capability boundaries, visible surfaces, and next PR status. It does not save configuration, change permissions, or affect trade flows."
+      },
       "moduleSwitches": {
         "title": "Module Switches",
         "description": "Placeholder for platform-level module switches that plan which capabilities are enabled, in pilot, under review, or paused. This does not affect Vendor menus yet."
@@ -1373,6 +1377,219 @@
         "originSupply": "Origin direct supply scope",
         "seedlingArea": "Seedling service scope",
         "crossRegion": "Cross-region wholesale scope"
+      }
+    },
+    "readonlyContracts": {
+      "actions": {
+        "exportDisabled": "Export placeholder",
+        "readonly": "Readonly overview"
+      },
+      "boundary": {
+        "title": "Readonly Contracts And Safety Boundary",
+        "badge": "Not effective",
+        "description": "This page shows China localization capability contracts, visible surfaces, and next PR plans. It is not a feature flag, RBAC, payment configuration, or settlement configuration, and it does not change orders, payments, refunds, settlements, commissions, payouts, or permissions."
+      },
+      "contractCount": "{{count}} contracts",
+      "summary": {
+        "definedContracts": {
+          "title": "Defined contracts",
+          "description": "Frontend readonly items"
+        },
+        "highRiskBoundaries": {
+          "title": "High-risk blocks",
+          "description": "Must stay serial"
+        },
+        "displayOnly": {
+          "title": "Visible, not effective",
+          "description": "Only changes operator understanding"
+        },
+        "surfaces": {
+          "title": "Surfaces",
+          "description": "Admin / Vendor / Storefront"
+        }
+      },
+      "groups": {
+        "merchantRoles": {
+          "title": "Merchant And Supplier Roles",
+          "description": "Readonly enablement boundaries for ordinary merchants, material suppliers, delivery suppliers, origin suppliers, seedlings, and remote wholesalers."
+        },
+        "merchantOps": {
+          "title": "Merchant Operations",
+          "description": "Mobile quick listing, shop decoration, waybill tools, and live status show boundaries only and do not execute real business actions."
+        },
+        "consumer": {
+          "title": "Consumer Visible Capabilities",
+          "description": "Storefront only shows shopping-relevant shops, pickup cards, and status information, not merchant procurement or backend tools."
+        },
+        "highRisk": {
+          "title": "High-Risk Serial Boundaries",
+          "description": "Payment, orders, refunds, settlements, commissions, payouts, permissions, and real providers require isolated review and must not be mixed into normal UI PRs."
+        }
+      },
+      "columns": {
+        "contract": "Contract",
+        "surfaces": "Visible surfaces",
+        "runtime": "Runtime state",
+        "status": "Display status",
+        "blocked": "Blocked boundary",
+        "next": "Next PR"
+      },
+      "status": {
+        "readOnly": "Readonly",
+        "displayOnly": "Display only",
+        "designOnly": "Design placeholder",
+        "blocked": "Blocked"
+      },
+      "surfaces": {
+        "adminVendor": "Admin / Vendor",
+        "adminVendorStorefront": "Admin / Vendor / Storefront",
+        "vendorAdmin": "Vendor / Admin",
+        "vendorAdminStorefront": "Vendor / Admin / Storefront",
+        "storefrontAdminVendor": "Storefront / Admin / Vendor",
+        "storefrontVendorAdmin": "Storefront / Vendor / Admin",
+        "apiAdmin": "API / Admin",
+        "apiAdminVendor": "API / Admin / Vendor"
+      },
+      "runtime": {
+        "readonlyMetadata": "Readonly metadata / contract",
+        "visibilityOnly": "Display semantics only",
+        "notEnabled": "Runtime not enabled",
+        "draftOnly": "Draft only",
+        "publicSnapshot": "Readonly public snapshot",
+        "statusOnly": "Readonly status",
+        "flowContractOnly": "Readonly flow contract",
+        "serialOnly": "High-risk serial work only"
+      },
+      "blocked": {
+        "rbacSettlement": "Does not change RBAC, settlement, or payout permissions.",
+        "orderFulfillment": "Does not let material suppliers take real orders or fulfillments.",
+        "realLogistics": "Does not connect real logistics, dispatch, assignment, or waybills.",
+        "procurementSettlement": "Does not create procurement settlement or upstream payable records.",
+        "inventoryOrder": "Does not initialize real inventory or order flows.",
+        "crossRegionSettlement": "Does not handle cross-region freight, tax, or settlement.",
+        "realProductPublish": "Does not publish real products or write inventory.",
+        "publishWorkflow": "Does not execute real publish, review, or rollback workflows.",
+        "shipmentWaybill": "Does not create shipments, waybill numbers, or cloud printing.",
+        "realLiveProvider": "Does not connect streaming, IM, chat rooms, gifts, or trade.",
+        "pickupRedeemOrder": "Does not create payments or ordinary orders and does not discount cart totals.",
+        "liveTransaction": "Live commerce is not a trade entry and does not trigger payment or settlement.",
+        "paymentTruth": "Payment success must be based on backend asynchronous verified notifications.",
+        "orderState": "Does not modify order or fulfillment state machines.",
+        "refundState": "Does not modify refund state or after-sales money flow.",
+        "settlementMoney": "Does not generate settlement statements, payables, receivables, or financial reports.",
+        "commissionRules": "Does not modify commission rules or split ratios.",
+        "payoutMoney": "Does not trigger merchant payouts, withdrawals, or money movement.",
+        "rbacPermission": "Does not change permission checks, roles, or true menu visibility.",
+        "providerCredential": "Does not connect real secrets, merchant ids, or production providers."
+      },
+      "next": {
+        "roleConfig": "Role config readonly model",
+        "supplierIntake": "Supplier intake readonly panel",
+        "deliveryAdapter": "Delivery provider / adapter design",
+        "originLink": "Origin supply relation readonly contract",
+        "seedlingPlan": "Seedling wholesale plan",
+        "wholesaleLink": "Remote wholesaler relation contract",
+        "draftReview": "Draft review candidate model",
+        "decorationSnapshot": "Shop decoration snapshot API",
+        "waybillAdapter": "Waybill adapter mock plan",
+        "liveProvider": "Live readonly provider boundary",
+        "pickupReadModel": "Pickup card fulfillment readonly model",
+        "sellerStatus": "Shop status public snapshot",
+        "snapshotApi": "Consumer shop snapshot API",
+        "paymentRuntimeGate": "Payment runtime gate",
+        "orderReadiness": "Order readonly readiness review",
+        "refundPlan": "Refund serial plan",
+        "settlementPlan": "Settlement serial plan",
+        "commissionPlan": "Commission serial plan",
+        "payoutPlan": "Payout serial plan",
+        "permissionPlan": "Permission serial plan",
+        "providerAdapter": "Real provider adapter plan"
+      },
+      "contracts": {
+        "ordinaryMerchant": {
+          "title": "Ordinary merchant",
+          "description": "Baseline display contract for seafood, frozen goods, dry goods, fruits, and vegetables."
+        },
+        "materialSupplier": {
+          "title": "Material supplier",
+          "description": "Market material capability for foam boxes, packaging boxes, ice packs, and ice."
+        },
+        "deliverySupplier": {
+          "title": "Delivery supplier",
+          "description": "Role and service scope placeholder for market delivery providers."
+        },
+        "originSupplier": {
+          "title": "Aquaculture / grower supplier",
+          "description": "Readonly relation between origin suppliers and market merchants."
+        },
+        "seedlingSupplier": {
+          "title": "Seedling supplier",
+          "description": "Planning entry for seedling wholesale connected to growers, aquaculture suppliers, and merchants."
+        },
+        "remoteWholesaler": {
+          "title": "Remote wholesaler",
+          "description": "Display contract for cross-region wholesalers connecting directly to local merchants."
+        },
+        "mobileQuickListing": {
+          "title": "Mobile quick listing",
+          "description": "Simplified merchant mobile listing and specification draft capability."
+        },
+        "shopDecoration": {
+          "title": "Shop homepage decoration",
+          "description": "Shop decoration, public snapshots, and consumer shop page display boundary."
+        },
+        "waybillPrinting": {
+          "title": "Express print / e-waybill",
+          "description": "Fulfillment tool entry and waybill capability placeholder."
+        },
+        "liveStatus": {
+          "title": "Shop live status",
+          "description": "Live commerce is shown only as shop status, not as a primary homepage entry."
+        },
+        "pickupCardFlow": {
+          "title": "Pickup card consumer flow",
+          "description": "Consumers identify entitlement, fill address or pickup details, and submit a pickup request."
+        },
+        "shopLiveBadge": {
+          "title": "Shop live badge",
+          "description": "Consumers may see live status on shop cards or shop pages."
+        },
+        "publicShopSnapshot": {
+          "title": "Public shop snapshot",
+          "description": "Consumers read shop decoration and public qualification information."
+        },
+        "payment": {
+          "title": "Payment",
+          "description": "Payment notifications, signature verification, idempotency, and payment state changes."
+        },
+        "order": {
+          "title": "Order",
+          "description": "Order state, fulfillment state, and order ownership."
+        },
+        "refund": {
+          "title": "Refund",
+          "description": "Refund requests, money return, and after-sales state."
+        },
+        "settlement": {
+          "title": "Settlement",
+          "description": "Merchant settlement, reconciliation, and financial reports."
+        },
+        "commission": {
+          "title": "Commission",
+          "description": "Platform commission rules, split ratios, and fee calculation."
+        },
+        "payout": {
+          "title": "Payout",
+          "description": "Merchant withdrawals, payouts, and money movement."
+        },
+        "permission": {
+          "title": "Permission",
+          "description": "RBAC, roles, menus, and true backend access control."
+        },
+        "realProviders": {
+          "title": "Real providers",
+          "description": "Production WeChat Pay, Alipay, SMS, IM, logistics, and live services."
+        }
       }
     },
     "status": {

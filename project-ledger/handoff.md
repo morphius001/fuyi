@@ -1252,3 +1252,10 @@
 - 本轮只规划首页 adapter，不改 `apps/**` 或 `packages/**`。
 - 明确 adapter 后续只负责 discovery / product card / static fallback 输入合成，不改页面布局，不碰 cart、checkout、order、payment 或 fulfillment。
 - 下一项建议继续 `storefront-shop-view-model-adapter-plan`，docs-only 细化店铺 adapter 输入输出。
+
+## Round 204 更新
+
+- `storefront-shop-view-model-adapter-plan` 已完成，见 `docs/storefront-shop-view-model-adapter-plan.md`。
+- 本轮只规划店铺页 adapter，不改 `apps/**` 或 `packages/**`。
+- 明确 adapter 后续只负责 seller handle、seller product ids、products、market context 和 static fallback 输入合成，不改页面布局，不碰 cart、checkout、order、payment 或 fulfillment。
+- 第一百零二轮队列已清空；下一步建议做 `storefront-adapter-plan-validation`，再决定是否进入 adapter skeleton。

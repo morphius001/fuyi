@@ -261,3 +261,4 @@
 - 完成 `storefront-shop-bind-view-model-plan`，docs-only 规划 Storefront 店铺页绑定 shop mapper 的三步 PR：adapter、店铺头部绑定、店铺商品卡绑定；明确配送/自提归属店铺头部、提货卡独立入口、直播状态 badge、B-side role-gated preview 和回滚。
 - 完成 `storefront-template-binding-validation`，验证 template registry、home/shop/search mapper、China read models、API typecheck 和 diff check 均通过；记录页面绑定前仍需 adapter plan。
 - 完成 `storefront-home-view-model-adapter-plan`，docs-only 细化首页 adapter 的建议文件位置、discovery/product/fallback 输入、合成顺序、错误处理、测试和回滚边界。
+- 完成 `storefront-shop-view-model-adapter-plan`，docs-only 细化店铺页 adapter 的建议文件位置、seller/product ids/products/market/fallback 输入、合成顺序、特殊场景、错误处理、测试和回滚边界。

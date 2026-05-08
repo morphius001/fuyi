@@ -301,7 +301,8 @@
 - `mock-webhook-db-backed-route-runtime-gate-plan` 已完成：docs-only 规划 runtime gate Go/No-Go、feature flags、回滚和 PR 拆分；仍不执行 workflow。
 - `payment-notification-runtime-gate-contract` 已完成：新增 runtime gate 纯函数和单测；默认 blocked，不接 route、不执行 workflow。
 - `payment-notification-db-runtime-preflight` 已完成：docs-only 规划 local/preprod disposable DB preflight、migration readiness 和 No-Go 条件。
-- 队列下一项：`payment-notification-preprod-disposable-db-checklist`。
+- `payment-notification-preprod-disposable-db-checklist` 已完成：docs-only 准备外部 disposable preprod DB Go/No-Go 和执行清单；未连接数据库。
+- 队列下一项：`payment-notification-preprod-disposable-db-script-plan`。
 
 ## 仍需注意
 

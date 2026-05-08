@@ -1093,7 +1093,8 @@
 43. `mock-provider-runtime-gate-composition-tests`: done，新增纯函数组合测试；不接 route、不接 DB、不注册 provider。
 44. `mock-provider-runtime-readiness-report`: done，记录组合测试合并后的 harness/typecheck/runtime grep 和 DB 无残留验证。
 45. `mock-provider-runtime-readiness-checklist`: done，整理进入 mock provider runtime 前的 Go / No-Go checklist；不写 runtime code。
-46. `mock-provider-runtime-design`: pending，设计 mock provider runtime wiring；只写文档，不写 runtime code。
+46. `mock-provider-runtime-design`: done，设计 mock provider runtime wiring；只写文档，不写 runtime code。
+47. `mock-provider-runtime-disabled-skeleton-plan`: pending，规划 disabled skeleton；docs-only，不写 runtime code。
 
 第九十三轮原则：
 

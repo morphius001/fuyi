@@ -1137,3 +1137,11 @@
 - 本轮只修改消费者首页展示层，不修改 API、Admin、Vendor、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 验证通过：Storefront build、Storefront lint、`git diff --check`、`/cn` HTTP 200、桌面/移动端本地截图。
 - 下一项建议继续 `storefront-shop-template-v2` 或 `admin-dashboard-template-v2` 的小范围实现。
+
+## Round 189 更新
+
+- `storefront-shop-template-v2` 已完成，见 `docs/storefront-shop-template-v2.md`。
+- 店铺 / 档口主页 v2 第一版已把消费者文案从工程化说明收口为“今日可买、档口今日参考、购买提醒”。
+- 配送、自提、营业时间和市场能力继续归属店铺头部与侧栏；商品卡不作为配送规则事实来源。
+- 本轮未修改 API、Admin、Vendor、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 下一项建议继续 `admin-dashboard-template-v2`。

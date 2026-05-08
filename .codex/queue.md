@@ -1163,7 +1163,7 @@
 第九十八轮建议：
 
 1. `storefront-home-template-v2`: done，落地消费者首页 v2 第一版模板，主路径收口为市场、档口、今日鲜货。
-2. `storefront-shop-template-v2`: pending，小范围落地店铺/档口主页 v2。
+2. `storefront-shop-template-v2`: done，小范围落地店铺/档口主页 v2。
 3. `admin-dashboard-template-v2`: pending，小范围落地平台运营首页 v2。
 4. `vendor-role-workspace-template-v2`: pending，小范围落地商户角色工作台 v2。
 

@@ -640,3 +640,12 @@
 - 本轮只写文档，规划 migration registration gate、repository runtime gate、mock provider preprod gate 和 workflow execution gate。
 - 明确 production 默认 disabled，workflow execution 必须单独 gate，支付宝/微信支付/退款/对账/结算/佣金/权限继续串行。
 - 下一步可做 `payment-notification-runtime-gate-contract`：纯函数 contract，默认 disabled，不接 route、不执行 workflow。
+
+## Round 121 更新
+
+- `payment-notification-runtime-gate-contract` 已完成，见 `docs/payment-notification-runtime-gate-contract.md`。
+- 新增 `evaluatePaymentNotificationRuntimeGate()` 纯函数和单元测试。
+- Gate 默认 blocked，production blocked，DB runtime / migration / preprod disposable DB / provider adapter 缺一即 blocked。
+- `mock_inbox_only` 和 `mock_prepare_command` 只在所有非 workflow gate 满足时 allowed。
+- Harness 已纳入 runtime gate 单测。
+- 当前仍不接 route、不注册 migration、不连接 DB、不执行 payment workflow。

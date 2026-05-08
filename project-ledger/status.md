@@ -299,7 +299,8 @@
 - `mock-webhook-db-backed-route-local-rejected-smoke` 已完成：missing signature、invalid signature、non-CNY local DB rejected smoke 均通过，拒绝路径不写 inbox/event log；non-CNY 当前按既有 contract 返回 `PAYLOAD_INVALID`。
 - `mock-webhook-db-backed-route-post-validation` 已完成：PR #164/#165 合并后 harness、accepted/duplicate/rejected smoke、typecheck、runtime grep 和 DB/9110 无残留均通过。
 - `mock-webhook-db-backed-route-runtime-gate-plan` 已完成：docs-only 规划 runtime gate Go/No-Go、feature flags、回滚和 PR 拆分；仍不执行 workflow。
-- 队列下一项：`payment-notification-runtime-gate-contract`。
+- `payment-notification-runtime-gate-contract` 已完成：新增 runtime gate 纯函数和单测；默认 blocked，不接 route、不执行 workflow。
+- 队列下一项：`payment-notification-db-runtime-preflight`。
 
 ## 仍需注意
 

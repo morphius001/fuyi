@@ -1078,7 +1078,8 @@
 28. `mock-webhook-db-backed-route-local-rejected-smoke`: done，补 missing signature / invalid signature / non-CNY local DB smoke；仍不执行 workflow。
 29. `mock-webhook-db-backed-route-post-validation`: done，合并后记录 harness、typecheck、runtime grep、DB/端口无残留验证。
 30. `mock-webhook-db-backed-route-runtime-gate-plan`: done，规划 local DB smoke 到未来 runtime gate 的前置条件；仍不执行 workflow。
-31. `payment-notification-runtime-gate-contract`: pending，新增纯函数 runtime gate contract，默认 disabled；不接 route、不执行 workflow。
+31. `payment-notification-runtime-gate-contract`: done，新增纯函数 runtime gate contract，默认 disabled；不接 route、不执行 workflow。
+32. `payment-notification-db-runtime-preflight`: pending，规划 DB runtime preflight 验证；不接 route、不执行 workflow。
 
 第九十三轮原则：
 

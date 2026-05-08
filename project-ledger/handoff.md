@@ -767,3 +767,10 @@
 - 单测覆盖默认 disabled、runtime env requested、production blocked、不读 body、不泄露 secret、不暴露 workflow/checkout 字段。
 - Harness 已纳入新增 route 单测。
 - 仍未注册 Medusa payment provider，未接 DB，未调用 adapter，未执行 payment workflow。
+
+## Round 138 更新
+
+- `mock-provider-runtime-disabled-validation` 已完成，见 `docs/mock-provider-runtime-disabled-validation.md`。
+- 验证通过：payment notification harness 21 suites / 137 tests、API typecheck、runtime grep 未注册、disposable DB 无残留。
+- 当前 `POST /china/payment-providers/mock` 仍只是 disabled skeleton，不读 body、不接 DB、不执行 workflow。
+- 下一项建议为 `mock-provider-runtime-local-inbox-only-plan`，只规划 local disposable DB inbox-only runtime。

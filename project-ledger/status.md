@@ -316,7 +316,8 @@
 - `mock-provider-runtime-design` 已完成：docs-only 设计 mock provider runtime wiring 和安全边界。
 - `mock-provider-runtime-disabled-skeleton-plan` 已完成：docs-only 规划 disabled route skeleton 和测试清单。
 - `mock-provider-runtime-disabled-skeleton` 已完成：新增 disabled route skeleton 和单测，不读 body、不接 DB、不执行 workflow。
-- 队列下一项可执行任务：`mock-provider-runtime-disabled-validation`。
+- `mock-provider-runtime-disabled-validation` 已完成：记录 harness 21/137、typecheck、runtime grep 未注册和 DB 无残留。
+- 队列下一项可执行任务：`mock-provider-runtime-local-inbox-only-plan`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

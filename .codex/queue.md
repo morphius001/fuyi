@@ -1297,3 +1297,4 @@
 1. `storefront-home-product-discovery-source-binding`: done，首页“今日鲜货 / 首页商品展示字段”优先读取商品发现只读 client，空结果回退静态鲜货，不改 ProductCard 或交易链路。
 2. `storefront-search-product-discovery-source-binding`: done，搜索页“相关鲜货展示 / 市场样例”优先读取商品发现只读 client，真实可加购商品仍走 Store API / ProductCard。
 3. `storefront-shop-product-discovery-source-binding`: done，店铺页“档口今日参考 / 常卖鲜货”优先读取商品发现只读 client，真实可加购商品仍走 seller product ids + Store API / ProductCard。
+4. `storefront-product-discovery-binding-validation`: done，docs-only 汇总首页、搜索页和店铺页商品发现只读绑定阶段验证。

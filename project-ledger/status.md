@@ -493,3 +493,10 @@
 - `storefront-shop-product-discovery-source-binding`: done，店铺页“档口今日参考 / 常卖鲜货”优先读取商品发现只读 client 的当前 seller handle `store_product_table` 结果，空结果回退静态 `shop.products`。
 - 真实可加购商品继续走 seller product ids + Store API / `ProductCard`，本轮不修改首页、搜索页、`packages/api/**`、cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 237 更新
+
+- `storefront-product-discovery-binding-validation`: done，docs-only 汇总 PR #281-#283 的 Storefront 商品发现只读页面绑定状态。
+- 首页、搜索页和店铺页均只消费商品发现展示字段；真实可加购商品继续走 Store API / `ProductCard`。
+- 本轮不修改 `apps/**` 或 `packages/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

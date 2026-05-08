@@ -217,3 +217,4 @@
 - 完成 `vendor-mobile-draft-product-contract`，新增手机快速上架草稿只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `shop-decoration-readonly-plan`，docs-only 规划商家主页装修只读模型和三端展示边界。
 - 完成 `shop-decoration-readonly-contract`，新增商家主页装修只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
+- 完成 `logistics-and-waybill-boundary-plan`，docs-only 规划统一配送、自配送、自提、配送供应商和快递面单打印边界。

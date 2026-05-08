@@ -928,3 +928,10 @@
 - 新增 `buildChinaShopDecorationReadonlyView()`，输出店铺装修只读 view shape。
 - 合同明确模块全部不可编辑，装修不影响商品、库存、checkout、订单、支付、退款、结算、佣金、权限、文件上传、直播或履约。
 - 推荐下一项：`logistics-and-waybill-boundary-plan`。
+
+## Round 160 更新
+
+- `logistics-and-waybill-boundary-plan` 已完成，见 `docs/logistics-and-waybill-boundary-plan.md`。
+- 本轮只规划展示层/配置层与执行层/面单层的边界。
+- 明确当前不得确认发货、创建履约单、写 checkout shipping options、生成真实运单、云打印或回写订单物流状态。
+- 推荐下一项：`logistics-and-waybill-readonly-contract`。

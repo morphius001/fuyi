@@ -7,6 +7,7 @@ import Script from "next/script"
 import { listRegions } from "@/lib/data/regions"
 import { retrieveChinaDiscovery } from "@/lib/data/china-discovery"
 import { retrieveChinaMarkets } from "@/lib/data/china-markets"
+import { retrieveChinaProductDiscovery } from "@/lib/data/china-product-discovery"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import {
   freshProducts,
@@ -96,6 +97,25 @@ const getHomeProductTag = (product: {
 
   return "鲜活"
 }
+
+const buildStaticFreshProductInputs = () =>
+  freshProducts.map((product) => {
+    const stall = stalls.find((item) => item.name === product.seller)
+
+    return {
+      id: product.handle,
+      title: product.name,
+      handle: product.handle,
+      sellerId: stall?.handle,
+      sellerName: product.seller,
+      market: product.market,
+      booth: stall?.booth,
+      priceText: product.price,
+      specText: product.spec,
+      stockText: product.stock,
+      source: "placeholder",
+    }
+  })
 
 export async function generateMetadata({
   params,
@@ -191,9 +211,10 @@ export default async function Home({
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Fuyi"
-  const [chinaMarkets, chinaDiscovery] = await Promise.all([
+  const [chinaMarkets, chinaDiscovery, chinaProductDiscovery] = await Promise.all([
     retrieveChinaMarkets(),
     retrieveChinaDiscovery(),
+    retrieveChinaProductDiscovery({ limit: 8 }),
   ])
   const readonlyMarketItems = chinaMarkets.items.slice(0, 3).map((market) => ({
     name: market.name,
@@ -210,6 +231,22 @@ export default async function Home({
     source: "market_readonly_api",
   }))
   const staticHomeDiscovery = buildStaticHomeDiscovery()
+  const staticFreshProductInputs = buildStaticFreshProductInputs()
+  const productDiscoveryInputs = chinaProductDiscovery.items
+    .filter((product) => product.source === "store_product_table")
+    .map((product) => ({
+      id: product.id,
+      title: product.title,
+      handle: product.handle,
+      sellerId: product.sellerId ?? product.sellerHandle,
+      sellerName: product.sellerName,
+      market: product.market,
+      booth: product.booth,
+      priceText: product.priceText,
+      specText: product.specText,
+      stockText: product.stockText,
+      source: "store_product_table",
+    }))
   const homeViewModel = buildChinaHomeViewModel({
     discovery: {
       source: "storefront_home_market_discovery_binding",
@@ -219,25 +256,10 @@ export default async function Home({
       categories: chinaDiscovery.categories,
       sellers: chinaDiscovery.sellers,
     },
-    products: freshProducts.map((product) => {
-      const stall = stalls.find((item) => item.name === product.seller)
-
-      return {
-        id: product.handle,
-        title: product.name,
-        handle: product.handle,
-        sellerId: stall?.handle,
-        sellerName: product.seller,
-        market: product.market,
-        booth: stall?.booth,
-        priceText: product.price,
-        specText: product.spec,
-        stockText: product.stock,
-        source: "placeholder",
-      }
-    }),
+    products: productDiscoveryInputs.length ? productDiscoveryInputs : undefined,
     fallback: {
       discovery: staticHomeDiscovery,
+      products: staticFreshProductInputs,
       notice: "首页展示数据待后台更新。",
     },
   })

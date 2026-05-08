@@ -291,3 +291,4 @@
 - 完成 `product-discovery-store-api-readonly`，新增 `/store/china/product-discovery` 只读 GET route、helpers 和 focused tests；只读 open seller、seller product links 与 published products，不写 cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
 - 完成 `storefront-product-discovery-client`，新增 Storefront 商品发现只读 fetcher，支持 query / market / sellerHandle / categoryHandle / limit 映射和空 fallback；不接页面、不改 `ProductCard` 或交易链路。
 - 完成 `product-discovery-readonly-validation`，docs-only 汇总 PR #277-#279 的商品发现 builder / Store API / Storefront client 验证结果和后续单 surface 页面绑定边界。
+- 完成 `storefront-home-product-discovery-source-binding`，首页“今日鲜货 / 首页商品展示字段”优先读取 `retrieveChinaProductDiscovery({ limit: 8 })` 的真实 `store_product_table` 结果，再交给 `buildChinaHomeViewModel()` 输出 `freshProducts`；空结果继续回退静态鲜货，不改 `ProductCard`、搜索页、店铺页、`packages/api/**` 或交易/履约链路；Storefront build、`git diff --check` 和子智能体只读复核通过。

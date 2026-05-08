@@ -1291,3 +1291,7 @@
 - 默认不要 push。
 - 默认不要创建 PR。
 - 默认不要运行 `git reset --hard`, `git merge`, `git rebase`, `git pull`, `git worktree remove`，除非用户当前指令或任务文件明确允许。
+
+## 第一百一十轮建议
+
+1. `storefront-home-product-discovery-source-binding`: done，首页“今日鲜货 / 首页商品展示字段”优先读取商品发现只读 client，空结果回退静态鲜货，不改 ProductCard 或交易链路。

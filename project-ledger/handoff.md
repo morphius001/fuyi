@@ -1502,3 +1502,11 @@
 - 当前商品发现链路已具备 builder / API / client，但尚未接入首页、搜索页或店铺页。
 - 下一步若继续，应按首页、搜索、店铺单 surface 拆只读页面绑定 PR；不能混入 `ProductCard` 改造、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 provider runtime。
 - 验证通过：`git diff --check`、子智能体只读复核。
+
+## Round 234 更新
+
+- `storefront-home-product-discovery-source-binding` 已完成，见 `docs/storefront-home-product-discovery-source-binding.md`。
+- 首页现在并行读取 markets、discovery 和 product discovery；首页商品展示字段优先来自 `retrieveChinaProductDiscovery({ limit: 8 })` 的真实 `store_product_table` 结果。
+- Product discovery 空结果或 client fallback 时，`buildChinaHomeViewModel()` 继续使用静态 `freshProducts` fallback。
+- 本轮只改首页展示输入和任务/ledger 文档，不修改 `ProductCard`、搜索页、店铺页、`packages/api/**` 或交易/履约链路。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

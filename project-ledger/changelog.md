@@ -240,3 +240,4 @@
 - 完成 `template-registry-readonly-contract`，新增未注册三端模板注册表只读 TypeScript contract 和 focused unit tests，不新增 route、不接 DB、不影响运行时。
 - 完成 `template-system-validation`，记录 template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 通过，第九十六轮队列清空。
 - 完成 `template-preview-backlog`，docs-only 建立第九十七轮模板预览 backlog，明确实现前的模板 id、view model、隐藏能力、验证和回滚门槛。
+- 完成 `storefront-home-template-v2-plan`，docs-only 规划消费者首页 v2 模板预览，明确市场/店铺/今日鲜货主路径、移动端短首页、重复搜索/类目清理和 B 端能力隐藏规则。

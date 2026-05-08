@@ -268,3 +268,4 @@
 - 完成 `storefront-adapter-skeleton-validation`，验证 Storefront build、首页 adapter focused TypeScript check 和 diff check 通过；记录既有 React Hook warning 与本轮无关。
 - 完成 `storefront-shop-view-model-adapter-skeleton`，新增 Storefront 店铺页本地纯函数 adapter skeleton，输出 `storefront-shop-stall-v2` 只读 view model，保留 static fallback、B-side role-gated preview、店铺头部履约提示和高风险 blocked serial work 边界；未接入页面布局或真实交易链路。
 - 完成 `storefront-search-view-model-adapter-skeleton`，新增 Storefront 搜索页本地纯函数 adapter skeleton，输出 `storefront-search-market-results-v1` 只读 view model，支持 query、marketName、discovery、products 和 static fallback；无结果只展示消费者提示，默认过滤 B-side 供给内容，未接入页面布局、搜索排序、购物车、订单、履约或真实交易链路。
+- 完成 `storefront-adapter-skeleton-validation-v2`，验证 Storefront home / shop / search 三个本地 adapter skeleton：Storefront build、focused TypeScript check、后端 runtime import grep 和 `git diff --check` 均通过；记录页面尚未绑定、B-side 过滤仍需结构化字段、搜索排序/广告/竞价仍未实现。

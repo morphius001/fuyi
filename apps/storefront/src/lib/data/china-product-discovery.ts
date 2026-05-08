@@ -29,6 +29,16 @@ export type ChinaProductDiscoveryResponse = {
       categoryHandle?: string
     }
     items: ChinaProductDiscoveryItem[]
+    sourceTags: {
+      responseSource: "store_product_table" | "seller_products_api" | "static_fallback" | "storefront_fallback"
+      itemCount: number
+      productRowCount: number
+      sellerContextCount: number
+      fallbackUsed: boolean
+      fallbackReason?: "no_product_rows" | "client_fetch_failed"
+      filterKeysPresent: Array<"query" | "market" | "sellerHandle" | "categoryHandle">
+      displayOnly: true
+    }
     readOnly: true
     runtimeEnabled: false
     canWriteBusinessState: false
@@ -44,12 +54,40 @@ export type RetrieveChinaProductDiscoveryInput = {
   limit?: number
 }
 
+const getPresentFilterKeys = ({
+  query,
+  market,
+  sellerHandle,
+  categoryHandle,
+}: RetrieveChinaProductDiscoveryInput) =>
+  [
+    query ? "query" : undefined,
+    market ? "market" : undefined,
+    sellerHandle ? "sellerHandle" : undefined,
+    categoryHandle ? "categoryHandle" : undefined,
+  ].filter(
+    (
+      key
+    ): key is "query" | "market" | "sellerHandle" | "categoryHandle" =>
+      Boolean(key)
+  )
+
 const fallbackProductDiscovery: ChinaProductDiscoveryResponse["product_discovery"] = {
   mode: "fallback_product_discovery",
   source: "storefront_fallback",
   note: "China product discovery API is unavailable; storefront is using an empty read-only fallback.",
   filters: {},
   items: [],
+  sourceTags: {
+    responseSource: "storefront_fallback",
+    itemCount: 0,
+    productRowCount: 0,
+    sellerContextCount: 0,
+    fallbackUsed: true,
+    fallbackReason: "client_fetch_failed",
+    filterKeysPresent: [],
+    displayOnly: true,
+  },
   readOnly: true,
   runtimeEnabled: false,
   canWriteBusinessState: false,
@@ -95,6 +133,15 @@ export const retrieveChinaProductDiscovery = async ({
         market,
         sellerHandle,
         categoryHandle,
+      },
+      sourceTags: {
+        ...fallbackProductDiscovery.sourceTags,
+        filterKeysPresent: getPresentFilterKeys({
+          query,
+          market,
+          sellerHandle,
+          categoryHandle,
+        }),
       },
     }))
 }

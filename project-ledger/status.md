@@ -535,3 +535,10 @@
 - Inventory 覆盖 market、seller membership、discovery categories 和 product discovery 的已具备字段、metadata 依赖、缺口和安全下一步。
 - 本轮不修改 `apps/**` 或 `packages/**`，不新增脚本、不读写数据库、不新增 route 或 runtime。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 243 更新
+
+- `product-discovery-source-tags`: done，商品发现只读 read model 增加非敏感 `sourceTags`。
+- `sourceTags` 仅包含 response source、item count、product row count、seller context count、fallback、filter keys 和 display-only 标记。
+- 本轮不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
+- 验证通过：focused unit test、API typecheck、Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

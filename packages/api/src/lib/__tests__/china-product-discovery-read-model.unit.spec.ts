@@ -52,6 +52,15 @@ describe("China product discovery read model", () => {
     expect(view.note).toContain("Display-only");
     expect(view.blockedRuntime).toContain("checkout_shipping_options");
     expect(view.blockedRuntime).toContain("payment");
+    expect(view.sourceTags).toMatchObject({
+      responseSource: "store_product_table",
+      itemCount: 1,
+      productRowCount: 1,
+      sellerContextCount: 1,
+      fallbackUsed: false,
+      filterKeysPresent: [],
+      displayOnly: true,
+    });
   });
 
   it("applies query, market, seller, category, and seller product id filters without mutating runtime state", () => {
@@ -103,6 +112,19 @@ describe("China product discovery read model", () => {
       ],
     });
     expect(view.items).toHaveLength(1);
+    expect(view.sourceTags).toMatchObject({
+      responseSource: "seller_products_api",
+      itemCount: 1,
+      productRowCount: 2,
+      sellerContextCount: 1,
+      fallbackUsed: false,
+      filterKeysPresent: [
+        "query",
+        "market",
+        "sellerHandle",
+        "categoryHandle",
+      ],
+    });
     expect(view.blockedRuntime).toEqual(
       expect.arrayContaining([
         "inventory_reservation",
@@ -134,8 +156,24 @@ describe("China product discovery read model", () => {
 
     expect(bSideOnly.items).toEqual([]);
     expect(bSideOnly.source).toBe("store_product_table");
+    expect(bSideOnly.sourceTags).toMatchObject({
+      responseSource: "store_product_table",
+      itemCount: 0,
+      productRowCount: 2,
+      fallbackUsed: false,
+    });
     expect(fallback).toMatchObject({
       source: "static_fallback",
+      sourceTags: {
+        responseSource: "static_fallback",
+        itemCount: 1,
+        productRowCount: 0,
+        sellerContextCount: 0,
+        fallbackUsed: true,
+        fallbackReason: "no_product_rows",
+        filterKeysPresent: [],
+        displayOnly: true,
+      },
       items: [
         {
           id: "fallback_product",

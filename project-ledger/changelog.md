@@ -234,3 +234,4 @@
 - 完成 `storefront-visibility-copy-polish`，消费者侧搜索页、店铺页和提货卡页文案去掉部分工程化 `API`/`metadata`/`fallback`/`mock` 表述，改为展示数据、后台展示配置、演示占位和以结算页为准；未修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime；Storefront build 和 `git diff --check` 通过。
 - 完成 `readonly-contracts-ui-validation`，三端验证通过：Admin lint/build、Vendor lint/build、Storefront build 和 `git diff --check`；Storefront 仅保留既有 React Hook dependency warnings，本轮不扩大范围修复。
 - 完成 `ui-template-system-plan`，docs-only 规划三端 UI 模板系统，明确模板可替换但只能消费稳定 view model，不得改变交易链路和高风险状态来源。
+- 完成 `storefront-template-contract-plan`，docs-only 规划消费者端模板合同，明确首页/搜索/店铺/商品/提货卡/移动端边界，以及物料、配送供应商和上游供给默认隐藏规则。

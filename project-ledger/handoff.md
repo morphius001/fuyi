@@ -1052,3 +1052,10 @@
 - 本轮把三端界面改造收束为模板系统规划：Storefront、Admin、Vendor 可以换布局和视觉，但只能消费稳定 view model。
 - 模板层不得决定订单、支付、退款、结算、佣金、权限、履约或 checkout 事实。
 - 下一项建议继续 `storefront-template-contract-plan`。
+
+## Round 177 更新
+
+- `storefront-template-contract-plan` 已完成，见 `docs/storefront-template-contract-plan.md`。
+- 本轮固化消费者端模板合同：首页、搜索/类目、店铺/档口、商品详情、提货卡独立页和移动端 App-like 模板。
+- 明确物料供应商、配送供应商和上游供给关系默认不进入消费者首页主路径；配送方式主要挂在店铺/档口和结算确认。
+- 下一项建议继续 `admin-template-contract-plan`。

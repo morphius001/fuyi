@@ -1430,3 +1430,11 @@
 - Store API 真实商品结果仍走 `ProductCard`。
 - 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
 - 本轮不修改 `packages/api/**`，不接真实搜索排序、广告、竞价、推荐或搜索 provider。
+
+## Round 225 更新
+
+- `storefront-shop-membership-source-binding` 已完成，见 `docs/storefront-shop-membership-source-binding.md`。
+- 店铺页现在从 matched market detail 的 memberships 中按 seller handle / seller id 匹配当前店铺，并把结果传给 `buildChinaShopViewModel()` 的 `membership` 输入。
+- 找不到 membership 时继续使用 seller metadata / static profile 作为只读 fallback；原 `seller` 输入、market 输入和 `ProductCard` 真实商品路径保留。
+- 本轮不修改 `packages/api/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；复核提出的 membership sellerId 与样例商品 sellerId 不一致风险已修正。

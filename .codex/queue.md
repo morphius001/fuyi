@@ -1249,6 +1249,7 @@
 3. `storefront-shop-membership-source`: done，新增店铺 adapter membership 输入形状，不改店铺页或交易链路。
 4. `storefront-read-model-source-validation`: done，汇总 home / search / shop read model source 阶段验证和后续建议。
 5. `storefront-search-discovery-source-binding`: done，搜索页输入构造收束为 discovery / markets / products + static fallback，不接真实搜索 provider。
+6. `storefront-shop-membership-source-binding`: done，店铺页把 market detail membership / seller metadata 合成为 shop adapter membership 输入，不改 ProductCard 或交易链路。
 
 第九十三轮原则：
 

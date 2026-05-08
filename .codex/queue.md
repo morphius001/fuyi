@@ -1187,6 +1187,19 @@
 - 如果进入视觉 QA，只生成截图和检查清单，不提交截图产物。
 - 继续禁止支付、订单、退款、结算、佣金、权限、真实履约、真实物流、真实直播和真实提货卡兑换。
 
+第一百轮建议：
+
+1. `template-registry-v2-contract`: done，新增四个 v2 template ids 到未注册只读 registry contract，不接 route、不接 DB。
+2. `storefront-home-view-model-mapper`: pending，新增首页 view model mapper 和 focused tests，先不改页面。
+3. `storefront-shop-view-model-mapper`: pending，新增店铺页 view model mapper 和 focused tests，先不改页面。
+4. `template-registry-v2-validation`: pending，验证 registry v2、mapper、API typecheck 和 diff 范围。
+
+第一百轮原则：
+
+- 优先做纯 contract / mapper / tests。
+- 页面绑定必须另拆单 surface PR。
+- 继续禁止支付、订单、退款、结算、佣金、权限、真实履约、真实物流、真实直播和真实提货卡兑换。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

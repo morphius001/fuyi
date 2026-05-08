@@ -1181,3 +1181,10 @@
 - 本轮只规划 Storefront 首页、搜索和店铺页的数据源迁移，不修改 `apps/**` 或 `packages/**`。
 - 第九十九轮可自动执行的 docs-only 队列已清空；`vendor-role-workspace-visual-qa` 仍为 `blocked-manual`，需要用户视觉确认后再继续 UI 密度调整。
 - 下一轮建议进入实际低风险 mapper PR：`template-registry-v2-contract`、`storefront-home-view-model-mapper`、`storefront-shop-view-model-mapper`，但应先新增任务文件并保持不改交易链路。
+
+## Round 195 更新
+
+- `template-registry-v2-contract` 已完成，见 `docs/template-registry-v2-contract.md`。
+- 新增四个 v2 template ids 到未注册只读 template registry contract：Storefront 首页、Storefront 店铺页、Admin 首页和 Vendor 多角色经营看板。
+- 本轮不新增 API route、不注册 Medusa module、不接 DB、不修改 `apps/**`，也不改变 checkout、订单、支付、退款、结算、佣金、权限或履约。
+- 下一项建议继续 `storefront-home-view-model-mapper`，只新增 mapper 和测试，先不改页面。

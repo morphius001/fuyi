@@ -61,14 +61,18 @@ export type ChinaTemplateRegistrySlotKey =
   | "todos"
   | "risk_alerts"
   | "data_source_notice"
+  | "focus_modules"
   | "role_context"
+  | "role_workspace_cards"
   | "quick_actions"
   | "draft_form"
   | "ai_suggestion"
   | "decoration_preview"
   | "materials_catalog"
   | "delivery_service_area"
-  | "upstream_supply_batch";
+  | "upstream_supply_batch"
+  | "market_announcements"
+  | "service_links";
 
 export type ChinaTemplateRegistryTemplateView = {
   templateId: string;

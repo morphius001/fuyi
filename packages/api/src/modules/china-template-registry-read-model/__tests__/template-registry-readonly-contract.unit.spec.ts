@@ -17,7 +17,7 @@ describe("China template registry readonly contract", () => {
       "admin",
       "vendor",
     ]);
-    expect(contract.surfaces.flatMap((surface) => surface.templates)).toHaveLength(9);
+    expect(contract.surfaces.flatMap((surface) => surface.templates)).toHaveLength(13);
     expect(
       contract.surfaces
         .flatMap((surface) => surface.templates)
@@ -29,12 +29,51 @@ describe("China template registry readonly contract", () => {
     ).toBe(true);
   });
 
+  it("includes template v2 ids for the four merged preview surfaces without runtime writes", () => {
+    const contract = buildChinaTemplateRegistryReadonlyContract();
+    const templates = contract.surfaces.flatMap((surface) => surface.templates);
+
+    expect(templates).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          templateId: "storefront-home-market-shop-v2",
+          version: "v2",
+          visibility: "consumer_default_visible",
+          consumerFacing: true,
+          runtimeEnabled: false,
+          canWriteBusinessState: false,
+        }),
+        expect.objectContaining({
+          templateId: "storefront-shop-stall-v2",
+          version: "v2",
+          slots: expect.arrayContaining(["shop_profile", "fulfillment_hint"]),
+          runtimeEnabled: false,
+          canWriteBusinessState: false,
+        }),
+        expect.objectContaining({
+          templateId: "admin-dashboard-ops-v2",
+          version: "v2",
+          slots: expect.arrayContaining(["data_source_notice", "focus_modules"]),
+          runtimeEnabled: false,
+          canWriteBusinessState: false,
+        }),
+        expect.objectContaining({
+          templateId: "vendor-role-workspace-v2",
+          version: "v2",
+          slots: expect.arrayContaining(["role_context", "role_workspace_cards"]),
+          runtimeEnabled: false,
+          canWriteBusinessState: false,
+        }),
+      ]),
+    );
+  });
+
   it("keeps B-side suppliers out of the default consumer homepage path", () => {
     const contract = buildChinaTemplateRegistryReadonlyContract();
     const storefrontHome = contract.surfaces
       .find((surface) => surface.surface === "storefront")
       ?.templates.find(
-        (template) => template.templateId === "storefront-home-market-shop-v1",
+        (template) => template.templateId === "storefront-home-market-shop-v2",
       );
 
     expect(storefrontHome).toMatchObject({
@@ -46,7 +85,7 @@ describe("China template registry readonly contract", () => {
       canWriteBusinessState: false,
     });
     expect(storefrontHome?.notes.join(" ")).toContain(
-      "物料、配送供应商和上游供给关系默认不进入消费者首页",
+      "物料、配送供应商、上游供给、种苗批发和外地批发商默认不进入消费者首页主路径",
     );
     expect(contract.highRiskBoundaries).toEqual(
       expect.arrayContaining([
@@ -55,6 +94,30 @@ describe("China template registry readonly contract", () => {
           status: "blocked_serial_work",
         }),
       ]),
+    );
+  });
+
+  it("keeps vendor role workspace v2 from acting as a real permission or fulfillment source", () => {
+    const contract = buildChinaTemplateRegistryReadonlyContract();
+    const vendorRoleWorkspace = contract.surfaces
+      .find((surface) => surface.surface === "vendor")
+      ?.templates.find(
+        (template) => template.templateId === "vendor-role-workspace-v2",
+      );
+
+    expect(vendorRoleWorkspace).toMatchObject({
+      surface: "vendor",
+      scenario: "dashboard",
+      visibility: "merchant_default_visible",
+      consumerFacing: false,
+      runtimeEnabled: false,
+      canWriteBusinessState: false,
+    });
+    expect(vendorRoleWorkspace?.notes.join(" ")).toContain(
+      "不代表真实权限已经生效",
+    );
+    expect(vendorRoleWorkspace?.notes.join(" ")).toContain(
+      "另走平台审核、权限、履约、结算和日志边界",
     );
   });
 

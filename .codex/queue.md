@@ -1086,7 +1086,8 @@
 36. `payment-notification-preprod-disposable-db-execution`: blocked-external，等待用户明确提供 disposable preprod DB、备份/回滚 owner 和连接授权。
 37. `payment-preprod-db-script-post-validation`: done，记录 PR #171/#172 合并后验证；继续保持外部 DB 执行为 blocked-external。
 38. `payment-provider-adapter-contract-plan`: done，规划中国本地支付 Provider / Adapter 合同；不接真实支付宝或微信支付。
-39. `mock-china-payment-provider-contract`: pending，新增未注册 mock provider contract；不接 checkout runtime，不执行 payment workflow。
+39. `mock-china-payment-provider-contract`: done，新增未注册 mock provider contract；不接 checkout runtime，不执行 payment workflow。
+40. `mock-payment-provider-registry-contract`: pending，新增 adapter registry 纯函数 contract；默认 production disabled，不读取真实密钥。
 
 第九十三轮原则：
 

@@ -542,3 +542,10 @@
 - `sourceTags` 仅包含 response source、item count、product row count、seller context count、fallback、filter keys 和 display-only 标记。
 - 本轮不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
 - 验证通过：focused unit test、API typecheck、Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 244 更新
+
+- `product-discovery-source-tags-validation`: done，docs-only 汇总 PR #290 的 sourceTags 验证和隐私边界。
+- 记录 focused unit test、API typecheck、Storefront build、`git diff --check` 和子智能体复核均已通过。
+- 下一步 dev-only debug banner 必须单独 PR，且只能在开发环境或显式 debug flag 下显示非敏感 source tags。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

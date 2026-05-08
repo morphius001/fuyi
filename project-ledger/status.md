@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 02:35 Asia/Shanghai
+更新时间：2026-05-09 02:49 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -67,6 +67,15 @@
 - `storefront-adapter-binding-validation`: done，已汇总 PR #260-#264 的只读绑定状态、验证范围、风险边界和回滚方式。
 - 验证通过：Storefront build、`git diff --check`；本轮没有修改 `apps/**` 或 `packages/**` 业务代码。
 - 当前阶段不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
+
+## 第一百零六轮 Storefront Read Model 数据源规划
+
+- `storefront-read-model-data-source-plan`: done，新增 `docs/storefront-read-model-data-source-plan.md`。
+- 本轮只做 docs-only 规划，不修改 `apps/**` 或 `packages/**`。
+- 规划将 Storefront adapter 下一阶段输入拆为 market read model、seller membership read model 和 product discovery read model。
+- 后续 PR 建议：首页 adapter 输入收束、搜索 read model 输入合同、店铺 membership 输入过渡、最终 source validation。
+- 验证通过：`git diff --check`。
+- 当前阶段仍不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
 
 ## 第十六轮进度
 

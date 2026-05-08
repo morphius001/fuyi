@@ -1204,7 +1204,13 @@
 
 1. `storefront-search-view-model-mapper`: done，新增搜索页 view model mapper、focused tests 和说明文档，先不改页面。
 2. `storefront-home-bind-view-model-plan`: done，docs-only 规划首页如何绑定 home mapper，先不改页面。
-3. `storefront-shop-bind-view-model-plan`: pending，docs-only 规划店铺页如何绑定 shop mapper，先不改页面。
+3. `storefront-shop-bind-view-model-plan`: done，docs-only 规划店铺页如何绑定 shop mapper，先不改页面。
+
+第一百零一轮已清空。下一步建议新增第一百零二轮任务：
+
+1. `storefront-template-binding-validation`: pending，验证第一百零一轮 mapper / binding plan 状态和下一步可实现边界。
+2. `storefront-home-view-model-adapter-plan`: pending，docs-only 细化首页 adapter 输入输出，不改页面。
+3. `storefront-shop-view-model-adapter-plan`: pending，docs-only 细化店铺 adapter 输入输出，不改页面。
 
 第九十三轮原则：
 

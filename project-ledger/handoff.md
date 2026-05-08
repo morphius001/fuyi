@@ -1230,3 +1230,11 @@
 - 后续首页绑定建议拆三步：Home View Model Adapter、Home First Screen Binding、Home Product Cards Binding。
 - 明确首页保留静态 fallback，B-side 供应商不进入消费者首页主路径，商品卡不写库存、购物车、订单或 checkout shipping options。
 - 下一项建议继续 `storefront-shop-bind-view-model-plan`，docs-only 规划店铺页绑定，不改页面。
+
+## Round 201 更新
+
+- `storefront-shop-bind-view-model-plan` 已完成，见 `docs/storefront-shop-bind-view-model-plan.md`。
+- 本轮只规划店铺页绑定策略，不改 `apps/**` 或 `packages/**`。
+- 后续店铺页绑定建议拆三步：Shop View Model Adapter、Shop Header Binding、Shop Product Cards Binding。
+- 明确配送、自提、营业时间和公告归属店铺头部；商品卡不写库存、购物车、订单、checkout shipping options 或履约状态。
+- 第一百零一轮队列已清空；下一步建议做 `storefront-template-binding-validation` 或继续 docs-only adapter plan。

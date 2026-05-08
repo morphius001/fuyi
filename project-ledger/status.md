@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-07 18:30 Asia/Shanghai
+更新时间：2026-05-08 15:46 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -321,7 +321,10 @@
 - `mock-provider-runtime-local-inbox-only-skeleton` 已完成：mock provider route 在严格本地 disposable DB gate 下可写 inbox/event log，默认/生产/缺门禁仍 disabled，不读 body，不执行 payment workflow。
 - `mock-provider-runtime-local-inbox-only-validation` 已完成：记录 PR #187 合并后 harness、API typecheck、runtime grep 和 DB 无残留验证。
 - `mock-provider-runtime-local-smoke-script-plan` 已完成：docs-only 规划 provider route local disposable DB smoke wrapper。
-- 队列下一项可执行任务：`mock-provider-runtime-local-smoke-script`。
+- `mock-provider-runtime-local-smoke-script` 已完成：新增 provider route local disposable DB smoke wrapper，不连接预发/生产，不执行 payment workflow。
+- `mock-provider-runtime-local-smoke-script` 补强：临时 API 的 `CODEX_DATABASE_URL` 现在所有模式都指向 disposable DB；普通 app DB 只作为 schema-only 来源。
+- `mock-provider-runtime-local-smoke-script` 补强：失败输出不再打印 raw event metadata 或临时 API log 内容；stop 逻辑记录监听 PID 并只清理本脚本启动的临时进程。
+- 队列下一项可执行任务：`mock-provider-runtime-local-smoke-validation`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

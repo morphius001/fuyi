@@ -804,3 +804,13 @@
 - 本轮只规划后续脚本，不新增 `.codex/scripts/**`，不修改 `packages/**` 或 `apps/**`。
 - 后续脚本应使用临时 API 端口、本地 disposable DB、fake local secret，并覆盖 disabled / accepted / duplicate / missing-signature smoke。
 - 下一项可做 `mock-provider-runtime-local-smoke-script`，但仍不得连接预发/生产或执行 payment workflow。
+
+## Round 143 更新
+
+- `mock-provider-runtime-local-smoke-script` 已完成，见 `docs/mock-provider-runtime-local-smoke-script.md`。
+- 新增 `.codex/scripts/mock-provider-runtime-local-smoke.sh`，支持 `disabled`、`accepted`、`duplicate`、`rejected`。
+- 脚本使用临时端口 `9120`、本地 disposable DB 前缀 `fuyi_payment_notification_route_dry_run_*`、fake local secret，并在结束后删除临时库。
+- 子 AG 复核后已补强：临时 API 不再在 disabled 模式连接普通 app DB，失败输出不打印 raw metadata 或临时 API log 内容，JSON 解析错误压制 stderr，并校验 listener PID 与脚本 server PID 进程组一致后再清理。
+- 验证通过：四种 smoke 模式、payment notification harness 21/143、API typecheck、`git diff --check`、`medusa-config.ts` 未注册、DB/9120 无残留。
+- 脚本仍不连接预发/生产，不注册 provider，不执行 payment workflow。
+- 下一项建议为 `mock-provider-runtime-local-smoke-validation`，运行脚本并记录验证结果。

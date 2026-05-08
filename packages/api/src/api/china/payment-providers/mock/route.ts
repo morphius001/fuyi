@@ -149,9 +149,10 @@ const readCurrentServerInfo = async (pg: KnexPgConnection) => {
     "select coalesce(inet_server_addr()::text, 'local_socket') as server_host, inet_server_port() as server_port",
   );
   const row = result.rows?.[0];
+  const host = row?.server_host ? String(row.server_host) : undefined;
 
   return {
-    host: row?.server_host ? String(row.server_host) : undefined,
+    host: host?.replace(/\/\d+$/, ""),
     port:
       typeof row?.server_port === "number"
         ? row.server_port

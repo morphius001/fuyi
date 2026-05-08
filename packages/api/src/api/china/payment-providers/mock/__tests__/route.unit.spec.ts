@@ -319,6 +319,7 @@ describe("mock China payment provider runtime disabled route", () => {
         "x-mock-payment-signature": buildMockPaymentSignature(rawBody, secret),
       },
       query,
+      serverHost: "127.0.0.1/32",
     });
     const res = makeResponse();
 

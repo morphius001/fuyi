@@ -1090,7 +1090,8 @@
 40. `mock-payment-provider-registry-contract`: done，新增 adapter registry 纯函数 contract；默认 production disabled，不读取真实密钥。
 41. `mock-payment-provider-registry-validation`: done，记录 registry 合并后 harness/typecheck/runtime grep 和 DB 无残留验证。
 42. `mock-provider-runtime-gate-validation-plan`: done，规划 mock provider contract / registry / runtime gate / preprod DB gate 的组合验证；不接 runtime。
-43. `mock-provider-runtime-gate-composition-tests`: pending，新增纯函数组合测试；不接 route、不接 DB、不注册 provider。
+43. `mock-provider-runtime-gate-composition-tests`: done，新增纯函数组合测试；不接 route、不接 DB、不注册 provider。
+44. `mock-provider-runtime-readiness-report`: pending，记录组合测试合并后的 harness/typecheck/runtime grep 和 DB 无残留验证。
 
 第九十三轮原则：
 

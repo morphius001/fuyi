@@ -1438,3 +1438,11 @@
 - 找不到 membership 时继续使用 seller metadata / static profile 作为只读 fallback；原 `seller` 输入、market 输入和 `ProductCard` 真实商品路径保留。
 - 本轮不修改 `packages/api/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；复核提出的 membership sellerId 与样例商品 sellerId 不一致风险已修正。
+
+## Round 226 更新
+
+- `storefront-source-binding-validation` 已完成，见 `docs/storefront-source-binding-validation.md`。
+- 本轮 docs-only 汇总 PR #271/#272：搜索页 discovery source binding 与店铺页 membership source binding。
+- 验证结论：两个 surface 只影响 `buildChinaSearchViewModel()` / `buildChinaShopViewModel()` 展示输入，真实商品卡仍走 Store API / `ProductCard`。
+- 本轮不修改 `apps/**` 或 `packages/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；仅保留既有 React Hook dependency warnings。

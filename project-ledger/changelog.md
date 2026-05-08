@@ -283,3 +283,4 @@
 - 完成 `storefront-read-model-source-validation`，docs-only 汇总 PR #267-#269 的 home / search / shop 输入源阶段验证、剩余风险和后续建议；Storefront build 和 `git diff --check` 通过；本轮不修改 `apps/**` 或 `packages/**`。
 - 完成 `storefront-search-discovery-source-binding`，搜索页输入构造收束为 discovery / markets / products + static fallback，新增 `market` query 作为只读展示筛选；Storefront build 和 `git diff --check` 通过，不接真实搜索 provider 或交易/履约链路。
 - 完成 `storefront-shop-membership-source-binding`，店铺页把 market detail membership / seller metadata 合成为 `buildChinaShopViewModel()` 的 membership 输入；真实商品卡仍走 Store API / `ProductCard`，不改交易、履约、权限或结算链路。
+- 完成 `storefront-source-binding-validation`，docs-only 汇总 PR #271/#272 的搜索 discovery 与店铺 membership source binding 验证；不修改运行时代码，不扩大到搜索排序、权限、交易或履约。

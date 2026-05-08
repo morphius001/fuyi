@@ -242,3 +242,4 @@
 - 完成 `template-preview-backlog`，docs-only 建立第九十七轮模板预览 backlog，明确实现前的模板 id、view model、隐藏能力、验证和回滚门槛。
 - 完成 `storefront-home-template-v2-plan`，docs-only 规划消费者首页 v2 模板预览，明确市场/店铺/今日鲜货主路径、移动端短首页、重复搜索/类目清理和 B 端能力隐藏规则。
 - 完成 `storefront-shop-template-v2-plan`，docs-only 规划店铺/档口主页 v2 模板预览，明确配送方式归属店铺头部、商品卡轻提示、店铺装修和直播状态边界。
+- 完成 `admin-dashboard-template-v2-plan`，docs-only 规划平台运营首页 v2 模板预览，明确顶部工具靠右、KPI/待办/风险首屏布局、mock 数据边界和高风险事实来源限制。

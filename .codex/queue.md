@@ -1222,6 +1222,11 @@
 
 1. `storefront-adapter-skeleton-validation`: done，验证 home adapter skeleton 和 adapter plans。
 2. `storefront-shop-view-model-adapter-skeleton`: done，小范围实现店铺 adapter skeleton，仍不改页面布局。
+3. `storefront-search-view-model-adapter-skeleton`: done，小范围实现搜索 adapter skeleton，仍不改页面布局。
+
+第一百零三轮补充任务已清空。下一步建议新增第一百零四轮任务：
+
+1. `storefront-adapter-skeleton-validation-v2`: pending，验证 home / shop / search 三个 Storefront adapter skeleton。
 
 第九十三轮原则：
 

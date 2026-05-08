@@ -297,7 +297,8 @@
 - `mock-webhook-db-backed-route-local-accepted` 已完成：neutral route 接入 local-only disposable Postgres adapter，accepted/duplicate smoke 通过；仍不执行 workflow、不改变交易状态。
 - 子 AG 复核后已补强：event log id 使用短前缀 + hash、smoke 固定 9110、dry-run DB 名使用严格白名单、临时 payload 目录纳入 cleanup。
 - `mock-webhook-db-backed-route-local-rejected-smoke` 已完成：missing signature、invalid signature、non-CNY local DB rejected smoke 均通过，拒绝路径不写 inbox/event log；non-CNY 当前按既有 contract 返回 `PAYLOAD_INVALID`。
-- 队列下一项：`mock-webhook-db-backed-route-post-validation`。
+- `mock-webhook-db-backed-route-post-validation` 已完成：PR #164/#165 合并后 harness、accepted/duplicate/rejected smoke、typecheck、runtime grep 和 DB/9110 无残留均通过。
+- 队列下一项：`mock-webhook-db-backed-route-runtime-gate-plan`。
 
 ## 仍需注意
 

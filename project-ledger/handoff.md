@@ -626,3 +626,10 @@
 - 三个 rejected 场景均返回 400，并保持 inbox count = 0、event log count = 0；non-CNY 当前按既有 contract 返回 `PAYLOAD_INVALID`。
 - 验证通过：payment notification harness 16 suites / 108 tests、rejected smoke、API typecheck、`git diff --check`、DB/9110 无残留。
 - 仍未修改 route runtime，未注册 migration，未连接预发/生产 DB，未执行 payment workflow。
+
+## Round 119 更新
+
+- `mock-webhook-db-backed-route-post-validation` 已完成，见 `docs/mock-webhook-db-backed-route-post-validation.md`。
+- PR #164 / #165 合并后验证通过：harness 16 suites / 108 tests、accepted smoke、duplicate smoke、rejected smoke、API typecheck、runtime grep、DB/9110 无残留、`git diff --check`。
+- 当前 neutral mock webhook route 已具备 local-only disposable DB inbox smoke，但仍不是生产支付 runtime。
+- 下一步建议只做 `mock-webhook-db-backed-route-runtime-gate-plan` docs-only，规划未来 runtime gate；仍不执行 workflow。

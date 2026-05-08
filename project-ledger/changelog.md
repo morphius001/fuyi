@@ -175,3 +175,4 @@
 - 完成 `mock-webhook-db-backed-route-local-accepted`，neutral route 接入 local-only disposable Postgres adapter，accepted/duplicate smoke 通过；仍不执行 payment workflow。
 - 修复 payment notification DB event log skeleton ID 截断导致的本地 DB 主键冲突，补充 event log id 不重复单测。
 - 完成 `mock-webhook-db-backed-route-local-rejected-smoke`，扩展 local DB route smoke 的 missing signature、invalid signature 和 non-CNY rejected 场景；拒绝路径不写 inbox/event log。
+- 完成 `mock-webhook-db-backed-route-post-validation`，记录 PR #164/#165 合并后的 harness、accepted/duplicate/rejected smoke、typecheck、runtime grep 和 DB/9110 无残留验证。

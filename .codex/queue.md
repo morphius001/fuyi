@@ -1151,6 +1151,15 @@
 5. `template-registry-readonly-contract`: done，新增纯 TypeScript 模板注册表 view shape skeleton，不接 route、不接 DB。
 6. `template-system-validation`: done，验证模板规划和 skeleton 合并后的 focused test、API typecheck、Admin lint、Vendor lint 和 diff check。
 
+第九十七轮建议：
+
+1. `template-preview-backlog`: done，规划模板预览 backlog 和后续实现门槛。
+2. `storefront-home-template-v2-plan`: pending，规划消费者首页 v2 模板预览，不改页面。
+3. `storefront-shop-template-v2-plan`: pending，规划店铺/档口主页 v2 模板预览，不改页面。
+4. `admin-dashboard-template-v2-plan`: pending，规划平台运营首页 v2 模板预览，不改页面。
+5. `vendor-role-workspace-template-v2-plan`: pending，规划商户角色工作台 v2 模板预览，不改页面。
+6. `template-preview-validation`: pending，验证第九十七轮规划范围、越界风险和队列状态。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

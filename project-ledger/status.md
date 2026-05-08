@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 23:55 Asia/Shanghai
+更新时间：2026-05-09 00:07 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -364,6 +364,8 @@
 - `template-registry-readonly-contract` 已完成：新增纯 TypeScript 三端模板注册表只读合同和 focused unit tests；不接 route、不接 DB、不注册 runtime。
 - `template-system-validation` 已完成：Template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 通过。
 - 第九十六轮队列已清空。
+- `template-preview-backlog` 已完成：规划第九十七轮模板预览 backlog 和实现门槛，不改页面或 runtime。
+- 队列下一项：`storefront-home-template-v2-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

@@ -717,3 +717,10 @@
 - 验证通过：payment notification harness 19 suites / 128 tests、API typecheck、runtime grep 未注册、disposable DB 无残留。
 - 当前 mock provider contract 和 registry 仍未接 runtime，不读取真实密钥，不执行 payment workflow。
 - 下一项建议为 `mock-provider-runtime-gate-validation-plan`，只规划组合验证，不接 runtime。
+
+## Round 131 更新
+
+- `mock-provider-runtime-gate-validation-plan` 已完成，见 `docs/mock-provider-runtime-gate-validation-plan.md`。
+- 本轮只写文档，规划 mock provider contract、registry、runtime gate 和 preprod disposable DB gate 的组合验证矩阵。
+- 未修改 `apps/**` 或 `packages/**`，未接 runtime，未注册 provider，未执行 payment workflow。
+- 下一项建议为 `mock-provider-runtime-gate-composition-tests`，只新增纯函数组合测试。

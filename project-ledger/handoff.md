@@ -921,3 +921,10 @@
 - 本轮只规划商家主页装修只读模型，覆盖 Storefront 公开快照、Vendor 预览、Admin 审核入口和高风险边界。
 - 明确装修不改变商品、库存、订单、支付、退款、结算、佣金、权限、履约或 checkout shipping options。
 - 推荐下一项：`shop-decoration-readonly-contract`。
+
+## Round 159 更新
+
+- `shop-decoration-readonly-contract` 已完成，见 `docs/shop-decoration-readonly-contract.md`。
+- 新增 `buildChinaShopDecorationReadonlyView()`，输出店铺装修只读 view shape。
+- 合同明确模块全部不可编辑，装修不影响商品、库存、checkout、订单、支付、退款、结算、佣金、权限、文件上传、直播或履约。
+- 推荐下一项：`logistics-and-waybill-boundary-plan`。

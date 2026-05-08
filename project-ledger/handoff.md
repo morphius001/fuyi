@@ -949,3 +949,10 @@
 - 本轮重新固化消费者流程：持卡识别权益、补齐规格/地址/自提时间、提交提货申请、生成提货单、进入履约。
 - 明确提货卡不是优惠券、满减券、折扣券、储值卡、余额、支付方式或普通购物抵扣。
 - 推荐下一项：`pickup-card-consumer-flow-contract`。
+
+## Round 163 更新
+
+- `pickup-card-consumer-flow-contract` 已完成，见 `docs/pickup-card-consumer-flow-contract.md`。
+- 新增 `buildChinaPickupCardConsumerFlowView()`，输出消费者提货步骤、权益模式、履约要求、消费者状态和高风险阻塞项。
+- 合同明确所有步骤不创建 payment 或 ordinary order，权益不能换目录商品、不能转余额、不能抵扣 cart total。
+- 推荐下一项：`live-commerce-readonly-plan`。

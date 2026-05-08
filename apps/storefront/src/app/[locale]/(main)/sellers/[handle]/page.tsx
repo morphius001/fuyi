@@ -192,6 +192,53 @@ const readMarketMetadataText = (
   return typeof value === "string" && value.trim() ? value : undefined
 }
 
+const getShopProductTag = (product: {
+  title: string
+  specText?: string
+  stockText?: string
+}) => {
+  const values = [product.title, product.specText, product.stockText].join(" ")
+
+  if (values.includes("冷冻")) {
+    return "冷冻"
+  }
+
+  if (values.includes("冰鲜")) {
+    return "冰鲜"
+  }
+
+  if (values.includes("干货")) {
+    return "干货"
+  }
+
+  if (values.includes("菜") || values.includes("蔬")) {
+    return "蔬菜"
+  }
+
+  return "鲜活"
+}
+
+const getShopProductHint = (product: {
+  specText?: string
+  stockText?: string
+}) => {
+  const values = [product.specText, product.stockText].join(" ")
+
+  if (values.includes("冷链")) {
+    return "冷链可送"
+  }
+
+  if (values.includes("礼盒") || values.includes("预订")) {
+    return "礼盒可送"
+  }
+
+  if (values.includes("鲜活") || values.includes("剩")) {
+    return "建议自提"
+  }
+
+  return "今日可送"
+}
+
 const formatMarketDeliveryName = (name: string) => {
   if (name.includes("统一配送")) {
     return "市场统一配送"
@@ -318,6 +365,19 @@ export default async function SellerPage({
         source: matchedMarket ? "market_readonly_api" : "static_profile",
       },
     ],
+    products: shop.products.map(([name, spec, price, stock], index) => ({
+      id: `${handle}-reference-${index}`,
+      title: name,
+      handle: `${handle}-reference-${index}`,
+      sellerId: handle,
+      sellerName: shop.name,
+      market: shop.market,
+      booth: shop.booth,
+      priceText: price,
+      specText: spec,
+      stockText: stock,
+      source: "placeholder",
+    })),
   })
   const shopHeader = shopViewModel.seller
   const shopMarketContext = shopViewModel.marketContext
@@ -328,6 +388,15 @@ export default async function SellerPage({
     .filter(Boolean)
   const showLiveBadge =
     shop.live && shopViewModel.livePlacement === "seller_status_badge"
+  const shopReferenceProducts = shopViewModel.products.map((product) => ({
+    id: product.id,
+    name: product.title,
+    spec: product.specText ?? "规格待配置",
+    price: product.priceText ?? "到店询价",
+    stock: product.stockText ?? "到店确认",
+    tag: getShopProductTag(product),
+    productHint: getShopProductHint(product),
+  }))
   const sellerProductIds = sellerResponse?.product_ids ?? []
   const {
     response: { products: realProducts, count: realProductCount },
@@ -484,13 +553,13 @@ export default async function SellerPage({
             <span className="text-[12px] leading-4 text-secondary">以商家确认为准</span>
           </div>
           <div className="mt-3 grid gap-3">
-            {shop.products.map(([name, spec, price, stock, tag, productHint], index) => (
-              <article key={name} className="rounded-lg border border-[#E5E7EB] bg-white p-3">
+            {shopReferenceProducts.map((product, index) => (
+              <article key={product.id} className="rounded-lg border border-[#E5E7EB] bg-white p-3">
                 <div className="grid grid-cols-[88px_minmax(0,1fr)] gap-3">
                   <div className="relative h-[88px] overflow-hidden rounded-lg bg-[#F5F7FA]">
                     <Image
                       src={shopHeroImage}
-                      alt={name}
+                      alt={product.name}
                       fill
                       unoptimized
                       sizes="88px"
@@ -506,21 +575,21 @@ export default async function SellerPage({
                   <div className="min-w-0">
                     <div className="flex min-w-0 items-center gap-1.5">
                       <p className="min-w-0 truncate text-[15px] font-semibold leading-5">
-                        {name}
+                        {product.name}
                       </p>
                       <span className="shrink-0 rounded-full bg-[#EFF6FF] px-2 py-0.5 text-[11px] leading-4 text-[#1D4ED8]">
-                        {productHint}
+                        {product.productHint}
                       </span>
                     </div>
                     <p className="mt-1 truncate text-[12px] leading-4 text-secondary">
-                      {spec}
+                      {product.spec}
                     </p>
                     <p className="mt-2 text-[20px] font-semibold leading-6 text-[#EA580C]">
-                      {price}
+                      {product.price}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      <span className={`rounded-full px-2 py-0.5 text-[11px] leading-4 ${tagStyles[tag] || "bg-[#F8FAFC] text-secondary"}`}>
-                        {tag}
+                      <span className={`rounded-full px-2 py-0.5 text-[11px] leading-4 ${tagStyles[product.tag] || "bg-[#F8FAFC] text-secondary"}`}>
+                        {product.tag}
                       </span>
                       <span className="rounded-full bg-[#E6F7F2] px-2 py-0.5 text-[11px] leading-4 text-[#0F8F6B]">
                         {index === 0 ? "今日到货" : "档口常卖"}
@@ -529,7 +598,7 @@ export default async function SellerPage({
                   </div>
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-3 text-[12px] leading-5 text-secondary">
-                  <span>库存：{stock}</span>
+                  <span>库存：{product.stock}</span>
                   {index === 0 ? (
                     <span className="inline-flex h-8 items-center rounded-full bg-[#F8FAFC] px-3 text-[12px] font-semibold text-secondary">
                       进店后确认规格
@@ -697,12 +766,12 @@ export default async function SellerPage({
             <p className="text-sm text-secondary">价格和库存会随到货变化，购买前以商家确认为准</p>
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {shop.products.map(([name, spec, price, stock, tag, productHint], index) => (
-              <article key={name} className="rounded-sm border border-[#E5E7EB] bg-white p-4">
+            {shopReferenceProducts.map((product, index) => (
+              <article key={product.id} className="rounded-sm border border-[#E5E7EB] bg-white p-4">
                 <div className="relative mb-3 aspect-[4/3] overflow-hidden rounded-sm bg-[#F5F7FA]">
                   <Image
                     src={shopHeroImage}
-                    alt={name}
+                    alt={product.name}
                     fill
                     sizes="260px"
                     className="object-cover"
@@ -716,19 +785,19 @@ export default async function SellerPage({
                 </div>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="label-lg">{name}</p>
-                    <p className="mt-1 text-sm text-secondary">{spec}</p>
+                    <p className="label-lg">{product.name}</p>
+                    <p className="mt-1 text-sm text-secondary">{product.spec}</p>
                   </div>
-                  <span className={`shrink-0 rounded-sm px-2 py-1 text-[12px] leading-4 ${tagStyles[tag] || "bg-[#F8FAFC] text-secondary"}`}>
-                    {tag}
+                  <span className={`shrink-0 rounded-sm px-2 py-1 text-[12px] leading-4 ${tagStyles[product.tag] || "bg-[#F8FAFC] text-secondary"}`}>
+                    {product.tag}
                   </span>
                 </div>
                 <p className="mt-3 text-[24px] font-semibold leading-[30px] text-[#EA580C]">
-                  {price}
+                  {product.price}
                 </p>
-                <p className="mt-2 text-sm text-secondary">到货：{stock}</p>
+                <p className="mt-2 text-sm text-secondary">到货：{product.stock}</p>
                 <p className="mt-1 text-sm text-secondary">
-                  商品提示：{productHint}
+                  商品提示：{product.productHint}
                 </p>
                 <button
                   disabled

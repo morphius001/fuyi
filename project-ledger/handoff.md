@@ -1356,3 +1356,12 @@
 - 商品入口仍走搜索页，不新增商品详情、加购、库存占用、结算或履约动作。
 - cart、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
 - 下一项建议继续 `storefront-shop-product-cards-binding-readonly`，只绑定店铺页商品卡展示，不改 cart/order/checkout。
+
+## Round 217 更新
+
+- `storefront-shop-product-cards-binding-readonly` 已完成，见 `docs/storefront-shop-product-cards-binding-readonly.md`。
+- 店铺页服务端页面现在把当前店铺样例商品展示输入传给 `buildChinaShopViewModel(...)`。
+- 移动端“档口今日参考”和桌面“常卖鲜货”读取 `shopViewModel.products` 派生字段。
+- 真实商品卡仍走 Store API 和 `ProductCard`，不新增商品详情、加购、库存占用、结算或履约动作。
+- cart、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
+- 第一百零五轮 Storefront adapter 页面绑定队列已清空，下一步建议做绑定验证收口任务。

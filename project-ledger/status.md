@@ -487,3 +487,9 @@
 - `storefront-search-product-discovery-source-binding`: done，搜索页“相关鲜货展示 / 市场样例”优先读取商品发现只读 client 的真实 `store_product_table` 且带 seller handle 的结果，空结果回退静态 `productResults`。
 - 真实可加购商品继续走 Store API / `ProductCard`，本轮不修改首页、店铺页、`packages/api/**`、cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 236 更新
+
+- `storefront-shop-product-discovery-source-binding`: done，店铺页“档口今日参考 / 常卖鲜货”优先读取商品发现只读 client 的当前 seller handle `store_product_table` 结果，空结果回退静态 `shop.products`。
+- 真实可加购商品继续走 seller product ids + Store API / `ProductCard`，本轮不修改首页、搜索页、`packages/api/**`、cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

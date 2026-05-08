@@ -296,3 +296,4 @@
 - 完成 `storefront-shop-product-discovery-source-binding`，店铺页“档口今日参考 / 常卖鲜货”优先读取 `retrieveChinaProductDiscovery({ sellerHandle })` 的真实 `store_product_table` 结果，再交给 `buildChinaShopViewModel()` 输出 `products`；真实可加购商品仍走 seller product ids + Store API / `ProductCard`，不改首页、搜索页、`packages/api/**` 或交易/履约链路；Storefront build、`git diff --check` 和子智能体只读复核通过。
 - 完成 `storefront-product-discovery-binding-validation`，docs-only 汇总 PR #281-#283 的首页、搜索页和店铺页商品发现只读绑定状态、验证范围、风险和回滚方式；不修改 `apps/**` 或 `packages/**`。
 - 完成 `storefront-product-discovery-phase-rollup`，docs-only 汇总 PR #277-#284 的商品发现 read model 阶段，从 builder、Store API、Storefront client 到首页/搜索/店铺绑定；明确下一阶段只能继续 QA runbook、observability plan 或 next-data plan，不能自动进入交易/履约/权限高风险 runtime。
+- 完成 `storefront-product-discovery-qa-runbook`，docs-only 新增首页、搜索页和店铺页商品发现只读绑定人工 QA runbook，覆盖 API 可用、fallback、无商品结果、截图证据和失败判定。

@@ -1542,3 +1542,11 @@
 - 当前链路仍只读展示，不是价格、库存、履约、订单、结算、佣金、权限或支付事实来源。
 - 下一阶段建议只做 QA runbook、observability plan 或 next-data plan；任何真实交易、履约、权限或 provider runtime 必须单独串行。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 239 更新
+
+- `storefront-product-discovery-qa-runbook` 已完成，见 `docs/storefront-product-discovery-qa-runbook.md`。
+- Runbook 覆盖首页、搜索页和店铺页的 API 可用、API fallback、无商品结果、截图证据、失败判定和回滚路径。
+- 截图产物如写入 `docs/visual-qa-artifacts/`，仍必须作为本地 QA 产物，不纳入 PR。
+- 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

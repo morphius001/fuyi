@@ -1059,3 +1059,10 @@
 - 本轮固化消费者端模板合同：首页、搜索/类目、店铺/档口、商品详情、提货卡独立页和移动端 App-like 模板。
 - 明确物料供应商、配送供应商和上游供给关系默认不进入消费者首页主路径；配送方式主要挂在店铺/档口和结算确认。
 - 下一项建议继续 `admin-template-contract-plan`。
+
+## Round 178 更新
+
+- `admin-template-contract-plan` 已完成，见 `docs/admin-template-contract-plan.md`。
+- 本轮固化平台运营后台模板合同：首页、菜单、市场、商户、商品审核、提货卡、营销、客服、直播、风控和系统配置。
+- 明确 Admin 模板只能呈现运营视图，不能替代 RBAC、审计、支付成功、订单、退款、结算、佣金、打款或履约事实来源。
+- 下一项建议继续 `vendor-template-contract-plan`。

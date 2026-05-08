@@ -140,3 +140,77 @@ export type AddVendorProductDraftSuggestionInput = {
   actorId: string;
   suggestion: Omit<VendorProductDraftSuggestion, "id" | "draftId" | "createdAt">;
 };
+
+export type VendorMobileDraftFieldKey =
+  | "title"
+  | "category_id"
+  | "spec_template_id"
+  | "price_payload"
+  | "sales_unit"
+  | "stock_text"
+  | "image_refs"
+  | "fulfillment_hints";
+
+export type VendorMobileDraftFieldSource =
+  | "merchant_input"
+  | "spec_template_readonly"
+  | "ai_suggestion"
+  | "market_context_readonly";
+
+export type VendorMobileDraftContractFieldView = {
+  key: VendorMobileDraftFieldKey;
+  label: string;
+  requiredForMobileSave: boolean;
+  source: VendorMobileDraftFieldSource;
+  merchantConfirmRequired: boolean;
+};
+
+export type VendorMobileDraftContractStageKey =
+  | "mobile_capture"
+  | "draft_saved"
+  | "ai_suggested"
+  | "merchant_reviewing"
+  | "pending_platform_review"
+  | "ready_for_product_create";
+
+export type VendorMobileDraftContractStageView = {
+  key: VendorMobileDraftContractStageKey;
+  label: string;
+  createsProduct: false;
+  createsInventory: false;
+  requiresAudit: boolean;
+};
+
+export type VendorMobileDraftContractBoundaryKey =
+  | "real_product_creation"
+  | "inventory_initialization"
+  | "product_publish"
+  | "real_ai_provider"
+  | "wechat_integration"
+  | "order"
+  | "payment"
+  | "refund"
+  | "settlement"
+  | "commission"
+  | "permission"
+  | "fulfillment";
+
+export type VendorMobileDraftContractBoundaryView = {
+  key: VendorMobileDraftContractBoundaryKey;
+  status: "blocked_serial_work";
+  reason: string;
+};
+
+export type VendorMobileDraftProductContractView = {
+  mode: "vendor_mobile_draft_product_contract_read_only";
+  source: "china_product_drafts";
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
+  fields: VendorMobileDraftContractFieldView[];
+  stages: VendorMobileDraftContractStageView[];
+  highRiskBoundaries: VendorMobileDraftContractBoundaryView[];
+  readOnly: true;
+  runtimeEnabled: false;
+  note: string;
+};

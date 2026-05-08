@@ -907,3 +907,10 @@
 - 本轮只梳理手机快速上架最小字段、规格模板读取、AI suggestion、草稿状态和真实商品创建前置条件。
 - 明确 AI 不直接发布商品，手机草稿不创建库存，`ready_for_product_create` 也只是候选。
 - 推荐下一项：`vendor-mobile-draft-product-contract`。
+
+## Round 157 更新
+
+- `vendor-mobile-draft-product-contract` 已完成，见 `docs/vendor-mobile-draft-product-contract.md`。
+- 新增 `buildVendorMobileDraftProductContract()`，输出手机草稿字段、阶段和高风险阻塞项。
+- 合同明确所有草稿阶段都不创建商品、不创建库存；AI/微信/真实商品发布仍是串行高风险。
+- 推荐下一项：`shop-decoration-readonly-plan`。

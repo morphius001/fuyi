@@ -214,3 +214,4 @@
 - 完成 `merchant-role-capability-readiness`，docs-only 整理商户/供应商/上游角色能力矩阵和高风险禁止项。
 - 完成 `merchant-role-capability-contract`，新增商户角色能力只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `vendor-mobile-draft-product-readiness`，docs-only 梳理手机快速上架、规格模板、AI suggestion、审核候选和真实商品创建分离边界。
+- 完成 `vendor-mobile-draft-product-contract`，新增手机快速上架草稿只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。

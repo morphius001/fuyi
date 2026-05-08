@@ -1470,3 +1470,11 @@
 - API 计划明确 `priceText` / `stockText` 仍是展示字段，query / market / seller / category 只做展示过滤，不写 checkout、订单、库存、支付、退款、结算、佣金、权限、履约或物流。
 - 本轮不修改 `apps/**` 或 `packages/**` 运行时代码，不新增 route，不读 DB，不接 provider。
 - 验证通过：`git diff --check`、子智能体只读复核。
+
+## Round 230 更新
+
+- `product-discovery-read-model-builder` 已完成，见 `docs/product-discovery-read-model-builder.md`。
+- 新增 `packages/api/src/lib/china-product-discovery-read-model.ts`，作为未来 `/store/china/product-discovery` 的纯 TypeScript builder。
+- Builder 支持 query、market、sellerHandle、categoryHandle 和 sellerProductIds 过滤，默认排除物料、配送供应商、上游、种苗、外地批发等 B 端内容。
+- 当前没有新增 API route、没有读 DB、没有注册 module、没有修改 Storefront 页面或 `ProductCard`。
+- 验证通过：focused unit test、API typecheck、`git diff --check`、子智能体只读复核；复核建议的 metadata / category B 端过滤已补强。

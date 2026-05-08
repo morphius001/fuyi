@@ -287,3 +287,4 @@
 - 完成 `storefront-product-discovery-input-contract`，新增 Storefront 商品发现输入共享只读合同，明确首页鲜货、搜索真实商品、店铺真实商品和店铺参考商品的 source order 与 blocked runtime；不改页面、Store API、`ProductCard` 或交易链路。
 - 完成 `storefront-read-model-source-phase-rollup`，docs-only 汇总 PR #267-#274 的 Storefront read model source 阶段状态、验证结论和后续高风险边界；不修改运行时代码。
 - 完成 `storefront-product-discovery-api-plan`，docs-only 规划未来 `/store/china/product-discovery` 只读 API、read model builder、Storefront client 和分 surface binding 顺序；不修改 `apps/**` 或 `packages/**`。
+- 完成 `product-discovery-read-model-builder`，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests，支持 query / market / seller / category / seller product ids 展示过滤、B 端内容过滤和 static fallback；不新增 route、不读 DB、不改 Storefront。

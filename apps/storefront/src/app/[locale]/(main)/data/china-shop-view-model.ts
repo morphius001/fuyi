@@ -103,6 +103,7 @@ type ChinaShopDataSource = {
   source:
     | 'seller_market_membership'
     | 'seller_and_category_tables'
+    | 'store_product_table'
     | 'seller_summary'
     | 'market_contract'
     | 'static_read_model'
@@ -513,7 +514,11 @@ export const buildChinaShopViewModel = ({
       },
       {
         key: 'products',
-        source: products?.length ? 'static_read_model' : 'static_fallback',
+        source: products?.some(product => product.source === 'store_product_table')
+          ? 'store_product_table'
+          : products?.length
+            ? 'static_read_model'
+            : 'static_fallback',
         fallbackUsed: !products?.length
       },
       {

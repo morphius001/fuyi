@@ -1518,3 +1518,11 @@
 - Product discovery 空结果或 client fallback 时，`buildChinaSearchViewModel()` 继续使用静态 `productResults` fallback。
 - 真实可加购商品仍走 Store API / `ProductCard`；本轮只改搜索页 adapter 展示输入和任务/ledger 文档。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 236 更新
+
+- `storefront-shop-product-discovery-source-binding` 已完成，见 `docs/storefront-shop-product-discovery-source-binding.md`。
+- 店铺页现在读取当前 seller handle 的 product discovery；“档口今日参考 / 常卖鲜货”商品字段优先来自真实 `store_product_table` 商品发现结果。
+- Product discovery 空结果或 client fallback 时，`buildChinaShopViewModel()` 继续使用静态 `shop.products` fallback。
+- 真实可加购商品仍走 seller product ids + Store API / `ProductCard`；本轮只改店铺页 adapter 展示输入、shop adapter data source 标记和任务/ledger 文档。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

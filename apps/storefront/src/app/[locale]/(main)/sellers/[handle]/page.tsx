@@ -9,11 +9,13 @@ import {
   type ChinaMarket,
   type ChinaMarketMembership,
 } from "@/lib/data/china-markets"
+import { retrieveChinaProductDiscovery } from "@/lib/data/china-product-discovery"
 import { retrieveChinaSeller } from "@/lib/data/china-sellers"
 import { listProducts } from "@/lib/data/products"
 import {
   buildChinaShopViewModel,
   type ChinaShopMembershipInput,
+  type ChinaShopProductCardInput,
 } from "../../data/china-shop-view-model"
 
 const shopHeroImage = "/images/local-market/seafood-market-hero.png"
@@ -370,6 +372,29 @@ const buildShopMembershipInput = ({
   source: membership ? "seller_market_membership" : shop.dataSource,
 })
 
+const buildStaticShopProductInputs = ({
+  handle,
+  shop,
+  shopMembership,
+}: {
+  handle: string
+  shop: ResolvedShopProfile
+  shopMembership: ChinaShopMembershipInput
+}): ChinaShopProductCardInput[] =>
+  shop.products.map(([name, spec, price, stock], index) => ({
+    id: `${handle}-reference-${index}`,
+    title: name,
+    handle: `${handle}-reference-${index}`,
+    sellerId: shopMembership.sellerId,
+    sellerName: shopMembership.sellerName,
+    market: shop.market,
+    booth: shop.booth,
+    priceText: price,
+    specText: spec,
+    stockText: stock,
+    source: "placeholder",
+  }))
+
 export async function generateMetadata({
   params,
 }: {
@@ -395,7 +420,13 @@ export default async function SellerPage({
     shopProfiles["a-hai-xian-huo-dang"]
   const sellerResponse = await retrieveChinaSeller(handle)
   const shop = resolveShopProfile(baseShop, sellerResponse?.seller)
-  const chinaMarkets = await retrieveChinaMarkets()
+  const [chinaMarkets, chinaProductDiscovery] = await Promise.all([
+    retrieveChinaMarkets(),
+    retrieveChinaProductDiscovery({
+      sellerHandle: handle,
+      limit: 8,
+    }),
+  ])
   const matchedMarket = chinaMarkets.items.find(
     (market) => market.name === shop.market
   )
@@ -422,6 +453,30 @@ export default async function SellerPage({
     seller: sellerResponse?.seller,
     membership: sellerMembership,
   })
+  const staticShopProductInputs = buildStaticShopProductInputs({
+    handle,
+    shop,
+    shopMembership,
+  })
+  const productDiscoveryInputs = chinaProductDiscovery.items
+    .filter(
+      (product) =>
+        product.source === "store_product_table" &&
+        product.sellerHandle === handle
+    )
+    .map((product) => ({
+      id: product.id,
+      title: product.title,
+      handle: product.handle,
+      sellerId: product.sellerId ?? shopMembership.sellerId,
+      sellerName: product.sellerName ?? shopMembership.sellerName,
+      market: product.market ?? shop.market,
+      booth: product.booth ?? shop.booth,
+      priceText: product.priceText,
+      specText: product.specText,
+      stockText: product.stockText,
+      source: "store_product_table",
+    }))
   const shopViewModel = buildChinaShopViewModel({
     handle,
     membership: shopMembership,
@@ -452,19 +507,11 @@ export default async function SellerPage({
         source: matchedMarket ? "market_readonly_api" : "static_profile",
       },
     ],
-    products: shop.products.map(([name, spec, price, stock], index) => ({
-      id: `${handle}-reference-${index}`,
-      title: name,
-      handle: `${handle}-reference-${index}`,
-      sellerId: shopMembership.sellerId,
-      sellerName: shopMembership.sellerName,
-      market: shop.market,
-      booth: shop.booth,
-      priceText: price,
-      specText: spec,
-      stockText: stock,
-      source: "placeholder",
-    })),
+    products: productDiscoveryInputs.length ? productDiscoveryInputs : undefined,
+    fallback: {
+      products: staticShopProductInputs,
+      notice: "店铺商品展示待后台更新。",
+    },
   })
   const shopHeader = shopViewModel.seller
   const shopMarketContext = shopViewModel.marketContext

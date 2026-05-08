@@ -1590,3 +1590,11 @@
 - 后续如果做 debug banner，只能显示 source、item count、fallback used/reason 和 filter key names；不能显示原始搜索词、用户身份、订单/支付/退款/结算字段。
 - 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 245 更新
+
+- `storefront-discovery-status-sync` 已完成，见 `docs/storefront-discovery-status-sync.md`。
+- PR #277-#291 的商品发现 read model、Store API readonly route、Storefront client、页面展示绑定、QA runbook、observability plan、data inventory、sourceTags 和 validation 均已合并。
+- 当前安全下一步仅限 docs-only debug banner plan、audience field plan 或后续 validation。
+- 不得自动进入真实搜索排序、广告、推荐、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实 provider、Admin 写接口或 migration。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

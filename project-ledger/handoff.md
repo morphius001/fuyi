@@ -789,3 +789,11 @@
 - 单测覆盖默认 disabled、runtime requested、production blocked、缺 registry、accepted、duplicate、missing signature 和不泄露 workflow/checkout 字段。
 - 仍未注册 Medusa payment provider，未接真实支付宝/微信支付，未执行 payment workflow，未改变 checkout、order、payment、refund、settlement、commission 或 permission 状态。
 - 下一项建议为 `mock-provider-runtime-local-inbox-only-validation`，记录合并后 harness/typecheck/runtime grep/DB 无残留。
+
+## Round 141 更新
+
+- `mock-provider-runtime-local-inbox-only-validation` 已完成，见 `docs/mock-provider-runtime-local-inbox-only-validation.md`。
+- PR #187 已合并，merge commit `528b26868b2096a413f3e448f15ea4d3fff6ae45`。
+- 合并后验证通过：payment notification harness 21 suites / 143 tests、API typecheck、`git diff --check`、`medusa-config.ts` runtime grep 无注册、disposable DB 无残留。
+- 子 AG 指出的实际 PG 连接本地性校验和 signature header name 泄露风险已在 PR #187 内修复。
+- 下一项建议为 `mock-provider-runtime-local-smoke-script-plan`，只规划 provider route local disposable DB smoke wrapper，不直接接真实支付。

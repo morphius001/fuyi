@@ -1550,3 +1550,11 @@
 - 截图产物如写入 `docs/visual-qa-artifacts/`，仍必须作为本地 QA 产物，不纳入 PR。
 - 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 240 更新
+
+- `product-discovery-observability-plan` 已完成，见 `docs/product-discovery-observability-plan.md`。
+- 本轮只规划商品发现只读链路的 source、fallback、item count、filter keys 和 API status 等低风险观测字段。
+- 不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
+- 后续如实现，必须先做 source tags / dev-only debug banner / validation 小 PR，不得直接接第三方 analytics 或生产埋点。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

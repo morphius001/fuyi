@@ -774,3 +774,9 @@
 - 验证通过：payment notification harness 21 suites / 137 tests、API typecheck、runtime grep 未注册、disposable DB 无残留。
 - 当前 `POST /china/payment-providers/mock` 仍只是 disabled skeleton，不读 body、不接 DB、不执行 workflow。
 - 下一项建议为 `mock-provider-runtime-local-inbox-only-plan`，只规划 local disposable DB inbox-only runtime。
+
+## Round 139 更新
+
+- `mock-provider-runtime-local-inbox-only-plan` 已完成，见 `docs/mock-provider-runtime-local-inbox-only-plan.md`。
+- 本轮只写文档，规划 local disposable DB inbox-only route 顺序、local DB gate、accepted/duplicate/rejected smoke 和禁止项。
+- 下一项可做 `mock-provider-runtime-local-inbox-only-skeleton`，但只能接 local disposable DB，仍不得执行 payment workflow。

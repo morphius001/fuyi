@@ -521,3 +521,10 @@
 - 计划只允许低风险聚合字段：surface、source、item count、filter keys、fallback used 和 API status。
 - 不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 241 更新
+
+- `storefront-discovery-next-data-plan`: done，docs-only 规划 Storefront discovery 下一轮只读数据质量要求。
+- 覆盖 market、seller membership、category 和 product discovery 的最小字段、质量要求、验收顺序和阻断工作。
+- 本轮不修改 `apps/**` 或 `packages/**`，不新增 migration、API route、写接口或 runtime。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

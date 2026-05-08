@@ -1262,6 +1262,7 @@
 
 1. `product-discovery-read-model-builder`: done，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests，不新增 route、不读 DB。
 2. `product-discovery-store-api-readonly`: done，新增 `/store/china/product-discovery` 只读 GET route、helpers 和 focused tests，不改 Storefront 或交易链路。
+3. `storefront-product-discovery-client`: done，新增 Storefront 商品发现只读 fetcher 和空 fallback，不接页面或交易链路。
 
 第九十三轮原则：
 

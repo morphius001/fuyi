@@ -1245,3 +1245,10 @@
 - 验证通过：template registry readonly contract、home mapper、shop mapper、search mapper、China read models、API typecheck、`git diff --check`。
 - 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
 - 下一项建议继续 `storefront-home-view-model-adapter-plan`，docs-only 细化首页 adapter 输入输出，不改页面。
+
+## Round 203 更新
+
+- `storefront-home-view-model-adapter-plan` 已完成，见 `docs/storefront-home-view-model-adapter-plan.md`。
+- 本轮只规划首页 adapter，不改 `apps/**` 或 `packages/**`。
+- 明确 adapter 后续只负责 discovery / product card / static fallback 输入合成，不改页面布局，不碰 cart、checkout、order、payment 或 fulfillment。
+- 下一项建议继续 `storefront-shop-view-model-adapter-plan`，docs-only 细化店铺 adapter 输入输出。

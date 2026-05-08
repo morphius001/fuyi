@@ -13,6 +13,31 @@ type TemplateDefinition = Omit<
 
 const storefrontTemplates: TemplateDefinition[] = [
   {
+    templateId: "storefront-home-market-shop-v2",
+    surface: "storefront",
+    scenario: "home",
+    label: "消费者首页：市场、档口和今日鲜货",
+    status: "preview",
+    version: "v2",
+    viewModelContract: "storefront_home_template_view",
+    slots: [
+      "market_context",
+      "search",
+      "category_groups",
+      "shop_cards",
+      "product_cards",
+      "pickup_card_entry",
+      "market_announcements",
+      "service_links",
+    ],
+    visibility: "consumer_default_visible",
+    consumerFacing: true,
+    notes: [
+      "首页主路径是选市场、找店/档口、看今日鲜货。",
+      "物料、配送供应商、上游供给、种苗批发和外地批发商默认不进入消费者首页主路径。",
+    ],
+  },
+  {
     templateId: "storefront-home-market-shop-v1",
     surface: "storefront",
     scenario: "home",
@@ -31,6 +56,29 @@ const storefrontTemplates: TemplateDefinition[] = [
     visibility: "consumer_default_visible",
     consumerFacing: true,
     notes: ["物料、配送供应商和上游供给关系默认不进入消费者首页。"],
+  },
+  {
+    templateId: "storefront-shop-stall-v2",
+    surface: "storefront",
+    scenario: "shop",
+    label: "店铺/档口主页：市场和履约说明",
+    status: "preview",
+    version: "v2",
+    viewModelContract: "storefront_shop_template_view",
+    slots: [
+      "shop_profile",
+      "market_context",
+      "fulfillment_hint",
+      "live_status",
+      "product_cards",
+      "market_announcements",
+    ],
+    visibility: "consumer_default_visible",
+    consumerFacing: true,
+    notes: [
+      "配送、自提、营业时间和公告属于店铺/档口能力。",
+      "商品卡不作为 checkout shipping options、真实运费或履约事实来源。",
+    ],
   },
   {
     templateId: "storefront-shop-stall-v1",
@@ -67,6 +115,29 @@ const storefrontTemplates: TemplateDefinition[] = [
 ];
 
 const adminTemplates: TemplateDefinition[] = [
+  {
+    templateId: "admin-dashboard-ops-v2",
+    surface: "admin",
+    scenario: "dashboard",
+    label: "平台运营首页：首屏指标和重点模块",
+    status: "preview",
+    version: "v2",
+    viewModelContract: "admin_dashboard_template_view",
+    slots: [
+      "kpi_cards",
+      "data_source_notice",
+      "todos",
+      "risk_alerts",
+      "quick_actions",
+      "focus_modules",
+    ],
+    visibility: "admin_default_visible",
+    consumerFacing: false,
+    notes: [
+      "首页指标是展示数据，不替代真实订单、支付、库存或结算报表。",
+      "快捷入口必须保持只读或禁用，直到后端权限、审计和真实 API 完成。",
+    ],
+  },
   {
     templateId: "admin-dashboard-ops-v1",
     surface: "admin",
@@ -109,6 +180,30 @@ const adminTemplates: TemplateDefinition[] = [
 ];
 
 const vendorTemplates: TemplateDefinition[] = [
+  {
+    templateId: "vendor-role-workspace-v2",
+    surface: "vendor",
+    scenario: "dashboard",
+    label: "商户多角色经营看板",
+    status: "preview",
+    version: "v2",
+    viewModelContract: "vendor_role_workspace_template_view",
+    slots: [
+      "role_context",
+      "market_context",
+      "kpi_cards",
+      "todos",
+      "quick_actions",
+      "risk_alerts",
+      "role_workspace_cards",
+    ],
+    visibility: "merchant_default_visible",
+    consumerFacing: false,
+    notes: [
+      "角色卡只展示工作重点和禁止边界，不代表真实权限已经生效。",
+      "物料供应商、配送供应商和上游供给必须另走平台审核、权限、履约、结算和日志边界。",
+    ],
+  },
   {
     templateId: "vendor-role-workspace-v1",
     surface: "vendor",

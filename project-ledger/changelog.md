@@ -252,3 +252,4 @@
 - 完成 `template-preview-v2-validation`，汇总 Storefront 首页、Storefront 店铺页、Admin 首页和 Vendor 多角色经营看板四个 template v2 surface 的验证结果、风险和下一轮 docs-only 方向。
 - 完成 `template-registry-surface-binding-plan`，docs-only 规划四个 v2 surface 如何先扩 template registry / stable view model，再逐端绑定页面，避免继续把模板状态散写在 UI 里。
 - 完成 `storefront-template-data-source-plan`，docs-only 规划 Storefront 首页、搜索和店铺页从静态展示数据迁到 home/search/shop view model mapper 与只读 discovery/market/seller 数据源。
+- 完成 `template-registry-v2-contract`，新增四个 v2 template ids 到未注册只读 template registry contract，并补充 focused tests；仍不接 route、不接 DB、不改变三端页面或交易链路。

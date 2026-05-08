@@ -1012,3 +1012,11 @@
 - Admin/Vendor/Storefront 三端只读合同规划已收口，下一轮可以进入小范围 UI PR。
 - 下一轮建议顺序：`admin-readonly-contracts-panel-ui`、`vendor-readonly-contracts-panel-ui`、`storefront-visibility-copy-polish`、`readonly-contracts-ui-validation`。
 - 仍禁止真实写接口、migration、交易链路、支付/退款/结算/佣金/权限、真实履约、真实直播和真实提货卡兑换。
+
+## Round 172 更新
+
+- `admin-readonly-contracts-panel-ui` 已完成，见 `docs/admin-readonly-contracts-panel-ui.md`。
+- Admin 新增平台设置下的“能力合同总览”只读页面：`/dashboard/cn/operations/capability-contracts`。
+- 页面使用前端静态只读数据，不新增后端 route，不写配置，不影响订单、支付、退款、结算、佣金、打款、权限、checkout、履约或真实 Provider。
+- 验证通过：i18n JSON parse、`git diff --check`、Admin lint、Admin build。
+- 下一项建议继续 `vendor-readonly-contracts-panel-ui`。

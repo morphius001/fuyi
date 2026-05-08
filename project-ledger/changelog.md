@@ -229,3 +229,4 @@
 - 完成 `vendor-readonly-contracts-panel-plan`，docs-only 规划 Vendor 我的能力边界只读面板和 UI PR 边界。
 - 完成 `storefront-readonly-contracts-visibility-plan`，docs-only 规划消费者侧只读 contract 可见性、隐藏规则和 UI PR 边界。
 - 完成 `readonly-contracts-ui-planning-validation`，docs-only 汇总三端只读合同 UI 规划完成状态和下一轮 UI PR 顺序。
+- 完成 `admin-readonly-contracts-panel-ui`，Admin 新增 `/dashboard/cn/operations/capability-contracts` 能力合同总览页面；前端静态只读数据展示商户角色、商家运营、消费者可见能力和高风险串行边界，不新增后端 route，不提供保存、发布、审核、删除或开关生效动作；Admin lint/build、i18n JSON parse 和 `git diff --check` 通过。

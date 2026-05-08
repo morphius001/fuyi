@@ -233,6 +233,10 @@
       }
     },
     "pages": {
+      "capabilityContracts": {
+        "title": "能力合同总览",
+        "description": "平台运营人员只读查看中国本地化能力边界、展示端和后续 PR 状态；本页不保存配置、不改变权限或交易流程。"
+      },
       "moduleSwitches": {
         "title": "模块开关",
         "description": "平台全局模块开关占位页，用于规划哪些能力开放、试点、审核或暂停；当前不会真实影响 Vendor 菜单。"
@@ -1395,6 +1399,219 @@
         "originSupply": "产地直供范围",
         "seedlingArea": "种苗服务范围",
         "crossRegion": "跨区域批发范围"
+      }
+    },
+    "readonlyContracts": {
+      "actions": {
+        "exportDisabled": "导出占位",
+        "readonly": "只读总览"
+      },
+      "boundary": {
+        "title": "只读合同与安全边界",
+        "badge": "不生效",
+        "description": "这里展示的是中国本地化能力合同、可见端和后续 PR 计划。它不是 feature flag、不是 RBAC、不是支付或结算配置，也不会改变订单、支付、退款、结算、佣金、打款或权限。"
+      },
+      "contractCount": "{{count}} 项合同",
+      "summary": {
+        "definedContracts": {
+          "title": "已定义合同",
+          "description": "前端只读展示项"
+        },
+        "highRiskBoundaries": {
+          "title": "高风险阻塞",
+          "description": "必须串行推进"
+        },
+        "displayOnly": {
+          "title": "可展示未生效",
+          "description": "只影响页面认知"
+        },
+        "surfaces": {
+          "title": "覆盖端",
+          "description": "Admin / Vendor / Storefront"
+        }
+      },
+      "groups": {
+        "merchantRoles": {
+          "title": "商户与供应方角色",
+          "description": "普通商户、物料供应商、配送供应商、产地供应方、种苗和外地批发商的只读开通边界。"
+        },
+        "merchantOps": {
+          "title": "商家运营能力",
+          "description": "手机快速上架、店铺装修、面单工具和直播状态只展示边界，不执行真实业务动作。"
+        },
+        "consumer": {
+          "title": "消费者可见能力",
+          "description": "消费者端只展示与买东西有关的店铺、提货卡和状态信息，不暴露商户采购或后台工具。"
+        },
+        "highRisk": {
+          "title": "高风险串行边界",
+          "description": "支付、订单、退款、结算、佣金、打款、权限和真实 Provider 只能单独评审，不能混入普通 UI PR。"
+        }
+      },
+      "columns": {
+        "contract": "合同",
+        "surfaces": "可见端",
+        "runtime": "运行状态",
+        "status": "展示状态",
+        "blocked": "阻塞边界",
+        "next": "后续 PR"
+      },
+      "status": {
+        "readOnly": "只读",
+        "displayOnly": "仅展示",
+        "designOnly": "设计占位",
+        "blocked": "阻塞"
+      },
+      "surfaces": {
+        "adminVendor": "Admin / Vendor",
+        "adminVendorStorefront": "Admin / Vendor / Storefront",
+        "vendorAdmin": "Vendor / Admin",
+        "vendorAdminStorefront": "Vendor / Admin / Storefront",
+        "storefrontAdminVendor": "Storefront / Admin / Vendor",
+        "storefrontVendorAdmin": "Storefront / Vendor / Admin",
+        "apiAdmin": "API / Admin",
+        "apiAdminVendor": "API / Admin / Vendor"
+      },
+      "runtime": {
+        "readonlyMetadata": "只读 metadata / 合同",
+        "visibilityOnly": "仅控制展示语义",
+        "notEnabled": "未启用运行时",
+        "draftOnly": "只生成草稿",
+        "publicSnapshot": "公开快照只读",
+        "statusOnly": "只读状态",
+        "flowContractOnly": "流程合同只读",
+        "serialOnly": "仅允许高风险串行任务"
+      },
+      "blocked": {
+        "rbacSettlement": "不改变 RBAC、结算或打款权限。",
+        "orderFulfillment": "不让物料供应商接真实订单或履约。",
+        "realLogistics": "不接真实物流、抢单、派单或面单。",
+        "procurementSettlement": "不创建采购结算或上游应付。",
+        "inventoryOrder": "不初始化真实库存或订单流程。",
+        "crossRegionSettlement": "不处理跨区域运费、税务或结算。",
+        "realProductPublish": "不发布真实商品，不写库存。",
+        "publishWorkflow": "不执行真实发布、审核或回滚流程。",
+        "shipmentWaybill": "不生成 shipment、运单号或云打印。",
+        "realLiveProvider": "不接推流、IM、聊天室、礼物或交易。",
+        "pickupRedeemOrder": "不创建 payment 或普通订单，不抵扣购物车。",
+        "liveTransaction": "直播不做交易入口，不触发支付或结算。",
+        "paymentTruth": "支付成功只能以后端异步通知验签为准。",
+        "orderState": "不修改订单状态机或履约状态。",
+        "refundState": "不修改退款状态或售后资金流。",
+        "settlementMoney": "不生成结算单、应收应付或资金报表。",
+        "commissionRules": "不修改佣金规则或分账比例。",
+        "payoutMoney": "不触发商家打款、提现或资金出账。",
+        "rbacPermission": "不改变权限校验、角色或菜单真实可见性。",
+        "providerCredential": "不接真实密钥、商户号或生产 Provider。"
+      },
+      "next": {
+        "roleConfig": "角色配置只读模型",
+        "supplierIntake": "供应方入驻资料只读面板",
+        "deliveryAdapter": "配送 Provider / adapter 设计",
+        "originLink": "产地供应关系只读合同",
+        "seedlingPlan": "种苗批发计划文档",
+        "wholesaleLink": "外地批发商关系合同",
+        "draftReview": "草稿审核候选模型",
+        "decorationSnapshot": "店铺装修快照 API",
+        "waybillAdapter": "面单 adapter mock 计划",
+        "liveProvider": "直播只读 Provider 边界",
+        "pickupReadModel": "提货卡提货只读模型",
+        "sellerStatus": "店铺状态公开快照",
+        "snapshotApi": "消费者店铺快照接口",
+        "paymentRuntimeGate": "支付 runtime gate",
+        "orderReadiness": "订单只读准备评审",
+        "refundPlan": "退款串行计划",
+        "settlementPlan": "结算串行计划",
+        "commissionPlan": "佣金串行计划",
+        "payoutPlan": "打款串行计划",
+        "permissionPlan": "权限串行计划",
+        "providerAdapter": "真实 Provider 适配器计划"
+      },
+      "contracts": {
+        "ordinaryMerchant": {
+          "title": "普通经营商户",
+          "description": "海鲜、冻品、干货、水果蔬菜等商户的基础展示合同。"
+        },
+        "materialSupplier": {
+          "title": "物料供应商",
+          "description": "泡沫箱、包装箱、冰袋、冰块等市场物料供应能力。"
+        },
+        "deliverySupplier": {
+          "title": "配送供应商",
+          "description": "市场配送服务方的角色和服务范围占位。"
+        },
+        "originSupplier": {
+          "title": "养殖户 / 种植户",
+          "description": "产地供应方与市场商户对接的只读关系。"
+        },
+        "seedlingSupplier": {
+          "title": "种苗供应商",
+          "description": "种苗批发对接养殖户、种植户和商户的规划入口。"
+        },
+        "remoteWholesaler": {
+          "title": "外地批发商",
+          "description": "跨区域批发商直接对接本地商户的展示合同。"
+        },
+        "mobileQuickListing": {
+          "title": "手机快速上架",
+          "description": "商家移动端简化上架和规格草稿能力。"
+        },
+        "shopDecoration": {
+          "title": "店铺主页装修",
+          "description": "商家主页装修、公开快照和消费者店铺页展示边界。"
+        },
+        "waybillPrinting": {
+          "title": "快递打印 / 电子面单",
+          "description": "履约工具入口和面单能力占位。"
+        },
+        "liveStatus": {
+          "title": "店铺直播状态",
+          "description": "直播只作为店铺状态展示，不做首页主入口。"
+        },
+        "pickupCardFlow": {
+          "title": "提货卡消费者流程",
+          "description": "消费者持卡识别权益、补齐地址或自提信息并提交提货申请。"
+        },
+        "shopLiveBadge": {
+          "title": "店铺直播标识",
+          "description": "消费者在店铺卡片或店铺页看到正在直播状态。"
+        },
+        "publicShopSnapshot": {
+          "title": "店铺公开快照",
+          "description": "消费者只读查看商家主页装修和公开资质信息。"
+        },
+        "payment": {
+          "title": "支付",
+          "description": "支付通知、验签、幂等和支付状态变更。"
+        },
+        "order": {
+          "title": "订单",
+          "description": "订单状态、履约状态和订单所有权。"
+        },
+        "refund": {
+          "title": "退款",
+          "description": "退款申请、资金退回和售后状态。"
+        },
+        "settlement": {
+          "title": "结算",
+          "description": "商家结算、对账和资金报表。"
+        },
+        "commission": {
+          "title": "佣金",
+          "description": "平台佣金规则、分账比例和费用计算。"
+        },
+        "payout": {
+          "title": "打款",
+          "description": "商家提现、打款和资金出账。"
+        },
+        "permission": {
+          "title": "权限",
+          "description": "RBAC、角色、菜单和后台真实访问控制。"
+        },
+        "realProviders": {
+          "title": "真实 Provider",
+          "description": "微信支付、支付宝、短信、IM、物流、直播等生产服务。"
+        }
       }
     },
     "status": {

@@ -189,3 +189,4 @@
 - 完成 `mock-payment-provider-registry-validation`，记录 registry 合并后 harness 19/128、typecheck、runtime grep 和 DB 无残留验证。
 - 完成 `mock-provider-runtime-gate-validation-plan`，docs-only 规划 mock provider / registry / runtime gate / preprod DB gate 的组合验证。
 - 完成 `mock-provider-runtime-gate-composition-tests`，新增 provider registry + runtime gate 纯函数组合测试；不接 route、不注册 provider、不执行 workflow。
+- 完成 `mock-provider-runtime-readiness-report`，记录组合测试合并后的 harness 20/133、typecheck、runtime grep 和 DB 无残留验证。

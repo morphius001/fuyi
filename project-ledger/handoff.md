@@ -1222,3 +1222,11 @@
 - 搜索结果只负责市场、类目、店铺 / 档口和商品展示，默认过滤物料供应商、配送供应商、上游供给、种苗批发和外地批发。
 - 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、库存、购物车、结算、订单、支付、退款、结算、佣金、权限或履约。
 - 下一项建议继续 `storefront-home-bind-view-model-plan`，docs-only 规划首页绑定，不改页面。
+
+## Round 200 更新
+
+- `storefront-home-bind-view-model-plan` 已完成，见 `docs/storefront-home-bind-view-model-plan.md`。
+- 本轮只规划首页绑定策略，不改 `apps/**` 或 `packages/**`。
+- 后续首页绑定建议拆三步：Home View Model Adapter、Home First Screen Binding、Home Product Cards Binding。
+- 明确首页保留静态 fallback，B-side 供应商不进入消费者首页主路径，商品卡不写库存、购物车、订单或 checkout shipping options。
+- 下一项建议继续 `storefront-shop-bind-view-model-plan`，docs-only 规划店铺页绑定，不改页面。

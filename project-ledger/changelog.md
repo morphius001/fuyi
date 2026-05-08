@@ -226,3 +226,4 @@
 - 完成 `non-payment-readonly-contracts-validation`，记录 6 组非支付只读合同 focused tests、API typecheck 和 diff check 通过。
 - 完成 `readonly-contracts-export-index`，docs-only 建立非支付只读 contracts 三端可读范围和禁止误用索引。
 - 完成 `admin-readonly-contracts-panel-plan`，docs-only 规划 Admin 平台能力只读总览面板和 UI PR 边界。
+- 完成 `vendor-readonly-contracts-panel-plan`，docs-only 规划 Vendor 我的能力边界只读面板和 UI PR 边界。

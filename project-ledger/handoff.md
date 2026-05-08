@@ -991,3 +991,10 @@
 - 本轮只规划 Admin “平台能力只读总览”面板，不修改 `apps/admin/**`。
 - 明确面板只展示合同状态和高风险边界，不提供保存、开关、审核、发布、删除或真实 Provider 配置入口。
 - 推荐下一项：`vendor-readonly-contracts-panel-plan`。
+
+## Round 169 更新
+
+- `vendor-readonly-contracts-panel-plan` 已完成，见 `docs/vendor-readonly-contracts-panel-plan.md`。
+- 本轮只规划 Vendor “我的能力边界”面板，不修改 `apps/vendor/**`。
+- 明确商户可见角色、草稿、装修、履约/面单、提货履约认知和直播状态，但不能直接发布商品、发货、打印面单、开播、兑换或改结算/权限。
+- 推荐下一项：`storefront-readonly-contracts-visibility-plan`。

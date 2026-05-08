@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 05:40 Asia/Shanghai
+更新时间：2026-05-09 05:45 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -96,6 +96,7 @@
 - `product-discovery-read-model-builder`: done，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests；不新增 route、不读 DB、不改 Storefront。
 - `product-discovery-store-api-readonly`: done，新增 `/store/china/product-discovery` 只读 GET route、helpers 和 focused tests；只读 open seller / seller product links / published products，不写业务状态。
 - `storefront-product-discovery-client`: done，新增 Storefront 商品发现只读 fetcher 和空 fallback；不接页面、不改 `ProductCard` 或交易链路。
+- `product-discovery-readonly-validation`: done，docs-only 汇总 PR #277-#279 的商品发现 builder / Store API / Storefront client 验证和后续页面绑定边界。
 
 ## 第十六轮进度
 

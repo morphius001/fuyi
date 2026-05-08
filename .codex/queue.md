@@ -1252,6 +1252,10 @@
 6. `storefront-shop-membership-source-binding`: done，店铺页把 market detail membership / seller metadata 合成为 shop adapter membership 输入，不改 ProductCard 或交易链路。
 7. `storefront-source-binding-validation`: done，docs-only 汇总搜索 discovery 与店铺 membership source binding 验证，不修改运行时代码。
 
+第一百零八轮建议：
+
+1. `storefront-product-discovery-input-contract`: done，新增 Storefront 商品发现输入共享只读合同，不改页面、Store API 或交易链路。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 22:00 Asia/Shanghai
+更新时间：2026-05-08 22:18 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -351,7 +351,8 @@
 - `admin-readonly-contracts-panel-plan` 已完成：规划 Admin 平台能力只读总览面板和 UI PR 边界。
 - `vendor-readonly-contracts-panel-plan` 已完成：规划 Vendor 我的能力边界只读面板和 UI PR 边界。
 - `storefront-readonly-contracts-visibility-plan` 已完成：规划消费者侧只读 contract 可见性、隐藏规则和 UI PR 边界。
-- 队列下一项：`readonly-contracts-ui-planning-validation`。
+- `readonly-contracts-ui-planning-validation` 已完成：三端只读合同 UI 规划收口，下一轮可进入 UI PR。
+- 队列下一项：`admin-readonly-contracts-panel-ui`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

@@ -1133,7 +1133,14 @@
 2. `admin-readonly-contracts-panel-plan`: done，规划 Admin 只读合同总览面板，不接写接口。
 3. `vendor-readonly-contracts-panel-plan`: done，规划 Vendor 能力/草稿/装修/履约/直播只读总览。
 4. `storefront-readonly-contracts-visibility-plan`: done，规划消费者侧哪些状态可展示，哪些必须隐藏。
-5. `readonly-contracts-ui-planning-validation`: pending，汇总 Admin/Vendor/Storefront 三端只读面板规划完成状态。
+5. `readonly-contracts-ui-planning-validation`: done，汇总 Admin/Vendor/Storefront 三端只读面板规划完成状态。
+
+第九十五轮建议：
+
+1. `admin-readonly-contracts-panel-ui`: pending，Admin 平台能力只读总览 UI，不新增后端 route。
+2. `vendor-readonly-contracts-panel-ui`: pending，Vendor 我的能力边界 UI，不保存、不发布、不发货。
+3. `storefront-visibility-copy-polish`: pending，Storefront 消费者侧可见性文案 polish，不改交易链路。
+4. `readonly-contracts-ui-validation`: pending，三端 UI build/lint/smoke 或截图验证。
 
 第九十三轮原则：
 

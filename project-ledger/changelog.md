@@ -289,3 +289,4 @@
 - 完成 `storefront-product-discovery-api-plan`，docs-only 规划未来 `/store/china/product-discovery` 只读 API、read model builder、Storefront client 和分 surface binding 顺序；不修改 `apps/**` 或 `packages/**`。
 - 完成 `product-discovery-read-model-builder`，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests，支持 query / market / seller / category / seller product ids 展示过滤、B 端内容过滤和 static fallback；不新增 route、不读 DB、不改 Storefront。
 - 完成 `product-discovery-store-api-readonly`，新增 `/store/china/product-discovery` 只读 GET route、helpers 和 focused tests；只读 open seller、seller product links 与 published products，不写 cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
+- 完成 `storefront-product-discovery-client`，新增 Storefront 商品发现只读 fetcher，支持 query / market / sellerHandle / categoryHandle / limit 映射和空 fallback；不接页面、不改 `ProductCard` 或交易链路。

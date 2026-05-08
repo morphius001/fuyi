@@ -633,3 +633,10 @@
 - PR #164 / #165 合并后验证通过：harness 16 suites / 108 tests、accepted smoke、duplicate smoke、rejected smoke、API typecheck、runtime grep、DB/9110 无残留、`git diff --check`。
 - 当前 neutral mock webhook route 已具备 local-only disposable DB inbox smoke，但仍不是生产支付 runtime。
 - 下一步建议只做 `mock-webhook-db-backed-route-runtime-gate-plan` docs-only，规划未来 runtime gate；仍不执行 workflow。
+
+## Round 120 更新
+
+- `mock-webhook-db-backed-route-runtime-gate-plan` 已完成，见 `docs/mock-webhook-db-backed-route-runtime-gate-plan.md`。
+- 本轮只写文档，规划 migration registration gate、repository runtime gate、mock provider preprod gate 和 workflow execution gate。
+- 明确 production 默认 disabled，workflow execution 必须单独 gate，支付宝/微信支付/退款/对账/结算/佣金/权限继续串行。
+- 下一步可做 `payment-notification-runtime-gate-contract`：纯函数 contract，默认 disabled，不接 route、不执行 workflow。

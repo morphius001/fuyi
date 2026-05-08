@@ -17,7 +17,7 @@ const boundaries = [
   "不是支付方式",
   "不是优惠券、满减券或折扣券",
   "不是储值卡、余额或购物车抵扣",
-  "当前页面为 mock 占位，不会真实核销卡密",
+  "当前页面为演示占位，不会真实核销卡密",
 ]
 
 const fulfillmentFields = [
@@ -28,8 +28,8 @@ const fulfillmentFields = [
 ]
 
 const pickupSlots = [
-  "市场自提：三门海鲜市场 A 区服务台 mock",
-  "同城配送：城区 5 公里内冷链配送 mock",
+  "市场自提：三门海鲜市场 A 区服务台演示",
+  "同城配送：城区 5 公里内冷链配送演示",
   "快递配送：当前不生成真实运单号",
 ]
 
@@ -57,13 +57,13 @@ export default async function PickupCardPage({
               提货卡提货
             </h1>
             <p className="mt-3 max-w-[620px] break-all text-sm leading-6 text-white/86 sm:text-md">
-              仅为页面占位。不接真实卡密、兑换或支付。
+              仅为消费者提货流程演示。不接真实卡密、兑换或支付。
             </p>
           </div>
 
           <div className="grid min-w-0 gap-4 p-3 sm:p-5 lg:grid-cols-[minmax(0,1fr)_340px]">
             <div className="min-w-0 rounded-sm border border-[#E5E7EB] bg-[#F8FAFC] p-3 sm:p-4">
-              <p className="label-lg">提货信息 mock</p>
+                <p className="label-lg">提货信息演示</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-secondary">
                   卡号

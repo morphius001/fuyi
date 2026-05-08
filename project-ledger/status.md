@@ -354,7 +354,8 @@
 - `readonly-contracts-ui-planning-validation` 已完成：三端只读合同 UI 规划收口，下一轮可进入 UI PR。
 - `admin-readonly-contracts-panel-ui` 已完成：Admin 新增 `/dashboard/cn/operations/capability-contracts` 能力合同总览只读页面；未新增后端 route，未改变交易链路或权限。
 - `vendor-readonly-contracts-panel-ui` 已完成：Vendor 新增“我的能力边界”只读面板和导航项；未新增后端 route，未提供发布、发货、打印、兑换、开播、结算或权限动作。
-- 队列下一项：`storefront-visibility-copy-polish`。
+- `storefront-visibility-copy-polish` 已完成：消费者侧搜索页、店铺页和提货卡页文案已改为更适合消费者理解的展示/演示口径；未修改 checkout 或交易链路。
+- 队列下一项：`readonly-contracts-ui-validation`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

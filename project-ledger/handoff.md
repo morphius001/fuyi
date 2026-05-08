@@ -1122,3 +1122,10 @@
 - 本轮只规划商户角色工作台 v2，不改 `apps/vendor/**`。
 - 明确普通商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商的首页重点；手机快速上架和 AI 草稿停在草稿/审核候选。
 - 下一项建议继续 `template-preview-validation`。
+
+## Round 187 更新
+
+- `template-preview-validation` 已完成，见 `docs/template-preview-validation.md`。
+- Template registry focused unit test 和 `git diff --check` 通过。
+- 第九十七轮规划均为 docs-only，未修改 `apps/**` 或 `packages/**`。
+- 第九十七轮队列已清空；下一步可以进入单 surface 页面实现，但每个实现 PR 必须带桌面/移动截图、build/lint 和回滚说明。

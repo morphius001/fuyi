@@ -984,3 +984,10 @@
 - 本轮只建立非支付只读 contracts 索引，说明 Admin/Vendor/Storefront 可读范围和禁止误用。
 - 明确这些 contract 不能作为 feature flag、RBAC、支付成功、订单已支付、履约、Provider 配置、结算、佣金或打款事实来源。
 - 推荐下一项：`admin-readonly-contracts-panel-plan`。
+
+## Round 168 更新
+
+- `admin-readonly-contracts-panel-plan` 已完成，见 `docs/admin-readonly-contracts-panel-plan.md`。
+- 本轮只规划 Admin “平台能力只读总览”面板，不修改 `apps/admin/**`。
+- 明确面板只展示合同状态和高风险边界，不提供保存、开关、审核、发布、删除或真实 Provider 配置入口。
+- 推荐下一项：`vendor-readonly-contracts-panel-plan`。

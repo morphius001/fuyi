@@ -244,3 +244,4 @@
 - 完成 `storefront-shop-template-v2-plan`，docs-only 规划店铺/档口主页 v2 模板预览，明确配送方式归属店铺头部、商品卡轻提示、店铺装修和直播状态边界。
 - 完成 `admin-dashboard-template-v2-plan`，docs-only 规划平台运营首页 v2 模板预览，明确顶部工具靠右、KPI/待办/风险首屏布局、mock 数据边界和高风险事实来源限制。
 - 完成 `vendor-role-workspace-template-v2-plan`，docs-only 规划商户角色工作台 v2 模板预览，明确普通商户、物料供应商、配送供应商、上游供给、手机快速上架、AI 草稿和店铺装修边界。
+- 完成 `template-preview-validation`，记录第九十七轮模板预览规划验证通过：template registry focused unit test 和 `git diff --check` 通过，队列清空。

@@ -1080,3 +1080,10 @@
 - 新增未注册 `packages/api/src/modules/china-template-registry-read-model/**`，定义 Storefront/Admin/Vendor 三端模板 registry 只读 view shape。
 - 合同明确模板 registry 不能作为权限、feature flag、支付成功、订单、退款、结算、佣金、打款、provider 配置、密钥或履约事实来源。
 - 下一项建议继续 `template-system-validation`。
+
+## Round 181 更新
+
+- `template-system-validation` 已完成，见 `docs/template-system-validation.md`。
+- Template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 均通过。
+- 本轮只更新验证报告、任务文件、队列和 ledger，未修改 `apps/**` 或 `packages/**`。
+- 第九十六轮队列已清空；下一批可继续模板 view shape 细分，或进入 Storefront 首页/店铺页 v2 的小范围可回滚实现。

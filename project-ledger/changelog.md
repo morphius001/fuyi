@@ -238,3 +238,4 @@
 - 完成 `admin-template-contract-plan`，docs-only 规划平台运营后台模板合同，明确菜单、首页、市场、商户、商品、提货卡、风控和系统配置可模板化，但不能替代权限、审计、交易、结算或履约事实。
 - 完成 `vendor-template-contract-plan`，docs-only 规划商户后台角色化模板合同，覆盖普通商户、物料供应商、配送供应商、上游供给、手机快速上架、AI 草稿和店铺装修边界。
 - 完成 `template-registry-readonly-contract`，新增未注册三端模板注册表只读 TypeScript contract 和 focused unit tests，不新增 route、不接 DB、不影响运行时。
+- 完成 `template-system-validation`，记录 template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 通过，第九十六轮队列清空。

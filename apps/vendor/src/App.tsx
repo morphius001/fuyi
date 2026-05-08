@@ -39,6 +39,12 @@ import {
   todayFreshItems,
 } from "./china/data/vendorMockData";
 import {
+  vendorReadonlyContractGroups,
+  vendorReadonlyProfileCards,
+  vendorReadonlyStatusLabels,
+  vendorReadonlySummary,
+} from "./china/data/vendorReadonlyContracts";
+import {
   retrieveChinaVendorMarketContext,
   type VendorMarketContextView,
 } from "./lib/china-vendor-market-context-client";
@@ -210,20 +216,104 @@ function App() {
         </header>
 
         {activePage ? (
-          <ManagementPage
-            activeStatus={activeStatuses[activePage.id] ?? "all"}
-            onStatusChange={(status) =>
-              setActiveStatuses((current) => ({
-                ...current,
-                [activePage.id]: status,
-              }))
-            }
-            page={activePage}
-          />
+          activePageId === "capabilityBoundary" ? (
+            <VendorReadonlyContractsPage />
+          ) : (
+            <ManagementPage
+              activeStatus={activeStatuses[activePage.id] ?? "all"}
+              onStatusChange={(status) =>
+                setActiveStatuses((current) => ({
+                  ...current,
+                  [activePage.id]: status,
+                }))
+              }
+              page={activePage}
+            />
+          )
         ) : (
           <HomePage onNavigate={setActivePageId} />
         )}
       </main>
+    </div>
+  );
+}
+
+function VendorReadonlyContractsPage() {
+  return (
+    <div className="page-stack">
+      <section className="mock-notice" aria-label="我的能力边界只读说明">
+        <strong>我的能力边界 · 只读</strong>
+        <span>
+          本页帮助商户理解当前角色、市场、档口和平台能力开通边界；它不是权限开关，不会发布商品、发货、打印面单、兑换提货卡、开直播或改变结算。
+        </span>
+      </section>
+
+      <section className="mini-metric-grid" aria-label="能力边界摘要">
+        {vendorReadonlySummary.map((metric) => (
+          <MetricCard metric={metric} key={metric.label} />
+        ))}
+      </section>
+
+      <section className="boundary-grid" aria-label="当前商户能力边界">
+        {vendorReadonlyProfileCards.map((card) => (
+          <article className="boundary-card" key={card.title}>
+            <span>{card.title}</span>
+            <strong>{card.value}</strong>
+            <p>{card.detail}</p>
+          </article>
+        ))}
+      </section>
+
+      {vendorReadonlyContractGroups.map((group) => (
+        <section className="panel" key={group.title}>
+          <div className="panel-header">
+            <div>
+              <h2>{group.title}</h2>
+              <p>{group.description}</p>
+            </div>
+            <span className="capability-source">readonly · not runtime config</span>
+          </div>
+
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>能力合同</th>
+                  <th>展示状态</th>
+                  <th>当前可见原因</th>
+                  <th>不可操作边界</th>
+                  <th>后续 PR</th>
+                </tr>
+              </thead>
+              <tbody>
+                {group.contracts.map((contract) => (
+                  <tr key={contract.title}>
+                    <td>
+                      <strong>{contract.title}</strong>
+                      <p>{contract.description}</p>
+                    </td>
+                    <td>
+                      <span className={`capability-status ${contract.status}`}>
+                        {vendorReadonlyStatusLabels[contract.status]}
+                      </span>
+                    </td>
+                    <td>{contract.visibleReason}</td>
+                    <td>{contract.blockedReason}</td>
+                    <td>{contract.nextStep}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ))}
+
+      <section className="readonly-state">
+        <strong>商户端安全边界</strong>
+        <p>
+          所有能力状态都只用于商户后台说明。真实开通必须以后端只读 view、平台审核、配置存储和审计日志为准；支付、订单、退款、结算、佣金、打款和权限仍按高风险串行任务推进。
+        </p>
+      </section>
     </div>
   );
 }

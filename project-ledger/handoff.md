@@ -1375,3 +1375,12 @@
 - 本轮只修改任务文件、验证文档、队列和 ledger，不修改 `apps/**` 或 `packages/**` 业务代码。
 - 剩余风险：adapter 仍不是价格、库存、配送、排序、广告、竞价、推荐或交易事实来源；cart、checkout、订单、支付、退款、结算、佣金、权限、履约和物流仍需高风险串行任务。
 - 第一百零五轮 Storefront adapter 页面绑定与验证队列已清空；下一步建议暂停自动 UI 绑定，改为规划真实 market/seller/product read model 数据源接入或做独立视觉确认。
+
+## Round 219 更新
+
+- `storefront-read-model-data-source-plan` 已完成，见 `docs/storefront-read-model-data-source-plan.md`。
+- 本轮只做 docs-only 规划，不修改 `apps/**` 或 `packages/**`。
+- 计划把 Storefront adapter 的下一阶段输入拆成 market read model、seller membership read model 和 product discovery read model。
+- 后续建议顺序：先收束首页 adapter 输入，再明确搜索输入合同，再把店铺页从 seller metadata 过渡到 seller membership read model 形状，最后做接入验证。
+- 验证通过：`git diff --check`；本轮没有业务代码改动。
+- 高风险边界不变：不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。

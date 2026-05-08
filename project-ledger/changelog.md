@@ -276,3 +276,4 @@
 - 完成 `storefront-home-product-cards-binding-readonly`，首页移动端“今日鲜货”、桌面推荐档口商品缩略卡和桌面“今日上新”已读取 `buildChinaHomeViewModel()` 的 `freshProducts` 展示字段；商品入口仍走搜索页，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 完成 `storefront-shop-product-cards-binding-readonly`，店铺页移动端“档口今日参考”和桌面“常卖鲜货”已读取 `buildChinaShopViewModel()` 的 `products` 展示字段；真实商品卡仍走 Store API，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 完成 `storefront-adapter-binding-validation`，汇总 home / shop / search 三个 Storefront adapter 只读页面绑定状态、PR #260-#264 验证范围、剩余风险和回滚方式；Storefront build 和 `git diff --check` 通过；本轮只改任务/文档/ledger，不修改 `apps/**` 或 `packages/**` 业务代码。
+- 完成 `storefront-read-model-data-source-plan`，docs-only 规划 Storefront adapter 下一阶段接入真实 market / seller membership / product discovery read model 数据源的顺序、fallback、PR 拆分和高风险边界；`git diff --check` 通过，本轮不修改 `apps/**` 或 `packages/**` 业务代码。

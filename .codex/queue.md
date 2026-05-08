@@ -1238,6 +1238,10 @@
 6. `storefront-shop-product-cards-binding-readonly`: done，只绑定店铺页商品卡展示，不改 cart/order/checkout。
 7. `storefront-adapter-binding-validation`: done，验证 home / shop / search 三个页面 adapter 只读绑定阶段和风险边界。
 
+第一百零六轮建议：
+
+1. `storefront-read-model-data-source-plan`: done，docs-only 规划 Storefront adapter 下一阶段接入真实 market / seller / product read model 数据源。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

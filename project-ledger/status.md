@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 19:38 Asia/Shanghai
+更新时间：2026-05-08 19:52 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -342,7 +342,8 @@
 - `shop-decoration-readonly-contract` 已完成：新增商家主页装修只读 TypeScript contract，明确模块和高风险阻塞边界。
 - `logistics-and-waybill-boundary-plan` 已完成：规划统一配送、自配送、自提、配送供应商和快递面单打印边界。
 - `logistics-and-waybill-readonly-contract` 已完成：新增物流/面单只读 TypeScript contract，明确 checkout、履约、面单和云打印阻塞边界。
-- 队列下一项：`pickup-card-consumer-flow-plan`。
+- `pickup-card-consumer-flow-plan` 已完成：重梳消费者持卡提货流程，明确不是优惠券、支付方式或储值卡。
+- 队列下一项：`pickup-card-consumer-flow-contract`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

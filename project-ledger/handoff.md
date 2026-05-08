@@ -1188,3 +1188,12 @@
 - 新增四个 v2 template ids 到未注册只读 template registry contract：Storefront 首页、Storefront 店铺页、Admin 首页和 Vendor 多角色经营看板。
 - 本轮不新增 API route、不注册 Medusa module、不接 DB、不修改 `apps/**`，也不改变 checkout、订单、支付、退款、结算、佣金、权限或履约。
 - 下一项建议继续 `storefront-home-view-model-mapper`，只新增 mapper 和测试，先不改页面。
+
+## Round 196 更新
+
+- `storefront-home-view-model-mapper` 已完成，见 `docs/storefront-home-view-model-mapper.md`。
+- 新增 Storefront 首页 v2 mapper 合同：`storefront-home-market-shop-v2`、`zh-CN`、`CNY`、`Asia/Shanghai`、`readOnly=true`、`runtimeEnabled=false`、`canWriteBusinessState=false`。
+- Mapper 默认过滤消费者首页不该出现的 B 端内容：物料供应商、配送供应商、上游供给、种苗批发、外地批发商和直播主入口。
+- 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
+- 验证通过：focused mapper test、既有 china read models test、API typecheck、`git diff --check`。
+- 下一项建议继续 `storefront-shop-view-model-mapper`，只新增店铺页 mapper 和 focused tests，先不改页面。

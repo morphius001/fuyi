@@ -61,9 +61,61 @@ export type ChinaStorefrontProductCardReadModel = {
   source: "store_product_table" | "placeholder";
 };
 
+export type ChinaStorefrontHomeTemplateId = "storefront-home-market-shop-v2";
+
+export type ChinaStorefrontHomeDataSourceView = {
+  key:
+    | "markets"
+    | "categories"
+    | "featured_sellers"
+    | "fresh_products"
+    | "service_links";
+  source: ChinaReadModelSource | "static_market_contract" | "static_fallback";
+  fallbackUsed: boolean;
+};
+
+export type ChinaStorefrontHomeConsumerPathStep =
+  | "market_switch"
+  | "category_discovery"
+  | "shop_discovery"
+  | "fresh_product_preview"
+  | "shop_detail";
+
+export type ChinaStorefrontHomeExcludedSection = {
+  key:
+    | "materials_suppliers"
+    | "delivery_suppliers"
+    | "upstream_supply"
+    | "seedling_wholesale"
+    | "regional_wholesale"
+    | "live_primary_entry";
+  reason: string;
+};
+
+export type ChinaStorefrontHomeBoundaryView = {
+  key:
+    | "checkout_shipping_options"
+    | "payment_success"
+    | "order_status"
+    | "refund_status"
+    | "settlement"
+    | "commission"
+    | "payout"
+    | "fulfillment"
+    | "consumer_b_side_visibility"
+    | "pickup_card_checkout_discount"
+    | "real_provider_config";
+  status: "blocked_serial_work";
+  reason: string;
+};
+
 export type ChinaStorefrontHomeView = {
   mode: "storefront_home_view";
+  templateId: ChinaStorefrontHomeTemplateId;
   source: ChinaReadModelSource;
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
   marketSelector: ChinaMarketReadModel[];
   categoryNav: ChinaCategoryDiscoveryReadModel[];
   featuredSellers: ChinaSellerDiscoveryReadModel[];
@@ -73,6 +125,14 @@ export type ChinaStorefrontHomeView = {
     label: string;
     placement: "secondary";
   }>;
+  consumerPath: ChinaStorefrontHomeConsumerPathStep[];
+  dataSources: ChinaStorefrontHomeDataSourceView[];
+  excludedConsumerSections: ChinaStorefrontHomeExcludedSection[];
+  highRiskBoundaries: ChinaStorefrontHomeBoundaryView[];
+  fallbackNotice?: string;
+  readOnly: true;
+  runtimeEnabled: false;
+  canWriteBusinessState: false;
   note: string;
 };
 
@@ -210,20 +270,163 @@ export const buildChinaDiscoveryReadModel = ({
   };
 };
 
+const storefrontHomeExcludedConsumerSections: ChinaStorefrontHomeExcludedSection[] =
+  [
+    {
+      key: "materials_suppliers",
+      reason: "物料供应商面向商户采购，不进入消费者首页主路径。",
+    },
+    {
+      key: "delivery_suppliers",
+      reason: "配送供应商能力由市场/商家配置展示，不作为消费者首页入口。",
+    },
+    {
+      key: "upstream_supply",
+      reason: "养殖户、种植户和外地批发商属于供给链协作，不默认展示给消费者。",
+    },
+    {
+      key: "seedling_wholesale",
+      reason: "种苗批发面向养殖户、种植户和商户，不进入消费者首页。",
+    },
+    {
+      key: "regional_wholesale",
+      reason: "外地批发商对接商户，不进入消费者首页主路径。",
+    },
+    {
+      key: "live_primary_entry",
+      reason: "直播只作为店铺状态或局部入口，不作为首页主入口。",
+    },
+  ];
+
+const storefrontHomeHighRiskBoundaries: ChinaStorefrontHomeBoundaryView[] = [
+  {
+    key: "checkout_shipping_options",
+    status: "blocked_serial_work",
+    reason: "首页配送展示不能写入 checkout shipping options。",
+  },
+  {
+    key: "payment_success",
+    status: "blocked_serial_work",
+    reason: "支付成功必须以后端异步通知为准，首页 mapper 不参与支付状态。",
+  },
+  {
+    key: "order_status",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不创建或修改订单状态。",
+  },
+  {
+    key: "refund_status",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不创建或修改退款状态。",
+  },
+  {
+    key: "settlement",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不改变结算主体、周期或规则。",
+  },
+  {
+    key: "commission",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不改变佣金规则。",
+  },
+  {
+    key: "payout",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不处理商家打款。",
+  },
+  {
+    key: "fulfillment",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不创建履约单、配送单、运单或面单。",
+  },
+  {
+    key: "consumer_b_side_visibility",
+    status: "blocked_serial_work",
+    reason: "物料、配送供应商和上游供给默认不进入消费者首页。",
+  },
+  {
+    key: "pickup_card_checkout_discount",
+    status: "blocked_serial_work",
+    reason: "提货卡保持独立入口，不作为优惠券、支付方式或购物车抵扣。",
+  },
+  {
+    key: "real_provider_config",
+    status: "blocked_serial_work",
+    reason: "首页 mapper 不保存或启用真实 Provider 配置。",
+  },
+];
+
+const storefrontHomeConsumerPath: ChinaStorefrontHomeConsumerPathStep[] = [
+  "market_switch",
+  "category_discovery",
+  "shop_discovery",
+  "fresh_product_preview",
+  "shop_detail",
+];
+
+const bSideConsumerHomeKeywords = [
+  "物料",
+  "包装",
+  "泡沫箱",
+  "冰袋",
+  "冰块",
+  "配送供应商",
+  "上游",
+  "种苗",
+  "外地批发",
+];
+
+const includesAnyKeyword = (values: Array<string | undefined>) =>
+  values.some((value) =>
+    bSideConsumerHomeKeywords.some((keyword) => value?.includes(keyword))
+  );
+
+const isConsumerHomeSeller = (seller: ChinaSellerDiscoveryReadModel) =>
+  !includesAnyKeyword([
+    seller.name,
+    seller.market,
+    seller.booth,
+    seller.summary,
+    ...seller.tags,
+  ]);
+
+const isConsumerHomeCategory = (category: ChinaCategoryDiscoveryReadModel) =>
+  !includesAnyKeyword([category.name, category.description]);
+
+const isConsumerHomeProduct = (product: ChinaStorefrontProductCardReadModel) =>
+  !includesAnyKeyword([
+    product.title,
+    product.sellerName,
+    product.market,
+    product.booth,
+    product.specText,
+  ]);
+
+const resolveStorefrontHomeMarketSource = (
+  markets: ChinaMarketReadModel[]
+): ChinaStorefrontHomeDataSourceView["source"] => {
+  if (!markets.length) {
+    return "static_fallback";
+  }
+
+  return markets.every((market) => market.source === "static_market_contract")
+    ? "static_market_contract"
+    : "seller_and_category_tables";
+};
+
 export const buildChinaStorefrontHomeView = ({
   discovery,
   products = [],
+  fallbackNotice,
 }: {
   discovery: ChinaDiscoveryReadModel;
   products?: ChinaStorefrontProductCardReadModel[];
-}): ChinaStorefrontHomeView => ({
-  mode: "storefront_home_view",
-  source: discovery.source,
-  marketSelector: discovery.markets,
-  categoryNav: discovery.categories,
-  featuredSellers: discovery.sellers,
-  freshProducts: products,
-  serviceLinks: [
+  fallbackNotice?: string;
+}): ChinaStorefrontHomeView => {
+  const categoryNav = discovery.categories.filter(isConsumerHomeCategory);
+  const featuredSellers = discovery.sellers.filter(isConsumerHomeSeller);
+  const freshProducts = products.filter(isConsumerHomeProduct);
+  const serviceLinks = [
     {
       key: "pickup_card",
       label: "提货卡",
@@ -239,9 +442,63 @@ export const buildChinaStorefrontHomeView = ({
       label: "商家入驻",
       placement: "secondary",
     },
-  ],
-  note: CHINA_READ_MODEL_RUNTIME_NOTE,
-});
+  ] satisfies ChinaStorefrontHomeView["serviceLinks"];
+  const hasDiscoveryContent =
+    discovery.markets.length > 0 ||
+    categoryNav.length > 0 ||
+    featuredSellers.length > 0;
+
+  return {
+    mode: "storefront_home_view",
+    templateId: "storefront-home-market-shop-v2",
+    source: discovery.source,
+    locale: "zh-CN",
+    currency: "CNY",
+    timezone: "Asia/Shanghai",
+    marketSelector: discovery.markets,
+    categoryNav,
+    featuredSellers,
+    freshProducts,
+    serviceLinks,
+    consumerPath: storefrontHomeConsumerPath,
+    dataSources: [
+      {
+        key: "markets",
+        source: resolveStorefrontHomeMarketSource(discovery.markets),
+        fallbackUsed: discovery.markets.length === 0,
+      },
+      {
+        key: "categories",
+        source: discovery.source,
+        fallbackUsed: categoryNav.length === 0,
+      },
+      {
+        key: "featured_sellers",
+        source: discovery.source,
+        fallbackUsed: featuredSellers.length === 0,
+      },
+      {
+        key: "fresh_products",
+        source: freshProducts.length ? "static_read_model" : "static_fallback",
+        fallbackUsed: freshProducts.length === 0,
+      },
+      {
+        key: "service_links",
+        source: "static_read_model",
+        fallbackUsed: false,
+      },
+    ],
+    excludedConsumerSections: storefrontHomeExcludedConsumerSections,
+    highRiskBoundaries: storefrontHomeHighRiskBoundaries,
+    fallbackNotice:
+      fallbackNotice ??
+      (hasDiscoveryContent ? undefined : "首页展示数据待后台运营配置。"),
+    readOnly: true,
+    runtimeEnabled: false,
+    canWriteBusinessState: false,
+    note: CHINA_READ_MODEL_RUNTIME_NOTE,
+  };
+};
 
 const includesQuery = (value: string | undefined, query: string) =>
   !query || value?.toLowerCase().includes(query.toLowerCase());

@@ -1190,7 +1190,7 @@
 第一百轮建议：
 
 1. `template-registry-v2-contract`: done，新增四个 v2 template ids 到未注册只读 registry contract，不接 route、不接 DB。
-2. `storefront-home-view-model-mapper`: pending，新增首页 view model mapper 和 focused tests，先不改页面。
+2. `storefront-home-view-model-mapper`: done，新增首页 view model mapper、focused tests 和说明文档，先不改页面。
 3. `storefront-shop-view-model-mapper`: pending，新增店铺页 view model mapper 和 focused tests，先不改页面。
 4. `template-registry-v2-validation`: pending，验证 registry v2、mapper、API typecheck 和 diff 范围。
 

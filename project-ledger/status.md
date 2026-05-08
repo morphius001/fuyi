@@ -475,3 +475,9 @@
 - 当前 mock payment notification skeleton 只用于测试和后续 adapter 评审；它没有注册 provider，也没有 inbox/model、runtime switch 或支付状态推进能力。
 - 支付通知 inbox 目前仍是设计文档；没有 migration、repository、runtime、状态推进或真实 Provider 接入。
 - 支付通知 inbox migration 目前只是 skeleton；尚未注册为生产 migration，不能直接用于预发或生产。
+
+## Round 234 更新
+
+- `storefront-home-product-discovery-source-binding`: done，首页“今日鲜货 / 首页商品展示字段”优先读取商品发现只读 client 的真实 `store_product_table` 结果，空结果回退静态鲜货。
+- 本轮不修改 `ProductCard`、搜索页、店铺页、`packages/api/**`、cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

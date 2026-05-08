@@ -1247,6 +1247,7 @@
 1. `storefront-home-adapter-real-source`: done，首页 adapter 输入收束为 markets API + discovery API + static fallback，不改视觉布局和交易链路。
 2. `storefront-search-read-model-input-contract`: done，新增搜索 adapter 输入合同，不接真实搜索排序、广告、竞价或推荐。
 3. `storefront-shop-membership-source`: done，新增店铺 adapter membership 输入形状，不改店铺页或交易链路。
+4. `storefront-read-model-source-validation`: done，汇总 home / search / shop read model source 阶段验证和后续建议。
 
 第九十三轮原则：
 

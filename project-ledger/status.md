@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 03:39 Asia/Shanghai
+更新时间：2026-05-09 03:47 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -86,6 +86,7 @@
 - 本轮不修改 `packages/api/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
 - `storefront-search-read-model-input-contract`: done，新增搜索 adapter 输入合同，明确 query / market / categories / sellers / products 的只读来源和 blocked runtime；Storefront build 和 `git diff --check` 通过。
 - `storefront-shop-membership-source`: done，新增店铺 adapter membership 输入形状和合同；Storefront build 和 `git diff --check` 通过；不修改店铺页、`ProductCard`、`packages/api/**` 或交易/履约链路。
+- `storefront-read-model-source-validation`: done，docs-only 汇总 PR #267-#269 的 read model source 阶段验证；Storefront build 和 `git diff --check` 通过；本轮不修改 `apps/**` 或 `packages/**`。
 
 ## 第十六轮进度
 

@@ -942,3 +942,10 @@
 - 新增 `buildChinaLogisticsWaybillReadonlyView()`，输出履约方式、面单能力和高风险阻塞项。
 - 合同明确所有履约方式对 checkout 无影响，面单能力不创建真实 shipment、不打印真实 label。
 - 推荐下一项：`pickup-card-consumer-flow-plan`。
+
+## Round 162 更新
+
+- `pickup-card-consumer-flow-plan` 已完成，见 `docs/pickup-card-consumer-flow-plan.md`。
+- 本轮重新固化消费者流程：持卡识别权益、补齐规格/地址/自提时间、提交提货申请、生成提货单、进入履约。
+- 明确提货卡不是优惠券、满减券、折扣券、储值卡、余额、支付方式或普通购物抵扣。
+- 推荐下一项：`pickup-card-consumer-flow-contract`。

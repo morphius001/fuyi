@@ -1494,3 +1494,11 @@
 - Fetcher 支持 query、market、sellerHandle、categoryHandle 和 limit 映射；API 不可用时返回空只读 fallback。
 - 当前没有接入任何页面，不修改 Storefront UI、`ProductCard`、cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；仅保留既有 React Hook dependency warnings。
+
+## Round 233 更新
+
+- `product-discovery-readonly-validation` 已完成，见 `docs/product-discovery-readonly-validation.md`。
+- 本轮 docs-only 汇总 PR #277-#279：商品发现 read model builder、Store 只读 API 和 Storefront 只读 fetcher。
+- 当前商品发现链路已具备 builder / API / client，但尚未接入首页、搜索页或店铺页。
+- 下一步若继续，应按首页、搜索、店铺单 surface 拆只读页面绑定 PR；不能混入 `ProductCard` 改造、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 provider runtime。
+- 验证通过：`git diff --check`、子智能体只读复核。

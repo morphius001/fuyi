@@ -1258,6 +1258,10 @@
 2. `storefront-read-model-source-phase-rollup`: done，docs-only 汇总 PR #267-#274 的 Storefront read model source 阶段状态和下一步边界。
 3. `storefront-product-discovery-api-plan`: done，docs-only 规划未来商品发现只读 API、builder、client 和分 surface binding 顺序。
 
+第一百零九轮建议：
+
+1. `product-discovery-read-model-builder`: done，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests，不新增 route、不读 DB。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

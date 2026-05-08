@@ -885,3 +885,10 @@
 - PR #199 已合并，merge commit `9c1276efc099004613d57effb0508604bccb97d0`。
 - 合并后验证通过：focused market-domain contract unit test、API typecheck、`git diff --check`。
 - 下一项建议为 `merchant-role-capability-readiness`。
+
+## Round 154 更新
+
+- `merchant-role-capability-readiness` 已完成，见 `docs/merchant-role-capability-readiness.md`。
+- 本轮整理普通商品商户、物料供应商、配送供应商、养殖户、种植户、种苗供应商和外地批发商的可见性、开通方式和禁止项。
+- 明确角色不影响权限、订单归属、结算、佣金、支付、退款或 checkout shipping options。
+- 推荐下一项：`merchant-role-capability-contract`。

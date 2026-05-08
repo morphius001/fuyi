@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 18:06 Asia/Shanghai
+更新时间：2026-05-08 18:22 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -336,7 +336,8 @@
 - `market-domain-read-model-contract-validation` 已完成：PR #199 合并后 focused unit test、API typecheck 和 diff check 通过。
 - `merchant-role-capability-readiness` 已完成：整理普通商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商角色矩阵。
 - `merchant-role-capability-contract` 已完成：新增商户角色能力只读 TypeScript contract，明确可见性、能力和高风险串行边界。
-- 队列下一项：`vendor-mobile-draft-product-readiness`。
+- `vendor-mobile-draft-product-readiness` 已完成：梳理手机快速上架、规格模板、AI suggestion、审核候选和真实商品创建分离边界。
+- 队列下一项：`vendor-mobile-draft-product-contract`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

@@ -900,3 +900,10 @@
 - 合同明确普通商品商户进入消费者商品流，物料/配送/上游/外地批发默认保持商户侧或上游侧可见。
 - 合同继续把权限、订单归属、checkout shipping options、支付、退款、结算、佣金、打款、真实物流和快递打印标为串行阻塞工作。
 - 推荐下一项：`vendor-mobile-draft-product-readiness`。
+
+## Round 156 更新
+
+- `vendor-mobile-draft-product-readiness` 已完成，见 `docs/vendor-mobile-draft-product-readiness.md`。
+- 本轮只梳理手机快速上架最小字段、规格模板读取、AI suggestion、草稿状态和真实商品创建前置条件。
+- 明确 AI 不直接发布商品，手机草稿不创建库存，`ready_for_product_create` 也只是候选。
+- 推荐下一项：`vendor-mobile-draft-product-contract`。

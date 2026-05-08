@@ -176,3 +176,4 @@
 - 修复 payment notification DB event log skeleton ID 截断导致的本地 DB 主键冲突，补充 event log id 不重复单测。
 - 完成 `mock-webhook-db-backed-route-local-rejected-smoke`，扩展 local DB route smoke 的 missing signature、invalid signature 和 non-CNY rejected 场景；拒绝路径不写 inbox/event log。
 - 完成 `mock-webhook-db-backed-route-post-validation`，记录 PR #164/#165 合并后的 harness、accepted/duplicate/rejected smoke、typecheck、runtime grep 和 DB/9110 无残留验证。
+- 完成 `mock-webhook-db-backed-route-runtime-gate-plan`，以 docs-only 方式规划 local DB smoke 到未来 runtime gate 的 Go/No-Go、feature flags、回滚和后续 PR 拆分。

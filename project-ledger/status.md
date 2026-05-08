@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 16:08 Asia/Shanghai
+更新时间：2026-05-08 16:16 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -326,7 +326,8 @@
 - `mock-provider-runtime-local-smoke-script` 补强：失败输出不再打印 raw event metadata 或临时 API log 内容；stop 逻辑记录监听 PID 并只清理本脚本启动的临时进程。
 - `mock-provider-runtime-local-smoke-validation` 已完成：PR #190 合并后四种 smoke、harness、API typecheck、未注册 grep 和 DB/9120 无残留验证通过。
 - `mock-provider-runtime-preprod-smoke-plan` 已完成：只规划 disposable preprod DB smoke 的门禁、禁止输入、执行阶段和后续拆分，不连接外部数据库。
-- 队列下一项可执行任务：`mock-provider-runtime-preprod-smoke-script`。
+- `mock-provider-runtime-preprod-smoke-script` 已完成：新增默认不连接外部 DB 的 skeleton，只支持 print-plan / validate-inputs-only。
+- 队列下一项可执行任务：`mock-provider-runtime-preprod-smoke-script-validation`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

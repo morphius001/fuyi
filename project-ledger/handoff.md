@@ -1037,3 +1037,11 @@
 - 本轮未修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 验证通过：Storefront build、`git diff --check`。
 - 下一项建议继续 `readonly-contracts-ui-validation`。
+
+## Round 175 更新
+
+- `readonly-contracts-ui-validation` 已完成，见 `docs/readonly-contracts-ui-validation.md`。
+- Admin lint/build、Vendor lint/build、Storefront build 和 `git diff --check` 均通过。
+- Storefront build 仍有项目既有 React Hook dependency warnings，本轮只记录，不扩大范围修复。
+- 本轮未修改 `apps/**` 或 `packages/**`，只更新验证报告、任务文件、队列和 ledger。
+- 第九十五轮队列已清空；下一批建议继续走非支付、低风险、只读/配置合同方向。

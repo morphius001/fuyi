@@ -1140,7 +1140,7 @@
 1. `admin-readonly-contracts-panel-ui`: done，Admin 平台能力只读总览 UI 已新增为前端静态只读页面，不新增后端 route。
 2. `vendor-readonly-contracts-panel-ui`: done，Vendor 我的能力边界 UI 已新增，不保存、不发布、不发货。
 3. `storefront-visibility-copy-polish`: done，Storefront 消费者侧可见性文案已 polish，不改交易链路。
-4. `readonly-contracts-ui-validation`: pending，三端 UI build/lint/smoke 或截图验证。
+4. `readonly-contracts-ui-validation`: done，三端 UI build/lint 验证通过，记录 Storefront 既有 React Hook warning。
 
 第九十三轮原则：
 

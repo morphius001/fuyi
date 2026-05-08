@@ -1197,3 +1197,12 @@
 - 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
 - 验证通过：focused mapper test、既有 china read models test、API typecheck、`git diff --check`。
 - 下一项建议继续 `storefront-shop-view-model-mapper`，只新增店铺页 mapper 和 focused tests，先不改页面。
+
+## Round 197 更新
+
+- `storefront-shop-view-model-mapper` 已完成，见 `docs/storefront-shop-view-model-mapper.md`。
+- 新增 Storefront 店铺 / 档口页 v2 mapper 合同：`storefront-shop-stall-v2`、`zh-CN`、`CNY`、`Asia/Shanghai`、`readOnly=true`、`runtimeEnabled=false`、`canWriteBusinessState=false`。
+- Mapper 将配送、自提、营业时间和公告归属店铺头部，商品卡只做规格/价格/库存展示；提货卡保持独立入口，直播只作为店铺状态 badge。
+- B-side 供应商店铺会标记为 `role_gated_preview_only`，不作为消费者默认主路径。
+- 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
+- 下一项建议继续 `template-registry-v2-validation`，验证 registry v2、home/shop mapper、API typecheck 和 diff 范围。

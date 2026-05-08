@@ -1091,7 +1091,8 @@
 41. `mock-payment-provider-registry-validation`: done，记录 registry 合并后 harness/typecheck/runtime grep 和 DB 无残留验证。
 42. `mock-provider-runtime-gate-validation-plan`: done，规划 mock provider contract / registry / runtime gate / preprod DB gate 的组合验证；不接 runtime。
 43. `mock-provider-runtime-gate-composition-tests`: done，新增纯函数组合测试；不接 route、不接 DB、不注册 provider。
-44. `mock-provider-runtime-readiness-report`: pending，记录组合测试合并后的 harness/typecheck/runtime grep 和 DB 无残留验证。
+44. `mock-provider-runtime-readiness-report`: done，记录组合测试合并后的 harness/typecheck/runtime grep 和 DB 无残留验证。
+45. `mock-provider-runtime-readiness-checklist`: pending，整理进入 mock provider runtime 前的 Go / No-Go checklist；不写 runtime code。
 
 第九十三轮原则：
 

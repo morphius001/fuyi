@@ -210,3 +210,4 @@
 - 完成 `market-domain-readiness-review`，docs-only 审查市场域已有只读 API/client、缺口和后续 PR 顺序。
 - 完成 `market-domain-contract-docs`，docs-only 定义 Market、Stall、SellerMarketMembership、商户角色、配送 profile 和三端展示边界。
 - 完成 `market-domain-read-model-contract`，新增市场域只读合同 view shape、角色边界和高风险 serial work 边界测试。
+- 完成 `market-domain-read-model-contract-validation`，记录 PR #199 合并后的 focused unit test、API typecheck 和 diff check。

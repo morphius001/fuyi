@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 17:18 Asia/Shanghai
+更新时间：2026-05-08 17:29 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -333,7 +333,8 @@
 - `market-domain-readiness-review` 已完成：确认市场域已有 read-only 基础，但真实运营模型、商户档口关系、配送 profile、公告营业时间和上游供应关系仍待合同化。
 - `market-domain-contract-docs` 已完成：定义真实市场域实体、关系、角色、配送 profile 和高风险边界。
 - `market-domain-read-model-contract` 已完成：新增市场域只读合同 view shape 和 focused unit tests。
-- 队列下一项：`market-domain-read-model-contract-validation`。
+- `market-domain-read-model-contract-validation` 已完成：PR #199 合并后 focused unit test、API typecheck 和 diff check 通过。
+- 队列下一项：`merchant-role-capability-readiness`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

@@ -878,3 +878,10 @@
 - 新增 `buildChinaMarketDomainContractView()` 纯函数和单元测试。
 - View shape 覆盖市场域实体、商户角色和 checkout/order/payment/refund/settlement/commission/payout/permission 高风险边界。
 - 未新增 migration、route 或数据库连接，不影响 runtime。
+
+## Round 153 更新
+
+- `market-domain-read-model-contract-validation` 已完成，见 `docs/market-domain-read-model-contract-validation.md`。
+- PR #199 已合并，merge commit `9c1276efc099004613d57effb0508604bccb97d0`。
+- 合并后验证通过：focused market-domain contract unit test、API typecheck、`git diff --check`。
+- 下一项建议为 `merchant-role-capability-readiness`。

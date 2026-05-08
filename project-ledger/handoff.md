@@ -1101,3 +1101,10 @@
 - 本轮只规划消费者首页 v2，不改 `apps/storefront/**`。
 - 明确首页主路径为选市场、找店/档口、看今日鲜货、加购/结算；物料供应商、配送供应商和上游供给默认不进入首页主路径。
 - 下一项建议继续 `storefront-shop-template-v2-plan`。
+
+## Round 184 更新
+
+- `storefront-shop-template-v2-plan` 已完成，见 `docs/storefront-shop-template-v2-plan.md`。
+- 本轮只规划店铺/档口主页 v2，不改 `apps/storefront/**`。
+- 明确配送方式属于店铺/档口头部能力，商品卡只做轻提示；店铺装修和直播不改变商品、库存、订单、支付、退款、结算或履约。
+- 下一项建议继续 `admin-dashboard-template-v2-plan`。

@@ -528,3 +528,10 @@
 - 覆盖 market、seller membership、category 和 product discovery 的最小字段、质量要求、验收顺序和阻断工作。
 - 本轮不修改 `apps/**` 或 `packages/**`，不新增 migration、API route、写接口或 runtime。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 242 更新
+
+- `storefront-discovery-data-inventory`: done，docs-only 盘点当前 Storefront discovery 只读链路字段。
+- Inventory 覆盖 market、seller membership、discovery categories 和 product discovery 的已具备字段、metadata 依赖、缺口和安全下一步。
+- 本轮不修改 `apps/**` 或 `packages/**`，不新增脚本、不读写数据库、不新增 route 或 runtime。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

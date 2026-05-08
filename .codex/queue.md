@@ -1302,3 +1302,4 @@
 6. `storefront-product-discovery-qa-runbook`: done，docs-only 新增首页、搜索页和店铺页商品发现只读绑定人工 QA runbook。
 7. `product-discovery-observability-plan`: done，docs-only 规划商品发现只读链路 source tag、fallback、item count 和排查字段，不接真实日志 provider。
 8. `storefront-discovery-next-data-plan`: done，docs-only 规划 market、seller membership、category 和 product discovery 下一轮只读数据质量要求。
+9. `storefront-discovery-data-inventory`: done，docs-only 盘点当前 Storefront discovery 只读链路可用字段、metadata 依赖和缺口。

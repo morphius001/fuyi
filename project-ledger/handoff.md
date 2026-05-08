@@ -1566,3 +1566,11 @@
 - 下一步安全顺序是 data inventory、readonly source tags、Storefront QA、validation rollup；不得直接进入真实 migration、Admin 写接口、权限生效、checkout shipping options、库存占用、订单、支付、退款、结算、佣金、履约或物流。
 - 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 242 更新
+
+- `storefront-discovery-data-inventory` 已完成，见 `docs/storefront-discovery-data-inventory.md`。
+- 本轮基于现有 Storefront clients、Store API route 和 product discovery builder 做 docs-only 字段盘点。
+- 主要缺口：market hours/notice 强类型化、category marketSlug、seller role/mainCategoryNames 结构化、product categoryHandle client 暴露、source tags/fallback reason。
+- 下一步建议只做 `product-discovery-source-tags`、inventory validation 或 audience field plan；不得直接进入 migration、写接口、权限、checkout、订单、支付、退款、结算、佣金、履约或物流。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

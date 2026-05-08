@@ -1248,6 +1248,7 @@
 2. `storefront-search-read-model-input-contract`: done，新增搜索 adapter 输入合同，不接真实搜索排序、广告、竞价或推荐。
 3. `storefront-shop-membership-source`: done，新增店铺 adapter membership 输入形状，不改店铺页或交易链路。
 4. `storefront-read-model-source-validation`: done，汇总 home / search / shop read model source 阶段验证和后续建议。
+5. `storefront-search-discovery-source-binding`: done，搜索页输入构造收束为 discovery / markets / products + static fallback，不接真实搜索 provider。
 
 第九十三轮原则：
 

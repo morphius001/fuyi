@@ -1421,3 +1421,12 @@
 - 当前 home / search / shop adapter 输入源阶段仍保持只读，不改变交易、履约、权限、排序、广告、竞价、推荐或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
 - 下一步建议只做单 surface 只读接入：搜索 discovery source binding 或店铺 membership source binding；不得混入 checkout、order、payment、refund、settlement、commission、permission、fulfillment 或 logistics。
+
+## Round 224 更新
+
+- `storefront-search-discovery-source-binding` 已完成，见 `docs/storefront-search-discovery-source-binding.md`。
+- 搜索页现在并行读取 discovery、markets 和 Store products，再把真实只读数据和 static fallback 分层传给 `buildChinaSearchViewModel()`。
+- 新增 `market` query param 作为只读展示筛选，不影响 checkout shipping options、配送、履约或运费。
+- Store API 真实商品结果仍走 `ProductCard`。
+- 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
+- 本轮不修改 `packages/api/**`，不接真实搜索排序、广告、竞价、推荐或搜索 provider。

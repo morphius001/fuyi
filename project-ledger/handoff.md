@@ -1384,3 +1384,12 @@
 - 后续建议顺序：先收束首页 adapter 输入，再明确搜索输入合同，再把店铺页从 seller metadata 过渡到 seller membership read model 形状，最后做接入验证。
 - 验证通过：`git diff --check`；本轮没有业务代码改动。
 - 高风险边界不变：不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
+
+## Round 220 更新
+
+- `storefront-home-adapter-real-source` 已完成，见 `docs/storefront-home-adapter-real-source.md`。
+- 首页现在并行读取 `retrieveChinaMarkets()` 和 `retrieveChinaDiscovery()`，再把 markets / categories / sellers 输入传给 `buildChinaHomeViewModel()`。
+- 静态 `home-market` 数据保留为 adapter fallback，页面视觉布局不变。
+- 验证通过：Storefront build、首页 HTTP smoke、桌面/移动截图、`git diff --check`；仅保留既有 React Hook dependency warnings。
+- 本轮不修改 `packages/api/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
+- 下一步建议继续 `storefront-search-read-model-input-contract`，先明确搜索 adapter 的 query / market / category / product 输入合同，不接真实搜索 provider。

@@ -1242,6 +1242,10 @@
 
 1. `storefront-read-model-data-source-plan`: done，docs-only 规划 Storefront adapter 下一阶段接入真实 market / seller / product read model 数据源。
 
+第一百零七轮建议：
+
+1. `storefront-home-adapter-real-source`: done，首页 adapter 输入收束为 markets API + discovery API + static fallback，不改视觉布局和交易链路。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

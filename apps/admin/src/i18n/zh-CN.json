@@ -140,7 +140,9 @@
       },
       "mockSource": {
         "title": "数据来源说明",
-        "message": "首页指标来自 apps/admin 前端静态 mock 常量，仅用于平台运营后台壳体验收口，不读取真实订单、支付、库存、结算或权限数据。"
+        "badge": "展示数据",
+        "message": "首页指标来自前端展示常量，仅用于平台运营后台壳体验收口，不读取真实订单、支付、库存、结算或权限数据。",
+        "hint": "真实数据接入需单独后端任务"
       },
       "todo": {
         "title": "运营待办",
@@ -185,7 +187,32 @@
         "configureMarket": "配置市场",
         "reviewMerchant": "查看商家",
         "orderMonitor": "订单监管",
-        "moduleSwitches": "模块开关"
+        "moduleSwitches": "模块开关",
+        "capabilityContracts": "能力合同"
+      },
+      "focusModules": {
+        "title": "近期重点模块",
+        "description": "按国内运营后台习惯，把近期要盯的模块放在首页首屏下方。",
+        "productAudit": {
+          "title": "商品审核",
+          "description": "优先处理鲜活、冻品和规格缺失商品",
+          "status": "处理中"
+        },
+        "marketDelivery": {
+          "title": "市场配送",
+          "description": "核对统一配送、自配送和自提展示口径",
+          "status": "跟进中"
+        },
+        "pickupCard": {
+          "title": "提货卡",
+          "description": "关注异常提货、即将过期和渠道记录",
+          "status": "待处理"
+        },
+        "serviceNotice": {
+          "title": "服务通知",
+          "description": "短信、站内信和客服通知失败队列",
+          "status": "异常"
+        }
       },
       "focus": {
         "title": "业务入口与职责说明",

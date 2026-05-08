@@ -40,6 +40,14 @@ export const chinaAdminDashboardQuickActionKeys = [
   "reviewMerchant",
   "orderMonitor",
   "moduleSwitches",
+  "capabilityContracts",
+] as const
+
+export const chinaAdminDashboardFocusModuleRows = [
+  { key: "productAudit", color: "orange" as ChinaAdminDashboardStatusColor },
+  { key: "marketDelivery", color: "blue" as ChinaAdminDashboardStatusColor },
+  { key: "pickupCard", color: "orange" as ChinaAdminDashboardStatusColor },
+  { key: "serviceNotice", color: "red" as ChinaAdminDashboardStatusColor },
 ] as const
 
 export const chinaAdminDashboardFocusRows = [

@@ -1266,3 +1266,11 @@
 - 验证通过：template registry readonly contract、home mapper、shop mapper、search mapper、China read models、API typecheck、`git diff --check`。
 - 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
 - 下一项建议继续 `storefront-search-view-model-adapter-plan`，先补齐搜索 adapter plan，再进入 adapter skeleton。
+
+## Round 206 更新
+
+- `storefront-home-view-model-adapter-skeleton` 已完成，见 `docs/storefront-home-view-model-adapter-skeleton.md`。
+- 新增 `apps/storefront/src/app/[locale]/(main)/data/china-home-view-model.ts`，只提供本地纯函数 adapter skeleton，不改首页页面。
+- Adapter 输出 `storefront-home-market-shop-v2` 只读 view model，保留 static fallback、B-side 默认过滤和高风险 blocked serial work 边界。
+- 本轮不修改 `packages/api/**`，不接真实 API，不影响 cart、checkout、order、payment、refund、settlement、commission、permission 或 fulfillment。
+- 下一项建议补 `storefront-search-view-model-adapter-plan` 或继续 `storefront-shop-view-model-adapter-skeleton`。

@@ -263,3 +263,4 @@
 - 完成 `storefront-home-view-model-adapter-plan`，docs-only 细化首页 adapter 的建议文件位置、discovery/product/fallback 输入、合成顺序、错误处理、测试和回滚边界。
 - 完成 `storefront-shop-view-model-adapter-plan`，docs-only 细化店铺页 adapter 的建议文件位置、seller/product ids/products/market/fallback 输入、合成顺序、特殊场景、错误处理、测试和回滚边界。
 - 完成 `storefront-adapter-plan-validation`，验证 template registry、home/shop/search mapper、China read models、API typecheck 和 diff check 均通过；建议先补搜索 adapter plan，再进入 adapter skeleton。
+- 完成 `storefront-home-view-model-adapter-skeleton`，新增 Storefront 首页本地纯函数 adapter skeleton，输出 `storefront-home-market-shop-v2` 只读 view model，保留 static fallback、B-side 默认过滤和高风险 blocked serial work 边界；未接入页面布局或真实交易链路。

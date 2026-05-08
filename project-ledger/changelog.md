@@ -250,3 +250,4 @@
 - 完成 `admin-dashboard-template-v2`，Admin 首页第一版 v2 收紧 KPI、增加数据来源条和近期重点模块；未修改权限、审计、订单、支付、退款、结算、佣金、打款或履约逻辑。
 - 完成 `vendor-role-workspace-template-v2`，Vendor 首页新增角色工作台模板 v2 只读预览，区分普通商户、果蔬商户、物料供应商、配送供应商、上游供给、种苗供应商和外地批发商；未修改订单、支付、退款、结算、佣金、打款、权限或履约 runtime。
 - 完成 `template-preview-v2-validation`，汇总 Storefront 首页、Storefront 店铺页、Admin 首页和 Vendor 多角色经营看板四个 template v2 surface 的验证结果、风险和下一轮 docs-only 方向。
+- 完成 `template-registry-surface-binding-plan`，docs-only 规划四个 v2 surface 如何先扩 template registry / stable view model，再逐端绑定页面，避免继续把模板状态散写在 UI 里。

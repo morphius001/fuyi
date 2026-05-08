@@ -1168,3 +1168,9 @@
 - 四个 template v2 surface 均已合并：Storefront 首页、Storefront 店铺页、Admin 运营首页、Vendor 多角色经营看板。
 - 本轮只新增验证报告、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
 - 下一轮建议先做 docs-only：`template-registry-surface-binding-plan` 或 `storefront-template-data-source-plan`；Vendor 视觉 QA 标记为 `blocked-manual`，避免在未确认满意度前继续堆 UI。
+
+## Round 193 更新
+
+- `template-registry-surface-binding-plan` 已完成，见 `docs/template-registry-surface-binding-plan.md`。
+- 本轮只规划 Storefront/Admin/Vendor 如何从 template registry v2 和 stable view model 读取模板，不修改 `apps/**` 或 `packages/**`。
+- 下一步建议为 `storefront-template-data-source-plan`，继续 docs-only 规划消费者首页/店铺页从静态展示数据切到真实 discovery/shop read model。

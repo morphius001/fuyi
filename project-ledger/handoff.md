@@ -998,3 +998,10 @@
 - 本轮只规划 Vendor “我的能力边界”面板，不修改 `apps/vendor/**`。
 - 明确商户可见角色、草稿、装修、履约/面单、提货履约认知和直播状态，但不能直接发布商品、发货、打印面单、开播、兑换或改结算/权限。
 - 推荐下一项：`storefront-readonly-contracts-visibility-plan`。
+
+## Round 170 更新
+
+- `storefront-readonly-contracts-visibility-plan` 已完成，见 `docs/storefront-readonly-contracts-visibility-plan.md`。
+- 本轮只规划消费者侧只读 contract 可见性，不修改 `apps/storefront/**`。
+- 明确普通商户、店铺装修、配送提示、提货卡独立入口和店铺直播状态可展示；物料/配送/上游供应默认隐藏，提货卡不接 checkout，直播不做首页主入口。
+- 推荐下一项：`readonly-contracts-ui-planning-validation`。

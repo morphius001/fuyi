@@ -227,3 +227,4 @@
 - 完成 `readonly-contracts-export-index`，docs-only 建立非支付只读 contracts 三端可读范围和禁止误用索引。
 - 完成 `admin-readonly-contracts-panel-plan`，docs-only 规划 Admin 平台能力只读总览面板和 UI PR 边界。
 - 完成 `vendor-readonly-contracts-panel-plan`，docs-only 规划 Vendor 我的能力边界只读面板和 UI PR 边界。
+- 完成 `storefront-readonly-contracts-visibility-plan`，docs-only 规划消费者侧只读 contract 可见性、隐藏规则和 UI PR 边界。

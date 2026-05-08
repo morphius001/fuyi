@@ -850,3 +850,10 @@
 - 本轮只记录外部阻塞边界、已完成 PR #190-#194 和下一批安全方向。
 - 没有 disposable preprod DB 前，不得执行 mock provider runtime preprod smoke。
 - 下一项建议为 `china-platform-non-payment-backlog`，回到非支付方向整理低风险 PR 队列。
+
+## Round 149 更新
+
+- `china-platform-non-payment-backlog` 已完成，见 `docs/china-platform-non-payment-backlog.md`。
+- 本轮只整理非支付方向 backlog，不修改 `apps/**` 或 `packages/**`。
+- 下一批低风险 docs-only 队列：market domain readiness、merchant role capability、vendor mobile draft product、shop decoration、logistics/waybill、pickup card consumer flow、live commerce readonly。
+- 推荐下一项：`market-domain-readiness-review`。

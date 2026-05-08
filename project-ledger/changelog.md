@@ -206,3 +206,4 @@
 - 完成 `mock-provider-runtime-preprod-smoke-script`，新增默认不连接外部 DB 的 preprod smoke skeleton，只支持 print-plan / validate-inputs-only，并验证禁止敏感 CLI 参数。
 - 完成 `mock-provider-runtime-preprod-smoke-script-validation`，记录 PR #193 合并后的 print-plan、validate-only、forbidden arg 和 diff check 验证；自动队列停在 external DB 阻塞边界。
 - 完成 `blocked-external-boundary-rollup`，记录 mock provider runtime 外部 DB 阻塞边界、PR #190-#194 状态和下一批非支付安全方向。
+- 完成 `china-platform-non-payment-backlog`，docs-only 整理市场域、商户角色、手机上架、店铺装修、物流面单、提货卡和直播的下一批低风险 PR。

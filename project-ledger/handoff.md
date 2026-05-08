@@ -753,3 +753,9 @@
 - 本轮只写文档，设计 runtime config、provider registry、runtime gate、inbox/event log、state guard、command mapper 和 audit 的调用顺序。
 - 明确本阶段不得执行 payment workflow，不得写订单/支付/退款/结算/佣金/权限状态。
 - 下一项建议为 `mock-provider-runtime-disabled-skeleton-plan`，继续 docs-only。
+
+## Round 136 更新
+
+- `mock-provider-runtime-disabled-skeleton-plan` 已完成，见 `docs/mock-provider-runtime-disabled-skeleton-plan.md`。
+- 本轮只写文档，规划未来 disabled route skeleton 的文件范围、默认 disabled 行为、production blocked 和测试清单。
+- 下一项可做 `mock-provider-runtime-disabled-skeleton`，但只能新增 disabled route，不读 body、不接 DB、不调用 adapter、不执行 workflow。

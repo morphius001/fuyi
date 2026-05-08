@@ -1259,3 +1259,10 @@
 - 本轮只规划店铺页 adapter，不改 `apps/**` 或 `packages/**`。
 - 明确 adapter 后续只负责 seller handle、seller product ids、products、market context 和 static fallback 输入合成，不改页面布局，不碰 cart、checkout、order、payment 或 fulfillment。
 - 第一百零二轮队列已清空；下一步建议做 `storefront-adapter-plan-validation`，再决定是否进入 adapter skeleton。
+
+## Round 205 更新
+
+- `storefront-adapter-plan-validation` 已完成，见 `docs/storefront-adapter-plan-validation.md`。
+- 验证通过：template registry readonly contract、home mapper、shop mapper、search mapper、China read models、API typecheck、`git diff --check`。
+- 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
+- 下一项建议继续 `storefront-search-view-model-adapter-plan`，先补齐搜索 adapter plan，再进入 adapter skeleton。

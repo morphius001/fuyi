@@ -262,3 +262,4 @@
 - 完成 `storefront-template-binding-validation`，验证 template registry、home/shop/search mapper、China read models、API typecheck 和 diff check 均通过；记录页面绑定前仍需 adapter plan。
 - 完成 `storefront-home-view-model-adapter-plan`，docs-only 细化首页 adapter 的建议文件位置、discovery/product/fallback 输入、合成顺序、错误处理、测试和回滚边界。
 - 完成 `storefront-shop-view-model-adapter-plan`，docs-only 细化店铺页 adapter 的建议文件位置、seller/product ids/products/market/fallback 输入、合成顺序、特殊场景、错误处理、测试和回滚边界。
+- 完成 `storefront-adapter-plan-validation`，验证 template registry、home/shop/search mapper、China read models、API typecheck 和 diff check 均通过；建议先补搜索 adapter plan，再进入 adapter skeleton。

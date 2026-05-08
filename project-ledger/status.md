@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 22:58 Asia/Shanghai
+更新时间：2026-05-08 23:06 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -358,7 +358,8 @@
 - `readonly-contracts-ui-validation` 已完成：Admin lint/build、Vendor lint/build、Storefront build 和 `git diff --check` 通过；Storefront 仅保留既有 React Hook warning。
 - 第九十五轮队列已清空。
 - `ui-template-system-plan` 已完成：规划三端模板系统，明确界面可模板化替换，但数据合同、交易链路和高风险边界保持稳定。
-- 队列下一项：`storefront-template-contract-plan`。
+- `storefront-template-contract-plan` 已完成：规划消费者端首页、搜索、店铺、商品、提货卡和移动端模板合同，不改页面。
+- 队列下一项：`admin-template-contract-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

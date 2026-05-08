@@ -1238,3 +1238,10 @@
 - 后续店铺页绑定建议拆三步：Shop View Model Adapter、Shop Header Binding、Shop Product Cards Binding。
 - 明确配送、自提、营业时间和公告归属店铺头部；商品卡不写库存、购物车、订单、checkout shipping options 或履约状态。
 - 第一百零一轮队列已清空；下一步建议做 `storefront-template-binding-validation` 或继续 docs-only adapter plan。
+
+## Round 202 更新
+
+- `storefront-template-binding-validation` 已完成，见 `docs/storefront-template-binding-validation.md`。
+- 验证通过：template registry readonly contract、home mapper、shop mapper、search mapper、China read models、API typecheck、`git diff --check`。
+- 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
+- 下一项建议继续 `storefront-home-view-model-adapter-plan`，docs-only 细化首页 adapter 输入输出，不改页面。

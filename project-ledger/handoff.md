@@ -1020,3 +1020,11 @@
 - 页面使用前端静态只读数据，不新增后端 route，不写配置，不影响订单、支付、退款、结算、佣金、打款、权限、checkout、履约或真实 Provider。
 - 验证通过：i18n JSON parse、`git diff --check`、Admin lint、Admin build。
 - 下一项建议继续 `vendor-readonly-contracts-panel-ui`。
+
+## Round 173 更新
+
+- `vendor-readonly-contracts-panel-ui` 已完成，见 `docs/vendor-readonly-contracts-panel-ui.md`。
+- Vendor 新增“我的能力边界”导航项和只读面板，覆盖角色、市场档口、快速上架、AI 草稿、店铺装修、履约/面单、提货卡、直播和高风险边界。
+- 本轮不新增后端 route，不修改 `packages/api/**`，不提供真实发布、发货、打印、兑换、开播、结算或权限动作。
+- 验证通过：Vendor lint、Vendor build、`git diff --check`。
+- 下一项建议继续 `storefront-visibility-copy-polish`。

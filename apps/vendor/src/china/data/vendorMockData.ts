@@ -1,5 +1,6 @@
 export type PageId =
   | "home"
+  | "capabilityBoundary"
   | "market"
   | "merchantTypes"
   | "mobileListing"
@@ -92,6 +93,7 @@ export type DashboardPage = {
 
 export const menuItems: Array<{ id: PageId; label: string; group: string }> = [
   { id: "home", label: "店铺首页", group: "市场经营" },
+  { id: "capabilityBoundary", label: "我的能力边界", group: "市场经营" },
   { id: "market", label: "市场选择", group: "市场经营" },
   { id: "merchantTypes", label: "商户类型", group: "市场经营" },
   { id: "mobileListing", label: "手机快速上架", group: "普通商户" },
@@ -510,6 +512,31 @@ export const commonStatuses = [
 ];
 
 export const pages: DashboardPage[] = [
+  {
+    id: "capabilityBoundary",
+    title: "我的能力边界",
+    description: "只读查看当前商户角色、市场、档口、快速上架、装修、履约、提货卡、直播和高风险串行边界。",
+    owner: "平台开通后可见",
+    todo: "TODO: 后续接入按登录商户过滤的 capability readonly view，不把本页当权限开关。",
+    primaryAction: "申请开通占位",
+    secondaryAction: "查看规则占位",
+    filters: ["能力名称", "开通状态", "后续 PR"],
+    stats: [
+      { label: "可见能力", value: "8", helper: "只读展示", tone: "blue" },
+      { label: "待平台开通", value: "4", helper: "后台配置", tone: "amber" },
+      { label: "高风险阻塞", value: "7", helper: "串行任务", tone: "red" },
+    ],
+    statuses: commonStatuses,
+    columns: [
+      { key: "capability", label: "能力" },
+      { key: "statusText", label: "状态" },
+      { key: "boundary", label: "边界" },
+      { key: "next", label: "后续" },
+    ],
+    rows: [],
+    emptyTitle: "暂无能力记录",
+    emptyDescription: "能力边界页使用专用只读面板展示，不通过本表执行任何操作。",
+  },
   {
     id: "market",
     title: "市场选择",

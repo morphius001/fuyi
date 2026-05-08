@@ -1142,6 +1142,15 @@
 3. `storefront-visibility-copy-polish`: done，Storefront 消费者侧可见性文案已 polish，不改交易链路。
 4. `readonly-contracts-ui-validation`: done，三端 UI build/lint 验证通过，记录 Storefront 既有 React Hook warning。
 
+第九十六轮建议：
+
+1. `ui-template-system-plan`: done，规划三端 UI 模板系统边界，明确模板可换、数据合同和高风险链路不可乱动。
+2. `storefront-template-contract-plan`: pending，规划消费者端模板合同，不改页面。
+3. `admin-template-contract-plan`: pending，规划运营后台模板合同，不改页面。
+4. `vendor-template-contract-plan`: pending，规划商户后台模板合同，不改页面。
+5. `template-registry-readonly-contract`: pending，新增纯 TypeScript 模板注册表 view shape skeleton，不接 route、不接 DB。
+6. `template-system-validation`: pending，验证模板规划和 skeleton 合并后的 typecheck/test/diff。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

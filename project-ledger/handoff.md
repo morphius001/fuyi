@@ -724,3 +724,11 @@
 - 本轮只写文档，规划 mock provider contract、registry、runtime gate 和 preprod disposable DB gate 的组合验证矩阵。
 - 未修改 `apps/**` 或 `packages/**`，未接 runtime，未注册 provider，未执行 payment workflow。
 - 下一项建议为 `mock-provider-runtime-gate-composition-tests`，只新增纯函数组合测试。
+
+## Round 132 更新
+
+- `mock-provider-runtime-gate-composition-tests` 已完成，见 `docs/mock-provider-runtime-gate-composition-tests.md`。
+- 新增 registry + runtime gate 组合单测，覆盖 real provider refused、production blocked、preprod DB gate required、prepare-command allowed 和 workflow 不暴露。
+- Harness 已纳入新增组合单测。
+- 未接 route、未连接 DB、未注册 Medusa payment provider，未执行 payment workflow。
+- 下一项建议为 `mock-provider-runtime-readiness-report`。

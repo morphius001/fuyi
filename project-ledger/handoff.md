@@ -1403,3 +1403,13 @@
 - 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
 - 本轮不修改搜索页页面、不修改 `packages/api/**`，不接真实搜索 provider。
 - 下一步建议继续 `storefront-shop-membership-source`，让店铺 adapter 输入从 seller metadata 过渡到 seller membership read model 形状。
+
+## Round 222 更新
+
+- `storefront-shop-membership-source` 已完成，见 `docs/storefront-shop-membership-source.md`。
+- 新增 `ChinaShopMembershipInput` 和 `getChinaShopMembershipInputContract()`。
+- 店铺 adapter 现在可接受 seller membership 形状，并映射为只读 seller view；当前店铺页行为不变。
+- Membership 输入只影响展示，不改变权限、订单归属、结算主体、checkout shipping options、cart、order、payment、refund、settlement、commission、fulfillment 或 logistics。
+- 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
+- 本轮不修改店铺页页面、不修改 `ProductCard`、不修改 `packages/api/**`。
+- 下一步建议做 `storefront-read-model-source-validation`，汇总 home/search/shop 输入源阶段结果。

@@ -963,3 +963,10 @@
 - 本轮只规划直播只读状态和 Provider 边界；直播只作为店铺/档口状态，不放消费者首页主入口。
 - 明确不接真实推流、IM、聊天室、礼物、打赏、直播交易、支付、退款、结算、佣金或权限。
 - 推荐下一项：`live-commerce-readonly-contract`。
+
+## Round 165 更新
+
+- `live-commerce-readonly-contract` 已完成，见 `docs/live-commerce-readonly-contract.md`。
+- 新增 `buildChinaLiveCommerceReadonlyView()`，输出直播 session、展示位置和高风险阻塞项。
+- 合同明确直播可作为店铺卡片/店铺主页/Vendor 预览/Admin 审核占位，但不能作为消费者首页主入口。
+- 推荐下一项：`non-payment-readonly-contracts-validation`。

@@ -235,3 +235,4 @@
 - 完成 `readonly-contracts-ui-validation`，三端验证通过：Admin lint/build、Vendor lint/build、Storefront build 和 `git diff --check`；Storefront 仅保留既有 React Hook dependency warnings，本轮不扩大范围修复。
 - 完成 `ui-template-system-plan`，docs-only 规划三端 UI 模板系统，明确模板可替换但只能消费稳定 view model，不得改变交易链路和高风险状态来源。
 - 完成 `storefront-template-contract-plan`，docs-only 规划消费者端模板合同，明确首页/搜索/店铺/商品/提货卡/移动端边界，以及物料、配送供应商和上游供给默认隐藏规则。
+- 完成 `admin-template-contract-plan`，docs-only 规划平台运营后台模板合同，明确菜单、首页、市场、商户、商品、提货卡、风控和系统配置可模板化，但不能替代权限、审计、交易、结算或履约事实。

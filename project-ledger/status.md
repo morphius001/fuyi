@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 23:06 Asia/Shanghai
+更新时间：2026-05-08 23:15 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -359,7 +359,8 @@
 - 第九十五轮队列已清空。
 - `ui-template-system-plan` 已完成：规划三端模板系统，明确界面可模板化替换，但数据合同、交易链路和高风险边界保持稳定。
 - `storefront-template-contract-plan` 已完成：规划消费者端首页、搜索、店铺、商品、提货卡和移动端模板合同，不改页面。
-- 队列下一项：`admin-template-contract-plan`。
+- `admin-template-contract-plan` 已完成：规划平台运营后台首页、菜单、市场、商户、商品、提货卡、营销、客服、直播、风控和系统配置模板合同，不改页面。
+- 队列下一项：`vendor-template-contract-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

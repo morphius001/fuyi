@@ -63,6 +63,16 @@ export type ListItem = {
   target?: PageId;
 };
 
+export type VendorRoleWorkspaceCard = {
+  role: string;
+  status: string;
+  headline: string;
+  focus: string[];
+  blocked: string;
+  target?: PageId;
+  tone: Tone;
+};
+
 export type TableColumn = {
   key: string;
   label: string;
@@ -375,6 +385,81 @@ export const supplierRoleAccessMatrix = [
   ["养殖户 / 种植户", "平台邀请接入", "作为上游供给方对接商户采购需求，不等同市场档口。"],
   ["种苗供应商", "平台邀请接入", "对接养殖户、种植户和部分商户，当前不创建真实合同或采购单。"],
   ["外地批发商", "平台邀请接入", "跨区货源直接对接本地商户，当前不触发支付、结算或库存。"],
+];
+
+export const vendorRoleWorkspaceTemplate = {
+  id: "vendor-role-workspace-v2",
+  eyebrow: "平台开通能力 · 只读预览",
+  title: "多角色经营看板",
+  description:
+    "按平台开通角色展示不同经营重点。当前只读预览，不改变真实权限、订单、履约、库存、支付或结算。",
+  hint: "真实开放状态以后端角色、平台审核和能力配置为准。",
+};
+
+export const vendorRoleWorkspaceCards: VendorRoleWorkspaceCard[] = [
+  {
+    role: "普通生鲜 / 海鲜商户",
+    status: "示例角色",
+    headline: "围绕商品、订单、售后、店铺装修和手机快速上架。",
+    focus: ["今日订单", "待发货 / 待自提", "手机快速上架", "店铺装修"],
+    blocked: "不直接改订单状态、库存事实、结算或权限。",
+    target: "mobileListing",
+    tone: "blue",
+  },
+  {
+    role: "水果蔬菜商户",
+    status: "平台可开通",
+    headline: "突出产地、等级、箱规、采摘日、到货时间和保鲜状态。",
+    focus: ["规格 / 单位", "产地批次", "采摘日期", "保鲜提示"],
+    blocked: "不把规格模板写死到商品模型。",
+    target: "products",
+    tone: "green",
+  },
+  {
+    role: "物料供应商",
+    status: "独立角色",
+    headline: "面向商户采购泡沫箱、包装箱、冰袋、冰块等市场物料。",
+    focus: ["物料目录", "商户采购订单", "库存预警", "报价占位"],
+    blocked: "不出现在普通消费者首页，不触发真实支付或结算。",
+    target: "materialSupplier",
+    tone: "amber",
+  },
+  {
+    role: "配送供应商",
+    status: "独立角色",
+    headline: "只展示服务范围、运力、异常和配送服务单占位。",
+    focus: ["服务市场", "服务范围", "运力状态", "异常记录"],
+    blocked: "不确认发货、不生成真实面单、不回写物流或结算。",
+    target: "deliveryServices",
+    tone: "red",
+  },
+  {
+    role: "养殖户 / 种植户",
+    status: "上游供给",
+    headline: "用于对接本地市场商户的货源、报价、资质和到货计划。",
+    focus: ["供给批次", "报价", "产地资质", "对接商户"],
+    blocked: "不上消费者主链路，不直接成交或写库存。",
+    target: "farmSuppliers",
+    tone: "slate",
+  },
+  {
+    role: "种苗供应商",
+    status: "上游供给",
+    headline: "对接养殖户、种植户和部分商户的苗种供应计划。",
+    focus: ["种苗品类", "供应周期", "报价", "到苗计划"],
+    blocked: "不创建真实合同、采购单或结算单。",
+    target: "seedWholesale",
+    tone: "green",
+  },
+  {
+    role: "外地批发商",
+    status: "跨区供给",
+    headline: "直接对接本地商户，重点看跨区货源、时效和冷链协同。",
+    focus: ["跨区货源", "报价", "冷链到货", "合作商户"],
+    blocked: "不触发支付、采购、库存或结算。",
+    target: "externalWholesalers",
+    tone: "blue",
+  },
 ];
 
 export const fastListingCategories = [

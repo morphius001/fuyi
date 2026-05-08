@@ -1210,7 +1210,13 @@
 
 1. `storefront-template-binding-validation`: done，验证第一百零一轮 mapper / binding plan 状态和下一步可实现边界。
 2. `storefront-home-view-model-adapter-plan`: done，docs-only 细化首页 adapter 输入输出，不改页面。
-3. `storefront-shop-view-model-adapter-plan`: pending，docs-only 细化店铺 adapter 输入输出，不改页面。
+3. `storefront-shop-view-model-adapter-plan`: done，docs-only 细化店铺 adapter 输入输出，不改页面。
+
+第一百零二轮已清空。下一步建议新增第一百零三轮任务：
+
+1. `storefront-adapter-plan-validation`: pending，验证 home/shop adapter plan 和 mapper 状态。
+2. `storefront-search-view-model-adapter-plan`: pending，docs-only 细化搜索 adapter 输入输出，不改页面。
+3. `storefront-home-view-model-adapter-skeleton`: pending，小范围实现首页 adapter skeleton，仍不改页面布局。
 
 第九十三轮原则：
 

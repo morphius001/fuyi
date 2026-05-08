@@ -843,3 +843,10 @@
 - PR #193 已合并，merge commit `49a6f8e93f654ff48030fe0a61503068b15c73c6`。
 - 合并后验证通过：print-plan、安全示例 validate-only、forbidden CLI arg 拒绝、`git diff --check`。
 - 自动队列现在停在 `mock-provider-runtime-preprod-smoke-execution: blocked-external`，需要 disposable preprod DB、备份/回滚 owner 和连接授权。
+
+## Round 148 更新
+
+- `blocked-external-boundary-rollup` 已完成，见 `docs/blocked-external-boundary-and-next-safe-tracks.md`。
+- 本轮只记录外部阻塞边界、已完成 PR #190-#194 和下一批安全方向。
+- 没有 disposable preprod DB 前，不得执行 mock provider runtime preprod smoke。
+- 下一项建议为 `china-platform-non-payment-backlog`，回到非支付方向整理低风险 PR 队列。

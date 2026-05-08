@@ -1107,6 +1107,8 @@
 57. `mock-provider-runtime-preprod-smoke-script`: done，新增默认不连接外部 DB 的脚本 skeleton，只允许 print-plan / validate-inputs-only。
 58. `mock-provider-runtime-preprod-smoke-script-validation`: done，记录 PR #193 合并后的 print-plan、validate-only、forbidden arg 和 diff check 验证。
 59. `mock-provider-runtime-preprod-smoke-execution`: blocked-external，等待用户提供 disposable preprod DB、备份/回滚 owner 和连接授权；默认自动队列不得执行。
+60. `blocked-external-boundary-rollup`: done，记录支付 provider runtime 外部阻塞边界和下一批安全方向。
+61. `china-platform-non-payment-backlog`: pending，docs-only 整理非支付方向下一批低风险 PR。
 
 第九十三轮原则：
 

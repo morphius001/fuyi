@@ -7,6 +7,7 @@ import {
 
 export type LocalPostgresQueryResult<Row = Record<string, unknown>> = {
   rows: Row[];
+  rowCount?: number;
 };
 
 export type LocalPostgresConnection = {
@@ -208,6 +209,24 @@ const createTransaction = (
   connection: LocalPostgresConnection,
 ): PaymentNotificationDbTransaction => ({
   insertInbox: async (row) => {
+    const existing = await connection
+      .query(
+        `
+          select id
+          from payment_notification_inbox
+          where provider = $1 and idempotency_key = $2
+          limit 1
+        `,
+        [row.provider, row.idempotencyKey],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    if (existing.rows.length > 0) {
+      throw createSafeError("DB_UNIQUE_CONFLICT");
+    }
+
     const insertResult = await connection
       .query(
         `
@@ -259,7 +278,7 @@ const createTransaction = (
         throw mapDbError(error);
       });
 
-    if (insertResult.rows.length === 0) {
+    if (insertResult.rowCount === 0) {
       throw createSafeError("DB_UNIQUE_CONFLICT");
     }
   },

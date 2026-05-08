@@ -17,6 +17,67 @@ const makeResponse = () => {
   };
 };
 
+const localDbName = "fuyi_payment_notification_route_dry_run_unit";
+const localDbUrl = `postgres://codex@127.0.0.1:15432/${localDbName}`;
+
+const makeLocalDbRequest = ({
+  rawBody,
+  headers = {},
+  query,
+}: {
+  rawBody: string;
+  headers?: Record<string, string>;
+  query: jest.Mock;
+}) =>
+  ({
+    headers,
+    text: jest.fn(async () => rawBody),
+    scope: {
+      resolve: jest.fn(() => ({
+        raw: jest.fn(async () => ({
+          rows: [{ database_name: localDbName }],
+        })),
+        transaction: jest.fn(async () => ({
+          raw: query,
+          commit: jest.fn(async () => undefined),
+          rollback: jest.fn(async () => undefined),
+        })),
+      })),
+    },
+  }) as unknown as MedusaRequest;
+
+const localDbInboxRow = {
+  id: "pinbox_mock_china_pay_key_001",
+  provider: "mock_china_pay",
+  event_id: "evt_local_db_001",
+  event_type: "payment.succeeded",
+  idempotency_key: "mock_china_pay:event:evt_local_db_001",
+  merchant_order_ref: "pay_local_db_001",
+  payment_session_id: "payses_local_db_001",
+  provider_transaction_id: "mock_txn_local_db_001",
+  provider_refund_id: null,
+  amount_value: 128560,
+  currency: "CNY",
+  signature_status: "verified",
+  raw_payload_digest: "sha256:digest",
+  processing_status: "verified",
+  retry_count: 0,
+  received_at: "2026-05-07T00:00:00.000Z",
+  created_at: "2026-05-07T00:00:00.000Z",
+  updated_at: "2026-05-07T00:00:00.000Z",
+};
+
+const setLocalDbEnv = (secret: string) => {
+  process.env.CHINA_PAYMENT_NOTIFICATION_RUNTIME_ENABLED = "true";
+  process.env.CHINA_PAYMENT_NOTIFICATION_WEBHOOK_MODE = "mock_inbox_only";
+  process.env.CHINA_PAYMENT_NOTIFICATION_PROVIDER = "mock_china_pay";
+  process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB = "true";
+  process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_URL = localDbUrl;
+  process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_NAME = localDbName;
+  process.env.CHINA_PAYMENT_NOTIFICATION_MOCK_SECRET = secret;
+  process.env.NODE_ENV = "development";
+};
+
 describe("neutral china mock payment webhook disabled route", () => {
   beforeEach(() => {
     process.env = { ...oldEnv };
@@ -121,6 +182,111 @@ describe("neutral china mock payment webhook disabled route", () => {
       runtimeRequested: true,
     });
     expect((req as unknown as { text: jest.Mock }).text).not.toHaveBeenCalled();
+  });
+
+  it("accepts local DB signed payloads when disposable DB gates pass", async () => {
+    const secret = "neutral_local_db_secret";
+    const rawBody = JSON.stringify({
+      event_id: "evt_local_db_001",
+      event_type: "payment.succeeded",
+      merchant_order_ref: "pay_local_db_001",
+      payment_session_id: "payses_local_db_001",
+      provider_transaction_id: "mock_txn_local_db_001",
+      amount: 128560,
+      currency: "CNY",
+    });
+    setLocalDbEnv(secret);
+    const query = jest.fn(async (sql: string) => {
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [{ id: "pinbox_mock_china_pay_key_001" }], rowCount: 1 };
+      }
+
+      if (sql.includes("insert into payment_notification_event_log")) {
+        return { rows: [] };
+      }
+
+      return { rows: [] };
+    });
+    const req = makeLocalDbRequest({
+      rawBody,
+      headers: {
+        "x-mock-payment-signature": buildMockPaymentSignature(rawBody, secret),
+      },
+      query,
+    });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "accepted",
+        route: "mock_payment_webhook_neutral_local_db",
+      }),
+    );
+    const sqlCalls = query.mock.calls.map(([sql]) => String(sql).trim());
+    expect(sqlCalls).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("from payment_notification_inbox"),
+        expect.stringContaining("insert into payment_notification_inbox"),
+        expect.stringContaining("insert into payment_notification_event_log"),
+      ]),
+    );
+    expect(sqlCalls).not.toContain("begin");
+    expect(sqlCalls).not.toContain("commit");
+
+    const responseBody = JSON.stringify(res.json.mock.calls[0][0]);
+    expect(responseBody).not.toContain(rawBody);
+    expect(responseBody).not.toContain(secret);
+    expect(responseBody).not.toContain(localDbUrl);
+  });
+
+  it("returns duplicate for local DB idempotency replays", async () => {
+    const secret = "neutral_local_db_secret";
+    const rawBody = JSON.stringify({
+      event_id: "evt_local_db_001",
+      event_type: "payment.succeeded",
+      merchant_order_ref: "pay_local_db_001",
+      payment_session_id: "payses_local_db_001",
+      provider_transaction_id: "mock_txn_local_db_001",
+      amount: 128560,
+      currency: "CNY",
+    });
+    setLocalDbEnv(secret);
+    const query = jest.fn(async (sql: string) => {
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [] };
+      }
+
+      if (sql.includes("from payment_notification_inbox")) {
+        return { rows: [localDbInboxRow] };
+      }
+
+      if (sql.includes("insert into payment_notification_event_log")) {
+        return { rows: [] };
+      }
+
+      return { rows: [] };
+    });
+    const req = makeLocalDbRequest({
+      rawBody,
+      headers: {
+        "x-mock-payment-signature": buildMockPaymentSignature(rawBody, secret),
+      },
+      query,
+    });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "duplicate",
+        route: "mock_payment_webhook_neutral_local_db",
+      }),
+    );
   });
 
   it("accepts local in-memory signed payloads when explicitly enabled", async () => {

@@ -797,3 +797,10 @@
 - 合并后验证通过：payment notification harness 21 suites / 143 tests、API typecheck、`git diff --check`、`medusa-config.ts` runtime grep 无注册、disposable DB 无残留。
 - 子 AG 指出的实际 PG 连接本地性校验和 signature header name 泄露风险已在 PR #187 内修复。
 - 下一项建议为 `mock-provider-runtime-local-smoke-script-plan`，只规划 provider route local disposable DB smoke wrapper，不直接接真实支付。
+
+## Round 142 更新
+
+- `mock-provider-runtime-local-smoke-script-plan` 已完成，见 `docs/mock-provider-runtime-local-smoke-script-plan.md`。
+- 本轮只规划后续脚本，不新增 `.codex/scripts/**`，不修改 `packages/**` 或 `apps/**`。
+- 后续脚本应使用临时 API 端口、本地 disposable DB、fake local secret，并覆盖 disabled / accepted / duplicate / missing-signature smoke。
+- 下一项可做 `mock-provider-runtime-local-smoke-script`，但仍不得连接预发/生产或执行 payment workflow。

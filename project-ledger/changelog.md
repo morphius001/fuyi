@@ -212,3 +212,4 @@
 - 完成 `market-domain-read-model-contract`，新增市场域只读合同 view shape、角色边界和高风险 serial work 边界测试。
 - 完成 `market-domain-read-model-contract-validation`，记录 PR #199 合并后的 focused unit test、API typecheck 和 diff check。
 - 完成 `merchant-role-capability-readiness`，docs-only 整理商户/供应商/上游角色能力矩阵和高风险禁止项。
+- 完成 `merchant-role-capability-contract`，新增商户角色能力只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。

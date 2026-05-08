@@ -158,6 +158,78 @@ export type ChinaMarketDomainContractView = {
   note: string;
 };
 
+export type ChinaMerchantRoleCapabilityKey =
+  | "consumer_product_flow"
+  | "shop_homepage"
+  | "mobile_quick_listing_draft"
+  | "product_review_candidate"
+  | "merchant_materials_procurement"
+  | "materials_supplier_self_order"
+  | "delivery_supplier_service"
+  | "market_unified_delivery_display"
+  | "upstream_supply_match"
+  | "seedling_trade_match"
+  | "regional_wholesale_match"
+  | "shop_decoration_readonly"
+  | "live_status_readonly";
+
+export type ChinaMerchantRoleCapabilityBoundaryKey =
+  | "rbac_permission"
+  | "order_ownership"
+  | "checkout_shipping_options"
+  | "payment"
+  | "refund"
+  | "settlement"
+  | "commission"
+  | "payout"
+  | "real_logistics_provider"
+  | "waybill_printing";
+
+export type ChinaMerchantRoleGroup =
+  | "consumer_merchant"
+  | "merchant_service"
+  | "upstream_supply"
+  | "regional_supply";
+
+export type ChinaMerchantRoleVisibility =
+  | "default_visible"
+  | "hidden_by_default"
+  | "requires_additional_consumer_role";
+
+export type ChinaMerchantRoleCapabilityContractRoleView = {
+  roleKey: ChinaSellerRoleKey;
+  label: string;
+  group: ChinaMerchantRoleGroup;
+  consumerVisibility: ChinaMerchantRoleVisibility;
+  merchantVisibility: ChinaMerchantRoleVisibility;
+  adminEnablement: "platform_market_seller_approval_required";
+  defaultCapabilities: ChinaMerchantRoleCapabilityKey[];
+  blockedCapabilities: ChinaMerchantRoleCapabilityKey[];
+  permissionImpact: "none";
+  orderOwnershipImpact: "none";
+  settlementImpact: "none";
+  runtimeEnabled: false;
+};
+
+export type ChinaMerchantRoleCapabilityBoundaryView = {
+  key: ChinaMerchantRoleCapabilityBoundaryKey;
+  status: "blocked_serial_work";
+  reason: string;
+};
+
+export type ChinaMerchantRoleCapabilityContractView = {
+  mode: "merchant_role_capability_contract_read_only";
+  source: "china_market_read_model";
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
+  roles: ChinaMerchantRoleCapabilityContractRoleView[];
+  highRiskBoundaries: ChinaMerchantRoleCapabilityBoundaryView[];
+  readOnly: true;
+  runtimeEnabled: false;
+  note: string;
+};
+
 export type ChinaVendorMarketContextMode =
   | "vendor_market_context_read_only"
   | "vendor_market_context_empty";

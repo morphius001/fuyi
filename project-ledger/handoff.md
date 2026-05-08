@@ -1305,3 +1305,12 @@
 - 空 query 不报错，无结果只展示消费者提示；默认过滤物料供应商、配送供应商、上游供给、种苗批发和外地批发等 B-side 内容。
 - 本轮不修改 `packages/api/**`，不接真实 API，不影响库存、cart、checkout、order、payment、refund、settlement、commission、permission、fulfillment 或搜索排序/广告/竞价 runtime。
 - 下一项建议继续 `storefront-adapter-skeleton-validation-v2`，验证 home / shop / search 三个 Storefront adapter skeleton。
+
+## Round 211 更新
+
+- `storefront-adapter-skeleton-validation-v2` 已完成，见 `docs/storefront-adapter-skeleton-validation-v2.md`。
+- 验证通过：Storefront build、home / shop / search adapter focused TypeScript check、后端 runtime import grep、`git diff --check`。
+- 三个 adapter 均保持 `zh-CN`、`CNY`、`Asia/Shanghai`、`readOnly=true`、`runtimeEnabled=false`、`canWriteBusinessState=false`。
+- 本轮只新增验证文档、任务文件、队列和 ledger，不修改 Storefront 页面、不修改 `packages/api/**`，不接真实 API 或交易链路。
+- 剩余风险：页面尚未绑定；B-side 过滤仍为关键词 skeleton；真实市场、排序、广告、竞价、推荐、配送和交易事实仍未实现。
+- 下一项建议继续 `storefront-adapter-binding-sequence-plan`，先规划 home / shop / search 三个 adapter 绑定页面的 PR 顺序。

@@ -527,6 +527,7 @@ export type Routes = {
         china: {
             capabilities: typeof import("../../src/api/store/china/capabilities/route");
             discovery: typeof import("../../src/api/store/china/discovery/route");
+            productDiscovery: typeof import("../../src/api/store/china/product-discovery/route");
             sellers: {
                 $handle: {
                     products: typeof import("../../src/api/store/china/sellers/[handle]/products/route");

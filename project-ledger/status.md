@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 05:18 Asia/Shanghai
+更新时间：2026-05-09 05:32 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -94,6 +94,7 @@
 - `storefront-read-model-source-phase-rollup`: done，docs-only 汇总 PR #267-#274 的 Storefront read model source 阶段状态和下一步高风险边界。
 - `storefront-product-discovery-api-plan`: done，docs-only 规划未来 `/store/china/product-discovery` 只读 API、read model builder、Storefront client 和分 surface binding 顺序。
 - `product-discovery-read-model-builder`: done，新增 API 纯 TypeScript 商品发现只读 read model builder 和 focused tests；不新增 route、不读 DB、不改 Storefront。
+- `product-discovery-store-api-readonly`: done，新增 `/store/china/product-discovery` 只读 GET route、helpers 和 focused tests；只读 open seller / seller product links / published products，不写业务状态。
 
 ## 第十六轮进度
 

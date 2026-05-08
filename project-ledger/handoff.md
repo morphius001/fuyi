@@ -1338,3 +1338,12 @@
 - 本轮只把店铺名称、市场、档口号、履约提示、直播状态 badge 和提货卡独立提示接到 shop view model 输出。
 - 店铺商品卡、购物车、checkout shipping options、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
 - 下一项建议继续 `storefront-search-adapter-binding-readonly`，只绑定搜索结果展示，不接真实排序、广告、竞价或推荐系统。
+
+## Round 215 更新
+
+- `storefront-search-adapter-binding-readonly` 已完成，见 `docs/storefront-search-adapter-binding-readonly.md`。
+- 搜索页服务端页面现在构造 `searchViewModel = buildChinaSearchViewModel(...)`。
+- 本轮只把 query、市场 / 类目 / 店铺 / 静态商品样例结果接到 search view model 输出。
+- 真实商品卡仍走 Store API 和 `ProductCard`，不接真实排序、广告、竞价或推荐系统。
+- cart、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
+- 下一项建议继续 `storefront-home-product-cards-binding-readonly`，只绑定首页今日鲜货商品卡展示，不改 cart/order/checkout。

@@ -43,9 +43,9 @@ fail() {
 }
 
 case "$mode" in
-  disabled | accepted | duplicate) ;;
+  disabled | accepted | duplicate | rejected) ;;
   *)
-    fail "Usage: $0 [disabled|accepted|duplicate]"
+    fail "Usage: $0 [disabled|accepted|duplicate|rejected]"
     ;;
 esac
 
@@ -308,6 +308,17 @@ assert_db_counts() {
   [ "$leak_count" = "0" ] || fail "Event log metadata leaked secret, signature, or database URL."
 }
 
+assert_empty_db() {
+  local inbox_count
+  local event_log_count
+
+  inbox_count="$(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -tAc "select count(*) from payment_notification_inbox")"
+  [ "$inbox_count" = "0" ] || fail "Expected rejected smoke inbox count 0, got $inbox_count"
+
+  event_log_count="$(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -tAc "select count(*) from payment_notification_event_log")"
+  [ "$event_log_count" = "0" ] || fail "Expected rejected smoke event log count 0, got $event_log_count"
+}
+
 run_local_db_cases() {
   local payload_file
   local body_file
@@ -354,6 +365,74 @@ run_local_db_cases() {
     assert_db_counts "1" "dedupe_hit"
     echo "PASS local DB duplicate case"
   fi
+
+  rm -rf "$tmpdir"
+  tmpdir=""
+}
+
+run_rejected_cases() {
+  local payload_file
+  local non_cny_payload_file
+  local body_file
+  local signature
+  local status
+
+  tmpdir="$(mktemp -d)"
+  payload_file="$tmpdir/payload.json"
+  non_cny_payload_file="$tmpdir/non-cny-payload.json"
+  body_file="$tmpdir/response.json"
+
+  printf '%s' '{"event_id":"evt_neutral_db_rejected_001","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_db_rejected_001","payment_session_id":"payses_neutral_db_rejected_001","provider_transaction_id":"mock_txn_neutral_db_rejected_001","amount":128560,"currency":"CNY"}' >"$payload_file"
+
+  status="$(http_post "$body_file" \
+    -H "content-type: application/json" \
+    --data-binary "@$payload_file")"
+
+  [ "$status" = "400" ] || fail "Expected missing signature HTTP 400, got $status with $(cat "$body_file")"
+  assert_json_field "$body_file" "status" "rejected"
+  assert_json_field "$body_file" "code" "SIGNATURE_MISSING"
+  assert_json_field "$body_file" "route" "mock_payment_webhook_neutral_local_db"
+  assert_response_absent "$body_file" "$(cat "$payload_file")" "raw payload"
+  assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
+  assert_response_absent "$body_file" "$db_url" "database URL"
+  assert_empty_db
+  echo "PASS local DB rejected missing signature case"
+
+  status="$(http_post "$body_file" \
+    -H "content-type: application/json" \
+    -H "x-mock-payment-signature: sha256=invalid" \
+    -H "x-mock-payment-event-id: evt_neutral_db_rejected_001" \
+    --data-binary "@$payload_file")"
+
+  [ "$status" = "400" ] || fail "Expected invalid signature HTTP 400, got $status with $(cat "$body_file")"
+  assert_json_field "$body_file" "status" "rejected"
+  assert_json_field "$body_file" "code" "SIGNATURE_INVALID"
+  assert_json_field "$body_file" "route" "mock_payment_webhook_neutral_local_db"
+  assert_response_absent "$body_file" "$(cat "$payload_file")" "raw payload"
+  assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
+  assert_response_absent "$body_file" "sha256=invalid" "signature"
+  assert_response_absent "$body_file" "$db_url" "database URL"
+  assert_empty_db
+  echo "PASS local DB rejected invalid signature case"
+
+  printf '%s' '{"event_id":"evt_neutral_db_rejected_002","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_db_rejected_002","payment_session_id":"payses_neutral_db_rejected_002","provider_transaction_id":"mock_txn_neutral_db_rejected_002","amount":128560,"currency":"USD"}' >"$non_cny_payload_file"
+  signature="$(build_signature "$non_cny_payload_file")"
+  status="$(http_post "$body_file" \
+    -H "content-type: application/json" \
+    -H "x-mock-payment-signature: $signature" \
+    -H "x-mock-payment-event-id: evt_neutral_db_rejected_002" \
+    --data-binary "@$non_cny_payload_file")"
+
+  [ "$status" = "400" ] || fail "Expected non-CNY HTTP 400, got $status with $(cat "$body_file")"
+  assert_json_field "$body_file" "status" "rejected"
+  assert_json_field "$body_file" "code" "PAYLOAD_INVALID"
+  assert_json_field "$body_file" "route" "mock_payment_webhook_neutral_local_db"
+  assert_response_absent "$body_file" "$(cat "$non_cny_payload_file")" "raw payload"
+  assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
+  assert_response_absent "$body_file" "$signature" "signature"
+  assert_response_absent "$body_file" "$db_url" "database URL"
+  assert_empty_db
+  echo "PASS local DB rejected non-CNY case"
 
   rm -rf "$tmpdir"
   tmpdir=""
@@ -409,7 +488,11 @@ if [ "$mode" = "disabled" ]; then
   CHINA_PAYMENT_NOTIFICATION_MOCK_SECRET="local_db_route_smoke_secret_not_real" \
     "$root/.codex/scripts/mock-webhook-neutral-route-smoke.sh" disabled
 else
-  run_local_db_cases
+  if [ "$mode" = "rejected" ]; then
+    run_rejected_cases
+  else
+    run_local_db_cases
+  fi
   stop_server
   drop_disposable_db
   created_db=0

@@ -1075,7 +1075,7 @@
 25. `mock-webhook-db-client-contract-validation`: done，记录 adapter skeleton 合并后的 harness、typecheck、runtime grep 和 DB/端口无残留验证。
 26. `mock-webhook-db-backed-route-local-accepted-plan`: done，规划 neutral route 接 local adapter 后的 accepted/duplicate/rejected smoke，不直接实现。
 27. `mock-webhook-db-backed-route-local-accepted`: done，route 接 local-only adapter，并扩展 local smoke accepted/duplicate；仍不执行 workflow。
-28. `mock-webhook-db-backed-route-local-rejected-smoke`: pending，补 missing signature / invalid signature / non-CNY local DB smoke；仍不执行 workflow。
+28. `mock-webhook-db-backed-route-local-rejected-smoke`: done，补 missing signature / invalid signature / non-CNY local DB smoke；仍不执行 workflow。
 29. `mock-webhook-db-backed-route-post-validation`: pending，合并后记录 harness、typecheck、runtime grep、DB/端口无残留验证。
 
 第九十三轮原则：

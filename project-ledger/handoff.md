@@ -618,3 +618,11 @@
 - 验证通过：payment notification harness 16 suites / 108 tests、accepted smoke、duplicate smoke、API typecheck、`git diff --check`、DB/9110 无残留。
 - 当前仍未注册 migration，未连接预发/生产 DB，未执行 payment workflow，未接支付宝/微信支付/退款/对账/结算/佣金/权限。
 - 下一步建议做 `mock-webhook-db-backed-route-local-rejected-smoke`，补 rejected path smoke。
+
+## Round 118 更新
+
+- `mock-webhook-db-backed-route-local-rejected-smoke` 已完成，见 `docs/mock-webhook-db-backed-route-local-rejected-smoke.md`。
+- `.codex/scripts/mock-webhook-db-backed-route-local-smoke.sh rejected` 覆盖 missing signature、invalid signature 和 non-CNY payload。
+- 三个 rejected 场景均返回 400，并保持 inbox count = 0、event log count = 0；non-CNY 当前按既有 contract 返回 `PAYLOAD_INVALID`。
+- 验证通过：payment notification harness 16 suites / 108 tests、rejected smoke、API typecheck、`git diff --check`、DB/9110 无残留。
+- 仍未修改 route runtime，未注册 migration，未连接预发/生产 DB，未执行 payment workflow。

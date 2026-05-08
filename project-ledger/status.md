@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 18:55 Asia/Shanghai
+更新时间：2026-05-08 19:10 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -339,7 +339,8 @@
 - `vendor-mobile-draft-product-readiness` 已完成：梳理手机快速上架、规格模板、AI suggestion、审核候选和真实商品创建分离边界。
 - `vendor-mobile-draft-product-contract` 已完成：新增手机快速上架草稿只读 TypeScript contract，明确字段、阶段和高风险阻塞项。
 - `shop-decoration-readonly-plan` 已完成：规划商家主页装修只读模型和 Storefront/Vendor/Admin 三端展示边界。
-- 队列下一项：`shop-decoration-readonly-contract`。
+- `shop-decoration-readonly-contract` 已完成：新增商家主页装修只读 TypeScript contract，明确模块和高风险阻塞边界。
+- 队列下一项：`logistics-and-waybill-boundary-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

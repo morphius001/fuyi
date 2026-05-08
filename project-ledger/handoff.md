@@ -1446,3 +1446,11 @@
 - 验证结论：两个 surface 只影响 `buildChinaSearchViewModel()` / `buildChinaShopViewModel()` 展示输入，真实商品卡仍走 Store API / `ProductCard`。
 - 本轮不修改 `apps/**` 或 `packages/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；仅保留既有 React Hook dependency warnings。
+
+## Round 227 更新
+
+- `storefront-product-discovery-input-contract` 已完成，见 `docs/storefront-product-discovery-input-contract.md`。
+- 新增 `china-product-discovery-input-contract.ts`，覆盖首页鲜货、搜索真实商品、店铺真实商品和店铺参考商品四个商品展示 surface。
+- 合同明确 `priceText` / `stockText` 只是展示字段，真实价格、库存、配送和履约仍以后续商品详情、购物车、checkout、订单和后端状态为准。
+- 本轮不修改页面布局、`ProductCard`、Store API、`packages/api/**`、cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体只读复核；仅保留既有 React Hook dependency warnings。

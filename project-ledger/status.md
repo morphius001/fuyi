@@ -507,3 +507,10 @@
 - 当前已形成 builder -> Store API readonly route -> Storefront client -> 首页 / 搜索 / 店铺展示绑定链路。
 - 下一阶段只能继续 QA runbook、observability plan 或 next-data plan；真实搜索排序、广告、竞价、推荐、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约或物流必须单独高风险串行。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 239 更新
+
+- `storefront-product-discovery-qa-runbook`: done，docs-only 新增商品发现只读绑定人工 QA runbook。
+- Runbook 覆盖首页、搜索页、店铺页的真实商品发现、fallback、无商品结果、失败判定和截图证据。
+- 本轮不修改 `apps/**` 或 `packages/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

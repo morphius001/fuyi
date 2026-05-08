@@ -309,7 +309,8 @@
 - `mock-china-payment-provider-contract` 已完成：新增未注册 mock provider contract 和单元测试，不接 checkout runtime。
 - `mock-payment-provider-registry-contract` 已完成：新增 provider registry 纯函数 contract，默认 disabled，production blocked，并要求显式非生产 `nodeEnv`。
 - `mock-payment-provider-registry-validation` 已完成：记录 harness 19/128、typecheck、runtime grep 未注册和 DB 无残留。
-- 队列下一项可执行任务：`mock-provider-runtime-gate-validation-plan`。
+- `mock-provider-runtime-gate-validation-plan` 已完成：docs-only 规划 provider / registry / runtime gate / preprod DB gate 组合验证。
+- 队列下一项可执行任务：`mock-provider-runtime-gate-composition-tests`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

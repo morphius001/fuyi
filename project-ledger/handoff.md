@@ -1153,3 +1153,11 @@
 - 顶部工具继续靠右；所有快捷入口保持禁用只读，不执行审核、退款、结算、打款、发货、冻结或配置生效。
 - 本轮未修改 API、Storefront、Vendor、RBAC、审计、订单、支付、退款、结算、佣金、打款、权限或履约 runtime。
 - 下一项建议继续 `vendor-role-workspace-template-v2`。
+
+## Round 191 更新
+
+- `vendor-role-workspace-template-v2` 已完成，见 `docs/vendor-role-workspace-template-v2.md`。
+- Vendor 首页新增角色工作台模板 v2 只读预览，区分普通生鲜/海鲜商户、水果蔬菜商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商。
+- 每个角色只展示工作重点和禁止边界；查看按钮只跳转现有占位页，不执行接单、发货、打印、发布、开播、支付、结算或权限变化。
+- 本轮未修改 API、Admin、Storefront、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 第九十八轮实现队列已清空；下一步建议做 `template-preview-validation-v2` 或进入 Vendor 角色工作台浏览器视觉 QA。

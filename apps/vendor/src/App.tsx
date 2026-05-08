@@ -37,6 +37,8 @@ import {
   supplierRoleAccessMatrix,
   supplySummary,
   todayFreshItems,
+  vendorRoleWorkspaceCards,
+  vendorRoleWorkspaceTemplate,
 } from "./china/data/vendorMockData";
 import {
   vendorReadonlyContractGroups,
@@ -121,6 +123,23 @@ const importantVendorCapabilityKeys = new Set([
   "seedling_wholesale",
   "regional_wholesaler_connection",
 ]);
+
+const vendorMarketContextSourceLabels: Record<string, string> = {
+  china_market_read_model: "市场只读模型",
+  static_adapter: "静态展示适配器",
+  vendor_market_context_fallback: "本地展示回退",
+};
+
+const vendorMarketContextModeLabels: Record<string, string> = {
+  vendor_market_context_read_only: "只读市场上下文",
+  vendor_market_context_empty: "空市场上下文",
+  vendor_market_context_fallback: "未连接市场接口",
+};
+
+const formatVendorMarketContextSource = (data: VendorMarketContextView) =>
+  `${vendorMarketContextSourceLabels[data.source] ?? data.source} · ${
+    vendorMarketContextModeLabels[data.mode] ?? data.mode
+  }`;
 
 const getBackendUrl = () =>
   (import.meta.env.VITE_MEDUSA_BACKEND_URL ?? "http://127.0.0.1:9000").replace(
@@ -406,6 +425,8 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
 
       <VendorMarketContextPanel state={marketContextState} />
 
+      <RoleWorkspaceTemplatePanel onNavigate={onNavigate} />
+
       <section className="decoration-home-card" aria-label="店铺装修快捷维护">
         <div className="decoration-home-copy">
           <p className="eyebrow">店铺装修 · 档口主页预览</p>
@@ -532,6 +553,54 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
   );
 }
 
+function RoleWorkspaceTemplatePanel({
+  onNavigate,
+}: {
+  onNavigate: (page: PageId) => void;
+}) {
+  return (
+    <section className="role-workspace-panel" aria-label="商户角色工作台模板">
+      <div className="role-workspace-header">
+        <div>
+          <p className="eyebrow">{vendorRoleWorkspaceTemplate.eyebrow}</p>
+          <h2>{vendorRoleWorkspaceTemplate.title}</h2>
+          <p>{vendorRoleWorkspaceTemplate.description}</p>
+        </div>
+        <span>{vendorRoleWorkspaceTemplate.hint}</span>
+      </div>
+
+      <div className="role-workspace-grid">
+        {vendorRoleWorkspaceCards.map((card) => (
+          <article className={`role-workspace-card tone-${card.tone}`} key={card.role}>
+            <div className="role-workspace-card-head">
+              <div>
+                <span>{card.status}</span>
+                <strong>{card.role}</strong>
+              </div>
+              {card.target ? (
+                <button
+                  className="table-action"
+                  onClick={() => onNavigate(card.target as PageId)}
+                  type="button"
+                >
+                  查看占位
+                </button>
+              ) : null}
+            </div>
+            <p>{card.headline}</p>
+            <div className="role-focus-tags" aria-label={`${card.role} 工作重点`}>
+              {card.focus.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+            <small>{card.blocked}</small>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
   if (state.status === "loading") {
     return (
@@ -629,7 +698,7 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
           {hasApiContext ? "Vendor 市场上下文已读取" : "Vendor 市场上下文未连接"}
         </strong>
         <span>
-          {data.source} · {data.mode}；本区只做首页展示，不影响订单、配送、结算、佣金或权限。
+          {formatVendorMarketContextSource(data)}；本区只做首页展示，不影响订单、配送、结算、佣金或权限。
         </span>
       </section>
 

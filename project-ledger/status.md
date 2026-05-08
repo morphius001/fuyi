@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 16:23 Asia/Shanghai
+更新时间：2026-05-08 16:34 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -328,7 +328,9 @@
 - `mock-provider-runtime-preprod-smoke-plan` 已完成：只规划 disposable preprod DB smoke 的门禁、禁止输入、执行阶段和后续拆分，不连接外部数据库。
 - `mock-provider-runtime-preprod-smoke-script` 已完成：新增默认不连接外部 DB 的 skeleton，只支持 print-plan / validate-inputs-only。
 - `mock-provider-runtime-preprod-smoke-script-validation` 已完成：PR #193 合并后 print-plan、安全示例 validate-only、forbidden arg 拒绝和 diff check 通过。
-- 队列下一项：`mock-provider-runtime-preprod-smoke-execution`，状态 `blocked-external`。
+- `blocked-external-boundary-rollup` 已完成：记录支付 provider runtime 外部 DB 阻塞边界和下一批安全方向。
+- 队列下一项：`china-platform-non-payment-backlog`。
+- `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

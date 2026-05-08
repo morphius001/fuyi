@@ -1330,3 +1330,11 @@
 - 本轮只把 active market、桌面市场类目和移动端推荐档口改为读取 home view model 输出。
 - 今日鲜货商品卡、购物车、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
 - 下一项建议继续 `storefront-shop-header-adapter-binding-readonly`，只绑定店铺头部市场 / 档口 / 公告 / 履约提示，不改 checkout shipping options。
+
+## Round 214 更新
+
+- `storefront-shop-header-adapter-binding-readonly` 已完成，见 `docs/storefront-shop-header-adapter-binding-readonly.md`。
+- 店铺页服务端页面现在构造 `shopViewModel = buildChinaShopViewModel(...)`。
+- 本轮只把店铺名称、市场、档口号、履约提示、直播状态 badge 和提货卡独立提示接到 shop view model 输出。
+- 店铺商品卡、购物车、checkout shipping options、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
+- 下一项建议继续 `storefront-search-adapter-binding-readonly`，只绑定搜索结果展示，不接真实排序、广告、竞价或推荐系统。

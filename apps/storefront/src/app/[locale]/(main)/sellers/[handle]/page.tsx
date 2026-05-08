@@ -10,6 +10,7 @@ import {
 } from "@/lib/data/china-markets"
 import { retrieveChinaSeller } from "@/lib/data/china-sellers"
 import { listProducts } from "@/lib/data/products"
+import { buildChinaShopViewModel } from "../../data/china-shop-view-model"
 
 const shopHeroImage = "/images/local-market/seafood-market-hero.png"
 
@@ -288,6 +289,45 @@ export default async function SellerPage({
   const marketDeliveryNames = marketDeliveryProfiles.map(
     (profile) => formatMarketDeliveryName(profile.displayName)
   )
+  const shopViewModel = buildChinaShopViewModel({
+    handle,
+    seller: {
+      id: handle,
+      handle,
+      name: shop.name,
+      market: shop.market,
+      booth: shop.booth,
+      tags: [shop.status, ...shop.categories.slice(0, 3)],
+      summary: shop.fulfillment.join(" / "),
+      source: shop.dataSource,
+    },
+    markets: [
+      {
+        name: shop.market,
+        city: matchedMarket
+          ? [matchedMarket.city, matchedMarket.district]
+              .filter(Boolean)
+              .join(" / ")
+          : shop.market,
+        hours: marketHours,
+        notice: marketNotice,
+        delivery:
+          marketDeliveryNames.length > 0
+            ? marketDeliveryNames.join(" / ")
+            : shop.fulfillment.join(" / "),
+        source: matchedMarket ? "market_readonly_api" : "static_profile",
+      },
+    ],
+  })
+  const shopHeader = shopViewModel.seller
+  const shopMarketContext = shopViewModel.marketContext
+  const shopFulfillmentHint = shopViewModel.fulfillmentHint.text
+  const shopFulfillmentItems = shopFulfillmentHint
+    .split(" / ")
+    .map((item) => item.trim())
+    .filter(Boolean)
+  const showLiveBadge =
+    shop.live && shopViewModel.livePlacement === "seller_status_badge"
   const sellerProductIds = sellerResponse?.product_ids ?? []
   const {
     response: { products: realProducts, count: realProductCount },
@@ -314,7 +354,7 @@ export default async function SellerPage({
             返回
           </Link>
           <h1 className="truncate text-[18px] font-semibold leading-6">
-            {shop.name}
+            {shopHeader.name}
           </h1>
           <Link
             href={`/${locale}/cart`}
@@ -328,17 +368,17 @@ export default async function SellerPage({
           <div className="grid gap-2">
             <div className="min-w-0">
               <p className="truncate text-[20px] font-semibold leading-7">
-                {shop.name}
+                {shopHeader.name}
               </p>
               <p className="mt-1 text-[12px] leading-4 text-secondary">
-                {shop.market} · {shop.booth}
+                {shopHeader.market} · {shopHeader.booth}
               </p>
             </div>
             <div className="flex flex-wrap gap-1.5">
               <span className="rounded-full bg-[#E6F7F2] px-2 py-1 text-[11px] leading-4 text-[#0F8F6B]">
                 {shop.status}
               </span>
-              {shop.live && (
+              {showLiveBadge && (
                 <span className="rounded-full bg-[#FFF4E5] px-2 py-1 text-[11px] leading-4 text-[#9A4B00]">
                   直播讲货中
                 </span>
@@ -350,7 +390,7 @@ export default async function SellerPage({
               本店支持
             </p>
             <div className="mt-1 flex flex-wrap gap-1.5">
-              {shop.fulfillment.map((item) => (
+              {shopFulfillmentItems.map((item) => (
                 <span
                   key={item}
                   className="rounded-full bg-white px-2 py-0.5 text-[11px] leading-4 text-[#1D4ED8]"
@@ -531,17 +571,17 @@ export default async function SellerPage({
               返回本地鲜货首页
             </Link>
             <h1 className="mt-2 text-[32px] font-semibold leading-[40px] tracking-normal text-primary md:text-[42px] md:leading-[50px]">
-              {shop.name}
+              {shopHeader.name}
             </h1>
             <p className="mt-1 text-md text-secondary">
-              {shop.market} · {shop.booth} · {shop.status}
+              {shopHeader.market} · {shopHeader.booth} · {shop.status}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <span className="rounded-sm bg-[#E6F7F2] px-3 py-2 label-md text-[#0F8F6B]">
               {shop.status}
             </span>
-            {shop.live && (
+            {showLiveBadge && (
               <span className="rounded-sm bg-[#FFF4E5] px-3 py-2 label-md text-[#9A4B00]">
                 直播讲货中
               </span>
@@ -588,7 +628,7 @@ export default async function SellerPage({
                 className="object-cover"
               />
               <div className="absolute bottom-3 left-3 right-3 rounded-sm bg-white/92 p-3 backdrop-blur">
-                <p className="label-lg">{shop.market}</p>
+                <p className="label-lg">{shopMarketContext?.name ?? shopHeader.market}</p>
                 <p className="mt-1 text-sm text-secondary">
                   {shop.dataSource === "seller_metadata"
                     ? "档口信息和取送方式来自商家资料，购买前仍以结算页确认为准。"
@@ -705,7 +745,7 @@ export default async function SellerPage({
           <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
             <p className="label-lg">配送 / 自提规则</p>
             <div className="mt-3 grid gap-2">
-              {shop.fulfillment.map((item) => (
+              {shopFulfillmentItems.map((item) => (
                 <p key={item} className="rounded-sm bg-[#F8FAFC] px-3 py-2 text-sm text-secondary">
                   {item}
                 </p>
@@ -732,7 +772,10 @@ export default async function SellerPage({
                 : "当前为展示资料，后续应由商家后台配置读取。"}
             </p>
             <p className="mt-2 text-sm text-secondary">
-              市场营业时间：{marketHours}；市场配送说明仅用于进店判断，最终可选配送方式以结算页为准。
+              市场营业时间：{shopMarketContext?.hours ?? marketHours}；市场配送说明仅用于进店判断，最终可选配送方式以结算页为准。
+            </p>
+            <p className="mt-2 text-sm text-secondary">
+              提货卡保持独立入口，不作为优惠券、储值卡或支付方式。
             </p>
           </div>
           <div className="rounded-sm border border-[#F59E0B] bg-[#FFFBEB] p-4 shadow-sm">

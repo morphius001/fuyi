@@ -1132,7 +1132,8 @@
 1. `readonly-contracts-export-index`: done，建立只读合同索引文档，说明后续 Admin/Vendor/Storefront 可读取范围。
 2. `admin-readonly-contracts-panel-plan`: done，规划 Admin 只读合同总览面板，不接写接口。
 3. `vendor-readonly-contracts-panel-plan`: done，规划 Vendor 能力/草稿/装修/履约/直播只读总览。
-4. `storefront-readonly-contracts-visibility-plan`: pending，规划消费者侧哪些状态可展示，哪些必须隐藏。
+4. `storefront-readonly-contracts-visibility-plan`: done，规划消费者侧哪些状态可展示，哪些必须隐藏。
+5. `readonly-contracts-ui-planning-validation`: pending，汇总 Admin/Vendor/Storefront 三端只读面板规划完成状态。
 
 第九十三轮原则：
 

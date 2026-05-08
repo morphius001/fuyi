@@ -1221,7 +1221,7 @@
 第一百零三轮补充任务：
 
 1. `storefront-adapter-skeleton-validation`: done，验证 home adapter skeleton 和 adapter plans。
-2. `storefront-shop-view-model-adapter-skeleton`: pending，小范围实现店铺 adapter skeleton，仍不改页面布局。
+2. `storefront-shop-view-model-adapter-skeleton`: done，小范围实现店铺 adapter skeleton，仍不改页面布局。
 
 第九十三轮原则：
 

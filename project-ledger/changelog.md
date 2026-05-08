@@ -199,3 +199,5 @@
 - 完成 `mock-provider-runtime-local-inbox-only-skeleton`，`POST /china/payment-providers/mock` 仅在 mock registry、runtime gate 和 local disposable DB gate 同时满足时写入 inbox/event log；默认、生产、缺少 registry 或缺少 local DB gate 时仍 disabled 且不读 body。
 - 完成 `mock-provider-runtime-local-inbox-only-validation`，记录 PR #187 合并后 harness 21/143、API typecheck、runtime grep 未注册和 disposable DB 无残留验证。
 - 完成 `mock-provider-runtime-local-smoke-script-plan`，docs-only 规划 provider route local disposable DB smoke wrapper、env gate、accepted/duplicate/rejected 场景和 cleanup 边界。
+- 完成 `mock-provider-runtime-local-smoke-script`，新增 provider route local disposable DB smoke wrapper，支持 disabled/accepted/duplicate/rejected 模式；仍不连接预发/生产、不执行 payment workflow。
+- 补强 `mock-provider-runtime-local-smoke-script`：所有模式 runtime 只连接 disposable DB，失败输出脱敏，临时进程清理更稳，并完成四种 smoke、harness、typecheck、diff check、未注册 grep 和无残留验证。

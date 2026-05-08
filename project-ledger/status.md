@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 04:03 Asia/Shanghai
+更新时间：2026-05-09 04:44 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -88,6 +88,7 @@
 - `storefront-shop-membership-source`: done，新增店铺 adapter membership 输入形状和合同；Storefront build 和 `git diff --check` 通过；不修改店铺页、`ProductCard`、`packages/api/**` 或交易/履约链路。
 - `storefront-read-model-source-validation`: done，docs-only 汇总 PR #267-#269 的 read model source 阶段验证；Storefront build 和 `git diff --check` 通过；本轮不修改 `apps/**` 或 `packages/**`。
 - `storefront-search-discovery-source-binding`: done，搜索页输入构造收束为 discovery / markets / products + static fallback；Storefront build 和 `git diff --check` 通过，不接真实搜索 provider 或交易/履约链路。
+- `storefront-shop-membership-source-binding`: done，店铺页把 market detail membership / seller metadata 合成为 shop adapter membership 输入；真实商品卡仍走 Store API / `ProductCard`，不改交易或履约链路。
 
 ## 第十六轮进度
 

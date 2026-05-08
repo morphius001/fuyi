@@ -7,10 +7,14 @@ import {
   retrieveChinaMarketDetail,
   retrieveChinaMarkets,
   type ChinaMarket,
+  type ChinaMarketMembership,
 } from "@/lib/data/china-markets"
 import { retrieveChinaSeller } from "@/lib/data/china-sellers"
 import { listProducts } from "@/lib/data/products"
-import { buildChinaShopViewModel } from "../../data/china-shop-view-model"
+import {
+  buildChinaShopViewModel,
+  type ChinaShopMembershipInput,
+} from "../../data/china-shop-view-model"
 
 const shopHeroImage = "/images/local-market/seafood-market-hero.png"
 
@@ -192,6 +196,39 @@ const readMarketMetadataText = (
   return typeof value === "string" && value.trim() ? value : undefined
 }
 
+const readStringValue = (value: unknown) =>
+  typeof value === "string" && value.trim() ? value : undefined
+
+const readMembershipText = (
+  membership: ChinaMarketMembership | undefined,
+  keys: string[]
+) => {
+  for (const key of keys) {
+    const value = readStringValue(membership?.metadata[key])
+
+    if (value) {
+      return value
+    }
+  }
+
+  return undefined
+}
+
+const resolveMembershipStatus = (
+  membership: ChinaMarketMembership | undefined,
+  sellerStatus: string | undefined
+) => {
+  if (membership?.status) {
+    return membership.status
+  }
+
+  if (sellerStatus === "open") {
+    return "approved"
+  }
+
+  return sellerStatus ?? "approved"
+}
+
 const getShopProductTag = (product: {
   title: string
   specText?: string
@@ -295,6 +332,44 @@ const resolveShopProfile = (
   }
 }
 
+const buildShopMembershipInput = ({
+  handle,
+  shop,
+  seller,
+  membership,
+}: {
+  handle: string
+  shop: ResolvedShopProfile
+  seller?: {
+    id: string
+    handle: string
+    name: string
+    status: string
+    metadata?: Record<string, unknown>
+  }
+  membership?: ChinaMarketMembership
+}): ChinaShopMembershipInput => ({
+  sellerId: membership?.sellerId ?? seller?.id ?? handle,
+  sellerHandle: membership?.sellerHandle ?? seller?.handle ?? handle,
+  sellerName: membership?.sellerName ?? seller?.name ?? shop.name,
+  marketName: shop.market,
+  boothNo: membership?.boothNo ?? shop.booth,
+  role:
+    readMembershipText(membership, [
+      "seller_market_role",
+      "seller_role",
+      "role",
+      "business_type",
+    ]) ??
+    readStringValue(seller?.metadata?.seller_market_role) ??
+    readStringValue(seller?.metadata?.seller_role) ??
+    "merchant",
+  status: resolveMembershipStatus(membership, seller?.status),
+  mainCategoryNames: shop.categories,
+  summary: shop.fulfillment.join(" / "),
+  source: membership ? "seller_market_membership" : shop.dataSource,
+})
+
 export async function generateMetadata({
   params,
 }: {
@@ -327,6 +402,11 @@ export default async function SellerPage({
   const marketDetail = matchedMarket
     ? await retrieveChinaMarketDetail(matchedMarket.slug)
     : undefined
+  const sellerMembership = marketDetail?.memberships.find(
+    (membership) =>
+      membership.sellerHandle === handle ||
+      membership.sellerId === sellerResponse?.seller.id
+  )
   const marketHours =
     readMarketMetadataText(matchedMarket, "hours") ?? shop.metrics[3][0]
   const marketNotice =
@@ -336,8 +416,15 @@ export default async function SellerPage({
   const marketDeliveryNames = marketDeliveryProfiles.map(
     (profile) => formatMarketDeliveryName(profile.displayName)
   )
+  const shopMembership = buildShopMembershipInput({
+    handle,
+    shop,
+    seller: sellerResponse?.seller,
+    membership: sellerMembership,
+  })
   const shopViewModel = buildChinaShopViewModel({
     handle,
+    membership: shopMembership,
     seller: {
       id: handle,
       handle,
@@ -369,8 +456,8 @@ export default async function SellerPage({
       id: `${handle}-reference-${index}`,
       title: name,
       handle: `${handle}-reference-${index}`,
-      sellerId: handle,
-      sellerName: shop.name,
+      sellerId: shopMembership.sellerId,
+      sellerName: shopMembership.sellerName,
       market: shop.market,
       booth: shop.booth,
       priceText: price,

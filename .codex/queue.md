@@ -1179,7 +1179,7 @@
 1. `template-preview-v2-validation`: done，汇总四个 template v2 surface 的验证结果和下一轮方向。
 2. `template-registry-surface-binding-plan`: done，docs-only 规划三端页面如何读取统一模板 registry / stable view model，不改页面。
 3. `vendor-role-workspace-visual-qa`: blocked-manual，需要用户或浏览器截图确认商户端多角色经营看板是否过密。
-4. `storefront-template-data-source-plan`: pending，docs-only 规划消费者首页/店铺页从静态展示数据切到真实 discovery/shop read model 的步骤。
+4. `storefront-template-data-source-plan`: done，docs-only 规划消费者首页/店铺页从静态展示数据切到真实 discovery/shop read model 的步骤。
 
 第九十九轮原则：
 

@@ -1174,3 +1174,10 @@
 - `template-registry-surface-binding-plan` 已完成，见 `docs/template-registry-surface-binding-plan.md`。
 - 本轮只规划 Storefront/Admin/Vendor 如何从 template registry v2 和 stable view model 读取模板，不修改 `apps/**` 或 `packages/**`。
 - 下一步建议为 `storefront-template-data-source-plan`，继续 docs-only 规划消费者首页/店铺页从静态展示数据切到真实 discovery/shop read model。
+
+## Round 194 更新
+
+- `storefront-template-data-source-plan` 已完成，见 `docs/storefront-template-data-source-plan.md`。
+- 本轮只规划 Storefront 首页、搜索和店铺页的数据源迁移，不修改 `apps/**` 或 `packages/**`。
+- 第九十九轮可自动执行的 docs-only 队列已清空；`vendor-role-workspace-visual-qa` 仍为 `blocked-manual`，需要用户视觉确认后再继续 UI 密度调整。
+- 下一轮建议进入实际低风险 mapper PR：`template-registry-v2-contract`、`storefront-home-view-model-mapper`、`storefront-shop-view-model-mapper`，但应先新增任务文件并保持不改交易链路。

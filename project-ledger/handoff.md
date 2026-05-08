@@ -821,3 +821,10 @@
 - PR #190 已合并，merge commit `dd936fe0e58cd846079920e318a871b754be7038`。
 - 合并后验证通过：四种 provider route local smoke、payment notification harness 21/143、API typecheck、`git diff --check`、`medusa-config.ts` 未注册、DB/9120 无残留。
 - 下一项建议为 `mock-provider-runtime-preprod-smoke-plan`，只做 docs-only 规划；没有外部 disposable preprod DB 和授权前不得连接预发或生产数据库。
+
+## Round 145 更新
+
+- `mock-provider-runtime-preprod-smoke-plan` 已完成，见 `docs/mock-provider-runtime-preprod-smoke-plan.md`。
+- 本轮只写文档和任务文件，规划 disposable preprod DB 的 Go / No-Go、禁止输入、执行阶段、脱敏、cleanup 和后续 PR 拆分。
+- 未新增脚本，未连接预发或生产数据库，未注册 Provider，未执行 payment workflow。
+- 下一项建议为 `mock-provider-runtime-preprod-smoke-script`，但脚本只能默认不连接外部 DB，并只支持 print-plan / validate-inputs-only。

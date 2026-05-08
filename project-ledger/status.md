@@ -381,6 +381,7 @@
 - 第九十九轮可自动执行 docs-only 队列已清空；`vendor-role-workspace-visual-qa` 仍为 `blocked-manual`。
 - `template-registry-v2-contract` 已完成：四个 v2 template ids 已纳入未注册只读 registry contract，仍不接 route、不接 DB、不改页面。
 - 第一百轮进度：`template-registry-v2-contract`、`storefront-home-view-model-mapper`、`storefront-shop-view-model-mapper` 和 `template-registry-v2-validation` 均已完成；第一百轮 contract / mapper 队列清空。
+- 第一百零一轮进度：`storefront-search-view-model-mapper` 已完成；下一项建议为 `storefront-home-bind-view-model-plan`，先 docs-only 规划页面绑定。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

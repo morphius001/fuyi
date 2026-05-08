@@ -17,9 +17,31 @@ export type ChinaShopProductCardInput = {
   source?: 'store_product_table' | 'placeholder' | string;
 };
 
+export type ChinaShopMembershipInput = {
+  sellerId: string;
+  sellerHandle?: string;
+  sellerName: string;
+  marketName: string;
+  boothNo: string;
+  role:
+    | 'merchant'
+    | 'materials_supplier'
+    | 'delivery_supplier'
+    | 'farmer'
+    | 'breeder'
+    | 'seedling_supplier'
+    | 'regional_wholesaler'
+    | string;
+  status: 'approved' | 'pending_review' | 'suspended' | 'paused' | string;
+  mainCategoryNames?: string[];
+  summary?: string;
+  source?: 'seller_market_membership' | string;
+};
+
 export type ChinaShopViewModelAdapterInput = {
   handle: string;
   seller?: ChinaDiscoverySeller | null;
+  membership?: ChinaShopMembershipInput | null;
   markets?: ChinaDiscoveryMarket[] | null;
   productIds?: string[] | null;
   products?: ChinaShopProductCardInput[] | null;
@@ -31,6 +53,45 @@ export type ChinaShopViewModelAdapterInput = {
   };
 };
 
+export type ChinaShopMembershipInputContract = {
+  version: 'storefront-shop-membership-input-contract-v1';
+  readOnly: true;
+  runtimeEnabled: false;
+  membership: {
+    sourceOrder: Array<'seller_market_membership' | 'seller_metadata' | 'static_fallback'>;
+    fields: Array<
+      | 'sellerId'
+      | 'sellerHandle'
+      | 'sellerName'
+      | 'marketName'
+      | 'boothNo'
+      | 'role'
+      | 'status'
+      | 'mainCategoryNames'
+    >;
+    affectsPermission: false;
+    affectsSettlement: false;
+    affectsCheckoutShippingOptions: false;
+  };
+  products: {
+    sourceOrder: Array<'seller_products_api' | 'store_products' | 'static_fallback'>;
+    readOnlyCards: true;
+    reservesInventory: false;
+  };
+  blockedRuntime: Array<
+    | 'cart_mutation'
+    | 'checkout_shipping_options'
+    | 'order_mutation'
+    | 'payment'
+    | 'refund'
+    | 'settlement'
+    | 'commission'
+    | 'permission'
+    | 'fulfillment'
+    | 'logistics'
+  >;
+};
+
 type ChinaShopDataSource = {
   key:
     | 'seller'
@@ -40,6 +101,7 @@ type ChinaShopDataSource = {
     | 'pickup_card_entry'
     | 'live_status';
   source:
+    | 'seller_market_membership'
     | 'seller_and_category_tables'
     | 'seller_summary'
     | 'market_contract'
@@ -105,6 +167,45 @@ export type ChinaShopViewModel = {
 const runtimeNote =
   'This read model is display-only. It does not change product, order, checkout, payment, fulfillment, settlement, commission, payout, refund, or permission behavior.';
 
+export const getChinaShopMembershipInputContract = (): ChinaShopMembershipInputContract => ({
+  version: 'storefront-shop-membership-input-contract-v1',
+  readOnly: true,
+  runtimeEnabled: false,
+  membership: {
+    sourceOrder: ['seller_market_membership', 'seller_metadata', 'static_fallback'],
+    fields: [
+      'sellerId',
+      'sellerHandle',
+      'sellerName',
+      'marketName',
+      'boothNo',
+      'role',
+      'status',
+      'mainCategoryNames'
+    ],
+    affectsPermission: false,
+    affectsSettlement: false,
+    affectsCheckoutShippingOptions: false
+  },
+  products: {
+    sourceOrder: ['seller_products_api', 'store_products', 'static_fallback'],
+    readOnlyCards: true,
+    reservesInventory: false
+  },
+  blockedRuntime: [
+    'cart_mutation',
+    'checkout_shipping_options',
+    'order_mutation',
+    'payment',
+    'refund',
+    'settlement',
+    'commission',
+    'permission',
+    'fulfillment',
+    'logistics'
+  ]
+});
+
 const bSideKeywords = [
   '物料',
   '包装',
@@ -166,6 +267,37 @@ const isConsumerSeller = (seller: ChinaDiscoverySeller) =>
     seller.summary,
     ...seller.tags
   ]);
+
+const buildSellerFromMembership = ({
+  handle,
+  membership
+}: {
+  handle: string;
+  membership?: ChinaShopMembershipInput | null;
+}): ChinaDiscoverySeller | undefined => {
+  if (!membership) {
+    return undefined;
+  }
+
+  const tags = [
+    membership.status,
+    membership.role,
+    ...(membership.mainCategoryNames ?? [])
+  ].filter((value): value is string => Boolean(value));
+
+  return {
+    id: membership.sellerId,
+    handle: membership.sellerHandle ?? handle,
+    name: membership.sellerName,
+    market: membership.marketName,
+    booth: membership.boothNo,
+    tags,
+    summary:
+      membership.summary ??
+      `${membership.marketName} · ${membership.boothNo} · 店铺资料待后台运营配置。`,
+    source: membership.source ?? 'seller_market_membership'
+  };
+};
 
 const normalizeProducts = ({
   products,
@@ -294,12 +426,15 @@ const buildBoundaries = (): ChinaShopBoundary[] => [
 export const buildChinaShopViewModel = ({
   handle,
   seller,
+  membership,
   markets,
   productIds,
   products,
   fallback
 }: ChinaShopViewModelAdapterInput): ChinaShopViewModel => {
+  const membershipSeller = buildSellerFromMembership({ handle, membership });
   const resolvedSeller =
+    membershipSeller ??
     seller ??
     fallback?.seller ??
     (handle === fallbackSeller.handle
@@ -364,8 +499,12 @@ export const buildChinaShopViewModel = ({
     dataSources: [
       {
         key: 'seller',
-        source: seller ? 'seller_and_category_tables' : 'static_fallback',
-        fallbackUsed: !seller
+        source: membership
+          ? 'seller_market_membership'
+          : seller
+            ? 'seller_and_category_tables'
+            : 'static_fallback',
+        fallbackUsed: !seller && !membership
       },
       {
         key: 'market_context',

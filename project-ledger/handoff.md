@@ -662,3 +662,10 @@
 - 本轮只写文档，准备外部 disposable preprod DB 的 Go/No-Go、变量模板、执行前/中/后检查和失败处理。
 - 当前没有连接任何外部数据库，没有写入真实密钥，没有执行 migration registration 或 payment workflow。
 - 下一步可做 `payment-notification-preprod-disposable-db-script-plan`，仍不连接数据库。
+
+## Round 124 更新
+
+- `payment-notification-preprod-disposable-db-script-plan` 已完成，见 `docs/payment-notification-preprod-disposable-db-script-plan.md`。
+- 本轮只写文档，规划未来脚本参数、安全检查、输出 JSON、失败处理和 Go/No-Go。
+- 未新增脚本，未连接数据库，未注册 migration，未执行 workflow。
+- 下一步可做 `payment-notification-preprod-disposable-db-script`，只新增 skeleton，不执行外部 DB。

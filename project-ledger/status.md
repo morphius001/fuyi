@@ -312,7 +312,8 @@
 - `mock-provider-runtime-gate-validation-plan` 已完成：docs-only 规划 provider / registry / runtime gate / preprod DB gate 组合验证。
 - `mock-provider-runtime-gate-composition-tests` 已完成：新增 registry + runtime gate 纯函数组合测试。
 - `mock-provider-runtime-readiness-report` 已完成：记录 harness 20/133、typecheck、runtime grep 未注册和 DB 无残留。
-- 队列下一项可执行任务：`mock-provider-runtime-readiness-checklist`。
+- `mock-provider-runtime-readiness-checklist` 已完成：docs-only 整理 mock provider runtime 前 Go / No-Go 清单。
+- 队列下一项可执行任务：`mock-provider-runtime-design`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

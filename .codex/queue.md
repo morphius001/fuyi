@@ -1124,7 +1124,8 @@
 67. `pickup-card-consumer-flow-plan`: done，docs-only 重梳提货卡消费者持卡提货流程。
 67.1. `pickup-card-consumer-flow-contract`: done，新增纯 TypeScript consumer pickup flow view shape，不新增 API route。
 68. `live-commerce-readonly-plan`: done，docs-only 规划直播只读占位和 Provider 边界。
-68.1. `live-commerce-readonly-contract`: pending，新增纯 TypeScript live commerce readonly view shape，不新增 API route。
+68.1. `live-commerce-readonly-contract`: done，新增纯 TypeScript live commerce readonly view shape，不新增 API route。
+69. `non-payment-readonly-contracts-validation`: pending，验证非支付 read-only contracts 合并后的 focused tests、API typecheck 和账本状态。
 
 第九十三轮原则：
 

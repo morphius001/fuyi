@@ -1574,3 +1574,11 @@
 - 主要缺口：market hours/notice 强类型化、category marketSlug、seller role/mainCategoryNames 结构化、product categoryHandle client 暴露、source tags/fallback reason。
 - 下一步建议只做 `product-discovery-source-tags`、inventory validation 或 audience field plan；不得直接进入 migration、写接口、权限、checkout、订单、支付、退款、结算、佣金、履约或物流。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 243 更新
+
+- `product-discovery-source-tags` 已完成，见 `docs/product-discovery-source-tags.md`。
+- 商品发现 read model response 新增 `sourceTags`，Storefront client fallback 也补充 `storefront_fallback` source tag。
+- 字段只用于 QA 和 dev-only 调试，不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或 provider secret。
+- 本轮不修改 Storefront 页面、`ProductCard`、cart、checkout、订单、支付、退款、结算、佣金、履约或物流。
+- 验证通过：focused unit test、API typecheck、Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

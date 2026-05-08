@@ -25,12 +25,24 @@ export type ChinaProductDiscoveryItem = {
   source: "store_product_table" | "static_fallback";
 };
 
+export type ChinaProductDiscoverySourceTags = {
+  responseSource: ChinaProductDiscoverySource;
+  itemCount: number;
+  productRowCount: number;
+  sellerContextCount: number;
+  fallbackUsed: boolean;
+  fallbackReason?: "no_product_rows";
+  filterKeysPresent: Array<keyof ChinaProductDiscoveryFilters>;
+  displayOnly: true;
+};
+
 export type ChinaProductDiscoveryReadModel = {
   mode: "read_only_product_discovery";
   source: ChinaProductDiscoverySource;
   note: string;
   filters: ChinaProductDiscoveryFilters;
   items: ChinaProductDiscoveryItem[];
+  sourceTags: ChinaProductDiscoverySourceTags;
   readOnly: true;
   runtimeEnabled: false;
   canWriteBusinessState: false;
@@ -287,6 +299,11 @@ const buildBlockedRuntime =
     "recommendation_engine",
   ];
 
+const getPresentFilterKeys = (filters: ChinaProductDiscoveryFilters) =>
+  (["query", "market", "sellerHandle", "categoryHandle"] as const).filter(
+    (key) => Boolean(filters[key])
+  );
+
 export const buildChinaProductDiscoveryReadModel = ({
   productRows = [],
   sellerContexts = [],
@@ -316,17 +333,31 @@ export const buildChinaProductDiscoveryReadModel = ({
     .slice(0, Math.max(0, limit))
     .map(({ item }) => item);
   const shouldUseFallback = items.length === 0 && productRows.length === 0;
+  const source: ChinaProductDiscoverySource = shouldUseFallback
+    ? "static_fallback"
+    : sellerProductIdSet.size > 0
+      ? "seller_products_api"
+      : "store_product_table";
+  const resolvedItems = shouldUseFallback
+    ? fallbackInput.slice(0, Math.max(0, limit))
+    : items;
 
   return {
     mode: "read_only_product_discovery",
-    source: shouldUseFallback
-      ? "static_fallback"
-      : sellerProductIdSet.size > 0
-        ? "seller_products_api"
-        : "store_product_table",
+    source,
     note: runtimeNote,
     filters,
-    items: shouldUseFallback ? fallbackInput.slice(0, Math.max(0, limit)) : items,
+    items: resolvedItems,
+    sourceTags: {
+      responseSource: source,
+      itemCount: resolvedItems.length,
+      productRowCount: productRows.length,
+      sellerContextCount: sellerContexts.length,
+      fallbackUsed: shouldUseFallback,
+      ...(shouldUseFallback ? { fallbackReason: "no_product_rows" as const } : {}),
+      filterKeysPresent: getPresentFilterKeys(filters),
+      displayOnly: true,
+    },
     readOnly: true,
     runtimeEnabled: false,
     canWriteBusinessState: false,

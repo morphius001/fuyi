@@ -300,3 +300,4 @@
 - 完成 `product-discovery-observability-plan`，docs-only 规划商品发现只读链路 source tag、fallback、item count、filter keys 和 debug flow；不接真实日志 provider、不记录用户隐私或交易敏感字段。
 - 完成 `storefront-discovery-next-data-plan`，docs-only 规划 market、seller membership、category 和 product discovery 下一轮只读数据质量要求、验收顺序和高风险阻断项。
 - 完成 `storefront-discovery-data-inventory`，docs-only 盘点当前 Storefront discovery 只读链路的 market、seller membership、category 和 product discovery 字段、metadata 依赖、缺口和安全下一步。
+- 完成 `product-discovery-source-tags`，商品发现只读 read model 增加非敏感 `sourceTags`，覆盖 response source、item count、row count、seller context count、fallback、filter keys 和 display-only 标记；不接真实日志 provider 或交易 runtime。

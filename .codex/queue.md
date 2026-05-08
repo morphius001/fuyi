@@ -1081,7 +1081,8 @@
 31. `payment-notification-runtime-gate-contract`: done，新增纯函数 runtime gate contract，默认 disabled；不接 route、不执行 workflow。
 32. `payment-notification-db-runtime-preflight`: done，规划 DB runtime preflight 验证；不接 route、不执行 workflow。
 33. `payment-notification-preprod-disposable-db-checklist`: done，准备外部 disposable preprod DB 执行清单；不连接数据库。
-34. `payment-notification-preprod-disposable-db-script-plan`: pending，规划外部 disposable DB 脚本输入输出；不连接数据库。
+34. `payment-notification-preprod-disposable-db-script-plan`: done，规划外部 disposable DB 脚本输入输出；不连接数据库。
+35. `payment-notification-preprod-disposable-db-script`: pending，新增外部 disposable DB 脚本 skeleton，但不执行外部数据库。
 
 第九十三轮原则：
 

@@ -669,3 +669,11 @@
 - 本轮只写文档，规划未来脚本参数、安全检查、输出 JSON、失败处理和 Go/No-Go。
 - 未新增脚本，未连接数据库，未注册 migration，未执行 workflow。
 - 下一步可做 `payment-notification-preprod-disposable-db-script`，只新增 skeleton，不执行外部 DB。
+
+## Round 125 更新
+
+- `payment-notification-preprod-disposable-db-script` 已完成，见 `docs/payment-notification-preprod-disposable-db-script.md`。
+- 新增 `.codex/scripts/payment-notification-preprod-disposable-db-smoke.sh` skeleton。
+- 脚本当前只支持 `--print-plan` 和 `--validate-inputs-only`，默认不连接外部数据库。
+- 已拒绝 production-like DB name、full connection string、password CLI 参数、provider secret、signature、raw payload 和 commit sha 不一致。
+- 下一项 `payment-notification-preprod-disposable-db-execution` 标记为 `blocked-external`，需要 disposable preprod DB、备份/回滚 owner 和明确连接授权。

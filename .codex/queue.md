@@ -1082,7 +1082,8 @@
 32. `payment-notification-db-runtime-preflight`: done，规划 DB runtime preflight 验证；不接 route、不执行 workflow。
 33. `payment-notification-preprod-disposable-db-checklist`: done，准备外部 disposable preprod DB 执行清单；不连接数据库。
 34. `payment-notification-preprod-disposable-db-script-plan`: done，规划外部 disposable DB 脚本输入输出；不连接数据库。
-35. `payment-notification-preprod-disposable-db-script`: pending，新增外部 disposable DB 脚本 skeleton，但不执行外部数据库。
+35. `payment-notification-preprod-disposable-db-script`: done，新增外部 disposable DB 脚本 skeleton；默认只输出计划或校验输入，不执行外部数据库。
+36. `payment-notification-preprod-disposable-db-execution`: blocked-external，等待用户明确提供 disposable preprod DB、备份/回滚 owner 和连接授权。
 
 第九十三轮原则：
 

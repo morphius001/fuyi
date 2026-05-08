@@ -1066,3 +1066,10 @@
 - 本轮固化平台运营后台模板合同：首页、菜单、市场、商户、商品审核、提货卡、营销、客服、直播、风控和系统配置。
 - 明确 Admin 模板只能呈现运营视图，不能替代 RBAC、审计、支付成功、订单、退款、结算、佣金、打款或履约事实来源。
 - 下一项建议继续 `vendor-template-contract-plan`。
+
+## Round 179 更新
+
+- `vendor-template-contract-plan` 已完成，见 `docs/vendor-template-contract-plan.md`。
+- 本轮固化商户后台角色化模板合同：普通商户、水果蔬菜商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商。
+- 明确手机快速上架和 AI 上架只能进入草稿/审核候选；模板不能直接发布商品、发货、退款、结算、改佣金、改权限或创建真实面单。
+- 下一项建议继续 `template-registry-readonly-contract`。

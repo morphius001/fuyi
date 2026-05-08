@@ -685,3 +685,10 @@
 - 子 AG 复核未发现外部 DB 连接、SQL 执行、migration 注册、payment workflow 调用或交易链路逻辑混入。
 - `docs/visual-qa-artifacts/**` 仍为未跟踪本地截图产物，本轮未纳入 PR。
 - 自动队列下一项为 `payment-notification-preprod-disposable-db-execution`，保持 `blocked-external`。
+
+## Round 127 更新
+
+- `payment-provider-adapter-contract-plan` 已完成，见 `docs/payment-provider-adapter-contract-plan.md`。
+- 本轮只写文档和队列，规划 Provider / Adapter 分层、notify/return URL 边界、验签、幂等、错误映射、密钥加载和后续 PR 拆分。
+- 未接支付宝或微信支付，未实现真实 Provider，未修改 `apps/**` 或 `packages/**`。
+- 下一项可执行任务为 `mock-china-payment-provider-contract`：未注册 mock provider contract，不接 checkout runtime，不执行 payment workflow。

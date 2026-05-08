@@ -9,6 +9,7 @@ import {
   type ChinaMarket,
 } from "@/lib/data/china-markets"
 import { listProducts } from "@/lib/data/products"
+import { buildChinaSearchViewModel } from "../data/china-search-view-model"
 
 export const metadata: Metadata = {
   title: "搜索本地鲜货",
@@ -190,7 +191,73 @@ export default async function SearchPage({
     discovery.categories.length > 0
       ? discovery.categories
       : fallbackCategoryResults
-  const activeMarket = marketResults[0]
+  const searchViewModel = buildChinaSearchViewModel({
+    query,
+    discovery: {
+      source: discovery.source,
+      markets: marketResults.map((market) => ({
+        name: market.name,
+        city: market.city,
+        hours: market.hours,
+        notice: market.notice,
+        delivery: market.delivery,
+        source: "search_market_result",
+      })),
+      categories: categoryResults.map((category) => ({
+        id: category.handle,
+        handle: category.handle,
+        name: category.name,
+        description: category.description,
+        count: category.count,
+        source: "search_category_result",
+      })),
+      sellers: shopResults.map((shop) => ({
+        id: shop.handle,
+        handle: shop.handle,
+        name: shop.name,
+        market: shop.market,
+        booth: shop.booth,
+        tags: shop.tags,
+        summary: shop.summary,
+        source: "search_shop_result",
+      })),
+    },
+    products: productResults.map((product) => ({
+      id: product.productHandle,
+      title: product.name,
+      handle: product.productHandle,
+      sellerName: product.shop,
+      market: product.market,
+      booth: product.booth,
+      priceText: product.price,
+      specText: product.spec,
+      stockText: product.stock,
+      source: "placeholder",
+    })),
+  })
+  const displayMarket = searchViewModel.marketContext ?? marketResults[0]
+  const displayMarketResults = searchViewModel.marketContext
+    ? [searchViewModel.marketContext]
+    : searchViewModel.resultGroups[0].count > 0
+      ? marketResults
+      : []
+  const displayShopResults = searchViewModel.matchedSellers.map((shop) => ({
+    name: shop.name,
+    handle: shop.handle,
+    market: shop.market,
+    booth: shop.booth,
+    tags: shop.tags,
+    summary: shop.summary,
+  }))
+  const displayCategoryResults = searchViewModel.matchedCategories.map((category) => ({
+    handle: category.handle,
+    name: category.name,
+    description: category.description,
+    count: category.count,
+  }))
+  const displayProductResults = productResults.filter((product) =>
+    searchViewModel.matchedProducts.some((matched) => matched.id === product.productHandle)
+  )
 
   return (
     <main className="w-screen max-w-[100vw] overflow-x-hidden bg-[#F6F8FB] px-3 pb-24 pt-3 text-primary lg:w-full lg:max-w-none lg:px-8 lg:py-6">
@@ -246,7 +313,7 @@ export default async function SearchPage({
 
           <div className="mt-3 flex items-center justify-between rounded-lg bg-white px-3 py-2 text-[13px] leading-5 shadow-sm">
             <span className="font-semibold">
-              {activeMarket.name} · {activeMarket.city}
+              {displayMarket.name} · {displayMarket.city}
             </span>
             <Link href={`/${locale}/categories`} className="text-[#155EEF]">
               切换
@@ -318,16 +385,16 @@ export default async function SearchPage({
                   <p className="label-md text-[#155EEF]">市场样例</p>
                   <h2 className="heading-md">相关鲜货展示</h2>
                 </div>
-                <p className="text-sm text-secondary">{productResults.length} 条</p>
+                <p className="text-sm text-secondary">{displayProductResults.length} 条</p>
               </div>
               <div className="flex items-center justify-between lg:hidden">
                 <p className="text-[16px] font-semibold leading-5">市场样例鲜货</p>
                 <span className="text-[12px] leading-4 text-secondary">
-                  {productResults.length} 条
+                  {displayProductResults.length} 条
                 </span>
               </div>
               <div className="mt-3 grid gap-3 md:grid-cols-2 lg:mt-4">
-                {productResults.map((product, productIndex) => (
+                {displayProductResults.map((product, productIndex) => (
                   <article
                     key={product.name}
                     className="rounded-lg border border-[#E5E7EB] bg-white p-3 lg:rounded-sm lg:p-4"
@@ -422,7 +489,7 @@ export default async function SearchPage({
               <p className="label-md text-[#155EEF]">店铺 / 档口</p>
               <h2 className="heading-md">相关档口</h2>
               <div className="mt-4 grid gap-3">
-                {shopResults.map((shop) => (
+                {displayShopResults.map((shop) => (
                   <article key={shop.handle} className="rounded-sm border border-[#E5E7EB] p-4">
                     <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                       <div>
@@ -457,11 +524,11 @@ export default async function SearchPage({
               <div className="flex items-center justify-between gap-3">
                 <p className="label-lg">市场配置</p>
                 <span className="shrink-0 rounded-sm bg-[#F8FAFC] px-2 py-1 text-[12px] leading-4 text-secondary">
-                  {chinaMarkets.source}
+                  本地市场
                 </span>
               </div>
               <div className="mt-3 grid gap-3">
-                {marketResults.map((market) => (
+                {displayMarketResults.map((market) => (
                   <div key={market.name} className="rounded-sm border border-[#E5E7EB] bg-[#F8FAFC] p-3">
                     <p className="label-lg">{market.name}</p>
                     <p className="mt-1 text-sm text-secondary">{market.city} · {market.hours}</p>
@@ -475,7 +542,7 @@ export default async function SearchPage({
             <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
               <p className="label-lg">类目</p>
               <div className="mt-3 grid gap-2">
-                {categoryResults.map((category) => (
+                {displayCategoryResults.map((category) => (
                   <Link
                     key={category.handle}
                     href={`/${locale}/categories/${category.handle}`}

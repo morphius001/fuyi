@@ -272,3 +272,4 @@
 - 完成 `storefront-adapter-binding-sequence-plan`，docs-only 规划 Storefront home / shop / search adapter 绑定页面的 PR 顺序：先首页首屏，再店铺头部，再搜索结果，再分两步绑定首页和店铺商品卡，最后做绑定验证；每步均要求只读、截图、回滚和禁止交易/履约 runtime。
 - 完成 `storefront-home-adapter-binding-readonly`，首页首屏市场、桌面类目和移动端推荐档口已读取 `buildChinaHomeViewModel()` 输出；本轮不绑定今日鲜货商品卡，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 完成 `storefront-shop-header-adapter-binding-readonly`，店铺页头部名称、市场、档口号、履约提示和直播状态 badge 已读取 `buildChinaShopViewModel()` 输出；本轮不绑定店铺商品卡，不修改 checkout shipping options、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 完成 `storefront-search-adapter-binding-readonly`，搜索页 query、市场 / 类目 / 店铺 / 静态商品样例结果已读取 `buildChinaSearchViewModel()` 输出；真实商品卡仍走 Store API，不接真实排序、广告、竞价或推荐系统，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。

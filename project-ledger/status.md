@@ -397,6 +397,7 @@
 - 第一百零五轮进度：`storefront-adapter-binding-sequence-plan` 已完成；下一项建议做 `storefront-home-adapter-binding-readonly`，只绑定首页首屏市场 / 类目 / 店铺数据。
 - 第一百零五轮进度：`storefront-home-adapter-binding-readonly` 已完成；下一项建议做 `storefront-shop-header-adapter-binding-readonly`。
 - 第一百零五轮进度：`storefront-shop-header-adapter-binding-readonly` 已完成；下一项建议做 `storefront-search-adapter-binding-readonly`。
+- 第一百零五轮进度：`storefront-search-adapter-binding-readonly` 已完成；下一项建议做 `storefront-home-product-cards-binding-readonly`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

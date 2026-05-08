@@ -1534,3 +1534,11 @@
 - 真实可加购商品仍走 Store API / `ProductCard`；商品发现字段不作为价格、库存、履约、订单、结算、佣金、权限或支付事实。
 - 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 238 更新
+
+- `storefront-product-discovery-phase-rollup` 已完成，见 `docs/storefront-product-discovery-phase-rollup.md`。
+- 本轮 docs-only 汇总 PR #277-#284：商品发现 read model 已从 builder、Store API readonly route、Storefront client 走到首页/搜索/店铺展示绑定。
+- 当前链路仍只读展示，不是价格、库存、履约、订单、结算、佣金、权限或支付事实来源。
+- 下一阶段建议只做 QA runbook、observability plan 或 next-data plan；任何真实交易、履约、权限或 provider runtime 必须单独串行。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

@@ -1298,3 +1298,4 @@
 2. `storefront-search-product-discovery-source-binding`: done，搜索页“相关鲜货展示 / 市场样例”优先读取商品发现只读 client，真实可加购商品仍走 Store API / ProductCard。
 3. `storefront-shop-product-discovery-source-binding`: done，店铺页“档口今日参考 / 常卖鲜货”优先读取商品发现只读 client，真实可加购商品仍走 seller product ids + Store API / ProductCard。
 4. `storefront-product-discovery-binding-validation`: done，docs-only 汇总首页、搜索页和店铺页商品发现只读绑定阶段验证。
+5. `storefront-product-discovery-phase-rollup`: done，docs-only 汇总 PR #277-#284 商品发现 read model 阶段从 API 到页面绑定的状态和下一阶段安全边界。

@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 21:02 Asia/Shanghai
+更新时间：2026-05-08 21:18 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -347,7 +347,8 @@
 - `live-commerce-readonly-plan` 已完成：规划直播只读状态、店铺展示、Provider 和高风险边界。
 - `live-commerce-readonly-contract` 已完成：新增直播只读 TypeScript contract，明确店铺展示位置和真实直播/IM/交易阻塞边界。
 - `non-payment-readonly-contracts-validation` 已完成：6 组 focused tests、API typecheck 和 diff check 通过。
-- 队列下一项：`readonly-contracts-export-index`。
+- `readonly-contracts-export-index` 已完成：建立非支付只读 contracts 三端可读范围和禁止误用索引。
+- 队列下一项：`admin-readonly-contracts-panel-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

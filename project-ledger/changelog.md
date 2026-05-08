@@ -224,3 +224,4 @@
 - 完成 `live-commerce-readonly-plan`，docs-only 规划直播只读状态、店铺展示、Provider 和高风险边界。
 - 完成 `live-commerce-readonly-contract`，新增直播只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `non-payment-readonly-contracts-validation`，记录 6 组非支付只读合同 focused tests、API typecheck 和 diff check 通过。
+- 完成 `readonly-contracts-export-index`，docs-only 建立非支付只读 contracts 三端可读范围和禁止误用索引。

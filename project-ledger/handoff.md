@@ -977,3 +977,10 @@
 - 合并后 focused tests 通过：6 suites / 19 tests。
 - API typecheck 和 `git diff --check` 通过；`packages/api/.mercur/index.d.ts` 已恢复，未纳入验证 PR。
 - 第九十四轮建议从 `readonly-contracts-export-index` 开始。
+
+## Round 167 更新
+
+- `readonly-contracts-export-index` 已完成，见 `docs/readonly-contracts-export-index.md`。
+- 本轮只建立非支付只读 contracts 索引，说明 Admin/Vendor/Storefront 可读范围和禁止误用。
+- 明确这些 contract 不能作为 feature flag、RBAC、支付成功、订单已支付、履约、Provider 配置、结算、佣金或打款事实来源。
+- 推荐下一项：`admin-readonly-contracts-panel-plan`。

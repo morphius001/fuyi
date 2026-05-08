@@ -225,3 +225,4 @@
 - 完成 `live-commerce-readonly-contract`，新增直播只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `non-payment-readonly-contracts-validation`，记录 6 组非支付只读合同 focused tests、API typecheck 和 diff check 通过。
 - 完成 `readonly-contracts-export-index`，docs-only 建立非支付只读 contracts 三端可读范围和禁止误用索引。
+- 完成 `admin-readonly-contracts-panel-plan`，docs-only 规划 Admin 平台能力只读总览面板和 UI PR 边界。

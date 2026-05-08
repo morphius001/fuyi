@@ -1108,3 +1108,10 @@
 - 本轮只规划店铺/档口主页 v2，不改 `apps/storefront/**`。
 - 明确配送方式属于店铺/档口头部能力，商品卡只做轻提示；店铺装修和直播不改变商品、库存、订单、支付、退款、结算或履约。
 - 下一项建议继续 `admin-dashboard-template-v2-plan`。
+
+## Round 185 更新
+
+- `admin-dashboard-template-v2-plan` 已完成，见 `docs/admin-dashboard-template-v2-plan.md`。
+- 本轮只规划平台运营首页 v2，不改 `apps/admin/**`。
+- 明确顶部工具靠右、首屏包含 KPI/待办/风险、数据来源说明必须区分展示数据和真实交易事实。
+- 下一项建议继续 `vendor-role-workspace-template-v2-plan`。

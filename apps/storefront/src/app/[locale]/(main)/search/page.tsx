@@ -8,7 +8,9 @@ import {
   retrieveChinaMarkets,
   type ChinaMarket,
 } from "@/lib/data/china-markets"
+import { retrieveChinaProductDiscovery } from "@/lib/data/china-product-discovery"
 import { listProducts } from "@/lib/data/products"
+import type { ChinaSearchProductCardInput } from "../data/china-search-view-model"
 import { buildChinaSearchViewModel } from "../data/china-search-view-model"
 
 export const metadata: Metadata = {
@@ -184,6 +186,39 @@ const buildStaticSearchDiscovery = () => ({
   })),
 })
 
+const buildStaticSearchProductInputs = (): ChinaSearchProductCardInput[] =>
+  productResults.map((product) => ({
+    id: product.productHandle,
+    title: product.name,
+    handle: product.productHandle,
+    sellerId: product.handle,
+    sellerName: product.shop,
+    market: product.market,
+    booth: product.booth,
+    priceText: product.price,
+    specText: product.spec,
+    stockText: product.stock,
+    source: "placeholder",
+  }))
+
+const toSearchDisplayProduct = (product: ChinaSearchProductCardInput) => ({
+  id: product.id,
+  name: product.title,
+  productHandle: product.handle ?? product.id,
+  spec: product.specText ?? "规格待配置",
+  price: product.priceText ?? "到店询价",
+  stock: product.stockText ?? "到店确认",
+  shop: product.sellerName ?? "本地档口",
+  sellerHandle: product.sellerId ?? "a-hai-xian-huo-dang",
+  market: product.market ?? "本地市场",
+  booth: product.booth ?? "档口待配置",
+  badges: product.source === "store_product_table" ? ["商品展示", "到店确认"] : ["样例"],
+  productHint:
+    product.source === "store_product_table" ? "详情确认" : "样例展示",
+  stallFulfillment: ["到店自提", "配送以商家页和结算页为准"],
+  image: "/images/local-market/seafood-market-hero.png",
+})
+
 export default async function SearchPage({
   params,
   searchParams,
@@ -196,7 +231,8 @@ export default async function SearchPage({
   const rawQuery = resolvedSearchParams?.q?.trim()
   const selectedMarketName = resolvedSearchParams?.market?.trim()
   const query = rawQuery || "今日鲜货"
-  const [discovery, chinaMarkets, productResponse] = await Promise.all([
+  const adapterQuery = rawQuery ?? ""
+  const [discovery, chinaMarkets, productResponse, chinaProductDiscovery] = await Promise.all([
     retrieveChinaDiscovery(),
     retrieveChinaMarkets(),
     listProducts({
@@ -205,6 +241,11 @@ export default async function SearchPage({
         ...(rawQuery ? { q: rawQuery } : {}),
         limit: 8,
       },
+    }),
+    retrieveChinaProductDiscovery({
+      query: rawQuery,
+      market: selectedMarketName,
+      limit: 8,
     }),
   ])
   const {
@@ -216,10 +257,29 @@ export default async function SearchPage({
       ? readonlyMarketResults
       : discovery.markets.length > 0
         ? discovery.markets
-        : []
+      : []
   const staticSearchDiscovery = buildStaticSearchDiscovery()
+  const staticSearchProductInputs = buildStaticSearchProductInputs()
+  const productDiscoveryInputs = chinaProductDiscovery.items
+    .filter(
+      (product) =>
+        product.source === "store_product_table" && Boolean(product.sellerHandle)
+    )
+    .map((product) => ({
+      id: product.id,
+      title: product.title,
+      handle: product.handle,
+      sellerId: product.sellerHandle,
+      sellerName: product.sellerName,
+      market: product.market,
+      booth: product.booth,
+      priceText: product.priceText,
+      specText: product.specText,
+      stockText: product.stockText,
+      source: "store_product_table",
+    }))
   const searchViewModel = buildChinaSearchViewModel({
-    query,
+    query: adapterQuery,
     marketName: selectedMarketName,
     discovery: {
       source: "storefront_search_discovery_source_binding",
@@ -234,20 +294,10 @@ export default async function SearchPage({
       categories: discovery.categories,
       sellers: discovery.sellers,
     },
-    products: productResults.map((product) => ({
-      id: product.productHandle,
-      title: product.name,
-      handle: product.productHandle,
-      sellerName: product.shop,
-      market: product.market,
-      booth: product.booth,
-      priceText: product.price,
-      specText: product.spec,
-      stockText: product.stock,
-      source: "placeholder",
-    })),
+    products: productDiscoveryInputs.length ? productDiscoveryInputs : undefined,
     fallback: {
       discovery: staticSearchDiscovery,
+      products: staticSearchProductInputs,
       notice: "没有找到匹配内容，可以换个关键词或切换市场。",
     },
   })
@@ -274,9 +324,8 @@ export default async function SearchPage({
     description: category.description,
     count: category.count,
   }))
-  const displayProductResults = productResults.filter((product) =>
-    searchViewModel.matchedProducts.some((matched) => matched.id === product.productHandle)
-  )
+  const displayProductResults =
+    searchViewModel.matchedProducts.map(toSearchDisplayProduct)
 
   return (
     <main className="w-screen max-w-[100vw] overflow-x-hidden bg-[#F6F8FB] px-3 pb-24 pt-3 text-primary lg:w-full lg:max-w-none lg:px-8 lg:py-6">
@@ -415,7 +464,7 @@ export default async function SearchPage({
               <div className="mt-3 grid gap-3 md:grid-cols-2 lg:mt-4">
                 {displayProductResults.map((product, productIndex) => (
                   <article
-                    key={product.name}
+                    key={product.id}
                     className="rounded-lg border border-[#E5E7EB] bg-white p-3 lg:rounded-sm lg:p-4"
                   >
                     <div className="grid grid-cols-[88px_minmax(0,1fr)] gap-3">
@@ -487,7 +536,7 @@ export default async function SearchPage({
                     </div>
                     <div className="mt-3 grid grid-cols-[1fr_1fr] gap-2">
                       <Link
-                        href={`/${locale}/sellers/${product.handle}`}
+                        href={`/${locale}/sellers/${product.sellerHandle}`}
                         className="inline-flex h-9 items-center justify-center rounded-lg border border-[#155EEF] px-3 text-[13px] font-semibold leading-4 text-[#155EEF] hover:bg-[#EFF6FF]"
                       >
                         进店

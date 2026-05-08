@@ -1256,6 +1256,7 @@
 
 1. `storefront-product-discovery-input-contract`: done，新增 Storefront 商品发现输入共享只读合同，不改页面、Store API 或交易链路。
 2. `storefront-read-model-source-phase-rollup`: done，docs-only 汇总 PR #267-#274 的 Storefront read model source 阶段状态和下一步边界。
+3. `storefront-product-discovery-api-plan`: done，docs-only 规划未来商品发现只读 API、builder、client 和分 surface binding 顺序。
 
 第九十三轮原则：
 

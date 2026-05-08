@@ -649,3 +649,9 @@
 - `mock_inbox_only` 和 `mock_prepare_command` 只在所有非 workflow gate 满足时 allowed。
 - Harness 已纳入 runtime gate 单测。
 - 当前仍不接 route、不注册 migration、不连接 DB、不执行 payment workflow。
+
+## Round 122 更新
+
+- `payment-notification-db-runtime-preflight` 已完成，见 `docs/payment-notification-db-runtime-preflight.md`。
+- 本轮只写文档，规划 local DB preflight、preprod disposable DB preflight、migration registration readiness、transaction checks 和 observability checks。
+- 当前结论：可以准备 preprod disposable DB checklist，但不能自动注册 migration，不能接 route runtime，不能执行 workflow。

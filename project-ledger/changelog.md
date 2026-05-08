@@ -178,3 +178,4 @@
 - 完成 `mock-webhook-db-backed-route-post-validation`，记录 PR #164/#165 合并后的 harness、accepted/duplicate/rejected smoke、typecheck、runtime grep 和 DB/9110 无残留验证。
 - 完成 `mock-webhook-db-backed-route-runtime-gate-plan`，以 docs-only 方式规划 local DB smoke 到未来 runtime gate 的 Go/No-Go、feature flags、回滚和后续 PR 拆分。
 - 完成 `payment-notification-runtime-gate-contract`，新增 runtime gate 纯函数和单元测试；默认 blocked，不接 route、不执行 workflow。
+- 完成 `payment-notification-db-runtime-preflight`，docs-only 规划本地和 preprod disposable DB preflight、migration readiness、transaction checks 和 No-Go 条件。

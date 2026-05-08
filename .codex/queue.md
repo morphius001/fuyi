@@ -1088,7 +1088,8 @@
 38. `payment-provider-adapter-contract-plan`: done，规划中国本地支付 Provider / Adapter 合同；不接真实支付宝或微信支付。
 39. `mock-china-payment-provider-contract`: done，新增未注册 mock provider contract；不接 checkout runtime，不执行 payment workflow。
 40. `mock-payment-provider-registry-contract`: done，新增 adapter registry 纯函数 contract；默认 production disabled，不读取真实密钥。
-41. `mock-payment-provider-registry-validation`: pending，记录 registry 合并后 harness/typecheck/runtime grep 验证。
+41. `mock-payment-provider-registry-validation`: done，记录 registry 合并后 harness/typecheck/runtime grep 和 DB 无残留验证。
+42. `mock-provider-runtime-gate-validation-plan`: pending，规划 mock provider contract / registry / runtime gate / preprod DB gate 的组合验证；不接 runtime。
 
 第九十三轮原则：
 

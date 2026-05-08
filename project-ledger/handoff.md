@@ -710,3 +710,10 @@
 - `alipay` / `wechat_pay` 当前明确 refused，等待单独 adapter 设计和测试向量。
 - 未注册 Medusa payment provider，未读取真实密钥，未接 checkout runtime，未执行 payment workflow。
 - 下一项建议为 `mock-payment-provider-registry-validation`。
+
+## Round 130 更新
+
+- `mock-payment-provider-registry-validation` 已完成，见 `docs/mock-payment-provider-registry-validation.md`。
+- 验证通过：payment notification harness 19 suites / 128 tests、API typecheck、runtime grep 未注册、disposable DB 无残留。
+- 当前 mock provider contract 和 registry 仍未接 runtime，不读取真实密钥，不执行 payment workflow。
+- 下一项建议为 `mock-provider-runtime-gate-validation-plan`，只规划组合验证，不接 runtime。

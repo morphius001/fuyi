@@ -259,3 +259,4 @@
 - 完成 `storefront-search-view-model-mapper`，新增 Storefront 搜索页只读 mapper 契约、focused unit tests 和说明文档；搜索结果只展示市场、类目、店铺 / 档口和商品，默认过滤 B 端采购/供给内容，不占库存、不写配送、不创建购物车或订单。
 - 完成 `storefront-home-bind-view-model-plan`，docs-only 规划 Storefront 首页绑定 home mapper 的三步 PR：adapter、首屏市场/类目/店铺、今日鲜货商品卡；明确静态 fallback、B-side 隐藏规则、验收和回滚。
 - 完成 `storefront-shop-bind-view-model-plan`，docs-only 规划 Storefront 店铺页绑定 shop mapper 的三步 PR：adapter、店铺头部绑定、店铺商品卡绑定；明确配送/自提归属店铺头部、提货卡独立入口、直播状态 badge、B-side role-gated preview 和回滚。
+- 完成 `storefront-template-binding-validation`，验证 template registry、home/shop/search mapper、China read models、API typecheck 和 diff check 均通过；记录页面绑定前仍需 adapter plan。

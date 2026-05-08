@@ -780,3 +780,12 @@
 - `mock-provider-runtime-local-inbox-only-plan` 已完成，见 `docs/mock-provider-runtime-local-inbox-only-plan.md`。
 - 本轮只写文档，规划 local disposable DB inbox-only route 顺序、local DB gate、accepted/duplicate/rejected smoke 和禁止项。
 - 下一项可做 `mock-provider-runtime-local-inbox-only-skeleton`，但只能接 local disposable DB，仍不得执行 payment workflow。
+
+## Round 140 更新
+
+- `mock-provider-runtime-local-inbox-only-skeleton` 已完成，见 `docs/mock-provider-runtime-local-inbox-only-skeleton.md`。
+- `POST /china/payment-providers/mock` 默认和生产仍 disabled，不读 request body。
+- 只有 `mock_contract_only` registry、`mock_inbox_only` runtime、local disposable DB env、当前 DB 名匹配且非 production 时，才接收 fake signed mock provider notification 并写入 inbox/event log。
+- 单测覆盖默认 disabled、runtime requested、production blocked、缺 registry、accepted、duplicate、missing signature 和不泄露 workflow/checkout 字段。
+- 仍未注册 Medusa payment provider，未接真实支付宝/微信支付，未执行 payment workflow，未改变 checkout、order、payment、refund、settlement、commission 或 permission 状态。
+- 下一项建议为 `mock-provider-runtime-local-inbox-only-validation`，记录合并后 harness/typecheck/runtime grep/DB 无残留。

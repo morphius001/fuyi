@@ -191,6 +191,14 @@ const readMarketMetadataText = (
   return typeof value === "string" && value.trim() ? value : undefined
 }
 
+const formatMarketDeliveryName = (name: string) => {
+  if (name.includes("统一配送")) {
+    return "市场统一配送"
+  }
+
+  return name.replace("展示能力", "").trim()
+}
+
 const resolveShopProfile = (
   base: StaticShopProfile,
   seller?: {
@@ -278,7 +286,7 @@ export default async function SellerPage({
     "市场公告后续由后台市场配置维护。"
   const marketDeliveryProfiles = marketDetail?.deliveryProfiles ?? []
   const marketDeliveryNames = marketDeliveryProfiles.map(
-    (profile) => profile.displayName
+    (profile) => formatMarketDeliveryName(profile.displayName)
   )
   const sellerProductIds = sellerResponse?.product_ids ?? []
   const {
@@ -353,7 +361,7 @@ export default async function SellerPage({
             </div>
             <p className="mt-1 text-[11px] leading-4 text-secondary">
               {shop.dataSource === "seller_metadata"
-                ? "配送/自提来自商家后台展示配置，真实履约仍以结算页和商家确认为准。"
+                ? "配送和自提方式由商家展示，最终以结算页和商家确认为准。"
                 : "市场统一配送为市场能力，商家可自行选择是否加入。"}
             </p>
             {marketDeliveryNames.length > 0 ? (
@@ -407,11 +415,11 @@ export default async function SellerPage({
 
         <section id="today-products" className="mt-3 rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-semibold leading-5">真实可购商品</p>
+            <p className="text-[16px] font-semibold leading-5">今日可买</p>
             <span className="text-[12px] leading-4 text-secondary">{realProductCount} 条</span>
           </div>
           <p className="mt-1 text-[12px] leading-5 text-secondary">
-            来自当前档口 Store API 商品，进入详情页选择规格后加入真实购物车。
+            进入商品详情查看规格、数量和价格后加入购物车。
           </p>
           {realProducts.length > 0 ? (
             <div className="mt-3 grid gap-3">
@@ -432,8 +440,8 @@ export default async function SellerPage({
 
         <section className="mt-3 rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-[16px] font-semibold leading-5">档口展示样例</p>
-            <span className="text-[12px] leading-4 text-secondary">样例不直接加购</span>
+            <p className="text-[16px] font-semibold leading-5">档口今日参考</p>
+            <span className="text-[12px] leading-4 text-secondary">以商家确认为准</span>
           </div>
           <div className="mt-3 grid gap-3">
             {shop.products.map(([name, spec, price, stock, tag, productHint], index) => (
@@ -475,7 +483,7 @@ export default async function SellerPage({
                         {tag}
                       </span>
                       <span className="rounded-full bg-[#E6F7F2] px-2 py-0.5 text-[11px] leading-4 text-[#0F8F6B]">
-                        {index === 0 ? "今日到货" : "可自提"}
+                        {index === 0 ? "今日到货" : "档口常卖"}
                       </span>
                     </div>
                   </div>
@@ -488,7 +496,7 @@ export default async function SellerPage({
                     </span>
                   ) : (
                     <span className="inline-flex h-8 items-center rounded-full bg-[#F8FAFC] px-3 text-[12px] font-semibold text-secondary">
-                      展示样例
+                      价格随到货确认
                     </span>
                   )}
                 </div>
@@ -583,8 +591,8 @@ export default async function SellerPage({
                 <p className="label-lg">{shop.market}</p>
                 <p className="mt-1 text-sm text-secondary">
                   {shop.dataSource === "seller_metadata"
-                    ? "档口信息和履约方式来自商家只读配置。市场上下文为只读展示。"
-                    : "档口信息、营业时间和履约方式可由后台维护。市场上下文为只读展示。"}
+                    ? "档口信息和取送方式来自商家资料，购买前仍以结算页确认为准。"
+                    : "档口信息、营业时间和取送方式可由商家维护，购买前以结算页确认为准。"}
                 </p>
               </div>
             </div>
@@ -619,10 +627,12 @@ export default async function SellerPage({
         <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="label-md text-[#155EEF]">真实商品</p>
-              <h2 className="heading-md">可进入详情加购</h2>
+              <p className="label-md text-[#155EEF]">今日可买</p>
+              <h2 className="heading-md">进详情看规格</h2>
             </div>
-            <p className="text-sm text-secondary">当前档口 Store API 返回 {realProductCount} 条，本阶段不接订单外逻辑</p>
+            <p className="text-sm text-secondary">
+              当前档口有 {realProductCount} 条可展示商品，规格、数量和配送以详情页与结算页为准
+            </p>
           </div>
           {realProducts.length > 0 ? (
             <div className="mt-4 grid gap-3 md:grid-cols-3 xl:grid-cols-4">
@@ -641,10 +651,10 @@ export default async function SellerPage({
           )}
           <div className="mt-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="label-md text-[#64748B]">档口展示样例</p>
-              <h2 className="heading-md">后续接入商家商品列表</h2>
+              <p className="label-md text-[#64748B]">档口今日参考</p>
+              <h2 className="heading-md">常卖鲜货</h2>
             </div>
-            <p className="text-sm text-secondary">样例不直接加购，价格库存以商家确认为准</p>
+            <p className="text-sm text-secondary">价格和库存会随到货变化，购买前以商家确认为准</p>
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             {shop.products.map(([name, spec, price, stock, tag, productHint], index) => (
@@ -682,9 +692,9 @@ export default async function SellerPage({
                 </p>
                 <button
                   disabled
-                  className="mt-3 h-10 w-full rounded-sm bg-[#155EEF] label-md text-white"
+                  className="mt-3 h-10 w-full rounded-sm border border-[#DDE4F0] bg-[#F8FAFC] label-md text-secondary"
                 >
-                  进店选规格
+                  进入真实商品后选择规格
                 </button>
               </article>
             ))}
@@ -711,15 +721,14 @@ export default async function SellerPage({
                     key={profile.id}
                     className="rounded-sm bg-[#EFF6FF] px-3 py-2 text-sm text-[#1D4ED8]"
                   >
-                    {profile.displayName}
-                    {profile.serviceAreaNote ? ` · ${profile.serviceAreaNote}` : ""}
+                    {formatMarketDeliveryName(profile.displayName)}
                   </p>
                 ))}
               </div>
             ) : null}
             <p className="mt-3 text-sm text-secondary">
               {shop.dataSource === "seller_metadata"
-                ? "当前展示来自商家后台资料，不改变配送服务或运费。"
+                ? "当前展示来自商家资料，不改变配送服务或运费。"
                 : "当前为展示资料，后续应由商家后台配置读取。"}
             </p>
             <p className="mt-2 text-sm text-secondary">
@@ -727,9 +736,9 @@ export default async function SellerPage({
             </p>
           </div>
           <div className="rounded-sm border border-[#F59E0B] bg-[#FFFBEB] p-4 shadow-sm">
-            <p className="label-lg text-[#92400E]">安全边界</p>
+            <p className="label-lg text-[#92400E]">购买提醒</p>
             <p className="mt-2 text-sm text-[#92400E]">
-              本页展示店铺主页结构。客服、直播、物流、库存、支付和订单状态以后由独立服务和后台配置接入，当前不在店铺页直接办理。
+              鲜活、冰鲜和称重商品会受市场营业时间、商家备货和配送范围影响；请在详情页确认规格，在结算页确认配送方式。
             </p>
           </div>
         </aside>
@@ -738,8 +747,8 @@ export default async function SellerPage({
       <div className="fixed bottom-10 left-0 z-30 w-screen max-w-[100vw] px-3 lg:hidden">
         <div className="flex items-center justify-between rounded-full bg-[#111827] px-4 py-2 text-white shadow-lg">
           <div>
-            <p className="text-[13px] font-semibold leading-5">档口展示样例</p>
-            <p className="text-[12px] leading-4 text-white/75">真实加购后再结算</p>
+            <p className="text-[13px] font-semibold leading-5">先看规格再下单</p>
+            <p className="text-[12px] leading-4 text-white/75">结算页确认配送和费用</p>
           </div>
           <Link
             href={`/${locale}/cart`}

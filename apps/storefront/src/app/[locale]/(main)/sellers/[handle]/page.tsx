@@ -353,7 +353,7 @@ export default async function SellerPage({
             </div>
             <p className="mt-1 text-[11px] leading-4 text-secondary">
               {shop.dataSource === "seller_metadata"
-                ? "配送/自提来自商家只读配置，真实履约仍以结算页和商家确认为准。"
+                ? "配送/自提来自商家后台展示配置，真实履约仍以结算页和商家确认为准。"
                 : "市场统一配送为市场能力，商家可自行选择是否加入。"}
             </p>
             {marketDeliveryNames.length > 0 ? (
@@ -719,17 +719,17 @@ export default async function SellerPage({
             ) : null}
             <p className="mt-3 text-sm text-secondary">
               {shop.dataSource === "seller_metadata"
-                ? "当前展示来自商家 metadata，只读展示不改变配送服务或运费。"
-                : "当前为静态回退展示，后续应由商家配置读取。"}
+                ? "当前展示来自商家后台资料，不改变配送服务或运费。"
+                : "当前为展示资料，后续应由商家后台配置读取。"}
             </p>
             <p className="mt-2 text-sm text-secondary">
-              市场营业时间：{marketHours}；市场配送能力仅展示，不影响结算页配送方式。
+              市场营业时间：{marketHours}；市场配送说明仅用于进店判断，最终可选配送方式以结算页为准。
             </p>
           </div>
           <div className="rounded-sm border border-[#F59E0B] bg-[#FFFBEB] p-4 shadow-sm">
             <p className="label-lg text-[#92400E]">安全边界</p>
             <p className="mt-2 text-sm text-[#92400E]">
-              本页展示店铺主页结构，客服、直播、物流、库存、支付和订单状态后续需要通过独立服务和后台配置接入。
+              本页展示店铺主页结构。客服、直播、物流、库存、支付和订单状态以后由独立服务和后台配置接入，当前不在店铺页直接办理。
             </p>
           </div>
         </aside>

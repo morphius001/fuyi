@@ -1028,3 +1028,12 @@
 - 本轮不新增后端 route，不修改 `packages/api/**`，不提供真实发布、发货、打印、兑换、开播、结算或权限动作。
 - 验证通过：Vendor lint、Vendor build、`git diff --check`。
 - 下一项建议继续 `storefront-visibility-copy-polish`。
+
+## Round 174 更新
+
+- `storefront-visibility-copy-polish` 已完成，见 `docs/storefront-visibility-copy-polish.md`。
+- Storefront 搜索页、店铺页和提货卡页消费者文案已去掉部分工程化表达，改成“展示数据”“后台展示配置”“演示占位”“以结算页为准”。
+- 物料、配送供应商和上游供给继续不进入消费者商品流；提货卡保持独立入口；直播仍只作为店铺状态。
+- 本轮未修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 验证通过：Storefront build、`git diff --check`。
+- 下一项建议继续 `readonly-contracts-ui-validation`。

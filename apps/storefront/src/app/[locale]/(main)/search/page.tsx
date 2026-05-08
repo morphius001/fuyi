@@ -108,7 +108,7 @@ const fallbackShopResults = [
     market: "舟山沈家门市场",
     booth: "干货区 12号",
     tags: ["食品经营许可", "快递配送", "礼盒"],
-    summary: "虾皮、淡菜干、鱼干，适合企业福利和提货卡权益。",
+    summary: "虾皮、淡菜干、鱼干，适合干货礼盒和日常备货。",
   },
 ]
 
@@ -206,7 +206,7 @@ export default async function SearchPage({
                 “{query}”相关鲜货
               </h1>
               <p className="mt-2 text-md text-secondary">
-                真实商品可进入详情加购；店铺/档口和类目读取只读发现 API，市场上下文读取只读市场 API 或 fallback。
+                商品可进入详情加购；店铺/档口、类目和市场信息来自平台展示数据，配送方式以商家页和结算页为准。
               </p>
             </div>
             <form action={`/${locale}/search`} className="grid gap-2 sm:grid-cols-[minmax(260px,1fr)_auto]">
@@ -307,7 +307,7 @@ export default async function SearchPage({
               <div className="rounded-lg border border-[#F59E0B] bg-[#FFFBEB] p-3 shadow-sm lg:rounded-sm lg:p-4">
                 <p className="label-md text-[#92400E]">暂无真实商品结果</p>
                 <p className="mt-1 text-sm text-[#92400E]">
-                  当前展示下方市场样例；真实商品需要通过后台商品和商家数据接入后显示。
+                  当前先展示市场鲜货示例；可加购商品以上方真实商品结果为准。
                 </p>
               </div>
             )}
@@ -504,7 +504,7 @@ export default async function SearchPage({
         <div className="flex items-center justify-between rounded-full bg-[#111827] px-4 py-2 text-white shadow-lg">
           <div>
             <p className="text-[13px] font-semibold leading-5">真实商品可加购</p>
-            <p className="text-[12px] leading-4 text-white/75">样例内容只做展示</p>
+            <p className="text-[12px] leading-4 text-white/75">物料、配送供应商和上游供给不进入消费者商品流</p>
           </div>
           <Link
             href={`/${locale}/cart`}

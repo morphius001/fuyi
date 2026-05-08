@@ -231,3 +231,4 @@
 - 完成 `readonly-contracts-ui-planning-validation`，docs-only 汇总三端只读合同 UI 规划完成状态和下一轮 UI PR 顺序。
 - 完成 `admin-readonly-contracts-panel-ui`，Admin 新增 `/dashboard/cn/operations/capability-contracts` 能力合同总览页面；前端静态只读数据展示商户角色、商家运营、消费者可见能力和高风险串行边界，不新增后端 route，不提供保存、发布、审核、删除或开关生效动作；Admin lint/build、i18n JSON parse 和 `git diff --check` 通过。
 - 完成 `vendor-readonly-contracts-panel-ui`，Vendor 新增“我的能力边界”只读面板和导航项；静态合同数据展示商户角色、市场档口、快速上架、AI 草稿、店铺装修、履约/面单、提货卡、直播和高风险边界，不新增后端 route，不提供发布、发货、打印、兑换、开播或结算动作；Vendor lint/build 和 `git diff --check` 通过。
+- 完成 `storefront-visibility-copy-polish`，消费者侧搜索页、店铺页和提货卡页文案去掉部分工程化 `API`/`metadata`/`fallback`/`mock` 表述，改为展示数据、后台展示配置、演示占位和以结算页为准；未修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime；Storefront build 和 `git diff --check` 通过。

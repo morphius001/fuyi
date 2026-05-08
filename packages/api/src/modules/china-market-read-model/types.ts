@@ -101,6 +101,63 @@ export type ChinaMarketReadModelSeed = {
   deliveryProfiles?: ChinaMarketDeliveryProfile[];
 };
 
+export type ChinaMarketDomainContractBoundaryKey =
+  | "checkout_shipping_options"
+  | "order_fulfillment"
+  | "payment"
+  | "refund"
+  | "settlement"
+  | "commission"
+  | "payout"
+  | "permission";
+
+export type ChinaMarketDomainContractEntityKey =
+  | "market"
+  | "market_business_hours"
+  | "market_announcement"
+  | "stall"
+  | "seller_market_membership"
+  | "seller_role"
+  | "market_delivery_profile";
+
+export type ChinaMarketDomainContractEntityView = {
+  key: ChinaMarketDomainContractEntityKey;
+  label: string;
+  source: "read_model_seed";
+  currentCount: number;
+  writeEnabled: false;
+  runtimeImpact: "none";
+};
+
+export type ChinaMarketDomainContractRoleView = {
+  roleKey: ChinaSellerRoleKey;
+  label: string;
+  consumerFacingByDefault: boolean;
+  merchantFacingByDefault: boolean;
+  requiresPlatformApproval: true;
+  permissionImpact: "none";
+};
+
+export type ChinaMarketDomainContractBoundaryView = {
+  key: ChinaMarketDomainContractBoundaryKey;
+  status: "blocked_serial_work";
+  reason: string;
+};
+
+export type ChinaMarketDomainContractView = {
+  mode: "market_domain_contract_read_only";
+  source: "china_market_read_model";
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
+  entities: ChinaMarketDomainContractEntityView[];
+  roles: ChinaMarketDomainContractRoleView[];
+  highRiskBoundaries: ChinaMarketDomainContractBoundaryView[];
+  readOnly: true;
+  runtimeEnabled: false;
+  note: string;
+};
+
 export type ChinaVendorMarketContextMode =
   | "vendor_market_context_read_only"
   | "vendor_market_context_empty";

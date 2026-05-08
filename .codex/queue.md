@@ -1245,6 +1245,7 @@
 第一百零七轮建议：
 
 1. `storefront-home-adapter-real-source`: done，首页 adapter 输入收束为 markets API + discovery API + static fallback，不改视觉布局和交易链路。
+2. `storefront-search-read-model-input-contract`: done，新增搜索 adapter 输入合同，不接真实搜索排序、广告、竞价或推荐。
 
 第九十三轮原则：
 

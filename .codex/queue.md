@@ -1084,6 +1084,7 @@
 34. `payment-notification-preprod-disposable-db-script-plan`: done，规划外部 disposable DB 脚本输入输出；不连接数据库。
 35. `payment-notification-preprod-disposable-db-script`: done，新增外部 disposable DB 脚本 skeleton；默认只输出计划或校验输入，不执行外部数据库。
 36. `payment-notification-preprod-disposable-db-execution`: blocked-external，等待用户明确提供 disposable preprod DB、备份/回滚 owner 和连接授权。
+37. `payment-preprod-db-script-post-validation`: done，记录 PR #171/#172 合并后验证；继续保持外部 DB 执行为 blocked-external。
 
 第九十三轮原则：
 

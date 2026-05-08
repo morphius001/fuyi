@@ -1192,13 +1192,19 @@
 1. `template-registry-v2-contract`: done，新增四个 v2 template ids 到未注册只读 registry contract，不接 route、不接 DB。
 2. `storefront-home-view-model-mapper`: done，新增首页 view model mapper、focused tests 和说明文档，先不改页面。
 3. `storefront-shop-view-model-mapper`: done，新增店铺页 view model mapper、focused tests 和说明文档，先不改页面。
-4. `template-registry-v2-validation`: pending，验证 registry v2、mapper、API typecheck 和 diff 范围。
+4. `template-registry-v2-validation`: done，验证 registry v2、home/shop mapper、API typecheck 和 diff 范围。
 
 第一百轮原则：
 
 - 优先做纯 contract / mapper / tests。
 - 页面绑定必须另拆单 surface PR。
 - 继续禁止支付、订单、退款、结算、佣金、权限、真实履约、真实物流、真实直播和真实提货卡兑换。
+
+第一百轮已清空。下一步建议新增第一百零一轮任务：
+
+1. `storefront-search-view-model-mapper`: pending，新增搜索页 view model mapper 和 focused tests，先不改页面。
+2. `storefront-home-bind-view-model-plan`: pending，docs-only 规划首页如何绑定 home mapper，先不改页面。
+3. `storefront-shop-bind-view-model-plan`: pending，docs-only 规划店铺页如何绑定 shop mapper，先不改页面。
 
 第九十三轮原则：
 

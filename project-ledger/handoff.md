@@ -692,3 +692,12 @@
 - 本轮只写文档和队列，规划 Provider / Adapter 分层、notify/return URL 边界、验签、幂等、错误映射、密钥加载和后续 PR 拆分。
 - 未接支付宝或微信支付，未实现真实 Provider，未修改 `apps/**` 或 `packages/**`。
 - 下一项可执行任务为 `mock-china-payment-provider-contract`：未注册 mock provider contract，不接 checkout runtime，不执行 payment workflow。
+
+## Round 128 更新
+
+- `mock-china-payment-provider-contract` 已完成，见 `docs/mock-china-payment-provider-contract.md`。
+- 新增未注册 `createMockChinaPaymentProviderContract()`，覆盖 create/query/close/verify/normalize contract。
+- 单测覆盖 deterministic mock payment、非 CNY 拒绝、pending 查询、contract-only close、fake signed notification normalize。
+- Harness 已纳入新增单测。
+- 未注册 Medusa payment provider，未修改 `medusa-config.ts`，未接 checkout runtime，未执行 payment workflow。
+- 下一项建议为 `mock-payment-provider-registry-contract`：adapter registry 纯函数，默认 production disabled。

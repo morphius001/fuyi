@@ -1236,6 +1236,7 @@
 4. `storefront-search-adapter-binding-readonly`: done，只绑定搜索结果展示，不接真实排序、广告、竞价或推荐系统。
 5. `storefront-home-product-cards-binding-readonly`: done，只绑定首页今日鲜货商品卡展示，不改 cart/order/checkout。
 6. `storefront-shop-product-cards-binding-readonly`: done，只绑定店铺页商品卡展示，不改 cart/order/checkout。
+7. `storefront-adapter-binding-validation`: done，验证 home / shop / search 三个页面 adapter 只读绑定阶段和风险边界。
 
 第九十三轮原则：
 

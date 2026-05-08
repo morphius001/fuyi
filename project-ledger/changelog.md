@@ -202,3 +202,4 @@
 - 完成 `mock-provider-runtime-local-smoke-script`，新增 provider route local disposable DB smoke wrapper，支持 disabled/accepted/duplicate/rejected 模式；仍不连接预发/生产、不执行 payment workflow。
 - 补强 `mock-provider-runtime-local-smoke-script`：所有模式 runtime 只连接 disposable DB，失败输出脱敏，临时进程清理更稳，并完成四种 smoke、harness、typecheck、diff check、未注册 grep 和无残留验证。
 - 完成 `mock-provider-runtime-local-smoke-validation`，记录 PR #190 合并后四种 provider route smoke、harness 21/143、API typecheck、runtime grep 和 DB/9120 无残留验证。
+- 完成 `mock-provider-runtime-preprod-smoke-plan`，docs-only 规划 mock provider runtime disposable preprod DB smoke 的 Go/No-Go、禁止输入、脱敏、cleanup 和后续脚本拆分。

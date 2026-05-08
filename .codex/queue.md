@@ -1103,7 +1103,8 @@
 53. `mock-provider-runtime-local-smoke-script-plan`: done，规划 mock provider route local disposable DB smoke wrapper；docs-only，不新增脚本。
 54. `mock-provider-runtime-local-smoke-script`: done，新增 mock provider route local disposable DB smoke wrapper；不连接预发或生产，不执行 workflow。
 55. `mock-provider-runtime-local-smoke-validation`: done，记录 PR #190 合并后的四种 smoke、harness、typecheck、runtime grep 和 DB/9120 无残留验证。
-56. `mock-provider-runtime-preprod-smoke-plan`: pending，docs-only 规划未来 disposable preprod DB smoke；没有外部授权前不连接任何预发或生产数据库。
+56. `mock-provider-runtime-preprod-smoke-plan`: done，docs-only 规划未来 disposable preprod DB smoke；没有外部授权前不连接任何预发或生产数据库。
+57. `mock-provider-runtime-preprod-smoke-script`: pending，新增默认不连接外部 DB 的脚本 skeleton，只允许 print-plan / validate-inputs-only。
 
 第九十三轮原则：
 

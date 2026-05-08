@@ -655,3 +655,10 @@
 - `payment-notification-db-runtime-preflight` 已完成，见 `docs/payment-notification-db-runtime-preflight.md`。
 - 本轮只写文档，规划 local DB preflight、preprod disposable DB preflight、migration registration readiness、transaction checks 和 observability checks。
 - 当前结论：可以准备 preprod disposable DB checklist，但不能自动注册 migration，不能接 route runtime，不能执行 workflow。
+
+## Round 123 更新
+
+- `payment-notification-preprod-disposable-db-checklist` 已完成，见 `docs/payment-notification-preprod-disposable-db-checklist.md`。
+- 本轮只写文档，准备外部 disposable preprod DB 的 Go/No-Go、变量模板、执行前/中/后检查和失败处理。
+- 当前没有连接任何外部数据库，没有写入真实密钥，没有执行 migration registration 或 payment workflow。
+- 下一步可做 `payment-notification-preprod-disposable-db-script-plan`，仍不连接数据库。

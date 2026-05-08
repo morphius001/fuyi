@@ -1161,3 +1161,10 @@
 - 每个角色只展示工作重点和禁止边界；查看按钮只跳转现有占位页，不执行接单、发货、打印、发布、开播、支付、结算或权限变化。
 - 本轮未修改 API、Admin、Storefront、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
 - 第九十八轮实现队列已清空；下一步建议做 `template-preview-validation-v2` 或进入 Vendor 角色工作台浏览器视觉 QA。
+
+## Round 192 更新
+
+- `template-preview-v2-validation` 已完成，见 `docs/template-preview-v2-validation.md`。
+- 四个 template v2 surface 均已合并：Storefront 首页、Storefront 店铺页、Admin 运营首页、Vendor 多角色经营看板。
+- 本轮只新增验证报告、任务文件、队列和 ledger，不修改 `apps/**` 或 `packages/**`。
+- 下一轮建议先做 docs-only：`template-registry-surface-binding-plan` 或 `storefront-template-data-source-plan`；Vendor 视觉 QA 标记为 `blocked-manual`，避免在未确认满意度前继续堆 UI。

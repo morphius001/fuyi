@@ -375,7 +375,8 @@
 - `storefront-shop-template-v2` 已完成：店铺 / 档口页 v2 第一版已把配送、自提、营业时间和公告放回店铺能力语境，去掉消费者页面上的工程化说明。
 - `admin-dashboard-template-v2` 已完成：Admin 平台运营首页 v2 第一版已收紧 KPI，新增数据来源条和近期重点模块，保持只读展示。
 - `vendor-role-workspace-template-v2` 已完成：Vendor 首页新增角色工作台模板 v2 只读预览，区分普通商户、果蔬商户、物料供应商、配送供应商、上游供给、种苗供应商和外地批发商。
-- 第九十八轮实现队列已清空；下一项建议为 `template-preview-validation-v2` 或 Vendor 角色工作台视觉 QA。
+- `template-preview-v2-validation` 已完成：四个 template v2 surface 合并后验证结果、风险和下一轮方向已记录。
+- 第九十九轮已建立：下一项建议为 docs-only `template-registry-surface-binding-plan`，Vendor 角色工作台视觉 QA 暂标 `blocked-manual`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

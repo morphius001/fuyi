@@ -1174,6 +1174,19 @@
 - 不修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission、fulfillment runtime。
 - 不接真实微信支付、支付宝、短信、IM、直播、物流或提货卡兑换。
 
+第九十九轮建议：
+
+1. `template-preview-v2-validation`: done，汇总四个 template v2 surface 的验证结果和下一轮方向。
+2. `template-registry-surface-binding-plan`: pending，docs-only 规划三端页面如何读取统一模板 registry / stable view model，不改页面。
+3. `vendor-role-workspace-visual-qa`: blocked-manual，需要用户或浏览器截图确认商户端多角色经营看板是否过密。
+4. `storefront-template-data-source-plan`: pending，docs-only 规划消费者首页/店铺页从静态展示数据切到真实 discovery/shop read model 的步骤。
+
+第九十九轮原则：
+
+- 默认先做 docs-only plan，不继续随机改 UI。
+- 如果进入视觉 QA，只生成截图和检查清单，不提交截图产物。
+- 继续禁止支付、订单、退款、结算、佣金、权限、真实履约、真实物流、真实直播和真实提货卡兑换。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

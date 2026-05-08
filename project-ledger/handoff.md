@@ -1296,3 +1296,12 @@
 - Adapter 输出 `storefront-shop-stall-v2` 只读 view model，保留 static fallback、B-side role-gated preview、店铺头部履约提示和高风险 blocked serial work 边界。
 - 本轮不修改 `packages/api/**`，不接真实 API，不影响 cart、checkout、order、payment、refund、settlement、commission、permission 或 fulfillment。
 - 下一项建议实现 `storefront-search-view-model-adapter-skeleton` 或先做 skeleton validation。
+
+## Round 210 更新
+
+- `storefront-search-view-model-adapter-skeleton` 已完成，见 `docs/storefront-search-view-model-adapter-skeleton.md`。
+- 新增 `apps/storefront/src/app/[locale]/(main)/data/china-search-view-model.ts`，只提供本地纯函数 adapter skeleton，不改搜索页面。
+- Adapter 输出 `storefront-search-market-results-v1` 只读 view model，支持 query、marketName、discovery、products 和 static fallback。
+- 空 query 不报错，无结果只展示消费者提示；默认过滤物料供应商、配送供应商、上游供给、种苗批发和外地批发等 B-side 内容。
+- 本轮不修改 `packages/api/**`，不接真实 API，不影响库存、cart、checkout、order、payment、refund、settlement、commission、permission、fulfillment 或搜索排序/广告/竞价 runtime。
+- 下一项建议继续 `storefront-adapter-skeleton-validation-v2`，验证 home / shop / search 三个 Storefront adapter skeleton。

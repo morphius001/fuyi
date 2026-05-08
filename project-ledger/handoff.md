@@ -606,3 +606,15 @@
 - 本轮只规划 neutral route 接 local adapter 后的 accepted、duplicate 和 rejected smoke。
 - 未修改 `packages/**` 或 `apps/**`，未接 route，未连接数据库，未执行 payment workflow。
 - 下一步可做 `mock-webhook-db-backed-route-local-accepted`，但必须保持 local disposable DB、mock provider、inbox-only 和 production disabled。
+
+## Round 117 更新
+
+- `mock-webhook-db-backed-route-local-accepted` 已完成，见 `docs/mock-webhook-db-backed-route-local-accepted.md`。
+- Neutral mock webhook route 现在只在 local disposable DB gate 下接入 `DbPaymentNotificationInboxRepository`。
+- accepted smoke 通过：HTTP 202 / `accepted`，inbox count = 1，event log 包含 `verified`。
+- duplicate smoke 通过：HTTP 200 / `duplicate`，inbox count 仍为 1，event log 包含 `dedupe_hit`。
+- 修复 event log stable id 截断导致 `received` / `verified` 主键冲突的问题；现在使用短前缀 + hash，避免无限增长。
+- 子 AG 复核后已补强脚本边界：固定 9110、dry-run DB 名白名单、临时 payload 目录纳入 cleanup。
+- 验证通过：payment notification harness 16 suites / 108 tests、accepted smoke、duplicate smoke、API typecheck、`git diff --check`、DB/9110 无残留。
+- 当前仍未注册 migration，未连接预发/生产 DB，未执行 payment workflow，未接支付宝/微信支付/退款/对账/结算/佣金/权限。
+- 下一步建议做 `mock-webhook-db-backed-route-local-rejected-smoke`，补 rejected path smoke。

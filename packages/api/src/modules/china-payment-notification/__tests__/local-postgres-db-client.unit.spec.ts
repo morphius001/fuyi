@@ -158,6 +158,10 @@ describe("createLocalPaymentNotificationPostgresClient", () => {
     const row = makeRow();
 
     connection.query.mockImplementation(async (sql: string) => {
+      if (sql.includes("select id") && sql.includes("provider = $1")) {
+        return { rows: [] };
+      }
+
       if (sql.includes("insert into payment_notification_inbox")) {
         return { rows: [{ id: row.id }] };
       }
@@ -185,8 +189,12 @@ describe("createLocalPaymentNotificationPostgresClient", () => {
     const client = createClient(driver);
 
     connection.query.mockImplementation(async (sql: string) => {
+      if (sql.includes("select id") && sql.includes("provider = $1")) {
+        return { rows: [{ id: "pinbox_existing" }] };
+      }
+
       if (sql.includes("insert into payment_notification_inbox")) {
-        return { rows: [] };
+        throw new Error("insert should not run for known duplicates");
       }
 
       return { rows: [] };
@@ -197,6 +205,27 @@ describe("createLocalPaymentNotificationPostgresClient", () => {
     ).rejects.toMatchObject({
       code: "DB_UNIQUE_CONFLICT",
     });
+  });
+
+  it("treats rowCount-only inbox inserts as successful", async () => {
+    const { connection, driver } = makeConnection();
+    const client = createClient(driver);
+
+    connection.query.mockImplementation(async (sql: string) => {
+      if (sql.includes("select id") && sql.includes("provider = $1")) {
+        return { rows: [] };
+      }
+
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [], rowCount: 1 };
+      }
+
+      return { rows: [] };
+    });
+
+    await expect(
+      client.transaction((transaction) => transaction.insertInbox(makeRow())),
+    ).resolves.toBeUndefined();
   });
 
   it("updates inbox rows and returns mapped rows", async () => {

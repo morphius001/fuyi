@@ -1,9 +1,15 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
+import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
 
 import {
+  createLocalPaymentNotificationPostgresClient,
+  DbPaymentNotificationInboxRepository,
   handleMockPaymentWebhookNotification,
   InMemoryPaymentNotificationInboxRepository,
+  LocalPostgresConnection,
+  LocalPostgresDriver,
   mapMockPaymentWebhookResponse,
+  PaymentNotificationDbClient,
   parsePaymentNotificationRuntimeConfig,
   PaymentNotificationInboxRepositoryContract,
   resolveMockWebhookInboxRepository,
@@ -82,6 +88,18 @@ const isLocalInMemoryEnabled = () =>
 const isLocalDbRequested = () =>
   process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB === "true";
 
+const getLocalDbNameFromUrl = (databaseUrl?: string) => {
+  if (!databaseUrl) {
+    return undefined;
+  }
+
+  try {
+    return decodeURIComponent(new URL(databaseUrl).pathname.replace(/^\//, ""));
+  } catch {
+    return undefined;
+  }
+};
+
 const readRawBody = async (req: MedusaRequest): Promise<string | null> => {
   if (typeof (req as unknown as { text?: unknown }).text === "function") {
     return (req as unknown as { text: () => Promise<string> }).text();
@@ -120,21 +138,186 @@ const disabledResponse = (runtimeRequested: boolean) => {
   };
 };
 
+type KnexPgConnection = {
+  raw: (
+    sql: string,
+    params?: unknown[],
+  ) => Promise<{ rows?: Record<string, unknown>[] }>;
+  transaction?: () => Promise<{
+    raw: (
+      sql: string,
+      params?: unknown[],
+    ) => Promise<{ rows?: Record<string, unknown>[]; rowCount?: number }>;
+    commit: () => Promise<unknown>;
+    rollback: () => Promise<unknown>;
+  }>;
+};
+
+const readCurrentDatabaseName = async (pg: KnexPgConnection) => {
+  const result = await pg.raw("select current_database() as database_name");
+
+  return result.rows?.[0]?.database_name
+    ? String(result.rows[0].database_name)
+    : undefined;
+};
+
+const toKnexRawSql = (sql: string) => sql.replace(/\$\d+/g, "?");
+const toKnexRawParams = (params?: unknown[]) =>
+  params?.map((param) => (param === undefined ? null : param));
+
+const buildKnexLocalPostgresDriver = (
+  pg: KnexPgConnection,
+): LocalPostgresDriver => ({
+  connect: async (): Promise<LocalPostgresConnection> => {
+    let transaction:
+      | Awaited<ReturnType<NonNullable<KnexPgConnection["transaction"]>>>
+      | undefined;
+
+    const ensureTransaction = async () => {
+      if (!pg.transaction) {
+        throw Object.assign(new Error("LOCAL_DB_CLIENT_REFUSED"), {
+          code: "LOCAL_DB_CLIENT_REFUSED",
+        });
+      }
+
+      transaction ??= await pg.transaction();
+
+      return transaction;
+    };
+
+    return {
+      query: async (sql, params) => {
+        const normalizedSql = sql.trim().toLowerCase();
+
+        if (normalizedSql === "begin") {
+          await ensureTransaction();
+
+          return {
+            rows: [],
+          };
+        }
+
+        if (normalizedSql === "commit") {
+          await transaction?.commit();
+          transaction = undefined;
+
+          return {
+            rows: [],
+          };
+        }
+
+        if (normalizedSql === "rollback") {
+          await transaction?.rollback();
+          transaction = undefined;
+
+          return {
+            rows: [],
+          };
+        }
+
+        const activeTransaction = await ensureTransaction();
+        const result = await activeTransaction.raw(
+          toKnexRawSql(sql),
+          toKnexRawParams(params),
+        );
+
+        return {
+          rows: (result.rows ?? []) as never[],
+          rowCount:
+            "rowCount" in result &&
+            typeof result.rowCount === "number" &&
+            result.rowCount > 0
+              ? result.rowCount
+              : undefined,
+        };
+      },
+      release: async () => undefined,
+    };
+  },
+});
+
+const resolveLocalDbRepository = async (req: MedusaRequest) => {
+  const databaseUrl = process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_URL;
+  const databaseName =
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_NAME ??
+    getLocalDbNameFromUrl(databaseUrl);
+
+  if (!databaseUrl || !databaseName) {
+    return undefined;
+  }
+
+  const pg = req.scope.resolve(
+    ContainerRegistrationKeys.PG_CONNECTION,
+  ) as KnexPgConnection;
+  const currentDatabaseName = await readCurrentDatabaseName(pg).catch(
+    () => undefined,
+  );
+
+  if (currentDatabaseName !== databaseName) {
+    return undefined;
+  }
+
+  const client = createLocalPaymentNotificationPostgresClient({
+    databaseUrl,
+    databaseName,
+    localDbEnabled: true,
+    nodeEnv: process.env.NODE_ENV,
+    driver: buildKnexLocalPostgresDriver(pg),
+  });
+  const resolution = resolveMockWebhookInboxRepository({
+    runtimeConfigInput: buildRuntimeConfigInput(),
+    nodeEnv: process.env.NODE_ENV,
+    transactionClient: client,
+    repositoryFactory: (transactionClient) =>
+      new DbPaymentNotificationInboxRepository(
+        transactionClient as PaymentNotificationDbClient,
+      ),
+  });
+
+  return resolution.status === "available" ? resolution.repository : undefined;
+};
+
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
   const runtimeConfig = parsePaymentNotificationRuntimeConfig(
     buildRuntimeConfigInput(),
   );
   if (isLocalDbRequested()) {
-    const repositoryResolution = resolveMockWebhookInboxRepository({
-      runtimeConfigInput: buildRuntimeConfigInput(),
-      nodeEnv: process.env.NODE_ENV,
-    });
+    const repository = await resolveLocalDbRepository(req);
 
-    if (repositoryResolution.status !== "available") {
+    if (!repository) {
       const disabled = disabledResponse(runtimeConfig.enabled);
 
       return res.status(disabled.response.httpStatus).json(disabled.body);
     }
+
+    const rawBody = await readRawBody(req);
+
+    if (rawBody === null) {
+      const response = mapMockPaymentWebhookResponse({
+        status: "rejected",
+        code: "PAYLOAD_INVALID",
+      });
+
+      return res.status(response.httpStatus).json({
+        ...response.body,
+        route: "mock_payment_webhook_neutral_local_db",
+      });
+    }
+
+    const result = await handleMockPaymentWebhookNotification({
+      runtimeConfigInput: buildRuntimeConfigInput(),
+      rawBody,
+      headers: buildHeadersRecord(req.headers),
+      secret: process.env.CHINA_PAYMENT_NOTIFICATION_MOCK_SECRET,
+      receivedAt: new Date().toISOString(),
+      repository,
+    });
+
+    return res.status(result.response.httpStatus).json({
+      ...result.response.body,
+      route: "mock_payment_webhook_neutral_local_db",
+      safeDebug: result.safeDebug,
+    });
   }
 
   const routeEnabled =

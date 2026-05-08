@@ -113,6 +113,8 @@ describe("DbPaymentNotificationInboxRepository", () => {
       "received",
       "verified",
     ]);
+    expect(new Set(transaction.eventLogs.map((log) => log.id)).size).toBe(2);
+    expect(transaction.eventLogs.every((log) => log.id.length < 80)).toBe(true);
     expect(transaction.eventLogs[0].metadata).not.toHaveProperty("rawPayload");
     expect(transaction.eventLogs[0].metadata).not.toHaveProperty("signature");
     expect(transaction.eventLogs[0].metadata).not.toHaveProperty("secret");

@@ -1,4 +1,8 @@
 import {
+  createHash,
+} from "crypto";
+
+import {
   AppendPaymentNotificationEventInput,
   MarkPaymentNotificationFailedInput,
   PaymentNotificationInboxReceiveResult,
@@ -66,7 +70,11 @@ export type PaymentNotificationDbClient = {
 };
 
 const stableId = (prefix: string, parts: string[]): string => {
-  return `${prefix}_${parts.join("_").replace(/[^a-zA-Z0-9]+/g, "_").slice(0, 48)}`;
+  const sanitized = parts.join("_").replace(/[^a-zA-Z0-9]+/g, "_");
+  const readable = sanitized.slice(0, 40).replace(/_+$/, "");
+  const digest = createHash("sha256").update(sanitized).digest("hex").slice(0, 16);
+
+  return `${prefix}_${readable}_${digest}`;
 };
 
 const nowIso = (): string => new Date().toISOString();

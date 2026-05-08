@@ -172,3 +172,5 @@
 - 完成 `mock-webhook-db-client-contract`，新增 local disposable Postgres adapter skeleton 和 mocked tests；adapter 只接受注入式 driver，不接 route、不连接真实 DB。
 - 完成 `mock-webhook-db-client-contract-validation`，记录 PR #161 合并后 harness 16/105、API typecheck、runtime grep、DB/端口无残留验证。
 - 完成 `mock-webhook-db-backed-route-local-accepted-plan`，以 docs-only 方式规划 neutral route 接 local adapter 后的 accepted/duplicate/rejected smoke 和安全边界。
+- 完成 `mock-webhook-db-backed-route-local-accepted`，neutral route 接入 local-only disposable Postgres adapter，accepted/duplicate smoke 通过；仍不执行 payment workflow。
+- 修复 payment notification DB event log skeleton ID 截断导致的本地 DB 主键冲突，补充 event log id 不重复单测。

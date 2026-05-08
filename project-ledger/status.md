@@ -549,3 +549,10 @@
 - 记录 focused unit test、API typecheck、Storefront build、`git diff --check` 和子智能体复核均已通过。
 - 下一步 dev-only debug banner 必须单独 PR，且只能在开发环境或显式 debug flag 下显示非敏感 source tags。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 245 更新
+
+- `storefront-discovery-status-sync`: done，docs-only 同步 PR #277-#291 的 Storefront discovery / product discovery 主线状态。
+- 当前安全下一步仅限 docs-only debug banner plan、audience field plan 或后续 validation。
+- 不得自动进入真实搜索排序、广告、推荐、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实 provider、Admin 写接口或 migration。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

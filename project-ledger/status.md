@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 22:18 Asia/Shanghai
+更新时间：2026-05-08 22:42 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -355,7 +355,8 @@
 - `admin-readonly-contracts-panel-ui` 已完成：Admin 新增 `/dashboard/cn/operations/capability-contracts` 能力合同总览只读页面；未新增后端 route，未改变交易链路或权限。
 - `vendor-readonly-contracts-panel-ui` 已完成：Vendor 新增“我的能力边界”只读面板和导航项；未新增后端 route，未提供发布、发货、打印、兑换、开播、结算或权限动作。
 - `storefront-visibility-copy-polish` 已完成：消费者侧搜索页、店铺页和提货卡页文案已改为更适合消费者理解的展示/演示口径；未修改 checkout 或交易链路。
-- 队列下一项：`readonly-contracts-ui-validation`。
+- `readonly-contracts-ui-validation` 已完成：Admin lint/build、Vendor lint/build、Storefront build 和 `git diff --check` 通过；Storefront 仅保留既有 React Hook warning。
+- 第九十五轮队列已清空。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

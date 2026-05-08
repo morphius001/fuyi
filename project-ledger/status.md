@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 00:34 Asia/Shanghai
+更新时间：2026-05-09 00:43 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -368,7 +368,8 @@
 - `storefront-home-template-v2-plan` 已完成：规划消费者首页 v2 模板预览，明确市场/店铺/今日鲜货主路径、移动端 App-like 布局和隐藏 B 端能力。
 - `storefront-shop-template-v2-plan` 已完成：规划店铺/档口主页 v2 模板预览，明确配送方式属于店铺/档口能力，商品卡只做轻提示。
 - `admin-dashboard-template-v2-plan` 已完成：规划平台运营首页 v2 模板预览，明确顶部工具靠右、首屏密度、KPI/待办/风险和 mock 数据边界。
-- 队列下一项：`vendor-role-workspace-template-v2-plan`。
+- `vendor-role-workspace-template-v2-plan` 已完成：规划商户角色工作台 v2 模板预览，明确普通商户、物料供应商、配送供应商和上游供给的工作台边界。
+- 队列下一项：`template-preview-validation`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

@@ -1314,3 +1314,11 @@
 - 本轮只新增验证文档、任务文件、队列和 ledger，不修改 Storefront 页面、不修改 `packages/api/**`，不接真实 API 或交易链路。
 - 剩余风险：页面尚未绑定；B-side 过滤仍为关键词 skeleton；真实市场、排序、广告、竞价、推荐、配送和交易事实仍未实现。
 - 下一项建议继续 `storefront-adapter-binding-sequence-plan`，先规划 home / shop / search 三个 adapter 绑定页面的 PR 顺序。
+
+## Round 212 更新
+
+- `storefront-adapter-binding-sequence-plan` 已完成，见 `docs/storefront-adapter-binding-sequence-plan.md`。
+- 本轮只规划页面绑定顺序，不改 `apps/storefront/**` 页面、不修改 `packages/api/**`、不接真实 API 或交易链路。
+- 建议绑定顺序：home 首屏只读绑定、shop 头部只读绑定、search 结果只读绑定、home 商品卡只读绑定、shop 商品卡只读绑定、最终绑定验证。
+- 每个绑定 PR 必须带 Storefront build、桌面/移动截图、`git diff --check`、回滚方式，并排除 `docs/visual-qa-artifacts/` 截图产物。
+- 下一项建议继续 `storefront-home-adapter-binding-readonly`，只绑定首页首屏市场 / 类目 / 店铺数据，不改购物车、订单、结算或支付入口。

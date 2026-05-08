@@ -956,3 +956,10 @@
 - 新增 `buildChinaPickupCardConsumerFlowView()`，输出消费者提货步骤、权益模式、履约要求、消费者状态和高风险阻塞项。
 - 合同明确所有步骤不创建 payment 或 ordinary order，权益不能换目录商品、不能转余额、不能抵扣 cart total。
 - 推荐下一项：`live-commerce-readonly-plan`。
+
+## Round 164 更新
+
+- `live-commerce-readonly-plan` 已完成，见 `docs/live-commerce-readonly-plan.md`。
+- 本轮只规划直播只读状态和 Provider 边界；直播只作为店铺/档口状态，不放消费者首页主入口。
+- 明确不接真实推流、IM、聊天室、礼物、打赏、直播交易、支付、退款、结算、佣金或权限。
+- 推荐下一项：`live-commerce-readonly-contract`。

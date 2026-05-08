@@ -221,3 +221,4 @@
 - 完成 `logistics-and-waybill-readonly-contract`，新增物流/面单只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `pickup-card-consumer-flow-plan`，docs-only 重梳消费者持卡提货流程，明确提货卡不是优惠券、支付方式或储值卡。
 - 完成 `pickup-card-consumer-flow-contract`，新增提货卡消费者流程只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
+- 完成 `live-commerce-readonly-plan`，docs-only 规划直播只读状态、店铺展示、Provider 和高风险边界。

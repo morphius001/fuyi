@@ -1123,7 +1123,8 @@
 66.1. `logistics-and-waybill-readonly-contract`: done，新增纯 TypeScript logistics / waybill readonly view shape，不新增 API route。
 67. `pickup-card-consumer-flow-plan`: done，docs-only 重梳提货卡消费者持卡提货流程。
 67.1. `pickup-card-consumer-flow-contract`: done，新增纯 TypeScript consumer pickup flow view shape，不新增 API route。
-68. `live-commerce-readonly-plan`: pending，docs-only 规划直播只读占位和 Provider 边界。
+68. `live-commerce-readonly-plan`: done，docs-only 规划直播只读占位和 Provider 边界。
+68.1. `live-commerce-readonly-contract`: pending，新增纯 TypeScript live commerce readonly view shape，不新增 API route。
 
 第九十三轮原则：
 

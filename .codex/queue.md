@@ -1122,7 +1122,7 @@
 66. `logistics-and-waybill-boundary-plan`: done，docs-only 规划统一配送、自配送、自提、配送供应商和快递打印边界。
 66.1. `logistics-and-waybill-readonly-contract`: done，新增纯 TypeScript logistics / waybill readonly view shape，不新增 API route。
 67. `pickup-card-consumer-flow-plan`: done，docs-only 重梳提货卡消费者持卡提货流程。
-67.1. `pickup-card-consumer-flow-contract`: pending，新增纯 TypeScript consumer pickup flow view shape，不新增 API route。
+67.1. `pickup-card-consumer-flow-contract`: done，新增纯 TypeScript consumer pickup flow view shape，不新增 API route。
 68. `live-commerce-readonly-plan`: pending，docs-only 规划直播只读占位和 Provider 边界。
 
 第九十三轮原则：

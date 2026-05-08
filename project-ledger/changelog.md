@@ -220,3 +220,4 @@
 - 完成 `logistics-and-waybill-boundary-plan`，docs-only 规划统一配送、自配送、自提、配送供应商和快递面单打印边界。
 - 完成 `logistics-and-waybill-readonly-contract`，新增物流/面单只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。
 - 完成 `pickup-card-consumer-flow-plan`，docs-only 重梳消费者持卡提货流程，明确提货卡不是优惠券、支付方式或储值卡。
+- 完成 `pickup-card-consumer-flow-contract`，新增提货卡消费者流程只读 TypeScript contract 和 focused unit tests，不新增 route 或 runtime。

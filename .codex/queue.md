@@ -1230,7 +1230,7 @@
 
 第一百零四轮验证任务已清空。下一步建议新增第一百零五轮任务：
 
-1. `storefront-adapter-binding-sequence-plan`: pending，规划 home / shop / search adapter 绑定到页面的 PR 顺序。
+1. `storefront-adapter-binding-sequence-plan`: done，规划 home / shop / search adapter 绑定到页面的 PR 顺序。
 2. `storefront-home-adapter-binding-readonly`: pending，只绑定首页首屏市场 / 类目 / 店铺数据，不改购物车和订单入口。
 
 第九十三轮原则：

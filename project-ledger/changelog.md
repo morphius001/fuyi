@@ -191,3 +191,4 @@
 - 完成 `mock-provider-runtime-gate-composition-tests`，新增 provider registry + runtime gate 纯函数组合测试；不接 route、不注册 provider、不执行 workflow。
 - 完成 `mock-provider-runtime-readiness-report`，记录组合测试合并后的 harness 20/133、typecheck、runtime grep 和 DB 无残留验证。
 - 完成 `mock-provider-runtime-readiness-checklist`，docs-only 整理 mock provider runtime 前 Go / No-Go 清单。
+- 完成 `mock-provider-runtime-design`，docs-only 设计 mock provider runtime wiring、gate 顺序、inbox/audit 边界和 PR 拆分。

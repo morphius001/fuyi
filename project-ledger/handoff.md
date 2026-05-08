@@ -746,3 +746,10 @@
 - 本轮只写文档，明确 mock provider runtime 前 Go / No-Go 条件和下一阶段拆分。
 - 当前结论：还不能直接接 runtime；下一项只能做 `mock-provider-runtime-design` docs-only。
 - 真实支付宝、微信支付、退款、对账、结算、佣金和权限仍保持串行阻塞。
+
+## Round 135 更新
+
+- `mock-provider-runtime-design` 已完成，见 `docs/mock-provider-runtime-design.md`。
+- 本轮只写文档，设计 runtime config、provider registry、runtime gate、inbox/event log、state guard、command mapper 和 audit 的调用顺序。
+- 明确本阶段不得执行 payment workflow，不得写订单/支付/退款/结算/佣金/权限状态。
+- 下一项建议为 `mock-provider-runtime-disabled-skeleton-plan`，继续 docs-only。

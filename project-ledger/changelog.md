@@ -270,3 +270,4 @@
 - 完成 `storefront-search-view-model-adapter-skeleton`，新增 Storefront 搜索页本地纯函数 adapter skeleton，输出 `storefront-search-market-results-v1` 只读 view model，支持 query、marketName、discovery、products 和 static fallback；无结果只展示消费者提示，默认过滤 B-side 供给内容，未接入页面布局、搜索排序、购物车、订单、履约或真实交易链路。
 - 完成 `storefront-adapter-skeleton-validation-v2`，验证 Storefront home / shop / search 三个本地 adapter skeleton：Storefront build、focused TypeScript check、后端 runtime import grep 和 `git diff --check` 均通过；记录页面尚未绑定、B-side 过滤仍需结构化字段、搜索排序/广告/竞价仍未实现。
 - 完成 `storefront-adapter-binding-sequence-plan`，docs-only 规划 Storefront home / shop / search adapter 绑定页面的 PR 顺序：先首页首屏，再店铺头部，再搜索结果，再分两步绑定首页和店铺商品卡，最后做绑定验证；每步均要求只读、截图、回滚和禁止交易/履约 runtime。
+- 完成 `storefront-home-adapter-binding-readonly`，首页首屏市场、桌面类目和移动端推荐档口已读取 `buildChinaHomeViewModel()` 输出；本轮不绑定今日鲜货商品卡，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。

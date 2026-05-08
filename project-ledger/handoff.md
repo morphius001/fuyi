@@ -1322,3 +1322,11 @@
 - 建议绑定顺序：home 首屏只读绑定、shop 头部只读绑定、search 结果只读绑定、home 商品卡只读绑定、shop 商品卡只读绑定、最终绑定验证。
 - 每个绑定 PR 必须带 Storefront build、桌面/移动截图、`git diff --check`、回滚方式，并排除 `docs/visual-qa-artifacts/` 截图产物。
 - 下一项建议继续 `storefront-home-adapter-binding-readonly`，只绑定首页首屏市场 / 类目 / 店铺数据，不改购物车、订单、结算或支付入口。
+
+## Round 213 更新
+
+- `storefront-home-adapter-binding-readonly` 已完成，见 `docs/storefront-home-adapter-binding-readonly.md`。
+- 首页服务端页面现在构造 `homeViewModel = buildChinaHomeViewModel(...)`。
+- 本轮只把 active market、桌面市场类目和移动端推荐档口改为读取 home view model 输出。
+- 今日鲜货商品卡、购物车、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
+- 下一项建议继续 `storefront-shop-header-adapter-binding-readonly`，只绑定店铺头部市场 / 档口 / 公告 / 履约提示，不改 checkout shipping options。

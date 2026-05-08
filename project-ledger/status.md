@@ -395,6 +395,7 @@
 - 第一百零三轮进度：`storefront-search-view-model-adapter-skeleton` 已完成；home / shop / search 三个 Storefront 本地 adapter skeleton 已齐，下一项建议做 adapter skeleton validation v2。
 - 第一百零四轮进度：`storefront-adapter-skeleton-validation-v2` 已完成；下一项建议先做 `storefront-adapter-binding-sequence-plan`，再进入只读页面绑定。
 - 第一百零五轮进度：`storefront-adapter-binding-sequence-plan` 已完成；下一项建议做 `storefront-home-adapter-binding-readonly`，只绑定首页首屏市场 / 类目 / 店铺数据。
+- 第一百零五轮进度：`storefront-home-adapter-binding-readonly` 已完成；下一项建议做 `storefront-shop-header-adapter-binding-readonly`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

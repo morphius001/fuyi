@@ -389,6 +389,7 @@
 - 第一百零二轮进度：`storefront-shop-view-model-adapter-plan` 已完成；第一百零二轮队列清空，下一步建议进入 adapter plan validation。
 - 第一百零三轮进度：`storefront-adapter-plan-validation` 已完成；下一项建议为 `storefront-search-view-model-adapter-plan`。
 - 第一百零三轮进度：`storefront-home-view-model-adapter-skeleton` 已完成；页面尚未绑定，下一项建议补 `storefront-search-view-model-adapter-plan` 或实现 shop adapter skeleton。
+- 第一百零三轮进度：`storefront-search-view-model-adapter-plan` 已完成；下一项建议为 `storefront-shop-view-model-adapter-skeleton` 或 adapter skeleton validation。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

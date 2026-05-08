@@ -17,6 +17,7 @@ import {
   productTagStyles,
   stalls,
 } from "./data/home-market"
+import { buildChinaHomeViewModel } from "./data/china-home-view-model"
 
 const mobileHomeEntries = [
   { title: "鲜活水产", text: "鱼虾蟹贝", href: "search" },
@@ -138,31 +139,82 @@ export default async function Home({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Fuyi"
   const chinaMarkets = await retrieveChinaMarkets()
-  const activeMarket = chinaMarkets.items[0]
+  const homeViewModel = buildChinaHomeViewModel({
+    discovery: {
+      source: "storefront_home_readonly_binding",
+      markets:
+        chinaMarkets.items.length > 0
+          ? chinaMarkets.items.slice(0, 3).map((market) => ({
+              name: market.name,
+              city:
+                [market.city, market.district].filter(Boolean).join(" / ") ||
+                "本地市场",
+              hours:
+                readMarketMetadataString(market.metadata, "hours") ??
+                "营业时间待配置",
+              notice:
+                readMarketMetadataString(market.metadata, "notice") ??
+                "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
+              delivery: "进店查看履约方式",
+              source: "market_readonly_api",
+            }))
+          : marketSwitches.map((market) => ({
+              name: market.name,
+              city: market.area,
+              hours: market.open,
+              notice:
+                "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
+              delivery: market.delivery,
+              source: "static_home_market",
+            })),
+      categories: marketCategories.map((category) => ({
+        id: category.name,
+        handle: category.name,
+        name: category.name,
+        description: category.desc,
+        count: category.count,
+        source: "static_home_category",
+      })),
+      sellers: stalls.map((stall) => ({
+        id: stall.handle,
+        handle: stall.handle,
+        name: stall.name,
+        market: stall.market,
+        booth: stall.booth,
+        tags: [stall.status, stall.categories, stall.badge],
+        summary: stall.fulfillment,
+        source: "static_home_stall",
+      })),
+    },
+  })
+  const activeMarket = homeViewModel.marketSelector[0]
   const activeMarketName = activeMarket?.name ?? marketSwitches[0].name
-  const activeMarketCity = activeMarket
-    ? [activeMarket.city, activeMarket.district].filter(Boolean).join(" / ")
-    : "台州城区"
-  const activeMarketHours =
-    readMarketMetadataString(activeMarket?.metadata, "hours") ??
-    marketSwitches[0].open
+  const activeMarketCity = activeMarket?.city ?? "台州城区"
+  const activeMarketHours = activeMarket?.hours ?? marketSwitches[0].open
   const activeMarketNotice =
-    readMarketMetadataString(activeMarket?.metadata, "notice") ??
+    activeMarket?.notice ??
     "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。"
-  const homeMarketSwitches =
-    chinaMarkets.items.length > 0
-      ? chinaMarkets.items.slice(0, 3).map((market) => ({
-          name: market.name,
-          area:
-            [market.city, market.district].filter(Boolean).join(" / ") ||
-            "本地市场",
-          open:
-            readMarketMetadataString(market.metadata, "hours") ??
-            "营业时间待配置",
-          delivery: "进店查看履约方式",
-          fresh: `${stalls.filter((stall) => stall.market === market.name).length || "多"}家档口`,
-        }))
-      : marketSwitches
+  const homeMarketSwitches = homeViewModel.marketSelector.slice(0, 3).map((market) => ({
+    name: market.name,
+    area: market.city || "本地市场",
+    open: market.hours || "营业时间待配置",
+    delivery: market.delivery || "进店查看履约方式",
+    fresh: `${homeViewModel.featuredSellers.filter((stall) => stall.market === market.name).length || "多"}家档口`,
+  }))
+  const homeCategories = homeViewModel.categoryNav.map((category) => ({
+    name: category.name,
+    desc: category.description,
+    count: category.count,
+  }))
+  const homeFeaturedStalls = homeViewModel.featuredSellers.map((stall) => ({
+    handle: stall.handle,
+    name: stall.name,
+    market: stall.market,
+    booth: stall.booth,
+    categories: stall.tags.join("、"),
+    status: stall.tags[0] ?? "营业中",
+    fulfillment: stall.summary,
+  }))
 
   return (
     <main className="row-start-2 w-screen max-w-[100vw] overflow-x-hidden bg-[#F6F8FB] pb-16 text-primary lg:w-full lg:max-w-none lg:pb-0">
@@ -291,7 +343,7 @@ export default async function Home({
               </Link>
             </div>
             <div className="mt-2 grid gap-2">
-              {stalls.slice(0, 2).map((stall) => (
+              {homeFeaturedStalls.slice(0, 2).map((stall) => (
                 <Link
                   key={stall.name}
                   href={`/${locale}/sellers/${stall.handle}`}
@@ -385,7 +437,7 @@ export default async function Home({
               <p className="label-lg">市场类目</p>
             </div>
             <nav className="divide-y divide-[#E5E7EB]" aria-label="市场类目">
-              {marketCategories.map((category) => (
+              {homeCategories.map((category) => (
                 <Link
                   key={category.name}
                   href={`/${locale}/categories`}

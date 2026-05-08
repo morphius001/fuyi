@@ -1160,6 +1160,20 @@
 5. `vendor-role-workspace-template-v2-plan`: done，规划商户角色工作台 v2 模板预览，不改页面。
 6. `template-preview-validation`: done，验证第九十七轮规划范围、越界风险和队列状态。
 
+第九十八轮建议：
+
+1. `storefront-home-template-v2`: done，落地消费者首页 v2 第一版模板，主路径收口为市场、档口、今日鲜货。
+2. `storefront-shop-template-v2`: pending，小范围落地店铺/档口主页 v2。
+3. `admin-dashboard-template-v2`: pending，小范围落地平台运营首页 v2。
+4. `vendor-role-workspace-template-v2`: pending，小范围落地商户角色工作台 v2。
+
+第九十八轮原则：
+
+- 每个实现 PR 只做一个 surface。
+- 必须带 build/lint、桌面/移动或对应后台截图、风险说明和回滚方式。
+- 不修改 checkout、cart、order、payment、refund、settlement、commission、payout、permission、fulfillment runtime。
+- 不接真实微信支付、支付宝、短信、IM、直播、物流或提货卡兑换。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

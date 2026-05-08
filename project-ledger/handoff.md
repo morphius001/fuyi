@@ -1129,3 +1129,11 @@
 - Template registry focused unit test 和 `git diff --check` 通过。
 - 第九十七轮规划均为 docs-only，未修改 `apps/**` 或 `packages/**`。
 - 第九十七轮队列已清空；下一步可以进入单 surface 页面实现，但每个实现 PR 必须带桌面/移动截图、build/lint 和回滚说明。
+
+## Round 188 更新
+
+- `storefront-home-template-v2` 已完成，见 `docs/storefront-home-template-v2.md`。
+- Storefront 首页第一版 v2 模板已按“选市场、找档口、看今日鲜货”收口，桌面端保留市场类目/主视觉/推荐档口/今日上新，移动端改成短首页。
+- 本轮只修改消费者首页展示层，不修改 API、Admin、Vendor、checkout、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 验证通过：Storefront build、Storefront lint、`git diff --check`、`/cn` HTTP 200、桌面/移动端本地截图。
+- 下一项建议继续 `storefront-shop-template-v2` 或 `admin-dashboard-template-v2` 的小范围实现。

@@ -14,18 +14,15 @@ import {
   marketHeroImage,
   marketSwitches,
   portalStats,
-  priceBoard,
   productTagStyles,
   stalls,
 } from "./data/home-market"
 
 const mobileHomeEntries = [
-  { title: "鲜活水产", text: "鱼虾蟹贝" },
-  { title: "冰鲜冻品", text: "黄鱼带鱼" },
-  { title: "海产干货", text: "虾皮鱼干" },
-  { title: "水果蔬菜", text: "时令配菜" },
-  { title: "附近档口", text: "按店找货" },
-  { title: "今日行情", text: "参考价格" },
+  { title: "鲜活水产", text: "鱼虾蟹贝", href: "search" },
+  { title: "冰鲜冻品", text: "黄鱼带鱼", href: "search" },
+  { title: "海产干货", text: "虾皮鱼干", href: "search" },
+  { title: "附近档口", text: "按店找货", href: "categories" },
 ]
 
 const productImagePositions = [
@@ -237,20 +234,18 @@ export default async function Home({
         <div className="mt-3 overflow-hidden rounded-lg bg-[#155EEF] text-white shadow-sm">
           <div className="grid grid-cols-[minmax(0,1fr)_112px]">
             <div className="p-4">
-              <p className="text-[22px] font-semibold leading-7 tracking-normal">
-                今日鲜货到市
+              <p className="text-[21px] font-semibold leading-7 tracking-normal">
+                本地鲜货开市
               </p>
               <p className="mt-1 text-[13px] leading-5 text-white/85">
-                按市场找档口，看今日上新
+                选市场，进档口，看今日上新
               </p>
-              <div className="mt-3 flex gap-2 text-[11px] leading-4 text-white">
-                <span className="rounded-full bg-white/18 px-2 py-1">
-                  今日到货 128款
-                </span>
-                <span className="rounded-full bg-white/18 px-2 py-1">
-                  34家认证档口
-                </span>
-              </div>
+              <Link
+                href={`/${locale}/categories`}
+                className="mt-3 inline-flex rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold leading-4 text-[#155EEF]"
+              >
+                看附近档口
+              </Link>
             </div>
             <div className="relative min-h-[126px] overflow-hidden">
               <Image
@@ -265,24 +260,18 @@ export default async function Home({
           </div>
         </div>
 
-        <div className="mt-3 rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
-          <div className="grid grid-cols-3 gap-2">
+        <div className="mt-3 overflow-x-auto no-scrollbar">
+          <div className="flex min-w-max gap-2">
             {mobileHomeEntries.map((entry) => (
               <Link
                 key={entry.title}
-                href={
-                  entry.title === "今日行情"
-                    ? `/${locale}/search`
-                    : entry.title === "附近档口"
-                      ? `/${locale}/categories`
-                      : `/${locale}/search`
-                }
-                className="flex min-h-[56px] min-w-0 flex-col items-center justify-center rounded-lg bg-[#F5F7FA] px-2 text-center"
+                href={`/${locale}/${entry.href}`}
+                className="flex h-16 w-[88px] shrink-0 flex-col justify-center rounded-lg border border-[#E5E7EB] bg-white px-3 shadow-sm"
               >
-                <span className="w-full truncate text-[13px] font-semibold leading-5 text-primary">
+                <span className="truncate text-[13px] font-semibold leading-5 text-primary">
                   {entry.title}
                 </span>
-                <span className="mt-0.5 w-full truncate text-[11px] leading-4 text-secondary">
+                <span className="mt-0.5 truncate text-[11px] leading-4 text-secondary">
                   {entry.text}
                 </span>
               </Link>
@@ -293,38 +282,7 @@ export default async function Home({
         <div className="mt-3 grid gap-3">
           <div className="rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
             <div className="flex items-center justify-between">
-              <p className="text-[16px] font-semibold leading-5">今日行情</p>
-              <Link
-                href={`/${locale}/search`}
-                className="text-[12px] leading-4 text-[#155EEF]"
-              >
-                全部
-              </Link>
-            </div>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {priceBoard.slice(0, 4).map(([name, price, tag]) => (
-                <Link
-                  key={name}
-                  href={`/${locale}/search?q=${encodeURIComponent(name)}`}
-                  className="rounded-lg bg-[#F5F7FA] p-2"
-                >
-                  <p className="truncate text-[13px] font-semibold leading-4">
-                    {name}
-                  </p>
-                  <p className="mt-1 text-[13px] font-semibold leading-4 text-[#EA580C]">
-                    {price}
-                  </p>
-                  <p className="mt-0.5 text-[11px] leading-4 text-secondary">
-                    {tag}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
-            <div className="flex items-center justify-between">
-              <p className="text-[16px] font-semibold leading-5">附近档口</p>
+              <p className="text-[16px] font-semibold leading-5">推荐档口</p>
               <Link
                 href={`/${locale}/categories`}
                 className="text-[12px] leading-4 text-[#155EEF]"
@@ -333,7 +291,7 @@ export default async function Home({
               </Link>
             </div>
             <div className="mt-2 grid gap-2">
-              {stalls.slice(0, 3).map((stall) => (
+              {stalls.slice(0, 2).map((stall) => (
                 <Link
                   key={stall.name}
                   href={`/${locale}/sellers/${stall.handle}`}
@@ -356,8 +314,63 @@ export default async function Home({
                     {stall.categories}
                   </p>
                   <p className="mt-1 truncate text-[11px] leading-4 text-[#155EEF]">
-                    履约：进店选择
+                    {stall.fulfillment}
                   </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-[#E5E7EB] bg-white p-3 shadow-sm">
+            <div className="flex items-center justify-between">
+              <p className="text-[16px] font-semibold leading-5">今日鲜货</p>
+              <Link
+                href={`/${locale}/search`}
+                className="text-[12px] leading-4 text-[#155EEF]"
+              >
+                全部
+              </Link>
+            </div>
+            <div className="mt-2 grid gap-2">
+              {freshProducts.slice(0, 3).map((product) => (
+                <Link
+                  key={product.name}
+                  href={`/${locale}/search?q=${encodeURIComponent(product.name)}`}
+                  className="grid grid-cols-[72px_minmax(0,1fr)] gap-3 rounded-lg bg-[#F5F7FA] p-2"
+                >
+                  <div className="relative h-[72px] overflow-hidden rounded-md bg-white">
+                    <Image
+                      src={marketHeroImage}
+                      alt={`${product.name} 示例图`}
+                      fill
+                      sizes="72px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="truncate text-[14px] font-semibold leading-5">
+                        {product.name}
+                      </p>
+                      <span
+                        className={`shrink-0 rounded-sm px-1.5 py-0.5 text-[10px] leading-3 ${
+                          productTagStyles[product.tag] ||
+                          "bg-white text-secondary"
+                        }`}
+                      >
+                        {product.tag}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 truncate text-[12px] leading-4 text-secondary">
+                      {product.spec}
+                    </p>
+                    <p className="mt-1 text-[15px] font-semibold leading-5 text-[#EA580C]">
+                      {product.price.replace(".00", "")}
+                    </p>
+                    <p className="truncate text-[11px] leading-4 text-secondary">
+                      {product.seller}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -365,9 +378,12 @@ export default async function Home({
         </div>
       </section>
 
-      <section className="mx-auto box-border hidden w-full max-w-[1680px] gap-4 px-4 py-5 lg:grid lg:grid-cols-[240px_minmax(0,1fr)_280px] lg:px-8 2xl:px-10">
+      <section className="mx-auto box-border hidden w-full max-w-[1680px] gap-4 px-4 py-5 lg:grid lg:grid-cols-[220px_minmax(0,1fr)_260px] lg:px-8 2xl:px-10">
         <aside className="hidden space-y-3 lg:block">
           <div className="rounded-sm border border-[#E5E7EB] bg-white shadow-sm">
+            <div className="border-b border-[#E5E7EB] px-4 py-3">
+              <p className="label-lg">市场类目</p>
+            </div>
             <nav className="divide-y divide-[#E5E7EB]" aria-label="市场类目">
               {marketCategories.map((category) => (
                 <Link
@@ -389,15 +405,15 @@ export default async function Home({
         </aside>
 
         <section className="overflow-hidden rounded-sm border border-[#E5E7EB] bg-white shadow-sm">
-          <div className="grid min-h-[500px] lg:grid-cols-[minmax(0,1fr)_42%]">
+          <div className="grid min-h-[430px] lg:grid-cols-[minmax(0,1fr)_40%]">
             <div className="flex flex-col justify-between gap-6 p-6 xl:p-8">
               <div>
                 <p className="label-md text-[#155EEF]">{activeMarketName}</p>
                 <h1 className="mt-2 max-w-[820px] text-[26px] font-semibold leading-[34px] tracking-normal md:text-[44px] md:leading-[52px]">
-                  今日鲜货开市
+                  本地鲜货市场
                 </h1>
                 <p className="mt-4 max-w-[760px] text-md text-secondary">
-                  先选市场和档口，再看今日上新、规格、库存和参考价。自提或配送在商家页和结算页确认。
+                  按市场找档口，看鲜活水产、冰鲜冻品和本地配菜。
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
                   <Link
@@ -440,7 +456,7 @@ export default async function Home({
                 </div>
                 <div>
                   <p className="label-md text-primary">履约说明</p>
-                  <p className="mt-1">进店后选择自提或配送</p>
+                  <p className="mt-1">进店查看自提和配送方式</p>
                 </div>
               </div>
             </div>
@@ -505,13 +521,15 @@ export default async function Home({
 
             <div className="mt-5 grid grid-cols-[minmax(0,1fr)_76px] items-end gap-3">
               <div>
-                <p className="heading-sm">商家入驻有福利</p>
-                <p className="mt-1 text-sm text-secondary">档口、批发商、供应商</p>
+                <p className="heading-sm">常买档口更快找</p>
+                <p className="mt-1 text-sm text-secondary">
+                  收藏店铺、收货地址、售后记录
+                </p>
                 <Link
                   href={`/${locale}/categories`}
                   className="mt-3 inline-flex h-8 items-center justify-center rounded-sm bg-[#EF4444] px-3 label-sm text-white hover:bg-[#DC2626]"
                 >
-                  立即入驻
+                  去找档口
                 </Link>
               </div>
               <div className="relative h-16 rounded-lg bg-[#FEE2E2]">
@@ -541,7 +559,11 @@ export default async function Home({
 
       <section className="mx-auto hidden w-full max-w-[1680px] gap-4 px-4 pb-5 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:px-8 2xl:px-10">
         <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
-          <div className="flex justify-end">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="label-md text-[#155EEF]">按店找货</p>
+              <h2 className="mt-1 heading-md">推荐档口</h2>
+            </div>
             <Link
               href={`/${locale}/categories`}
               className="label-md text-[#155EEF] hover:underline"
@@ -627,6 +649,18 @@ export default async function Home({
         </div>
 
         <div className="rounded-sm border border-[#E5E7EB] bg-white p-4 shadow-sm">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <p className="label-md text-[#155EEF]">市场鲜货</p>
+              <h2 className="mt-1 heading-md">今日上新</h2>
+            </div>
+            <Link
+              href={`/${locale}/search`}
+              className="label-md text-[#155EEF] hover:underline"
+            >
+              查看全部
+            </Link>
+          </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {freshProducts.map((product, productIndex) => (
               <article
@@ -670,8 +704,8 @@ export default async function Home({
                   </p>
                   <div className="mt-2 grid gap-1 text-sm text-secondary">
                     <p className="truncate">档口：{product.seller}</p>
-                    <p className="truncate">到货：{product.stock}</p>
-                    <p className="truncate">履约：进店选择</p>
+                    <p className="truncate">供应：{product.stock}</p>
+                    <p className="truncate">自提/配送进店确认</p>
                   </div>
                 </div>
               </article>

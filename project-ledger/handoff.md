@@ -935,3 +935,10 @@
 - 本轮只规划展示层/配置层与执行层/面单层的边界。
 - 明确当前不得确认发货、创建履约单、写 checkout shipping options、生成真实运单、云打印或回写订单物流状态。
 - 推荐下一项：`logistics-and-waybill-readonly-contract`。
+
+## Round 161 更新
+
+- `logistics-and-waybill-readonly-contract` 已完成，见 `docs/logistics-and-waybill-readonly-contract.md`。
+- 新增 `buildChinaLogisticsWaybillReadonlyView()`，输出履约方式、面单能力和高风险阻塞项。
+- 合同明确所有履约方式对 checkout 无影响，面单能力不创建真实 shipment、不打印真实 label。
+- 推荐下一项：`pickup-card-consumer-flow-plan`。

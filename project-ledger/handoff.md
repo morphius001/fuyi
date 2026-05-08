@@ -1347,3 +1347,12 @@
 - 真实商品卡仍走 Store API 和 `ProductCard`，不接真实排序、广告、竞价或推荐系统。
 - cart、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
 - 下一项建议继续 `storefront-home-product-cards-binding-readonly`，只绑定首页今日鲜货商品卡展示，不改 cart/order/checkout。
+
+## Round 216 更新
+
+- `storefront-home-product-cards-binding-readonly` 已完成，见 `docs/storefront-home-product-cards-binding-readonly.md`。
+- 首页服务端页面现在把本地商品展示输入传给 `buildChinaHomeViewModel(...)`。
+- 移动端“今日鲜货”、桌面推荐档口商品缩略卡和桌面“今日上新”读取 `homeViewModel.freshProducts` 派生字段。
+- 商品入口仍走搜索页，不新增商品详情、加购、库存占用、结算或履约动作。
+- cart、checkout、订单、支付、退款、结算、佣金、打款、权限和履约入口未绑定、未修改。
+- 下一项建议继续 `storefront-shop-product-cards-binding-readonly`，只绑定店铺页商品卡展示，不改 cart/order/checkout。

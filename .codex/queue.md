@@ -1234,7 +1234,8 @@
 2. `storefront-home-adapter-binding-readonly`: done，只绑定首页首屏市场 / 类目 / 店铺数据，不改购物车和订单入口。
 3. `storefront-shop-header-adapter-binding-readonly`: done，只绑定店铺头部市场 / 档口 / 公告 / 履约提示，不改 checkout shipping options。
 4. `storefront-search-adapter-binding-readonly`: done，只绑定搜索结果展示，不接真实排序、广告、竞价或推荐系统。
-5. `storefront-home-product-cards-binding-readonly`: pending，只绑定首页今日鲜货商品卡展示，不改 cart/order/checkout。
+5. `storefront-home-product-cards-binding-readonly`: done，只绑定首页今日鲜货商品卡展示，不改 cart/order/checkout。
+6. `storefront-shop-product-cards-binding-readonly`: pending，只绑定店铺页商品卡展示，不改 cart/order/checkout。
 
 第九十三轮原则：
 

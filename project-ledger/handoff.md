@@ -1115,3 +1115,10 @@
 - 本轮只规划平台运营首页 v2，不改 `apps/admin/**`。
 - 明确顶部工具靠右、首屏包含 KPI/待办/风险、数据来源说明必须区分展示数据和真实交易事实。
 - 下一项建议继续 `vendor-role-workspace-template-v2-plan`。
+
+## Round 186 更新
+
+- `vendor-role-workspace-template-v2-plan` 已完成，见 `docs/vendor-role-workspace-template-v2-plan.md`。
+- 本轮只规划商户角色工作台 v2，不改 `apps/vendor/**`。
+- 明确普通商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商的首页重点；手机快速上架和 AI 草稿停在草稿/审核候选。
+- 下一项建议继续 `template-preview-validation`。

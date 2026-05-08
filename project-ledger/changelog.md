@@ -239,3 +239,4 @@
 - 完成 `vendor-template-contract-plan`，docs-only 规划商户后台角色化模板合同，覆盖普通商户、物料供应商、配送供应商、上游供给、手机快速上架、AI 草稿和店铺装修边界。
 - 完成 `template-registry-readonly-contract`，新增未注册三端模板注册表只读 TypeScript contract 和 focused unit tests，不新增 route、不接 DB、不影响运行时。
 - 完成 `template-system-validation`，记录 template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 通过，第九十六轮队列清空。
+- 完成 `template-preview-backlog`，docs-only 建立第九十七轮模板预览 backlog，明确实现前的模板 id、view model、隐藏能力、验证和回滚门槛。

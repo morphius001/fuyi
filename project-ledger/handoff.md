@@ -1087,3 +1087,10 @@
 - Template registry focused unit test、API typecheck、Admin lint、Vendor lint 和 `git diff --check` 均通过。
 - 本轮只更新验证报告、任务文件、队列和 ledger，未修改 `apps/**` 或 `packages/**`。
 - 第九十六轮队列已清空；下一批可继续模板 view shape 细分，或进入 Storefront 首页/店铺页 v2 的小范围可回滚实现。
+
+## Round 182 更新
+
+- `template-preview-backlog` 已完成，见 `docs/template-preview-backlog.md`。
+- 第九十七轮建议队列已建立：Storefront 首页 v2、Storefront 店铺页 v2、Admin 首页 v2、Vendor 角色工作台 v2 和 validation。
+- 明确实现前必须有模板 id、读取 view model、隐藏能力、桌面/移动验证和回滚方式。
+- 下一项建议继续 `storefront-home-template-v2-plan`。

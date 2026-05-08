@@ -1095,7 +1095,8 @@
 45. `mock-provider-runtime-readiness-checklist`: done，整理进入 mock provider runtime 前的 Go / No-Go checklist；不写 runtime code。
 46. `mock-provider-runtime-design`: done，设计 mock provider runtime wiring；只写文档，不写 runtime code。
 47. `mock-provider-runtime-disabled-skeleton-plan`: done，规划 disabled skeleton；docs-only，不写 runtime code。
-48. `mock-provider-runtime-disabled-skeleton`: pending，新增 disabled route skeleton；不读 body、不接 DB、不调用 adapter、不执行 workflow。
+48. `mock-provider-runtime-disabled-skeleton`: done，新增 disabled route skeleton；不读 body、不接 DB、不调用 adapter、不执行 workflow。
+49. `mock-provider-runtime-disabled-validation`: pending，记录 disabled skeleton 合并后 harness/typecheck/runtime grep 验证。
 
 第九十三轮原则：
 

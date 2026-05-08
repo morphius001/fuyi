@@ -193,3 +193,4 @@
 - 完成 `mock-provider-runtime-readiness-checklist`，docs-only 整理 mock provider runtime 前 Go / No-Go 清单。
 - 完成 `mock-provider-runtime-design`，docs-only 设计 mock provider runtime wiring、gate 顺序、inbox/audit 边界和 PR 拆分。
 - 完成 `mock-provider-runtime-disabled-skeleton-plan`，docs-only 规划 disabled route skeleton 文件范围、默认行为、production blocked 和测试清单。
+- 完成 `mock-provider-runtime-disabled-skeleton`，新增 mock provider runtime disabled route 和单测；不读 body、不接 DB、不调用 adapter、不执行 workflow。

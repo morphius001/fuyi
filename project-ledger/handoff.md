@@ -759,3 +759,11 @@
 - `mock-provider-runtime-disabled-skeleton-plan` 已完成，见 `docs/mock-provider-runtime-disabled-skeleton-plan.md`。
 - 本轮只写文档，规划未来 disabled route skeleton 的文件范围、默认 disabled 行为、production blocked 和测试清单。
 - 下一项可做 `mock-provider-runtime-disabled-skeleton`，但只能新增 disabled route，不读 body、不接 DB、不调用 adapter、不执行 workflow。
+
+## Round 137 更新
+
+- `mock-provider-runtime-disabled-skeleton` 已完成，见 `docs/mock-provider-runtime-disabled-skeleton.md`。
+- 新增 `POST /china/payment-providers/mock` disabled route skeleton，默认返回 503。
+- 单测覆盖默认 disabled、runtime env requested、production blocked、不读 body、不泄露 secret、不暴露 workflow/checkout 字段。
+- Harness 已纳入新增 route 单测。
+- 仍未注册 Medusa payment provider，未接 DB，未调用 adapter，未执行 payment workflow。

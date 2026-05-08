@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 16:55 Asia/Shanghai
+更新时间：2026-05-08 17:06 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -331,7 +331,8 @@
 - `blocked-external-boundary-rollup` 已完成：记录支付 provider runtime 外部 DB 阻塞边界和下一批安全方向。
 - `china-platform-non-payment-backlog` 已完成：整理非支付方向下一批低风险 docs-only PR 队列。
 - `market-domain-readiness-review` 已完成：确认市场域已有 read-only 基础，但真实运营模型、商户档口关系、配送 profile、公告营业时间和上游供应关系仍待合同化。
-- 队列下一项：`market-domain-contract-docs`。
+- `market-domain-contract-docs` 已完成：定义真实市场域实体、关系、角色、配送 profile 和高风险边界。
+- 队列下一项：`market-domain-read-model-contract`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

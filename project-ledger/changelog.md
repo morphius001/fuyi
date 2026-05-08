@@ -208,3 +208,4 @@
 - 完成 `blocked-external-boundary-rollup`，记录 mock provider runtime 外部 DB 阻塞边界、PR #190-#194 状态和下一批非支付安全方向。
 - 完成 `china-platform-non-payment-backlog`，docs-only 整理市场域、商户角色、手机上架、店铺装修、物流面单、提货卡和直播的下一批低风险 PR。
 - 完成 `market-domain-readiness-review`，docs-only 审查市场域已有只读 API/client、缺口和后续 PR 顺序。
+- 完成 `market-domain-contract-docs`，docs-only 定义 Market、Stall、SellerMarketMembership、商户角色、配送 profile 和三端展示边界。

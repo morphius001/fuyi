@@ -864,3 +864,10 @@
 - 本轮只审查市场域已有 read-only 能力和缺口，不修改 `apps/**` 或 `packages/**`。
 - 结论：已有 Store/Admin/Vendor 市场只读 API 和 clients，但市场实体、商户-市场-档口关系、配送 profile、公告营业时间和上游供应关系仍未真实运营化。
 - 推荐下一项：`market-domain-contract-docs`。
+
+## Round 151 更新
+
+- `market-domain-contract-docs` 已完成，见 `docs/market-domain-contract.md`。
+- 本轮定义 Market、MarketBusinessHours、MarketAnnouncement、Stall、SellerMarketMembership、商户角色和配送 profile 合同。
+- 明确 Storefront / Admin / Vendor 展示规则和 checkout、订单、结算、权限高风险边界。
+- 推荐下一项：`market-domain-read-model-contract`。

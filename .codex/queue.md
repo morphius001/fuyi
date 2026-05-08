@@ -1100,7 +1100,8 @@
 50. `mock-provider-runtime-local-inbox-only-plan`: done，规划 local disposable DB inbox-only runtime；docs-only，不写 runtime code。
 51. `mock-provider-runtime-local-inbox-only-skeleton`: done，新增 local disposable DB inbox-only skeleton；不执行 workflow。
 52. `mock-provider-runtime-local-inbox-only-validation`: done，记录 skeleton 合并后 harness、typecheck、runtime grep 和 DB 无残留验证。
-53. `mock-provider-runtime-local-smoke-script-plan`: pending，规划 mock provider route local disposable DB smoke wrapper；docs-only，不新增脚本。
+53. `mock-provider-runtime-local-smoke-script-plan`: done，规划 mock provider route local disposable DB smoke wrapper；docs-only，不新增脚本。
+54. `mock-provider-runtime-local-smoke-script`: pending，新增 mock provider route local disposable DB smoke wrapper；不连接预发或生产，不执行 workflow。
 
 第九十三轮原则：
 

@@ -376,7 +376,8 @@
 - `admin-dashboard-template-v2` 已完成：Admin 平台运营首页 v2 第一版已收紧 KPI，新增数据来源条和近期重点模块，保持只读展示。
 - `vendor-role-workspace-template-v2` 已完成：Vendor 首页新增角色工作台模板 v2 只读预览，区分普通商户、果蔬商户、物料供应商、配送供应商、上游供给、种苗供应商和外地批发商。
 - `template-preview-v2-validation` 已完成：四个 template v2 surface 合并后验证结果、风险和下一轮方向已记录。
-- 第九十九轮已建立：下一项建议为 docs-only `template-registry-surface-binding-plan`，Vendor 角色工作台视觉 QA 暂标 `blocked-manual`。
+- `template-registry-surface-binding-plan` 已完成：规划三端从 template registry v2 / stable view model 读取模板的职责边界和 PR 顺序。
+- 第九十九轮继续：下一项建议为 docs-only `storefront-template-data-source-plan`，Vendor 角色工作台视觉 QA 暂标 `blocked-manual`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

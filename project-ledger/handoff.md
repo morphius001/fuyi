@@ -857,3 +857,10 @@
 - 本轮只整理非支付方向 backlog，不修改 `apps/**` 或 `packages/**`。
 - 下一批低风险 docs-only 队列：market domain readiness、merchant role capability、vendor mobile draft product、shop decoration、logistics/waybill、pickup card consumer flow、live commerce readonly。
 - 推荐下一项：`market-domain-readiness-review`。
+
+## Round 150 更新
+
+- `market-domain-readiness-review` 已完成，见 `docs/market-domain-readiness-review.md`。
+- 本轮只审查市场域已有 read-only 能力和缺口，不修改 `apps/**` 或 `packages/**`。
+- 结论：已有 Store/Admin/Vendor 市场只读 API 和 clients，但市场实体、商户-市场-档口关系、配送 profile、公告营业时间和上游供应关系仍未真实运营化。
+- 推荐下一项：`market-domain-contract-docs`。

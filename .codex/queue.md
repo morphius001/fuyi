@@ -1109,7 +1109,8 @@
 59. `mock-provider-runtime-preprod-smoke-execution`: blocked-external，等待用户提供 disposable preprod DB、备份/回滚 owner 和连接授权；默认自动队列不得执行。
 60. `blocked-external-boundary-rollup`: done，记录支付 provider runtime 外部阻塞边界和下一批安全方向。
 61. `china-platform-non-payment-backlog`: done，docs-only 整理非支付方向下一批低风险 PR。
-62. `market-domain-readiness-review`: pending，docs-only 审查市场、商户、档口、多市场归属、营业时间、公告和配送 profile 当前缺口。
+62. `market-domain-readiness-review`: done，docs-only 审查市场、商户、档口、多市场归属、营业时间、公告和配送 profile 当前缺口。
+62.1. `market-domain-contract-docs`: pending，docs-only 定义真实市场域合同和高风险边界。
 63. `merchant-role-capability-readiness`: pending，docs-only 整理普通商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商角色矩阵。
 64. `vendor-mobile-draft-product-readiness`: pending，docs-only 梳理手机快速上架、规格模板、AI 草稿和审核候选边界。
 65. `shop-decoration-readonly-plan`: pending，docs-only 规划商家主页装修只读模型。

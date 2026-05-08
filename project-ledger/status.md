@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 16:44 Asia/Shanghai
+更新时间：2026-05-08 16:55 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -330,7 +330,8 @@
 - `mock-provider-runtime-preprod-smoke-script-validation` 已完成：PR #193 合并后 print-plan、安全示例 validate-only、forbidden arg 拒绝和 diff check 通过。
 - `blocked-external-boundary-rollup` 已完成：记录支付 provider runtime 外部 DB 阻塞边界和下一批安全方向。
 - `china-platform-non-payment-backlog` 已完成：整理非支付方向下一批低风险 docs-only PR 队列。
-- 队列下一项：`market-domain-readiness-review`。
+- `market-domain-readiness-review` 已完成：确认市场域已有 read-only 基础，但真实运营模型、商户档口关系、配送 profile、公告营业时间和上游供应关系仍待合同化。
+- 队列下一项：`market-domain-contract-docs`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

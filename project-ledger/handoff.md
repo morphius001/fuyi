@@ -1558,3 +1558,11 @@
 - 不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
 - 后续如实现，必须先做 source tags / dev-only debug banner / validation 小 PR，不得直接接第三方 analytics 或生产埋点。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 241 更新
+
+- `storefront-discovery-next-data-plan` 已完成，见 `docs/storefront-discovery-next-data-plan.md`。
+- 本轮 docs-only 规划 market、seller membership、category 和 product discovery 下一轮只读数据质量要求。
+- 下一步安全顺序是 data inventory、readonly source tags、Storefront QA、validation rollup；不得直接进入真实 migration、Admin 写接口、权限生效、checkout shipping options、库存占用、订单、支付、退款、结算、佣金、履约或物流。
+- 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

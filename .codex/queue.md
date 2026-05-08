@@ -1301,3 +1301,4 @@
 5. `storefront-product-discovery-phase-rollup`: done，docs-only 汇总 PR #277-#284 商品发现 read model 阶段从 API 到页面绑定的状态和下一阶段安全边界。
 6. `storefront-product-discovery-qa-runbook`: done，docs-only 新增首页、搜索页和店铺页商品发现只读绑定人工 QA runbook。
 7. `product-discovery-observability-plan`: done，docs-only 规划商品发现只读链路 source tag、fallback、item count 和排查字段，不接真实日志 provider。
+8. `storefront-discovery-next-data-plan`: done，docs-only 规划 market、seller membership、category 和 product discovery 下一轮只读数据质量要求。

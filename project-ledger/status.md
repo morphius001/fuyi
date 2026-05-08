@@ -514,3 +514,10 @@
 - Runbook 覆盖首页、搜索页、店铺页的真实商品发现、fallback、无商品结果、失败判定和截图证据。
 - 本轮不修改 `apps/**` 或 `packages/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流或真实 Provider。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 240 更新
+
+- `product-discovery-observability-plan`: done，docs-only 规划商品发现只读链路未来可观测字段和 debug flow。
+- 计划只允许低风险聚合字段：surface、source、item count、filter keys、fallback used 和 API status。
+- 不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或真实 provider 凭据。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

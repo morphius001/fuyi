@@ -1206,3 +1206,11 @@
 - B-side 供应商店铺会标记为 `role_gated_preview_only`，不作为消费者默认主路径。
 - 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
 - 下一项建议继续 `template-registry-v2-validation`，验证 registry v2、home/shop mapper、API typecheck 和 diff 范围。
+
+## Round 198 更新
+
+- `template-registry-v2-validation` 已完成，见 `docs/template-registry-v2-validation.md`。
+- 验证通过：template registry readonly contract、Storefront home mapper、Storefront shop mapper、China read models、API typecheck、`git diff --check`。
+- 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
+- 第一百轮 contract / mapper 队列已清空。
+- 下一轮建议先做 `storefront-search-view-model-mapper`，或以 docs-only 方式规划首页 / 店铺页如何绑定 mapper；页面绑定必须单 surface PR。

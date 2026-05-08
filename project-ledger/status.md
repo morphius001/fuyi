@@ -380,7 +380,7 @@
 - `storefront-template-data-source-plan` 已完成：规划 Storefront 首页、搜索和店铺页从静态展示数据迁到 home/search/shop view model mapper 与只读 API。
 - 第九十九轮可自动执行 docs-only 队列已清空；`vendor-role-workspace-visual-qa` 仍为 `blocked-manual`。
 - `template-registry-v2-contract` 已完成：四个 v2 template ids 已纳入未注册只读 registry contract，仍不接 route、不接 DB、不改页面。
-- 第一百轮进度：`storefront-home-view-model-mapper` 和 `storefront-shop-view-model-mapper` 已完成，只做 mapper、focused tests 和文档；下一项建议为 `template-registry-v2-validation`。
+- 第一百轮进度：`template-registry-v2-contract`、`storefront-home-view-model-mapper`、`storefront-shop-view-model-mapper` 和 `template-registry-v2-validation` 均已完成；第一百轮 contract / mapper 队列清空。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

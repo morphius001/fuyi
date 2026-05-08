@@ -1462,3 +1462,11 @@
 - 当前 Storefront read model source 阶段仍只改变展示输入，不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约、物流或真实 Provider。
 - 后续若继续，应拆新的低风险只读任务；任何 checkout shipping options、库存占用、订单归属、支付、退款、结算、佣金、权限、履约或物流生效都必须单独串行。
 - 验证通过：Storefront build、`git diff --check`、子智能体只读复核；仅保留既有 React Hook dependency warnings。
+
+## Round 229 更新
+
+- `storefront-product-discovery-api-plan` 已完成，见 `docs/storefront-product-discovery-api-plan.md`。
+- 本轮 docs-only 规划未来 `/store/china/product-discovery` 只读 API、纯 read model builder、Storefront fetcher 和分 surface binding 顺序。
+- API 计划明确 `priceText` / `stockText` 仍是展示字段，query / market / seller / category 只做展示过滤，不写 checkout、订单、库存、支付、退款、结算、佣金、权限、履约或物流。
+- 本轮不修改 `apps/**` 或 `packages/**` 运行时代码，不新增 route，不读 DB，不接 provider。
+- 验证通过：`git diff --check`、子智能体只读复核。

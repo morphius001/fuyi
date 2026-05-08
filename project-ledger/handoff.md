@@ -836,3 +836,10 @@
 - 脚本拒绝 full connection string、password、provider secret、raw payload、signature、production-like DB host/name 和 commit sha 不一致。
 - 验证通过：print-plan、安全示例 validate-only、forbidden CLI arg 拒绝、`git diff --check`。
 - 未连接预发或生产数据库，未注册 Provider，未执行 payment workflow。
+
+## Round 147 更新
+
+- `mock-provider-runtime-preprod-smoke-script-validation` 已完成，见 `docs/mock-provider-runtime-preprod-smoke-script-validation.md`。
+- PR #193 已合并，merge commit `49a6f8e93f654ff48030fe0a61503068b15c73c6`。
+- 合并后验证通过：print-plan、安全示例 validate-only、forbidden CLI arg 拒绝、`git diff --check`。
+- 自动队列现在停在 `mock-provider-runtime-preprod-smoke-execution: blocked-external`，需要 disposable preprod DB、备份/回滚 owner 和连接授权。

@@ -1105,7 +1105,8 @@
 55. `mock-provider-runtime-local-smoke-validation`: done，记录 PR #190 合并后的四种 smoke、harness、typecheck、runtime grep 和 DB/9120 无残留验证。
 56. `mock-provider-runtime-preprod-smoke-plan`: done，docs-only 规划未来 disposable preprod DB smoke；没有外部授权前不连接任何预发或生产数据库。
 57. `mock-provider-runtime-preprod-smoke-script`: done，新增默认不连接外部 DB 的脚本 skeleton，只允许 print-plan / validate-inputs-only。
-58. `mock-provider-runtime-preprod-smoke-script-validation`: pending，记录脚本 skeleton 合并后的 print-plan、validate-only、forbidden arg 和 diff check 验证。
+58. `mock-provider-runtime-preprod-smoke-script-validation`: done，记录 PR #193 合并后的 print-plan、validate-only、forbidden arg 和 diff check 验证。
+59. `mock-provider-runtime-preprod-smoke-execution`: blocked-external，等待用户提供 disposable preprod DB、备份/回滚 owner 和连接授权；默认自动队列不得执行。
 
 第九十三轮原则：
 

@@ -398,6 +398,7 @@
 - 第一百零五轮进度：`storefront-home-adapter-binding-readonly` 已完成；下一项建议做 `storefront-shop-header-adapter-binding-readonly`。
 - 第一百零五轮进度：`storefront-shop-header-adapter-binding-readonly` 已完成；下一项建议做 `storefront-search-adapter-binding-readonly`。
 - 第一百零五轮进度：`storefront-search-adapter-binding-readonly` 已完成；下一项建议做 `storefront-home-product-cards-binding-readonly`。
+- 第一百零五轮进度：`storefront-home-product-cards-binding-readonly` 已完成；下一项建议做 `storefront-shop-product-cards-binding-readonly`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

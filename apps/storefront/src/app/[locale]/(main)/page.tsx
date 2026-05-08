@@ -44,6 +44,28 @@ const readMarketMetadataString = (
   return typeof value === "string" && value.trim() ? value : undefined
 }
 
+const getHomeProductTag = (product: {
+  title: string
+  specText?: string
+  stockText?: string
+}) => {
+  const values = [product.title, product.specText, product.stockText].join(" ")
+
+  if (values.includes("冷冻")) {
+    return "冷冻"
+  }
+
+  if (values.includes("冰鲜")) {
+    return "冰鲜"
+  }
+
+  if (values.includes("干货")) {
+    return "干货"
+  }
+
+  return "鲜活"
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -186,6 +208,23 @@ export default async function Home({
         source: "static_home_stall",
       })),
     },
+    products: freshProducts.map((product) => {
+      const stall = stalls.find((item) => item.name === product.seller)
+
+      return {
+        id: product.handle,
+        title: product.name,
+        handle: product.handle,
+        sellerId: stall?.handle,
+        sellerName: product.seller,
+        market: product.market,
+        booth: stall?.booth,
+        priceText: product.price,
+        specText: product.spec,
+        stockText: product.stock,
+        source: "placeholder",
+      }
+    }),
   })
   const activeMarket = homeViewModel.marketSelector[0]
   const activeMarketName = activeMarket?.name ?? marketSwitches[0].name
@@ -214,6 +253,17 @@ export default async function Home({
     categories: stall.tags.join("、"),
     status: stall.tags[0] ?? "营业中",
     fulfillment: stall.summary,
+  }))
+  const homeFreshProducts = homeViewModel.freshProducts.map((product) => ({
+    handle: product.handle ?? product.id,
+    name: product.title,
+    spec: product.specText ?? "规格待配置",
+    price: product.priceText ?? "到店询价",
+    tag: getHomeProductTag(product),
+    stock: product.stockText ?? "到店确认",
+    seller: product.sellerName ?? "本地档口",
+    market: product.market ?? activeMarketName,
+    booth: product.booth ?? "档口待配置",
   }))
 
   return (
@@ -384,7 +434,7 @@ export default async function Home({
               </Link>
             </div>
             <div className="mt-2 grid gap-2">
-              {freshProducts.slice(0, 3).map((product) => (
+              {homeFreshProducts.slice(0, 3).map((product) => (
                 <Link
                   key={product.name}
                   href={`/${locale}/search?q=${encodeURIComponent(product.name)}`}
@@ -625,11 +675,11 @@ export default async function Home({
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {stalls.map((stall) => {
-              const stallProducts = freshProducts.filter(
+              const stallProducts = homeFreshProducts.filter(
                 (product) => product.seller === stall.name
               )
               const showcaseProducts = (
-                stallProducts.length > 0 ? stallProducts : freshProducts
+                stallProducts.length > 0 ? stallProducts : homeFreshProducts
               ).slice(0, 3)
 
               return (
@@ -714,7 +764,7 @@ export default async function Home({
             </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            {freshProducts.map((product, productIndex) => (
+            {homeFreshProducts.map((product, productIndex) => (
               <article
                 key={product.name}
                 className="grid grid-cols-[96px_minmax(0,1fr)] gap-3 rounded-sm border border-[#E5E7EB] p-3"
@@ -755,8 +805,11 @@ export default async function Home({
                     {product.price}
                   </p>
                   <div className="mt-2 grid gap-1 text-sm text-secondary">
-                    <p className="truncate">档口：{product.seller}</p>
+                    <p className="truncate">
+                      档口：{product.seller} · {product.booth}
+                    </p>
                     <p className="truncate">供应：{product.stock}</p>
+                    <p className="truncate">市场：{product.market}</p>
                     <p className="truncate">自提/配送进店确认</p>
                   </div>
                 </div>

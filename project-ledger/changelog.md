@@ -271,3 +271,4 @@
 - 完成 `storefront-adapter-skeleton-validation-v2`，验证 Storefront home / shop / search 三个本地 adapter skeleton：Storefront build、focused TypeScript check、后端 runtime import grep 和 `git diff --check` 均通过；记录页面尚未绑定、B-side 过滤仍需结构化字段、搜索排序/广告/竞价仍未实现。
 - 完成 `storefront-adapter-binding-sequence-plan`，docs-only 规划 Storefront home / shop / search adapter 绑定页面的 PR 顺序：先首页首屏，再店铺头部，再搜索结果，再分两步绑定首页和店铺商品卡，最后做绑定验证；每步均要求只读、截图、回滚和禁止交易/履约 runtime。
 - 完成 `storefront-home-adapter-binding-readonly`，首页首屏市场、桌面类目和移动端推荐档口已读取 `buildChinaHomeViewModel()` 输出；本轮不绑定今日鲜货商品卡，不修改 cart、checkout、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。
+- 完成 `storefront-shop-header-adapter-binding-readonly`，店铺页头部名称、市场、档口号、履约提示和直播状态 badge 已读取 `buildChinaShopViewModel()` 输出；本轮不绑定店铺商品卡，不修改 checkout shipping options、cart、order、payment、refund、settlement、commission、payout、permission 或 fulfillment runtime。

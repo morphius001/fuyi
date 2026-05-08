@@ -1232,7 +1232,8 @@
 
 1. `storefront-adapter-binding-sequence-plan`: done，规划 home / shop / search adapter 绑定到页面的 PR 顺序。
 2. `storefront-home-adapter-binding-readonly`: done，只绑定首页首屏市场 / 类目 / 店铺数据，不改购物车和订单入口。
-3. `storefront-shop-header-adapter-binding-readonly`: pending，只绑定店铺头部市场 / 档口 / 公告 / 履约提示，不改 checkout shipping options。
+3. `storefront-shop-header-adapter-binding-readonly`: done，只绑定店铺头部市场 / 档口 / 公告 / 履约提示，不改 checkout shipping options。
+4. `storefront-search-adapter-binding-readonly`: pending，只绑定搜索结果展示，不接真实排序、广告、竞价或推荐系统。
 
 第九十三轮原则：
 

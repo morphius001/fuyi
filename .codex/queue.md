@@ -1097,7 +1097,8 @@
 47. `mock-provider-runtime-disabled-skeleton-plan`: done，规划 disabled skeleton；docs-only，不写 runtime code。
 48. `mock-provider-runtime-disabled-skeleton`: done，新增 disabled route skeleton；不读 body、不接 DB、不调用 adapter、不执行 workflow。
 49. `mock-provider-runtime-disabled-validation`: done，记录 disabled skeleton 合并后 harness/typecheck/runtime grep 和 DB 无残留验证。
-50. `mock-provider-runtime-local-inbox-only-plan`: pending，规划 local disposable DB inbox-only runtime；docs-only，不写 runtime code。
+50. `mock-provider-runtime-local-inbox-only-plan`: done，规划 local disposable DB inbox-only runtime；docs-only，不写 runtime code。
+51. `mock-provider-runtime-local-inbox-only-skeleton`: pending，新增 local disposable DB inbox-only skeleton；不执行 workflow。
 
 第九十三轮原则：
 

@@ -1214,3 +1214,11 @@
 - 本轮只新增验证文档、任务文件、队列和 ledger，不修改 `apps/**`、route、DB、checkout、订单、支付、退款、结算、佣金、权限或履约。
 - 第一百轮 contract / mapper 队列已清空。
 - 下一轮建议先做 `storefront-search-view-model-mapper`，或以 docs-only 方式规划首页 / 店铺页如何绑定 mapper；页面绑定必须单 surface PR。
+
+## Round 199 更新
+
+- `storefront-search-view-model-mapper` 已完成，见 `docs/storefront-search-view-model-mapper.md`。
+- 新增 Storefront 搜索页 mapper 合同：`storefront-search-market-results-v1`、`zh-CN`、`CNY`、`Asia/Shanghai`、`readOnly=true`、`runtimeEnabled=false`、`canWriteBusinessState=false`。
+- 搜索结果只负责市场、类目、店铺 / 档口和商品展示，默认过滤物料供应商、配送供应商、上游供给、种苗批发和外地批发。
+- 本轮只修改 API lib 纯函数、focused tests 和文档，不改 `apps/**`、route、DB、库存、购物车、结算、订单、支付、退款、结算、佣金、权限或履约。
+- 下一项建议继续 `storefront-home-bind-view-model-plan`，docs-only 规划首页绑定，不改页面。

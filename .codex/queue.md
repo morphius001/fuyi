@@ -1202,7 +1202,7 @@
 
 第一百轮已清空。下一步建议新增第一百零一轮任务：
 
-1. `storefront-search-view-model-mapper`: pending，新增搜索页 view model mapper 和 focused tests，先不改页面。
+1. `storefront-search-view-model-mapper`: done，新增搜索页 view model mapper、focused tests 和说明文档，先不改页面。
 2. `storefront-home-bind-view-model-plan`: pending，docs-only 规划首页如何绑定 home mapper，先不改页面。
 3. `storefront-shop-bind-view-model-plan`: pending，docs-only 规划店铺页如何绑定 shop mapper，先不改页面。
 

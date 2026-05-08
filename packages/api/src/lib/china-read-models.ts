@@ -165,6 +165,53 @@ export type ChinaStorefrontShopBoundaryView = {
   reason: string;
 };
 
+export type ChinaStorefrontSearchTemplateId =
+  "storefront-search-market-results-v1";
+
+export type ChinaStorefrontSearchResultGroupView = {
+  key: "markets" | "categories" | "shops" | "products";
+  label: string;
+  count: number;
+  consumerFacing: true;
+};
+
+export type ChinaStorefrontSearchDataSourceView = {
+  key:
+    | "query"
+    | "market_context"
+    | "matched_sellers"
+    | "matched_categories"
+    | "matched_products";
+  source: ChinaReadModelSource | "static_fallback";
+  fallbackUsed: boolean;
+};
+
+export type ChinaStorefrontSearchDisplayRuleView = {
+  key:
+    | "consumer_results_only"
+    | "market_context_is_filter"
+    | "product_cards_are_readonly"
+    | "empty_state_is_display_only";
+  reason: string;
+};
+
+export type ChinaStorefrontSearchBoundaryView = {
+  key:
+    | "inventory_reservation"
+    | "checkout_shipping_options"
+    | "payment_success"
+    | "order_status"
+    | "refund_status"
+    | "settlement"
+    | "commission"
+    | "payout"
+    | "fulfillment"
+    | "search_ranking_runtime"
+    | "real_provider_config";
+  status: "blocked_serial_work";
+  reason: string;
+};
+
 export type ChinaStorefrontHomeView = {
   mode: "storefront_home_view";
   templateId: ChinaStorefrontHomeTemplateId;
@@ -194,12 +241,25 @@ export type ChinaStorefrontHomeView = {
 
 export type ChinaStorefrontSearchView = {
   mode: "storefront_search_view";
+  templateId: ChinaStorefrontSearchTemplateId;
   source: ChinaReadModelSource;
+  locale: "zh-CN";
+  currency: "CNY";
+  timezone: "Asia/Shanghai";
   query: string;
+  normalizedQuery: string;
   marketContext?: ChinaMarketReadModel;
   matchedSellers: ChinaSellerDiscoveryReadModel[];
   matchedCategories: ChinaCategoryDiscoveryReadModel[];
   matchedProducts: ChinaStorefrontProductCardReadModel[];
+  resultGroups: ChinaStorefrontSearchResultGroupView[];
+  displayRules: ChinaStorefrontSearchDisplayRuleView[];
+  dataSources: ChinaStorefrontSearchDataSourceView[];
+  highRiskBoundaries: ChinaStorefrontSearchBoundaryView[];
+  fallbackNotice?: string;
+  readOnly: true;
+  runtimeEnabled: false;
+  canWriteBusinessState: false;
   note: string;
 };
 
@@ -574,6 +634,83 @@ export const buildChinaStorefrontHomeView = ({
 const includesQuery = (value: string | undefined, query: string) =>
   !query || value?.toLowerCase().includes(query.toLowerCase());
 
+const storefrontSearchDisplayRules: ChinaStorefrontSearchDisplayRuleView[] = [
+  {
+    key: "consumer_results_only",
+    reason: "消费者搜索默认只返回市场、类目、店铺和商品找货结果，不展示物料、配送供应商或上游供给主路径。",
+  },
+  {
+    key: "market_context_is_filter",
+    reason: "市场上下文只作为搜索过滤和展示提示，不改变配送、库存或交易事实。",
+  },
+  {
+    key: "product_cards_are_readonly",
+    reason: "搜索商品卡只展示规格、价格和库存提示，不创建购物车、订单或库存占用。",
+  },
+  {
+    key: "empty_state_is_display_only",
+    reason: "搜索空状态只提示换关键词或切市场，不触发补货、询价、订单或客服流程。",
+  },
+];
+
+const storefrontSearchHighRiskBoundaries: ChinaStorefrontSearchBoundaryView[] = [
+  {
+    key: "inventory_reservation",
+    status: "blocked_serial_work",
+    reason: "搜索结果不占用库存，也不锁定价格或规格。",
+  },
+  {
+    key: "checkout_shipping_options",
+    status: "blocked_serial_work",
+    reason: "搜索市场过滤不写入 checkout shipping options。",
+  },
+  {
+    key: "payment_success",
+    status: "blocked_serial_work",
+    reason: "搜索页不决定支付成功，支付成功必须以后端异步通知为准。",
+  },
+  {
+    key: "order_status",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不创建或修改订单状态。",
+  },
+  {
+    key: "refund_status",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不创建或修改退款状态。",
+  },
+  {
+    key: "settlement",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不改变结算主体、周期或规则。",
+  },
+  {
+    key: "commission",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不改变佣金规则。",
+  },
+  {
+    key: "payout",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不处理商家打款。",
+  },
+  {
+    key: "fulfillment",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不创建履约单、配送单、运单或面单。",
+  },
+  {
+    key: "search_ranking_runtime",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不接真实排序、广告、竞价或推荐系统。",
+  },
+  {
+    key: "real_provider_config",
+    status: "blocked_serial_work",
+    reason: "搜索 mapper 不保存或启用真实 Provider 配置。",
+  },
+];
+
 export const buildChinaStorefrontSearchView = ({
   discovery,
   query,
@@ -589,13 +726,9 @@ export const buildChinaStorefrontSearchView = ({
   const marketContext = marketName
     ? discovery.markets.find((market) => market.name === marketName)
     : undefined;
-
-  return {
-    mode: "storefront_search_view",
-    source: discovery.source,
-    query: trimmedQuery,
-    marketContext,
-    matchedSellers: discovery.sellers.filter((seller) =>
+  const matchedSellers = discovery.sellers
+    .filter(isConsumerHomeSeller)
+    .filter((seller) =>
       [
         seller.name,
         seller.market,
@@ -603,13 +736,17 @@ export const buildChinaStorefrontSearchView = ({
         seller.summary,
         ...seller.tags,
       ].some((value) => includesQuery(value, trimmedQuery))
-    ),
-    matchedCategories: discovery.categories.filter((category) =>
+    );
+  const matchedCategories = discovery.categories
+    .filter(isConsumerHomeCategory)
+    .filter((category) =>
       [category.name, category.description].some((value) =>
         includesQuery(value, trimmedQuery)
       )
-    ),
-    matchedProducts: products.filter((product) =>
+    );
+  const matchedProducts = products.filter(
+    (product) =>
+      isConsumerHomeProduct(product) &&
       [
         product.title,
         product.sellerName,
@@ -617,7 +754,83 @@ export const buildChinaStorefrontSearchView = ({
         product.booth,
         product.specText,
       ].some((value) => includesQuery(value, trimmedQuery))
-    ),
+  );
+
+  return {
+    mode: "storefront_search_view",
+    templateId: "storefront-search-market-results-v1",
+    source: discovery.source,
+    locale: "zh-CN",
+    currency: "CNY",
+    timezone: "Asia/Shanghai",
+    query: trimmedQuery,
+    normalizedQuery: trimmedQuery.toLowerCase(),
+    marketContext,
+    matchedSellers,
+    matchedCategories,
+    matchedProducts,
+    resultGroups: [
+      {
+        key: "markets",
+        label: "市场",
+        count: marketContext ? 1 : discovery.markets.length,
+        consumerFacing: true,
+      },
+      {
+        key: "categories",
+        label: "类目",
+        count: matchedCategories.length,
+        consumerFacing: true,
+      },
+      {
+        key: "shops",
+        label: "店铺 / 档口",
+        count: matchedSellers.length,
+        consumerFacing: true,
+      },
+      {
+        key: "products",
+        label: "商品",
+        count: matchedProducts.length,
+        consumerFacing: true,
+      },
+    ],
+    displayRules: storefrontSearchDisplayRules,
+    dataSources: [
+      {
+        key: "query",
+        source: "static_read_model",
+        fallbackUsed: !trimmedQuery,
+      },
+      {
+        key: "market_context",
+        source: marketContext ? discovery.source : "static_fallback",
+        fallbackUsed: Boolean(marketName && !marketContext),
+      },
+      {
+        key: "matched_sellers",
+        source: discovery.source,
+        fallbackUsed: matchedSellers.length === 0,
+      },
+      {
+        key: "matched_categories",
+        source: discovery.source,
+        fallbackUsed: matchedCategories.length === 0,
+      },
+      {
+        key: "matched_products",
+        source: matchedProducts.length ? "static_read_model" : "static_fallback",
+        fallbackUsed: matchedProducts.length === 0,
+      },
+    ],
+    highRiskBoundaries: storefrontSearchHighRiskBoundaries,
+    fallbackNotice:
+      matchedSellers.length || matchedCategories.length || matchedProducts.length
+        ? undefined
+        : "没有找到匹配内容，可以换个关键词或切换市场。",
+    readOnly: true,
+    runtimeEnabled: false,
+    canWriteBusinessState: false,
     note: CHINA_READ_MODEL_RUNTIME_NOTE,
   };
 };

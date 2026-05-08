@@ -196,3 +196,4 @@
 - 完成 `mock-provider-runtime-disabled-skeleton`，新增 mock provider runtime disabled route 和单测；不读 body、不接 DB、不调用 adapter、不执行 workflow。
 - 完成 `mock-provider-runtime-disabled-validation`，记录 disabled skeleton 合并后 harness 21/137、typecheck、runtime grep 和 DB 无残留验证。
 - 完成 `mock-provider-runtime-local-inbox-only-plan`，docs-only 规划 local disposable DB inbox-only runtime、local DB gate 和 smoke 场景。
+- 完成 `mock-provider-runtime-local-inbox-only-skeleton`，`POST /china/payment-providers/mock` 仅在 mock registry、runtime gate 和 local disposable DB gate 同时满足时写入 inbox/event log；默认、生产、缺少 registry 或缺少 local DB gate 时仍 disabled 且不读 body。

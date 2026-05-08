@@ -914,3 +914,10 @@
 - 新增 `buildVendorMobileDraftProductContract()`，输出手机草稿字段、阶段和高风险阻塞项。
 - 合同明确所有草稿阶段都不创建商品、不创建库存；AI/微信/真实商品发布仍是串行高风险。
 - 推荐下一项：`shop-decoration-readonly-plan`。
+
+## Round 158 更新
+
+- `shop-decoration-readonly-plan` 已完成，见 `docs/shop-decoration-readonly-plan.md`。
+- 本轮只规划商家主页装修只读模型，覆盖 Storefront 公开快照、Vendor 预览、Admin 审核入口和高风险边界。
+- 明确装修不改变商品、库存、订单、支付、退款、结算、佣金、权限、履约或 checkout shipping options。
+- 推荐下一项：`shop-decoration-readonly-contract`。

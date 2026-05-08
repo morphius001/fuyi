@@ -1117,7 +1117,8 @@
 63.1. `merchant-role-capability-contract`: done，新增纯 TypeScript role capability view shape，不新增 API route。
 64. `vendor-mobile-draft-product-readiness`: done，docs-only 梳理手机快速上架、规格模板、AI 草稿和审核候选边界。
 64.1. `vendor-mobile-draft-product-contract`: done，新增纯 TypeScript draft view shape，不新增 API route。
-65. `shop-decoration-readonly-plan`: pending，docs-only 规划商家主页装修只读模型。
+65. `shop-decoration-readonly-plan`: done，docs-only 规划商家主页装修只读模型。
+65.1. `shop-decoration-readonly-contract`: pending，新增纯 TypeScript shop decoration readonly view shape，不新增 API route。
 66. `logistics-and-waybill-boundary-plan`: pending，docs-only 规划统一配送、自配送、自提、配送供应商和快递打印边界。
 67. `pickup-card-consumer-flow-plan`: pending，docs-only 重梳提货卡消费者持卡提货流程。
 68. `live-commerce-readonly-plan`: pending，docs-only 规划直播只读占位和 Provider 边界。

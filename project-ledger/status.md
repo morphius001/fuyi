@@ -304,6 +304,7 @@
 - `payment-notification-preprod-disposable-db-checklist` 已完成：docs-only 准备外部 disposable preprod DB Go/No-Go 和执行清单；未连接数据库。
 - `payment-notification-preprod-disposable-db-script-plan` 已完成：docs-only 规划未来脚本参数、安全检查、输出格式和失败处理；未新增脚本。
 - `payment-notification-preprod-disposable-db-script` 已完成：新增默认不连接外部 DB 的脚本 skeleton，只支持计划输出和输入校验。
+- `payment-preprod-db-script-post-validation` 已完成：记录 PR #171/#172 合并后验证，确认脚本仍不连接外部 DB。
 - 队列下一项：`payment-notification-preprod-disposable-db-execution`，状态为 `blocked-external`。
 
 ## 仍需注意

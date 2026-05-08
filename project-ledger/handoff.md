@@ -677,3 +677,11 @@
 - 脚本当前只支持 `--print-plan` 和 `--validate-inputs-only`，默认不连接外部数据库。
 - 已拒绝 production-like DB name、full connection string、password CLI 参数、provider secret、signature、raw payload 和 commit sha 不一致。
 - 下一项 `payment-notification-preprod-disposable-db-execution` 标记为 `blocked-external`，需要 disposable preprod DB、备份/回滚 owner 和明确连接授权。
+
+## Round 126 更新
+
+- `payment-preprod-db-script-post-validation` 已完成，见 `docs/payment-preprod-db-script-post-validation.md`。
+- PR #171/#172 合并后验证通过：`--print-plan`、`--validate-inputs-only`、password 拒绝、full connection string 拒绝、`git diff --check`。
+- 子 AG 复核未发现外部 DB 连接、SQL 执行、migration 注册、payment workflow 调用或交易链路逻辑混入。
+- `docs/visual-qa-artifacts/**` 仍为未跟踪本地截图产物，本轮未纳入 PR。
+- 自动队列下一项为 `payment-notification-preprod-disposable-db-execution`，保持 `blocked-external`。

@@ -37,6 +37,46 @@ export type ChinaSearchViewModelAdapterInput = {
   };
 };
 
+export type ChinaSearchReadModelInputContract = {
+  version: 'storefront-search-input-contract-v1';
+  readOnly: true;
+  runtimeEnabled: false;
+  query: {
+    source: 'url_search_params';
+    normalizedBy: 'trim_lowercase';
+    writesBusinessState: false;
+  };
+  market: {
+    sourceOrder: Array<'url_market_param' | 'discovery_market' | 'static_fallback'>;
+    effect: 'display_filter_only';
+    writesCheckoutShippingOptions: false;
+  };
+  categories: {
+    sourceOrder: Array<'discovery_categories' | 'static_fallback'>;
+    consumerFacingOnly: true;
+  };
+  sellers: {
+    sourceOrder: Array<'discovery_sellers' | 'static_fallback'>;
+    consumerFacingOnly: true;
+  };
+  products: {
+    sourceOrder: Array<'store_products' | 'static_fallback'>;
+    readOnlyCards: true;
+    reservesInventory: false;
+  };
+  blockedRuntime: Array<
+    | 'search_ranking_provider'
+    | 'ads_bidding'
+    | 'recommendation_engine'
+    | 'inventory_reservation'
+    | 'cart_mutation'
+    | 'checkout_shipping_options'
+    | 'order_mutation'
+    | 'payment'
+    | 'fulfillment'
+  >;
+};
+
 type ChinaSearchDataSource = {
   key:
     | 'query'
@@ -108,6 +148,46 @@ export type ChinaSearchViewModel = {
 
 const runtimeNote =
   'This read model is display-only. It does not change product, inventory, cart, order, checkout, payment, fulfillment, settlement, commission, payout, refund, or permission behavior.';
+
+export const getChinaSearchReadModelInputContract = (): ChinaSearchReadModelInputContract => ({
+  version: 'storefront-search-input-contract-v1',
+  readOnly: true,
+  runtimeEnabled: false,
+  query: {
+    source: 'url_search_params',
+    normalizedBy: 'trim_lowercase',
+    writesBusinessState: false
+  },
+  market: {
+    sourceOrder: ['url_market_param', 'discovery_market', 'static_fallback'],
+    effect: 'display_filter_only',
+    writesCheckoutShippingOptions: false
+  },
+  categories: {
+    sourceOrder: ['discovery_categories', 'static_fallback'],
+    consumerFacingOnly: true
+  },
+  sellers: {
+    sourceOrder: ['discovery_sellers', 'static_fallback'],
+    consumerFacingOnly: true
+  },
+  products: {
+    sourceOrder: ['store_products', 'static_fallback'],
+    readOnlyCards: true,
+    reservesInventory: false
+  },
+  blockedRuntime: [
+    'search_ranking_provider',
+    'ads_bidding',
+    'recommendation_engine',
+    'inventory_reservation',
+    'cart_mutation',
+    'checkout_shipping_options',
+    'order_mutation',
+    'payment',
+    'fulfillment'
+  ]
+});
 
 const bSideKeywords = [
   '物料',

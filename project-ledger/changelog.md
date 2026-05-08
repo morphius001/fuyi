@@ -278,3 +278,4 @@
 - 完成 `storefront-adapter-binding-validation`，汇总 home / shop / search 三个 Storefront adapter 只读页面绑定状态、PR #260-#264 验证范围、剩余风险和回滚方式；Storefront build 和 `git diff --check` 通过；本轮只改任务/文档/ledger，不修改 `apps/**` 或 `packages/**` 业务代码。
 - 完成 `storefront-read-model-data-source-plan`，docs-only 规划 Storefront adapter 下一阶段接入真实 market / seller membership / product discovery read model 数据源的顺序、fallback、PR 拆分和高风险边界；`git diff --check` 通过，本轮不修改 `apps/**` 或 `packages/**` 业务代码。
 - 完成 `storefront-home-adapter-real-source`，首页 `buildChinaHomeViewModel()` 输入已收束为 markets API + discovery API + static fallback；Storefront build、首页 HTTP smoke、桌面/移动截图和 `git diff --check` 通过，仅保留既有 React Hook warnings；不修改 `packages/api/**` 或交易/履约链路。
+- 完成 `storefront-search-read-model-input-contract`，新增搜索 adapter 输入合同，明确 query、market、categories、sellers、products 输入来源和 blocked runtime；Storefront build 和 `git diff --check` 通过；不修改搜索页、不接真实搜索排序、广告、竞价或推荐。

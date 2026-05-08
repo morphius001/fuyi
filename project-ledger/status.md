@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 17:06 Asia/Shanghai
+更新时间：2026-05-08 17:18 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -332,7 +332,8 @@
 - `china-platform-non-payment-backlog` 已完成：整理非支付方向下一批低风险 docs-only PR 队列。
 - `market-domain-readiness-review` 已完成：确认市场域已有 read-only 基础，但真实运营模型、商户档口关系、配送 profile、公告营业时间和上游供应关系仍待合同化。
 - `market-domain-contract-docs` 已完成：定义真实市场域实体、关系、角色、配送 profile 和高风险边界。
-- 队列下一项：`market-domain-read-model-contract`。
+- `market-domain-read-model-contract` 已完成：新增市场域只读合同 view shape 和 focused unit tests。
+- 队列下一项：`market-domain-read-model-contract-validation`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

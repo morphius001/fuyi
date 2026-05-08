@@ -871,3 +871,10 @@
 - 本轮定义 Market、MarketBusinessHours、MarketAnnouncement、Stall、SellerMarketMembership、商户角色和配送 profile 合同。
 - 明确 Storefront / Admin / Vendor 展示规则和 checkout、订单、结算、权限高风险边界。
 - 推荐下一项：`market-domain-read-model-contract`。
+
+## Round 152 更新
+
+- `market-domain-read-model-contract` 已完成，见 `docs/market-domain-read-model-contract.md`。
+- 新增 `buildChinaMarketDomainContractView()` 纯函数和单元测试。
+- View shape 覆盖市场域实体、商户角色和 checkout/order/payment/refund/settlement/commission/payout/permission 高风险边界。
+- 未新增 migration、route 或数据库连接，不影响 runtime。

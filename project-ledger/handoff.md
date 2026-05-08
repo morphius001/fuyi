@@ -701,3 +701,12 @@
 - Harness 已纳入新增单测。
 - 未注册 Medusa payment provider，未修改 `medusa-config.ts`，未接 checkout runtime，未执行 payment workflow。
 - 下一项建议为 `mock-payment-provider-registry-contract`：adapter registry 纯函数，默认 production disabled。
+
+## Round 129 更新
+
+- `mock-payment-provider-registry-contract` 已完成，见 `docs/mock-payment-provider-registry-contract.md`。
+- 新增 `resolveChinaPaymentProviderAdapter()` 纯函数 registry。
+- Registry 默认 disabled，production blocked，仅 `mock_china_pay` + `mock_contract_only` + 显式非生产 `nodeEnv` 可解析 mock contract。
+- `alipay` / `wechat_pay` 当前明确 refused，等待单独 adapter 设计和测试向量。
+- 未注册 Medusa payment provider，未读取真实密钥，未接 checkout runtime，未执行 payment workflow。
+- 下一项建议为 `mock-payment-provider-registry-validation`。

@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 23:24 Asia/Shanghai
+更新时间：2026-05-08 23:39 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -361,7 +361,8 @@
 - `storefront-template-contract-plan` 已完成：规划消费者端首页、搜索、店铺、商品、提货卡和移动端模板合同，不改页面。
 - `admin-template-contract-plan` 已完成：规划平台运营后台首页、菜单、市场、商户、商品、提货卡、营销、客服、直播、风控和系统配置模板合同，不改页面。
 - `vendor-template-contract-plan` 已完成：规划商户后台角色化模板、手机快速上架、AI 草稿、店铺装修、物料供应商、配送供应商和上游供给模板合同，不改页面。
-- 队列下一项：`template-registry-readonly-contract`。
+- `template-registry-readonly-contract` 已完成：新增纯 TypeScript 三端模板注册表只读合同和 focused unit tests；不接 route、不接 DB、不注册 runtime。
+- 队列下一项：`template-system-validation`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

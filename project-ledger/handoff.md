@@ -1073,3 +1073,10 @@
 - 本轮固化商户后台角色化模板合同：普通商户、水果蔬菜商户、物料供应商、配送供应商、养殖户/种植户、种苗供应商和外地批发商。
 - 明确手机快速上架和 AI 上架只能进入草稿/审核候选；模板不能直接发布商品、发货、退款、结算、改佣金、改权限或创建真实面单。
 - 下一项建议继续 `template-registry-readonly-contract`。
+
+## Round 180 更新
+
+- `template-registry-readonly-contract` 已完成，见 `docs/template-registry-readonly-contract.md`。
+- 新增未注册 `packages/api/src/modules/china-template-registry-read-model/**`，定义 Storefront/Admin/Vendor 三端模板 registry 只读 view shape。
+- 合同明确模板 registry 不能作为权限、feature flag、支付成功、订单、退款、结算、佣金、打款、provider 配置、密钥或履约事实来源。
+- 下一项建议继续 `template-system-validation`。

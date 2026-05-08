@@ -1102,7 +1102,8 @@
 52. `mock-provider-runtime-local-inbox-only-validation`: done，记录 skeleton 合并后 harness、typecheck、runtime grep 和 DB 无残留验证。
 53. `mock-provider-runtime-local-smoke-script-plan`: done，规划 mock provider route local disposable DB smoke wrapper；docs-only，不新增脚本。
 54. `mock-provider-runtime-local-smoke-script`: done，新增 mock provider route local disposable DB smoke wrapper；不连接预发或生产，不执行 workflow。
-55. `mock-provider-runtime-local-smoke-validation`: pending，运行并记录 provider route local smoke wrapper 验证结果。
+55. `mock-provider-runtime-local-smoke-validation`: done，记录 PR #190 合并后的四种 smoke、harness、typecheck、runtime grep 和 DB/9120 无残留验证。
+56. `mock-provider-runtime-preprod-smoke-plan`: pending，docs-only 规划未来 disposable preprod DB smoke；没有外部授权前不连接任何预发或生产数据库。
 
 第九十三轮原则：
 

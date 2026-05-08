@@ -814,3 +814,10 @@
 - 验证通过：四种 smoke 模式、payment notification harness 21/143、API typecheck、`git diff --check`、`medusa-config.ts` 未注册、DB/9120 无残留。
 - 脚本仍不连接预发/生产，不注册 provider，不执行 payment workflow。
 - 下一项建议为 `mock-provider-runtime-local-smoke-validation`，运行脚本并记录验证结果。
+
+## Round 144 更新
+
+- `mock-provider-runtime-local-smoke-validation` 已完成，见 `docs/mock-provider-runtime-local-smoke-validation.md`。
+- PR #190 已合并，merge commit `dd936fe0e58cd846079920e318a871b754be7038`。
+- 合并后验证通过：四种 provider route local smoke、payment notification harness 21/143、API typecheck、`git diff --check`、`medusa-config.ts` 未注册、DB/9120 无残留。
+- 下一项建议为 `mock-provider-runtime-preprod-smoke-plan`，只做 docs-only 规划；没有外部 disposable preprod DB 和授权前不得连接预发或生产数据库。

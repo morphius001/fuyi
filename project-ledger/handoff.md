@@ -1413,3 +1413,11 @@
 - 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
 - 本轮不修改店铺页页面、不修改 `ProductCard`、不修改 `packages/api/**`。
 - 下一步建议做 `storefront-read-model-source-validation`，汇总 home/search/shop 输入源阶段结果。
+
+## Round 223 更新
+
+- `storefront-read-model-source-validation` 已完成，见 `docs/storefront-read-model-source-validation.md`。
+- 本轮 docs-only 汇总 PR #267、PR #268、PR #269。
+- 当前 home / search / shop adapter 输入源阶段仍保持只读，不改变交易、履约、权限、排序、广告、竞价、推荐或真实 Provider。
+- 验证通过：Storefront build、`git diff --check`；仅保留既有 React Hook dependency warnings。
+- 下一步建议只做单 surface 只读接入：搜索 discovery source binding 或店铺 membership source binding；不得混入 checkout、order、payment、refund、settlement、commission、permission、fulfillment 或 logistics。

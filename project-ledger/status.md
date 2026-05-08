@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 00:54 Asia/Shanghai
+更新时间：2026-05-09 02:35 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -55,6 +55,18 @@
 - PR O-R 合并后验证通过：API typecheck、3 组单元测试 16/16、Medusa build。
 - `real-model-next-pr-plan`: done，新增 `docs/real-model-next-pr-plan.md`，明确下一轮 PR U-Z 的真实模型/API route 顺序和高风险门禁。
 - 第十五轮队列已清空；下一项建议为 `market-read-model-module-skeleton`。
+
+## 第一百零五轮 Storefront Adapter 页面绑定收口
+
+- `storefront-adapter-binding-sequence-plan`: done，已规划 home / shop / search adapter 页面绑定顺序。
+- `storefront-home-adapter-binding-readonly`: done，首页首屏市场 / 类目 / 店铺展示已读取 `buildChinaHomeViewModel()`。
+- `storefront-shop-header-adapter-binding-readonly`: done，店铺头部市场 / 档口 / 公告 / 履约提示已读取 `buildChinaShopViewModel()`。
+- `storefront-search-adapter-binding-readonly`: done，搜索页 query、市场 / 类目 / 店铺 / 静态商品样例结果已读取 `buildChinaSearchViewModel()`。
+- `storefront-home-product-cards-binding-readonly`: done，首页“今日鲜货 / 今日上新 / 推荐档口商品缩略卡”已读取 home view model 的商品展示字段。
+- `storefront-shop-product-cards-binding-readonly`: done，店铺页“档口今日参考 / 常卖鲜货”已读取 shop view model 的商品展示字段。
+- `storefront-adapter-binding-validation`: done，已汇总 PR #260-#264 的只读绑定状态、验证范围、风险边界和回滚方式。
+- 验证通过：Storefront build、`git diff --check`；本轮没有修改 `apps/**` 或 `packages/**` 业务代码。
+- 当前阶段不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
 
 ## 第十六轮进度
 

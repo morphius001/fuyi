@@ -1045,3 +1045,10 @@
 - Storefront build 仍有项目既有 React Hook dependency warnings，本轮只记录，不扩大范围修复。
 - 本轮未修改 `apps/**` 或 `packages/**`，只更新验证报告、任务文件、队列和 ledger。
 - 第九十五轮队列已清空；下一批建议继续走非支付、低风险、只读/配置合同方向。
+
+## Round 176 更新
+
+- `ui-template-system-plan` 已完成，见 `docs/ui-template-system-plan.md`。
+- 本轮把三端界面改造收束为模板系统规划：Storefront、Admin、Vendor 可以换布局和视觉，但只能消费稳定 view model。
+- 模板层不得决定订单、支付、退款、结算、佣金、权限、履约或 checkout 事实。
+- 下一项建议继续 `storefront-template-contract-plan`。

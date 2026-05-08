@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 21:32 Asia/Shanghai
+更新时间：2026-05-08 21:46 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -349,7 +349,8 @@
 - `non-payment-readonly-contracts-validation` 已完成：6 组 focused tests、API typecheck 和 diff check 通过。
 - `readonly-contracts-export-index` 已完成：建立非支付只读 contracts 三端可读范围和禁止误用索引。
 - `admin-readonly-contracts-panel-plan` 已完成：规划 Admin 平台能力只读总览面板和 UI PR 边界。
-- 队列下一项：`vendor-readonly-contracts-panel-plan`。
+- `vendor-readonly-contracts-panel-plan` 已完成：规划 Vendor 我的能力边界只读面板和 UI PR 边界。
+- 队列下一项：`storefront-readonly-contracts-visibility-plan`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

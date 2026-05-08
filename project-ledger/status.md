@@ -319,7 +319,8 @@
 - `mock-provider-runtime-disabled-validation` 已完成：记录 harness 21/137、typecheck、runtime grep 未注册和 DB 无残留。
 - `mock-provider-runtime-local-inbox-only-plan` 已完成：docs-only 规划 local disposable DB inbox-only runtime。
 - `mock-provider-runtime-local-inbox-only-skeleton` 已完成：mock provider route 在严格本地 disposable DB gate 下可写 inbox/event log，默认/生产/缺门禁仍 disabled，不读 body，不执行 payment workflow。
-- 队列下一项可执行任务：`mock-provider-runtime-local-inbox-only-validation`。
+- `mock-provider-runtime-local-inbox-only-validation` 已完成：记录 PR #187 合并后 harness、API typecheck、runtime grep 和 DB 无残留验证。
+- 队列下一项可执行任务：`mock-provider-runtime-local-smoke-script-plan`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

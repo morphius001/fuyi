@@ -281,3 +281,4 @@
 - 完成 `storefront-search-read-model-input-contract`，新增搜索 adapter 输入合同，明确 query、market、categories、sellers、products 输入来源和 blocked runtime；Storefront build 和 `git diff --check` 通过；不修改搜索页、不接真实搜索排序、广告、竞价或推荐。
 - 完成 `storefront-shop-membership-source`，新增店铺 adapter membership 输入形状和合同，支持 sellerId、marketName、boothNo、role、status 和 mainCategoryNames 映射到只读 seller view；Storefront build 和 `git diff --check` 通过；不修改店铺页、`ProductCard` 或交易/履约链路。
 - 完成 `storefront-read-model-source-validation`，docs-only 汇总 PR #267-#269 的 home / search / shop 输入源阶段验证、剩余风险和后续建议；Storefront build 和 `git diff --check` 通过；本轮不修改 `apps/**` 或 `packages/**`。
+- 完成 `storefront-search-discovery-source-binding`，搜索页输入构造收束为 discovery / markets / products + static fallback，新增 `market` query 作为只读展示筛选；Storefront build 和 `git diff --check` 通过，不接真实搜索 provider 或交易/履约链路。

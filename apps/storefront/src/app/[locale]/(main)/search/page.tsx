@@ -155,6 +155,33 @@ const toSearchMarketResult = (market: ChinaMarket) => ({
   hours: readMarketMetadataString(market, "hours", "营业时间待配置"),
   notice: readMarketMetadataString(market, "notice", "市场公告待配置"),
   delivery: "市场履约展示，具体自提或配送以商家页和结算页为准",
+  source: "market_readonly_api",
+})
+
+const buildStaticSearchDiscovery = () => ({
+  source: "static_search_fallback",
+  markets: fallbackMarketResults.map((market) => ({
+    ...market,
+    source: "static_search_market",
+  })),
+  categories: fallbackCategoryResults.map((category) => ({
+    id: category.handle,
+    handle: category.handle,
+    name: category.name,
+    description: category.description,
+    count: category.count,
+    source: "static_search_category",
+  })),
+  sellers: fallbackShopResults.map((shop) => ({
+    id: shop.handle,
+    handle: shop.handle,
+    name: shop.name,
+    market: shop.market,
+    booth: shop.booth,
+    tags: shop.tags,
+    summary: shop.summary,
+    source: "static_search_shop",
+  })),
 })
 
 export default async function SearchPage({
@@ -162,65 +189,50 @@ export default async function SearchPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams?: Promise<{ q?: string }>
+  searchParams?: Promise<{ q?: string; market?: string }>
 }) {
   const { locale } = await params
-  const rawQuery = (await searchParams)?.q?.trim()
+  const resolvedSearchParams = await searchParams
+  const rawQuery = resolvedSearchParams?.q?.trim()
+  const selectedMarketName = resolvedSearchParams?.market?.trim()
   const query = rawQuery || "今日鲜货"
-  const discovery = await retrieveChinaDiscovery()
+  const [discovery, chinaMarkets, productResponse] = await Promise.all([
+    retrieveChinaDiscovery(),
+    retrieveChinaMarkets(),
+    listProducts({
+      countryCode: locale,
+      queryParams: {
+        ...(rawQuery ? { q: rawQuery } : {}),
+        limit: 8,
+      },
+    }),
+  ])
   const {
     response: { products: realProducts, count: realProductCount },
-  } = await listProducts({
-    countryCode: locale,
-    queryParams: {
-      ...(rawQuery ? { q: rawQuery } : {}),
-      limit: 8,
-    },
-  })
-  const shopResults =
-    discovery.sellers.length > 0 ? discovery.sellers : fallbackShopResults
-  const chinaMarkets = await retrieveChinaMarkets()
+  } = productResponse
   const readonlyMarketResults = chinaMarkets.items.map(toSearchMarketResult)
-  const marketResults =
+  const discoveryMarketResults =
     readonlyMarketResults.length > 0
       ? readonlyMarketResults
       : discovery.markets.length > 0
         ? discovery.markets
-        : fallbackMarketResults
-  const categoryResults =
-    discovery.categories.length > 0
-      ? discovery.categories
-      : fallbackCategoryResults
+        : []
+  const staticSearchDiscovery = buildStaticSearchDiscovery()
   const searchViewModel = buildChinaSearchViewModel({
     query,
+    marketName: selectedMarketName,
     discovery: {
-      source: discovery.source,
-      markets: marketResults.map((market) => ({
+      source: "storefront_search_discovery_source_binding",
+      markets: discoveryMarketResults.map((market) => ({
         name: market.name,
         city: market.city,
         hours: market.hours,
         notice: market.notice,
         delivery: market.delivery,
-        source: "search_market_result",
+        source: market.source,
       })),
-      categories: categoryResults.map((category) => ({
-        id: category.handle,
-        handle: category.handle,
-        name: category.name,
-        description: category.description,
-        count: category.count,
-        source: "search_category_result",
-      })),
-      sellers: shopResults.map((shop) => ({
-        id: shop.handle,
-        handle: shop.handle,
-        name: shop.name,
-        market: shop.market,
-        booth: shop.booth,
-        tags: shop.tags,
-        summary: shop.summary,
-        source: "search_shop_result",
-      })),
+      categories: discovery.categories,
+      sellers: discovery.sellers,
     },
     products: productResults.map((product) => ({
       id: product.productHandle,
@@ -234,7 +246,14 @@ export default async function SearchPage({
       stockText: product.stock,
       source: "placeholder",
     })),
+    fallback: {
+      discovery: staticSearchDiscovery,
+      notice: "没有找到匹配内容，可以换个关键词或切换市场。",
+    },
   })
+  const marketResults = discoveryMarketResults.length
+    ? discoveryMarketResults
+    : staticSearchDiscovery.markets
   const displayMarket = searchViewModel.marketContext ?? marketResults[0]
   const displayMarketResults = searchViewModel.marketContext
     ? [searchViewModel.marketContext]

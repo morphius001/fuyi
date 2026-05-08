@@ -5,6 +5,7 @@ import { headers } from "next/headers"
 import Script from "next/script"
 
 import { listRegions } from "@/lib/data/regions"
+import { retrieveChinaDiscovery } from "@/lib/data/china-discovery"
 import { retrieveChinaMarkets } from "@/lib/data/china-markets"
 import { toHreflang } from "@/lib/helpers/hreflang"
 import {
@@ -43,6 +44,36 @@ const readMarketMetadataString = (
 
   return typeof value === "string" && value.trim() ? value : undefined
 }
+
+const buildStaticHomeDiscovery = () => ({
+  source: "static_home_market",
+  markets: marketSwitches.map((market) => ({
+    name: market.name,
+    city: market.area,
+    hours: market.open,
+    notice: "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
+    delivery: market.delivery,
+    source: "static_home_market",
+  })),
+  categories: marketCategories.map((category) => ({
+    id: category.name,
+    handle: category.name,
+    name: category.name,
+    description: category.desc,
+    count: category.count,
+    source: "static_home_category",
+  })),
+  sellers: stalls.map((stall) => ({
+    id: stall.handle,
+    handle: stall.handle,
+    name: stall.name,
+    market: stall.market,
+    booth: stall.booth,
+    tags: [stall.status, stall.categories, stall.badge],
+    summary: stall.fulfillment,
+    source: "static_home_stall",
+  })),
+})
 
 const getHomeProductTag = (product: {
   title: string
@@ -160,53 +191,33 @@ export default async function Home({
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "Fuyi"
-  const chinaMarkets = await retrieveChinaMarkets()
+  const [chinaMarkets, chinaDiscovery] = await Promise.all([
+    retrieveChinaMarkets(),
+    retrieveChinaDiscovery(),
+  ])
+  const readonlyMarketItems = chinaMarkets.items.slice(0, 3).map((market) => ({
+    name: market.name,
+    city:
+      [market.city, market.district].filter(Boolean).join(" / ") ||
+      "本地市场",
+    hours:
+      readMarketMetadataString(market.metadata, "hours") ??
+      "营业时间待配置",
+    notice:
+      readMarketMetadataString(market.metadata, "notice") ??
+      "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
+    delivery: "进店查看履约方式",
+    source: "market_readonly_api",
+  }))
+  const staticHomeDiscovery = buildStaticHomeDiscovery()
   const homeViewModel = buildChinaHomeViewModel({
     discovery: {
-      source: "storefront_home_readonly_binding",
-      markets:
-        chinaMarkets.items.length > 0
-          ? chinaMarkets.items.slice(0, 3).map((market) => ({
-              name: market.name,
-              city:
-                [market.city, market.district].filter(Boolean).join(" / ") ||
-                "本地市场",
-              hours:
-                readMarketMetadataString(market.metadata, "hours") ??
-                "营业时间待配置",
-              notice:
-                readMarketMetadataString(market.metadata, "notice") ??
-                "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
-              delivery: "进店查看履约方式",
-              source: "market_readonly_api",
-            }))
-          : marketSwitches.map((market) => ({
-              name: market.name,
-              city: market.area,
-              hours: market.open,
-              notice:
-                "鲜活区、冰鲜区、干货区同步更新，示例市场后续可由配置切换。",
-              delivery: market.delivery,
-              source: "static_home_market",
-            })),
-      categories: marketCategories.map((category) => ({
-        id: category.name,
-        handle: category.name,
-        name: category.name,
-        description: category.desc,
-        count: category.count,
-        source: "static_home_category",
-      })),
-      sellers: stalls.map((stall) => ({
-        id: stall.handle,
-        handle: stall.handle,
-        name: stall.name,
-        market: stall.market,
-        booth: stall.booth,
-        tags: [stall.status, stall.categories, stall.badge],
-        summary: stall.fulfillment,
-        source: "static_home_stall",
-      })),
+      source: "storefront_home_market_discovery_binding",
+      markets: readonlyMarketItems.length
+        ? readonlyMarketItems
+        : chinaDiscovery.markets,
+      categories: chinaDiscovery.categories,
+      sellers: chinaDiscovery.sellers,
     },
     products: freshProducts.map((product) => {
       const stall = stalls.find((item) => item.name === product.seller)
@@ -225,6 +236,10 @@ export default async function Home({
         source: "placeholder",
       }
     }),
+    fallback: {
+      discovery: staticHomeDiscovery,
+      notice: "首页展示数据待后台更新。",
+    },
   })
   const activeMarket = homeViewModel.marketSelector[0]
   const activeMarketName = activeMarket?.name ?? marketSwitches[0].name

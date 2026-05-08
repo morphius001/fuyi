@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 02:49 Asia/Shanghai
+更新时间：2026-05-09 03:12 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -76,6 +76,14 @@
 - 后续 PR 建议：首页 adapter 输入收束、搜索 read model 输入合同、店铺 membership 输入过渡、最终 source validation。
 - 验证通过：`git diff --check`。
 - 当前阶段仍不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
+
+## 第一百零七轮 Storefront 首页数据源收束
+
+- `storefront-home-adapter-real-source`: done，新增 `docs/storefront-home-adapter-real-source.md`。
+- 首页 `buildChinaHomeViewModel()` 输入现在并行读取 markets API 和 discovery API。
+- `markets` 优先来自 `/store/china/markets`，类目和档口优先来自 `/store/china/discovery`，静态 `home-market` 保留为 adapter fallback。
+- 验证通过：Storefront build、首页 HTTP smoke、桌面/移动截图、`git diff --check`；仅保留既有 React Hook dependency warnings。
+- 本轮不修改 `packages/api/**`，不改变 cart、checkout、订单、支付、退款、结算、佣金、打款、权限、履约、物流、真实排序、广告、竞价或推荐 runtime。
 
 ## 第十六轮进度
 

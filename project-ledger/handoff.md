@@ -1582,3 +1582,11 @@
 - 字段只用于 QA 和 dev-only 调试，不接真实日志 provider，不记录用户隐私、订单、支付、退款、结算、佣金、权限或 provider secret。
 - 本轮不修改 Storefront 页面、`ProductCard`、cart、checkout、订单、支付、退款、结算、佣金、履约或物流。
 - 验证通过：focused unit test、API typecheck、Storefront build、`git diff --check`、子智能体只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 244 更新
+
+- `product-discovery-source-tags-validation` 已完成，见 `docs/product-discovery-source-tags-validation.md`。
+- 本轮 docs-only 汇总 PR #290 的 sourceTags 实现、验证、隐私边界和下一步 dev-only debug banner 门槛。
+- 后续如果做 debug banner，只能显示 source、item count、fallback used/reason 和 filter key names；不能显示原始搜索词、用户身份、订单/支付/退款/结算字段。
+- 本轮不修改 `apps/**` 或 `packages/**` 运行时代码。
+- 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。

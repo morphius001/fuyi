@@ -1304,3 +1304,4 @@
 8. `storefront-discovery-next-data-plan`: done，docs-only 规划 market、seller membership、category 和 product discovery 下一轮只读数据质量要求。
 9. `storefront-discovery-data-inventory`: done，docs-only 盘点当前 Storefront discovery 只读链路可用字段、metadata 依赖和缺口。
 10. `product-discovery-source-tags`: done，给商品发现只读 read model 增加非敏感 sourceTags，不接日志 provider 或交易 runtime。
+11. `product-discovery-source-tags-validation`: done，docs-only 汇总 sourceTags 实现验证、隐私边界和 dev-only debug banner 门槛。

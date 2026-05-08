@@ -1,6 +1,6 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-08 20:45 Asia/Shanghai
+更新时间：2026-05-08 21:02 Asia/Shanghai
 
 ## 主线合并状态
 
@@ -346,7 +346,8 @@
 - `pickup-card-consumer-flow-contract` 已完成：新增消费者提货流程只读 TypeScript contract，明确不创建 payment/order 且不影响 cart total。
 - `live-commerce-readonly-plan` 已完成：规划直播只读状态、店铺展示、Provider 和高风险边界。
 - `live-commerce-readonly-contract` 已完成：新增直播只读 TypeScript contract，明确店铺展示位置和真实直播/IM/交易阻塞边界。
-- 队列下一项：`non-payment-readonly-contracts-validation`。
+- `non-payment-readonly-contracts-validation` 已完成：6 组 focused tests、API typecheck 和 diff check 通过。
+- 队列下一项：`readonly-contracts-export-index`。
 - `mock-provider-runtime-preprod-smoke-execution` 仍为 `blocked-external`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 

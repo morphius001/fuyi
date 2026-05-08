@@ -970,3 +970,10 @@
 - 新增 `buildChinaLiveCommerceReadonlyView()`，输出直播 session、展示位置和高风险阻塞项。
 - 合同明确直播可作为店铺卡片/店铺主页/Vendor 预览/Admin 审核占位，但不能作为消费者首页主入口。
 - 推荐下一项：`non-payment-readonly-contracts-validation`。
+
+## Round 166 更新
+
+- `non-payment-readonly-contracts-validation` 已完成，见 `docs/non-payment-readonly-contracts-validation.md`。
+- 合并后 focused tests 通过：6 suites / 19 tests。
+- API typecheck 和 `git diff --check` 通过；`packages/api/.mercur/index.d.ts` 已恢复，未纳入验证 PR。
+- 第九十四轮建议从 `readonly-contracts-export-index` 开始。

@@ -1005,3 +1005,10 @@
 - 本轮只规划消费者侧只读 contract 可见性，不修改 `apps/storefront/**`。
 - 明确普通商户、店铺装修、配送提示、提货卡独立入口和店铺直播状态可展示；物料/配送/上游供应默认隐藏，提货卡不接 checkout，直播不做首页主入口。
 - 推荐下一项：`readonly-contracts-ui-planning-validation`。
+
+## Round 171 更新
+
+- `readonly-contracts-ui-planning-validation` 已完成，见 `docs/readonly-contracts-ui-planning-validation.md`。
+- Admin/Vendor/Storefront 三端只读合同规划已收口，下一轮可以进入小范围 UI PR。
+- 下一轮建议顺序：`admin-readonly-contracts-panel-ui`、`vendor-readonly-contracts-panel-ui`、`storefront-visibility-copy-polish`、`readonly-contracts-ui-validation`。
+- 仍禁止真实写接口、migration、交易链路、支付/退款/结算/佣金/权限、真实履约、真实直播和真实提货卡兑换。

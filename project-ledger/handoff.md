@@ -1281,3 +1281,10 @@
 - 本轮只规划搜索页 adapter，不改 `apps/**` 或 `packages/**`。
 - 明确 adapter 后续只负责 query、discovery、products、market context 和 static fallback 输入合成，不改搜索页布局，不接真实排序、广告、竞价或推荐系统。
 - 下一项建议继续 `storefront-shop-view-model-adapter-skeleton` 或先做 adapter skeleton validation。
+
+## Round 208 更新
+
+- `storefront-adapter-skeleton-validation` 已完成，见 `docs/storefront-adapter-skeleton-validation.md`。
+- 验证通过：Storefront build、首页 adapter focused TypeScript check、`git diff --check`。
+- Storefront build 仍有既有 React Hook dependency warning，本轮未改。
+- 下一项建议继续 `storefront-shop-view-model-adapter-skeleton`，小范围新增店铺 adapter skeleton，不改页面布局。

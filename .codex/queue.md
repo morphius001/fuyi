@@ -1218,6 +1218,11 @@
 2. `storefront-search-view-model-adapter-plan`: done，docs-only 细化搜索 adapter 输入输出，不改页面。
 3. `storefront-home-view-model-adapter-skeleton`: done，小范围实现首页 adapter skeleton，仍不改页面布局。
 
+第一百零三轮补充任务：
+
+1. `storefront-adapter-skeleton-validation`: done，验证 home adapter skeleton 和 adapter plans。
+2. `storefront-shop-view-model-adapter-skeleton`: pending，小范围实现店铺 adapter skeleton，仍不改页面布局。
+
 第九十三轮原则：
 
 - 先规划 neutral provider callback route，再写 smoke script。

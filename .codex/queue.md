@@ -1125,7 +1125,14 @@
 67.1. `pickup-card-consumer-flow-contract`: done，新增纯 TypeScript consumer pickup flow view shape，不新增 API route。
 68. `live-commerce-readonly-plan`: done，docs-only 规划直播只读占位和 Provider 边界。
 68.1. `live-commerce-readonly-contract`: done，新增纯 TypeScript live commerce readonly view shape，不新增 API route。
-69. `non-payment-readonly-contracts-validation`: pending，验证非支付 read-only contracts 合并后的 focused tests、API typecheck 和账本状态。
+69. `non-payment-readonly-contracts-validation`: done，验证非支付 read-only contracts 合并后的 focused tests、API typecheck 和账本状态。
+
+第九十四轮建议：
+
+1. `readonly-contracts-export-index`: pending，建立只读合同索引文档，说明后续 Admin/Vendor/Storefront 可读取范围。
+2. `admin-readonly-contracts-panel-plan`: pending，规划 Admin 只读合同总览面板，不接写接口。
+3. `vendor-readonly-contracts-panel-plan`: pending，规划 Vendor 能力/草稿/装修/履约/直播只读总览。
+4. `storefront-readonly-contracts-visibility-plan`: pending，规划消费者侧哪些状态可展示，哪些必须隐藏。
 
 第九十三轮原则：
 

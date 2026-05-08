@@ -828,3 +828,11 @@
 - 本轮只写文档和任务文件，规划 disposable preprod DB 的 Go / No-Go、禁止输入、执行阶段、脱敏、cleanup 和后续 PR 拆分。
 - 未新增脚本，未连接预发或生产数据库，未注册 Provider，未执行 payment workflow。
 - 下一项建议为 `mock-provider-runtime-preprod-smoke-script`，但脚本只能默认不连接外部 DB，并只支持 print-plan / validate-inputs-only。
+
+## Round 146 更新
+
+- `mock-provider-runtime-preprod-smoke-script` 已完成，见 `docs/mock-provider-runtime-preprod-smoke-script.md`。
+- 新增 `.codex/scripts/mock-provider-runtime-preprod-smoke.sh`，当前只支持 `--print-plan` 和 `--validate-inputs-only`。
+- 脚本拒绝 full connection string、password、provider secret、raw payload、signature、production-like DB host/name 和 commit sha 不一致。
+- 验证通过：print-plan、安全示例 validate-only、forbidden CLI arg 拒绝、`git diff --check`。
+- 未连接预发或生产数据库，未注册 Provider，未执行 payment workflow。

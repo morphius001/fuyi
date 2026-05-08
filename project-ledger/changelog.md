@@ -192,3 +192,4 @@
 - 完成 `mock-provider-runtime-readiness-report`，记录组合测试合并后的 harness 20/133、typecheck、runtime grep 和 DB 无残留验证。
 - 完成 `mock-provider-runtime-readiness-checklist`，docs-only 整理 mock provider runtime 前 Go / No-Go 清单。
 - 完成 `mock-provider-runtime-design`，docs-only 设计 mock provider runtime wiring、gate 顺序、inbox/audit 边界和 PR 拆分。
+- 完成 `mock-provider-runtime-disabled-skeleton-plan`，docs-only 规划 disabled route skeleton 文件范围、默认行为、production blocked 和测试清单。

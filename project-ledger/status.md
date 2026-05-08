@@ -314,7 +314,8 @@
 - `mock-provider-runtime-readiness-report` 已完成：记录 harness 20/133、typecheck、runtime grep 未注册和 DB 无残留。
 - `mock-provider-runtime-readiness-checklist` 已完成：docs-only 整理 mock provider runtime 前 Go / No-Go 清单。
 - `mock-provider-runtime-design` 已完成：docs-only 设计 mock provider runtime wiring 和安全边界。
-- 队列下一项可执行任务：`mock-provider-runtime-disabled-skeleton-plan`。
+- `mock-provider-runtime-disabled-skeleton-plan` 已完成：docs-only 规划 disabled route skeleton 和测试清单。
+- 队列下一项可执行任务：`mock-provider-runtime-disabled-skeleton`。
 - `payment-notification-preprod-disposable-db-execution` 仍为 `blocked-external`。
 
 ## 仍需注意

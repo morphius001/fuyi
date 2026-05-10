@@ -1884,3 +1884,10 @@
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 输出仍为 `fixtureOnly: true` / `executable: false`；不写 inbox、不新增 route、不写 DB、不接 provider API、不执行 workflow、不改变退款状态。
 - 下一步建议进入 `refund-manual-review-audit-plan` 或 `payment-refund-runtime-gate-validation`。
+
+## Round 285 更新
+
+- `refund-manual-review-audit-plan` 已完成，见 `docs/refund-manual-review-audit-plan.md`。
+- 本轮只做 docs-only 计划，定义退款 manual review 触发条件、audit action allowlist、metadata、RBAC / ownership gate 和 settlement / commission / payout block。
+- 未新增 runtime、route、DB、provider API 或 workflow；不改变退款、订单、支付、结算、佣金、打款、履约或物流状态。
+- 下一步建议进入 `payment-refund-runtime-gate-validation`。

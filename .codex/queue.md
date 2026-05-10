@@ -1941,5 +1941,19 @@
 
 第二百八十四轮完成后建议继续：
 
-1. `refund-manual-review-audit-plan`: pending
+1. `refund-manual-review-audit-plan`: done
 2. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十五轮 Refund Manual Review Audit Plan
+
+1. `refund-manual-review-audit-plan`: done
+
+第二百八十五轮原则：
+
+- 本轮只做退款人工复核和审计事件 docs-only 计划。
+- 不新增 runtime、不新增 route、不写 DB、不接 provider refund API、不执行 workflow。
+- manual review decision 不能代表退款成功，只能作为后续 gate 输入。
+
+第二百八十五轮完成后建议继续：
+
+1. `payment-refund-runtime-gate-validation`: pending

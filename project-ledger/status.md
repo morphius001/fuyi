@@ -849,3 +849,10 @@
 - 验证通过：focused unit test 11/11、API typecheck、payment harness 34 suites / 242 tests、runtime grep 和 `git diff --check`。
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 提交前仍需子智能体只读复核。
+
+## Round 285 更新
+
+- `refund-manual-review-audit-plan`: done，docs-only 规划退款人工复核和审计事件合同。
+- 覆盖 manual review 触发条件、decision 形状、audit action allowlist、metadata、Admin / Vendor / System job RBAC 与 ownership gate，以及 settlement / commission / payout block。
+- 本轮不新增 TypeScript runtime、不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。

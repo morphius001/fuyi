@@ -705,3 +705,10 @@
 - Fixture 只包含 fake raw body、fake encrypted resource、fake decrypted resource、expected idempotency key 和 payload digest。
 - 本轮不实现验签、解密或归一化，不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
 - 验证要求：focused unit test、API typecheck、payment harness、`git diff --check`、子智能体复核。
+
+## Round 266 更新
+
+- `alipay-fake-notify-fixtures`: done，新增支付宝 fake-only notify vector。
+- Fixture 只包含 fake form、expected canonical keys / digest、expected idempotency key 和 payload digest；canonical payload 明确排除 `sign` 和 `sign_type`。
+- 本轮不实现 canonicalization helper、验签或归一化，不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 验证通过：focused unit test 4/4、API typecheck、payment harness 25 suites / 161 tests、`git diff --check`、子智能体复核。

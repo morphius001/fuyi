@@ -1637,6 +1637,23 @@
 
 第二百六十五轮完成后建议继续：
 
-1. `alipay-fake-notify-fixtures`: pending
+1. `alipay-fake-notify-fixtures`: done
 2. `wechat-pay-notification-verifier-contract`: pending
 3. `wechat-pay-notification-normalizer-contract`: pending
+
+## 第二百六十六轮 Alipay Fake Notify Fixtures
+
+1. `alipay-fake-notify-fixtures`: done
+
+第二百六十六轮原则：
+
+- 本轮只新增支付宝 fake-only notification fixtures 和 focused tests。
+- Canonical payload 必须排除 `sign` 和 `sign_type`，`sign_type=RSA2` 只作为独立字段校验输入。
+- 不实现 canonicalization helper、验签或归一化 helper。
+- 不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+
+第二百六十六轮完成后建议继续：
+
+1. `provider-fake-notify-contract-validation`: pending
+2. `wechat-pay-notification-verifier-contract`: pending
+3. `alipay-notification-verifier-contract`: pending

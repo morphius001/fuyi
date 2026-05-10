@@ -2229,3 +2229,10 @@
 - 本轮新增支付宝退款相关 verifier 纯函数、redacted fixtures 和 focused tests，并纳入 payment notification harness。
 - 合同只做 verifier output，不写 inbox、不接 route、不执行 workflow；同步退款响应、trade-only notification 和 query-required mode 仍不代表退款成功。
 - 下一步建议进入 `refund-provider-real-verifier-contract-validation`；仍不得接 SDK、真实密钥、provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 329 更新
+
+- `refund-provider-real-verifier-contract-validation` 已完成，见 `docs/refund-provider-real-verifier-contract-validation.md`。
+- PR #374-#375 合并后验证通过：focused provider refund verifier tests、API typecheck、payment notification harness 和 payment DB dry-run。
+- 微信 / 支付宝 verifier 合同仍只是纯函数输出，不写 inbox、不接 route、不执行 workflow；`refund.succeeded` verifier output 仍不代表平台退款成功。
+- 下一步建议进入 `refund-provider-inbox-route-plan`，只规划 provider inbox-only route shadow；仍不得接 provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

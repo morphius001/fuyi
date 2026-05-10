@@ -2622,4 +2622,19 @@
 
 第三百二十八轮完成后建议继续：
 
-1. `refund-provider-real-verifier-contract-validation`: pending
+1. `refund-provider-real-verifier-contract-validation`: done
+
+## 第三百二十九轮 Refund Provider Real Verifier Contract Validation
+
+1. `refund-provider-real-verifier-contract-validation`: done
+
+第三百二十九轮原则：
+
+- 本轮只记录 PR #374-#375 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- provider verifier 合同仍只是纯函数输出，不代表可接 route、inbox、workflow 或 refund success state。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十九轮完成后建议继续：
+
+1. `refund-provider-inbox-route-plan`: pending

@@ -923,3 +923,10 @@
 - Error classifier 覆盖 duplicate、manual_review、retryable、terminal 和 unknown；unknown 不默认 success。
 - 本轮不写 DB adapter、不接 route、不注册 migration、不调用 provider refund API 或 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 294 更新
+
+- `refund-inbox-repository-db-adapter-skeleton-plan`: done，docs-only 规划未来 refund inbox DB adapter skeleton。
+- 覆盖文件边界、adapter 职责 / 非职责、mocked DB client tests、transaction requirements、error mapping、metadata redaction、runtime grep guard 和后续 PR 顺序。
+- 明确未来 skeleton 也只能使用 injected transaction / mocked DB client，不能创建连接、读取 env、注册 module、接 route、调用 provider API 或 workflow。
+- 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。

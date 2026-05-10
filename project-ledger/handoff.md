@@ -1955,3 +1955,10 @@
 - Focused tests 覆盖 duplicate、manual review、retryable、terminal、unknown error 分类，以及 receive result 不暴露 provider request、workflow command 或 refund state mutation。
 - 当前仍没有 DB adapter、route、migration 注册、provider API、workflow 或退款状态写入。
 - 下一步建议进入 `refund-inbox-repository-db-adapter-skeleton-plan`，先 docs-only 规划 mocked DB adapter skeleton。
+
+## Round 294 更新
+
+- `refund-inbox-repository-db-adapter-skeleton-plan` 已完成，见 `docs/refund-inbox-repository-db-adapter-skeleton-plan.md`。
+- 本轮只做 docs-only 计划，定义未来 mocked DB adapter skeleton 的文件边界、transaction requirement、mock DB client tests、error mapping、metadata redaction 和 runtime grep guard。
+- 未来 skeleton 也不能连接真实 DB、读取 env、注册 migration、接 route、调用 provider refund API、workflow 或写交易 / 结算 / 履约状态。
+- 下一步如果继续 `refund-inbox-repository-db-adapter-skeleton`，只能写 mocked DB adapter skeleton + focused tests，不接 runtime。

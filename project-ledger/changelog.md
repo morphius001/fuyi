@@ -346,3 +346,4 @@
 - 完成 `payment-refund-runtime-gate-validation`，docs-only 汇总 payment / refund gate 验证；API typecheck、payment harness 34/242、disposable DB dry-run、高风险 grep 和 diff check 通过，结论仍是 No-Go to real refund runtime。
 - 完成 `refund-manual-review-audit-contract`，新增退款 manual review audit 纯函数和 focused tests；输出不可执行 decision、block runtime mutation、redaction policy 和 audit metadata，不写 DB、不接 provider、不执行 workflow。
 - 完成 `refund-audit-event-allowlist-contract`，新增退款 audit event allowlist 纯函数和 focused tests；允许不可执行审计动作，明确阻断 refund state mutation、workflow、provider request、settlement / commission / payout 调整动作。
+- 完成 `refund-inbox-state-transition-plan`，docs-only 规划退款通知 inbox 状态机、owner 边界、幂等、审计动作映射、failure matrix 和 Go / No-Go；明确 inbox state、normalized envelope、manual review decision 和 audit event 都不代表退款成功，本轮不新增 runtime、route、DB、provider API、workflow 或状态写入。

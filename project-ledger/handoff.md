@@ -1916,3 +1916,11 @@
 - runtime grep 中源码命中 `providerRefundRequest` / `refundStateMutation` 是 executable metadata denylist；其余命中为 focused test fixture / 负断言，未发现 route、provider refund API、workflow command 执行或退款状态写入。
 - 本轮不写 DB、不注册 migration、不新增 route、不接 provider API、不执行 workflow、不改变退款状态。
 - 下一步建议进入 `refund-inbox-state-transition-plan`。
+
+## Round 289 更新
+
+- `refund-inbox-state-transition-plan` 已完成，见 `docs/refund-inbox-state-transition-plan.md`。
+- 本轮只做 docs-only 状态机计划，覆盖 refund inbox states、allowed transitions、idempotency、duplicate replay、digest conflict、owner boundaries、audit action mapping、failure matrix 和 Go / No-Go。
+- inbox state、normalized envelope、manual review decision 和 audit event 都不代表退款成功；当前仍必须保持 `runtime_mutation_blocked`。
+- 本轮不新增 runtime、route、DB repository、migration 注册、provider refund API、workflow 或 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态写入。
+- 下一步建议进入 `refund-inbox-state-transition-contract` 纯函数合同，或先做 `refund-runtime-gate-validation-v2`；仍不能直接接真实支付宝 / 微信支付 refund API、checkout、workflow、退款状态写入、结算、佣金、打款、履约或物流 runtime。

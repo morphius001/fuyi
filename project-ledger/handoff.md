@@ -1740,3 +1740,10 @@
 - 汇总 PR #303-#310：支付宝 / 微信支付已具备 sandbox contract、secret key 模板、未注册 disabled adapter skeleton、validation 和 fake notify test plan。
 - 验证通过：payment harness 23 suites / 153 tests、API typecheck、runtime grep 和 `git diff --check`。
 - 当前仍禁止直接接真实 SDK、checkout、provider route、workflow、DB 或真实 secret；下一步只能做 fake fixture / pure contract。
+
+## Round 265 更新
+
+- `wechat-pay-fake-notify-fixtures` 已完成，见 `docs/wechat-pay-fake-notify-fixtures.md`。
+- 新增 `wechatPayFakeSuccessNotifyVector` 及 focused tests，fixture 值均为 fake/test 标记。
+- 本轮没有实现验签、解密或归一化，没有新增 route，没有读取真实 secret，没有接 checkout、SDK 或 payment workflow。
+- 下一步建议继续 `alipay-fake-notify-fixtures`。

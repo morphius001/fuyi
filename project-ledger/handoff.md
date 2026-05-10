@@ -2152,3 +2152,12 @@
 - 下一步可执行 `refund-inbox-schema-adapter-unmapped-state`，只调整 local PG client / focused tests / rehearsal，使新 schema 下 refund state / actor 原样写入和读回。
 - 当前仍未注册 module，未新增 route，未接真实 provider / workflow / refund success state。
 - 仍不得连接预发/生产 DB，不得接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 319 更新
+
+- `refund-inbox-schema-adapter-unmapped-state` 已完成，见 `docs/refund-inbox-schema-adapter-unmapped-state.md`。
+- `local-postgres-db-client.ts` 现在让 refund state / actor 原样写入 DB；未知 refund DB status 不再默默映射为 `normalized`，而是抛 `REFUND_DB_INVALID_STATE_TRANSITION`。
+- Focused tests 和 refund inbox route local DB fixture 已更新为 `normalized` / `system_job` 原样写入。
+- 验证通过：schema constraint rehearsal、focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、diff check。
+- 当前仍只影响 local disposable DB / mock refund inbox gate；未注册 module，未新增 route，未接真实 provider / workflow / refund success state。
+- 下一步建议做 `refund-inbox-schema-adapter-unmapped-state-validation`；仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

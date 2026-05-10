@@ -2470,4 +2470,19 @@
 
 第三百一十八轮完成后建议继续：
 
-1. `refund-inbox-schema-adapter-unmapped-state`: pending
+1. `refund-inbox-schema-adapter-unmapped-state`: done
+
+## 第三百一十九轮 Refund Inbox Schema Adapter Unmapped State
+
+1. `refund-inbox-schema-adapter-unmapped-state`: done
+
+第三百一十九轮原则：
+
+- 本轮只更新 local PG refund inbox adapter 和 focused tests。
+- 不注册 module，不新增 route，不连接预发/生产 DB。
+- refund state / actor 原样写入仍只代表 inbox / audit，不代表退款成功。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十九轮完成后建议继续：
+
+1. `refund-inbox-schema-adapter-unmapped-state-validation`: pending

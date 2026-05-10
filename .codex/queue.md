@@ -2239,5 +2239,21 @@
 
 第三百零三轮完成后建议继续：
 
-1. `refund-inbox-local-inbox-only-route-validation`: pending
+1. `refund-inbox-local-inbox-only-route-validation`: done
 2. `refund-inbox-local-db-route-plan`: pending
+
+## 第三百零四轮 Refund Inbox Local Inbox-only Route Validation
+
+1. `refund-inbox-local-inbox-only-route-validation`: done
+
+第三百零四轮原则：
+
+- 本轮只记录 PR #350 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 route 仍 fake/local in-memory inbox-only，不接 DB、不接真实 Provider、不执行 workflow。
+- accepted / duplicate / manual_review 不代表退款成功。
+
+第三百零四轮完成后建议继续：
+
+1. `refund-inbox-local-db-route-plan`: pending
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

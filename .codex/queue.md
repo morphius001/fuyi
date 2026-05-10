@@ -2350,4 +2350,19 @@
 
 第三百一十轮完成后建议继续：
 
-1. `refund-schema-constraint-migration-plan`: pending
+1. `refund-schema-constraint-migration-plan`: done
+
+## 第三百一十一轮 Refund Schema Constraint Migration Plan
+
+1. `refund-schema-constraint-migration-plan`: done
+
+第三百一十一轮原则：
+
+- 本轮只规划未来 refund schema / constraint migration。
+- 不修改真实 migration，不连接 DB，不注册 module，不新增 route。
+- 当前目标是解决 shared payment-first schema 与 refund-only state / action / actor 的约束不匹配。
+- 仍不代表退款成功，不接 provider refund API 或 workflow。
+
+第三百一十一轮完成后建议继续：
+
+1. `refund-schema-constraint-migration-rehearsal-plan`: pending

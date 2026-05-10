@@ -2086,3 +2086,11 @@
 - 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
 - 下一步建议进入 `refund-schema-constraint-migration-plan`，先规划真实 refund schema / constraint，不要直接修改 migration 或连接预发/生产。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 311 更新
+
+- `refund-schema-constraint-migration-plan` 已完成，见 `docs/refund-schema-constraint-migration-plan.md`。
+- 计划确认当前 shared migration 已允许 refund event type，但 `processing_status`、event action、actor、amount positive 和 metadata redaction 约束仍需未来独立 migration 规划。
+- 建议后续顺序：`refund-schema-constraint-migration-rehearsal-plan` -> `refund-schema-constraint-migration-rehearsal` -> `refund-schema-constraint-migration` -> validation。
+- 当前分支不修改真实 migration，不连接 DB，不注册 module，不新增 route。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

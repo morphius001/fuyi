@@ -1065,3 +1065,11 @@
 - 验证结束后工作区无 runtime diff。
 - 当前仍只是 local disposable DB rehearsal；真实 refund schema / constraint migration 必须单独规划。
 - 下一步建议进入 `refund-schema-constraint-migration-plan`，继续 docs-only。
+
+## Round 311 更新
+
+- `refund-schema-constraint-migration-plan`: done，见 `docs/refund-schema-constraint-migration-plan.md`。
+- 本轮只规划未来真实 migration 的约束扩展，不修改 `apps/**`、`packages/**` runtime，不修改 migration，不连接 DB。
+- 计划覆盖 current shared payment-first schema 不匹配点、future processing status / refund audit action / actor / amount / metadata redaction / index strategy、PR 拆分顺序和 verification matrix。
+- 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议进入 `refund-schema-constraint-migration-rehearsal-plan`，继续 docs-only。

@@ -1654,6 +1654,23 @@
 
 第二百六十六轮完成后建议继续：
 
-1. `provider-fake-notify-contract-validation`: pending
+1. `provider-fake-notify-contract-validation`: done
 2. `wechat-pay-notification-verifier-contract`: pending
 3. `alipay-notification-verifier-contract`: pending
+
+## 第二百六十七轮 Provider Fake Notify Contract Validation
+
+1. `provider-fake-notify-contract-validation`: done
+
+第二百六十七轮原则：
+
+- 本轮只汇总 PR #309-#313 的 fake notify plan / fixtures 和验证状态。
+- 不实现 canonicalization helper、verifier、decryptor 或 normalizer。
+- 不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 下一步只允许进入 verifier / normalizer 纯函数合同。
+
+第二百六十七轮完成后建议继续：
+
+1. `wechat-pay-notification-verifier-contract`: pending
+2. `alipay-notification-verifier-contract`: pending
+3. `wechat-pay-notification-normalizer-contract`: pending

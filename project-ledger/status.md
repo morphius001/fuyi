@@ -712,3 +712,10 @@
 - Fixture 只包含 fake form、expected canonical keys / digest、expected idempotency key 和 payload digest；canonical payload 明确排除 `sign` 和 `sign_type`。
 - 本轮不实现 canonicalization helper、验签或归一化，不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
 - 验证通过：focused unit test 4/4、API typecheck、payment harness 25 suites / 161 tests、`git diff --check`、子智能体复核。
+
+## Round 267 更新
+
+- `provider-fake-notify-contract-validation`: done，汇总 PR #309-#313 的 fake notify plan / fixtures 阶段。
+- 验证通过：payment harness 25 suites / 161 tests、API typecheck、runtime registration grep、sensitive credential grep、`git diff --check`。
+- 当前支付宝 / 微信支付仍只具备 fake-only notification vectors，不接 SDK、不接 checkout、不注册 provider、不执行 payment workflow。
+- 下一步只能进入 verifier / normalizer 纯函数合同，不应直接接真实 route、SDK、checkout、退款、结算、佣金、履约或物流。

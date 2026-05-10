@@ -1754,3 +1754,10 @@
 - 新增 `alipayFakeSuccessNotifyVector` 及 focused tests，fixture 值均为 fake/test 标记；canonical payload 排除 `sign` 和 `sign_type`。
 - 本轮没有实现 canonicalization helper、验签或归一化，没有新增 route，没有读取真实 secret，没有接 checkout、SDK 或 payment workflow。
 - 下一步建议继续 `provider-fake-notify-contract-validation`。
+
+## Round 267 更新
+
+- `provider-fake-notify-contract-validation` 已完成，见 `docs/provider-fake-notify-contract-validation.md`。
+- 汇总 PR #309-#313 的 fake notify plan / fixtures；WeChat Pay 和 Alipay 均只有 fake-only test vectors。
+- 验证通过：payment notification harness 25 suites / 161 tests、API typecheck、runtime registration grep、sensitive credential grep 和 `git diff --check`。
+- 下一步建议继续 `wechat-pay-notification-verifier-contract` 或 `alipay-notification-verifier-contract`，仍保持纯函数合同，不能接 SDK、checkout、真实 route、workflow 或真实 secret。

@@ -1726,3 +1726,10 @@
 - 本轮只规划微信支付 fake notify / test vector 阶段，明确 fake key / fake cert / fake ciphertext、验签/解密/归一化合同和失败矩阵。
 - 没有修改 runtime，没有接 SDK、checkout、DB、workflow 或真实 secret。
 - 下一步建议继续 `alipay-provider-fake-notify-test-plan`，仍保持 docs-only 或纯函数小 PR。
+
+## Round 263 更新
+
+- `alipay-provider-fake-notify-test-plan` 已完成，见 `docs/alipay-provider-fake-notify-test-plan.md`。
+- 本轮只规划支付宝 fake notify / test vector 阶段，明确 fake RSA key / fake public key / fake certificate metadata、canonicalization、验签/归一化合同和失败矩阵。
+- 没有修改 runtime，没有接 SDK、checkout、DB、workflow 或真实 secret。
+- 下一步建议继续 `provider-disabled-adapter-rollup-validation` 或 fake notify fixtures，仍保持小 PR。

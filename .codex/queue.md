@@ -1588,6 +1588,23 @@
 
 第二百六十二轮完成后建议继续：
 
-1. `alipay-provider-fake-notify-test-plan`: pending
+1. `alipay-provider-fake-notify-test-plan`: done
 2. `provider-disabled-adapter-rollup-validation`: pending
 3. `wechat-pay-fake-notify-fixtures`: pending
+
+## 第二百六十三轮 Alipay Provider Fake Notify Test Plan
+
+1. `alipay-provider-fake-notify-test-plan`: done
+
+第二百六十三轮原则：
+
+- 本轮只规划支付宝 fake notify / test vector 阶段。
+- 不修改 `packages/**` 或 `apps/**` runtime。
+- 不接支付宝 SDK，不读取真实 secret，不接 checkout，不执行 payment workflow。
+- 后续 fake notify 必须使用 fake RSA key / fake public key / fake certificate metadata，并保持纯函数。
+
+第二百六十三轮完成后建议继续：
+
+1. `provider-disabled-adapter-rollup-validation`: pending
+2. `wechat-pay-fake-notify-fixtures`: pending
+3. `alipay-fake-notify-fixtures`: pending

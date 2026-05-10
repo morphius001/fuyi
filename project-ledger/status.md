@@ -684,3 +684,10 @@
 - 计划覆盖 fake raw notification、fake decrypted resource、verification helper、normalize helper、test matrix、Go / No-Go 和后续 PR 拆分。
 - 本轮不修改 `packages/**` 或 `apps/**` runtime，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
 - 验证要求：`git diff --check`、子智能体复核。
+
+## Round 263 更新
+
+- `alipay-provider-fake-notify-test-plan`: done，docs-only 规划支付宝 fake notify / test vector 阶段。
+- 计划覆盖 fake form、canonicalization、verification helper、normalize helper、test matrix、Go / No-Go 和后续 PR 拆分。
+- 本轮不修改 `packages/**` 或 `apps/**` runtime，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 验证要求：`git diff --check`、子智能体复核。

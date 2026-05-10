@@ -320,3 +320,4 @@
 - 完成 `alipay-provider-disabled-adapter-skeleton`，新增未注册支付宝 disabled adapter skeleton 和 focused tests；本轮不注册 provider、不接 SDK、不接 checkout、不执行 payment workflow。
 - 完成 `alipay-provider-disabled-adapter-validation`，记录 Alipay disabled adapter 合并后 focused test、API typecheck、payment harness、runtime grep 和 diff check 通过。
 - 完成 `wechat-pay-provider-fake-notify-test-plan`，docs-only 规划微信支付 fake notify / test vector 阶段；本轮不接 SDK、不读真实密钥、不接 checkout、不执行 payment workflow。
+- 完成 `alipay-provider-fake-notify-test-plan`，docs-only 规划支付宝 fake notify / test vector 阶段；本轮不接 SDK、不读真实密钥、不接 checkout、不执行 payment workflow。

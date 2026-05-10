@@ -2191,5 +2191,21 @@
 
 第三百轮完成后建议继续：
 
-1. `refund-inbox-disabled-route-validation`: pending
+1. `refund-inbox-disabled-route-validation`: done
 2. `refund-inbox-local-inbox-only-route-plan`: pending
+
+## 第三百零一轮 Refund Inbox Disabled Route Validation
+
+1. `refund-inbox-disabled-route-validation`: done
+
+第三百零一轮原则：
+
+- 本轮只记录 PR #347 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 refund inbox route 仍 disabled-only，不读 body、不接 DB、不调 provider API 或 workflow。
+- 退款成功、结算、佣金、打款、权限、履约和物流继续 No-Go。
+
+第三百零一轮完成后建议继续：
+
+1. `refund-inbox-local-inbox-only-route-plan`: pending
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

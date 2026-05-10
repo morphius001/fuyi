@@ -982,3 +982,11 @@
 - Focused tests 覆盖默认 disabled、mock env requested 仍 disabled、production blocked、GET 405 和 response redaction；payment notification harness 已纳入该 route test。
 - 本轮不注册 migration/module，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 验证要求：focused route unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 301 更新
+
+- `refund-inbox-disabled-route-validation`: done，见 `docs/refund-inbox-disabled-route-validation.md`。
+- PR #347 合并后验证通过：focused route test 4/4、API typecheck、payment notification harness 40 suites / 284 tests、payment inbox DB dry-run row count 2|9 且 down/drop cleanup 通过。
+- Runtime grep 仅命中 focused route test 的负断言和 must-not-read fixture，未发现 provider refund request、workflow、checkout 或状态写入命令。
+- 当前 `/china/refund-inbox/mock` 仍 disabled-only，不读取 body、不连接 DB、不调用 verifier / normalizer / repository / provider refund API / workflow、不写 inbox 或 event log。
+- 下一步只能进入 `refund-inbox-local-inbox-only-route-plan` 或 repository rehearsal plan；仍不能接真实 refund runtime、settlement、commission、payout、permission、fulfillment 或 logistics。

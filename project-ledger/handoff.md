@@ -2007,3 +2007,10 @@
 - 新增 `/china/refund-inbox/mock` disabled-only route skeleton 和 focused tests。
 - 当前 route 只返回 disabled / production blocked / method not allowed，不读 body、不连接 DB、不调 verifier / normalizer / repository / provider API / workflow，不写 inbox/event log。
 - 下一步建议进入 `refund-inbox-disabled-route-validation` 做合并后验证；或先规划 `refund-inbox-local-inbox-only-route-plan`，但仍不得接真实退款 runtime。
+
+## Round 301 更新
+
+- `refund-inbox-disabled-route-validation` 已完成，见 `docs/refund-inbox-disabled-route-validation.md`。
+- 合并后验证通过：focused route test 4/4、API typecheck、payment harness 40 suites / 284 tests、DB dry-run 2|9 且清理、runtime grep 仅测试负断言。
+- 当前 refund inbox route 仍不是可用退款入口；它只证明 disabled / production blocked / 405 skeleton 存在且不读 body、不接 DB、不调 runtime。
+- 下一步建议进入 `refund-inbox-local-inbox-only-route-plan`，仍只做 fake/local inbox-only route gate 规划；不要直接实现 accepted inbox route 或真实 provider refund runtime。

@@ -339,3 +339,4 @@
 - 完成 `refund-request-idempotency-plan`，docs-only 规划退款 local command、provider request、provider notification 三层幂等，明确 request accepted 不等于 refund succeeded，并定义 request state / retry / audit 边界。
 - 完成 `refund-request-idempotency-contract`，新增退款 local command key 和 provider refund request key 纯函数合同与 focused tests；key 稳定、按金额/actor/reason/day 分叉、不包含成功语义或敏感值，不接 provider / DB / workflow。
 - 完成 `refund-notification-contract-plan`，docs-only 规划 `refund.succeeded` / `refund.failed` 通知 verifier / normalizer 合同，要求 providerRefundId、验签、金额/币种/引用匹配和 notification idempotency，输出仍不可执行。
+- 完成 `refund-notification-fake-fixtures`，新增 `refund.succeeded` / `refund.failed` fake-only 通知向量和 focused tests；fixture 标记 `fixtureOnly: true` / `executable: false`，不实现 verifier、normalizer、route、DB 或 workflow。

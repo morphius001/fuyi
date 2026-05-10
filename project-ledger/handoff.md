@@ -1858,3 +1858,11 @@
 - `refund-notification-contract-plan` 已完成，见 `docs/refund-notification-contract-plan.md`。
 - 已规划退款通知 verifier / normalizer 合同，要求验签、providerRefundId、金额/币种/引用匹配和独立 notification idempotency。
 - 下一步建议进入 `refund-notification-fake-fixtures` 或 `refund-manual-review-audit-plan`，仍不新增 route、不写 DB、不接 provider SDK、不执行 workflow。
+
+## Round 282 更新
+
+- `refund-notification-fake-fixtures` 已完成，见 `docs/refund-notification-fake-fixtures.md`。
+- 新增 refund succeeded / failed fake-only vectors，focused tests 4/4、API typecheck、payment harness 32 suites / 219 tests、runtime grep 和 `git diff --check` 均通过。
+- runtime grep 只命中既有 event type / migration check、fake fixture / tests 和负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 本轮不实现 verifier / normalizer，不新增 refund route、不写 DB、不接 provider API、不执行 workflow。
+- 下一步建议进入 `refund-notification-verifier-contract`，仍保持 fake-only pure function。

@@ -1892,6 +1892,23 @@
 
 第二百八十一轮完成后建议继续：
 
-1. `refund-notification-fake-fixtures`: pending
+1. `refund-notification-fake-fixtures`: done
 2. `refund-manual-review-audit-plan`: pending
 3. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十二轮 Refund Notification Fake Fixtures
+
+1. `refund-notification-fake-fixtures`: done
+
+第二百八十二轮原则：
+
+- 本轮只新增退款通知 fake-only fixtures 和 tests。
+- 不实现 verifier / normalizer，不新增 route、不写 DB、不接 provider refund API、不执行 workflow。
+- `refund.succeeded` fixture 不是退款成功 runtime。
+
+第二百八十二轮完成后建议继续：
+
+1. `refund-notification-verifier-contract`: pending
+2. `refund-notification-normalizer-contract`: pending
+3. `refund-manual-review-audit-plan`: pending
+4. `payment-refund-runtime-gate-validation`: pending

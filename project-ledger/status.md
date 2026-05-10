@@ -1256,3 +1256,13 @@
 - 本轮不连接 DB、不注册 module、不接 SDK、不写真实密钥、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-inbox-route-shadow-validation`，验证 focused tests、typecheck、payment harness、runtime grep 和 diff check。
 - 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 334 更新
+
+- `refund-provider-inbox-route-shadow-validation`: done，见 `docs/refund-provider-inbox-route-shadow-validation.md`。
+- PR #380 合并后验证通过：focused route/config/response tests 4 suites / 16 tests、API typecheck、payment harness 42 suites / 322 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`。
+- Runtime grep 只命中测试负断言和 response redaction denylist。
+- `packages/api/.mercur/index.d.ts` 由 typecheck 刷新后已恢复，未纳入本轮。
+- 当前 provider route 仍是 disabled skeleton，不读 body、不写 inbox、不连接 DB、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-inbox-route-local-wiring-plan`，先 docs-only 规划 local in-memory inbox wiring。
+- 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -596,3 +596,11 @@
 - 风险登记覆盖 PAY、REF、REC、SET、COM、PAYOUT、PERM 和 LOG 风险项，并明确 Go / No-Go。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider，不改变订单、支付、退款、结算、佣金、权限、履约或物流状态。
 - 验证要求：`git diff --check`、子智能体复核。
+
+## Round 251 更新
+
+- `permission-rbac-launch-matrix`: done，docs-only 建立上线前权限 / RBAC / 资源归属矩阵。
+- 矩阵覆盖 Platform operator、Market operator、Seller owner/staff、Delivery supplier、Customer 和 System job。
+- 明确 capability view 只能用于只读提示和入口降级，不能替代 RBAC、seller ownership、market ownership、order/payment/refund/settlement 权限。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不实现权限中间件、route guard、写接口或状态变更。
+- 验证要求：`git diff --check`、子智能体复核。

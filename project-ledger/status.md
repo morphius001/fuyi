@@ -1275,3 +1275,12 @@
 - 所有 provider event mapping 均不代表平台退款成功；Alipay query-required 仍不得调用 query API。
 - 下一步如进入 `refund-provider-inbox-route-local-wiring`，必须先实现 local in-memory repository / normalizer tests。
 - 仍 No-Go：provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 336 更新
+
+- `refund-provider-inbox-route-local-wiring`: done，见 `docs/refund-provider-inbox-route-local-wiring.md`。
+- Provider refund inbox route 现在支持 development/local/in-memory/fixture-only wiring；未通过 local gate 时仍不读取 body。
+- 新增 local in-memory repository 和 provider route normalizer；route focused tests 覆盖 accepted、duplicate、manual review、Alipay trade-only 和 query-required。
+- 本轮不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-inbox-route-local-wiring-validation`。
+- 仍 No-Go：settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

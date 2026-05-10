@@ -337,3 +337,4 @@
 - 完成 `refund-command-contract-plan`，docs-only 定义退款命令合同输入、actor / ownership / payment / refund snapshots、non-executable decision、block codes、reason codes 和 audit metadata；为后续 `refund-amount-guard-contract` 纯函数任务提供边界。
 - 完成 `refund-amount-guard-contract`，新增退款金额 guard 纯函数和 focused tests；覆盖金额、币种、支付状态、actor、ownership、reason、audit note 和幂等重放边界，输出始终 `executable: false`，不接 provider / DB / workflow。
 - 完成 `refund-request-idempotency-plan`，docs-only 规划退款 local command、provider request、provider notification 三层幂等，明确 request accepted 不等于 refund succeeded，并定义 request state / retry / audit 边界。
+- 完成 `refund-request-idempotency-contract`，新增退款 local command key 和 provider refund request key 纯函数合同与 focused tests；key 稳定、按金额/actor/reason/day 分叉、不包含成功语义或敏感值，不接 provider / DB / workflow。

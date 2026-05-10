@@ -350,8 +350,8 @@
 第二百五十三轮完成后建议继续：
 
 1. `payment-runtime-external-readiness-review`: done
-2. `alipay-provider-sandbox-contract`: pending
-3. `wechat-pay-provider-sandbox-contract`: pending
+2. `alipay-provider-sandbox-contract`: done
+3. `wechat-pay-provider-sandbox-contract`: done
 4. `provider-secret-config-template`: pending
 
 ## 第二百五十四轮 Payment Runtime External Readiness Review
@@ -367,7 +367,7 @@
 第二百五十四轮完成后建议继续：
 
 1. `alipay-provider-sandbox-contract`: done
-2. `wechat-pay-provider-sandbox-contract`: pending
+2. `wechat-pay-provider-sandbox-contract`: done
 3. `provider-secret-config-template`: pending
 
 ## 第二百五十五轮 Alipay Provider Sandbox Contract
@@ -382,7 +382,7 @@
 
 第二百五十五轮完成后建议继续：
 
-1. `wechat-pay-provider-sandbox-contract`: pending
+1. `wechat-pay-provider-sandbox-contract`: done
 2. `provider-secret-config-template`: pending
 3. `alipay-provider-disabled-adapter-skeleton`: pending
 
@@ -1491,3 +1491,20 @@
 1. `provider-secret-config-template`: pending
 2. `wechat-pay-provider-disabled-adapter-skeleton`: pending
 3. `alipay-provider-disabled-adapter-skeleton`: pending
+
+## 第二百五十七轮 Provider Secret Config Template
+
+1. `provider-secret-config-template`: done
+
+第二百五十七轮原则：
+
+- 本轮只整理支付宝 / 微信支付 Provider secret/config key 模板。
+- 不修改 `.env`、`.env.template` 或任何真实部署配置。
+- 不写真实 app id、mch id、merchant id、private key、APIv3 key、证书、公钥、token 或 DB URL。
+- 不接 SDK、checkout、payment workflow、退款、对账、结算、佣金、打款或履约。
+
+第二百五十七轮完成后建议继续：
+
+1. `wechat-pay-provider-disabled-adapter-skeleton`: pending
+2. `alipay-provider-disabled-adapter-skeleton`: pending
+3. `provider-secret-config-template-validation`: pending

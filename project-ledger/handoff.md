@@ -1947,3 +1947,11 @@
 - 本轮只做 docs-only repository 计划，定义退款 inbox repository owner、事务边界、幂等冲突、event log 一致性、error mapping、metadata redaction、manual review 和 settlement / commission / payout block。
 - repository 只能作为 inbox / audit log owner，不是退款成功事实表，不能调用 provider refund API、workflow 或写交易 / 结算 / 履约状态。
 - 下一步建议进入 `refund-inbox-repository-interface`，只允许 interface-only / pure error classifier，不连接 DB、不接 route、不注册 runtime。
+
+## Round 293 更新
+
+- `refund-inbox-repository-interface` 已完成，见 `docs/refund-inbox-repository-interface.md`。
+- 新增 `RefundInboxRepositoryContract`、receive result 类型、append / mark / get 方法合同和 `classifyRefundInboxRepositoryError()`。
+- Focused tests 覆盖 duplicate、manual review、retryable、terminal、unknown error 分类，以及 receive result 不暴露 provider request、workflow command 或 refund state mutation。
+- 当前仍没有 DB adapter、route、migration 注册、provider API、workflow 或退款状态写入。
+- 下一步建议进入 `refund-inbox-repository-db-adapter-skeleton-plan`，先 docs-only 规划 mocked DB adapter skeleton。

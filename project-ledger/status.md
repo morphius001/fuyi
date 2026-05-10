@@ -915,3 +915,11 @@
 - 覆盖 repository owner / non-owner、method contract、transaction boundary、idempotency / duplicate replay / digest conflict、event log consistency、error mapping、metadata redaction、manual review 和 settlement / commission / payout block。
 - 明确 repository 不是退款成功事实表，不能调用 provider API、workflow 或写 order / payment / refund / settlement / commission / payout 状态。
 - 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。
+
+## Round 293 更新
+
+- `refund-inbox-repository-interface`: done，新增退款 inbox repository interface-only 合同和 pure error classifier。
+- 覆盖 receive result、append event、mark verified / normalized / guard checked / manual review required / runtime mutation blocked / audit-only processed / terminal rejected、get by idempotency key 和 provider refund id。
+- Error classifier 覆盖 duplicate、manual_review、retryable、terminal 和 unknown；unknown 不默认 success。
+- 本轮不写 DB adapter、不接 route、不注册 migration、不调用 provider refund API 或 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。

@@ -2064,5 +2064,21 @@
 
 第二百九十二轮完成后建议继续：
 
-1. `refund-inbox-repository-interface`: pending
+1. `refund-inbox-repository-interface`: done
 2. `refund-inbox-repository-db-adapter-skeleton-plan`: pending
+
+## 第二百九十三轮 Refund Inbox Repository Interface
+
+1. `refund-inbox-repository-interface`: done
+
+第二百九十三轮原则：
+
+- 本轮只新增 refund inbox repository interface-only 合同和 pure error classifier。
+- 不写 DB adapter、不接 route、不注册 migration、不调用 provider refund API 或 workflow。
+- receive result 只表示 inbox outcome，不代表退款成功。
+- 下一步必须先做 DB adapter skeleton docs-only plan。
+
+第二百九十三轮完成后建议继续：
+
+1. `refund-inbox-repository-db-adapter-skeleton-plan`: pending
+2. `refund-inbox-repository-db-adapter-skeleton`: pending

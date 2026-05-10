@@ -938,3 +938,11 @@
 - metadata 顶层和嵌套敏感 / 可执行字段会被清洗；event log write failure 不被吞掉。
 - 本轮不连接真实 DB、不读取 env、不注册 migration/module、不接 route、不调用 provider refund API 或 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 296 更新
+
+- `refund-inbox-repository-disposable-db-dry-run-plan`: done，见 `docs/refund-inbox-repository-disposable-db-dry-run-plan.md`。
+- 本轮只做 docs-only local disposable DB dry-run 计划，定义后续脚本的 DB 命名、host guard、schema 来源、fixture、rollback / drop 和无残留检查。
+- 计划覆盖 `provider + idempotency_key` 唯一约束、same digest duplicate no-op、different digest manual review / conflict、CNY / positive amount、refund audit action allowlist、禁止动作 rejection 和 metadata redaction。
+- 本轮不新增脚本、不连接 DB、不修改 `apps/**` 或 `packages/**`，不注册 migration/module，不接 route、provider refund API 或 workflow，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：`git diff --check`、`git diff --name-only`、status/untracked 范围确认、子智能体复核。

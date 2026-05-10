@@ -1970,6 +1970,21 @@
 
 第二百八十六轮完成后建议继续：
 
-1. `refund-manual-review-audit-contract`: pending
+1. `refund-manual-review-audit-contract`: done
 2. `refund-audit-event-allowlist-contract`: pending
 3. `refund-inbox-state-transition-plan`: pending
+
+## 第二百八十七轮 Refund Manual Review Audit Contract
+
+1. `refund-manual-review-audit-contract`: done
+
+第二百八十七轮原则：
+
+- 本轮只新增退款 manual review audit 纯函数和 tests。
+- 输出必须不可执行，且必须 block runtime mutation。
+- 不新增 route、不写 DB、不接 provider API、不执行 workflow、不改变退款状态。
+
+第二百八十七轮完成后建议继续：
+
+1. `refund-audit-event-allowlist-contract`: pending
+2. `refund-inbox-state-transition-plan`: pending

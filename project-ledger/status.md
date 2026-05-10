@@ -864,3 +864,13 @@
 - grep 显示 `china-payment-notification` 仍未注册到 `medusa-config.ts`；高风险命中仅为既有 event log action enum / migration allowlist、focused tests 负断言和既有 mock payment route imports。
 - 当前结论仍是 No-Go to real refund runtime；不接真实支付宝 / 微信支付 payment 或 refund API、不执行 workflow、不改 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 下一步建议只进入 `refund-manual-review-audit-contract`、`refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan` 这类不可执行合同 / docs-only 任务。
+
+## Round 287 更新
+
+- `refund-manual-review-audit-contract`: done，新增退款 manual review audit 纯函数和 focused tests。
+- 覆盖 accepted guard、blocked guard、manual review guard、explicit risk signals、digest conflict、settlement / payout lock 和 redaction policy。
+- 输出始终 `fixtureOnly: true` / `executable: false`，并强制 `blockRuntimeMutation: true`；不生成 provider refund request，不输出 refund success mutation。
+- 本轮不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证通过：focused unit test 7/7、API typecheck、payment harness 35 suites / 249 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 提交前仍需子智能体只读复核。

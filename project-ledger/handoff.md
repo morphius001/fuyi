@@ -1761,3 +1761,10 @@
 - 汇总 PR #309-#313 的 fake notify plan / fixtures；WeChat Pay 和 Alipay 均只有 fake-only test vectors。
 - 验证通过：payment notification harness 25 suites / 161 tests、API typecheck、runtime registration grep、sensitive credential grep 和 `git diff --check`。
 - 下一步建议继续 `wechat-pay-notification-verifier-contract` 或 `alipay-notification-verifier-contract`，仍保持纯函数合同，不能接 SDK、checkout、真实 route、workflow 或真实 secret。
+
+## Round 268 更新
+
+- `wechat-pay-notification-verifier-contract` 已完成，见 `docs/wechat-pay-notification-verifier-contract.md`。
+- 新增 `verifyWechatPayNotificationContract()`，只验证 fake raw notification 的 header / serial / fake signature / timestamp / resource algorithm。
+- 当前 verifier 返回 `fixtureOnly: true` 和 `executable: false`，不输出 decrypted payload，不执行 payment workflow。
+- 下一步建议继续 `alipay-notification-verifier-contract`。

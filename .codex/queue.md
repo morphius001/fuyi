@@ -1814,5 +1814,20 @@
 
 第二百七十六轮完成后建议继续：
 
-1. `refund-command-contract-plan`: pending
+1. `refund-command-contract-plan`: done
+2. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百七十七轮 Refund Command Contract Plan
+
+1. `refund-command-contract-plan`: done
+
+第二百七十七轮原则：
+
+- 本轮只做退款命令合同文档。
+- 不新增 TypeScript runtime、不新增 route、不写 DB、不接支付宝 / 微信支付 refund API、不执行 workflow。
+- 后续 `refund-amount-guard-contract` 只允许纯函数 + tests，且输出仍必须不可执行。
+
+第二百七十七轮完成后建议继续：
+
+1. `refund-amount-guard-contract`: pending
 2. `payment-refund-runtime-gate-validation`: pending

@@ -1776,3 +1776,10 @@
 - Canonical payload 排除 `sign` 和 `sign_type`；`sign_type=RSA2` 只作为独立字段校验。
 - 当前 verifier 返回 `fixtureOnly: true` 和 `executable: false`，不输出 canonical payload 明文，不执行 payment workflow。
 - 下一步建议继续 `wechat-pay-notification-normalizer-contract`。
+
+## Round 270 更新
+
+- `wechat-pay-notification-normalizer-contract` 已完成，见 `docs/wechat-pay-notification-normalizer-contract.md`。
+- 新增 `normalizeWechatPayNotificationContract()`，把 verified fake notification + fake decrypted resource 映射为标准 envelope。
+- 当前 normalizer 返回 `fixtureOnly: true` 和 `executable: false`，不写 inbox、不执行 payment workflow。
+- 下一步建议继续 `alipay-notification-normalizer-contract`。

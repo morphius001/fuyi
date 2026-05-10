@@ -1703,6 +1703,22 @@
 
 第二百六十九轮完成后建议继续：
 
-1. `wechat-pay-notification-normalizer-contract`: pending
+1. `wechat-pay-notification-normalizer-contract`: done
 2. `alipay-notification-normalizer-contract`: pending
 3. `payment-provider-verifier-contract-validation`: pending
+
+## 第二百七十轮 WeChat Pay Notification Normalizer Contract
+
+1. `wechat-pay-notification-normalizer-contract`: done
+
+第二百七十轮原则：
+
+- 本轮只新增微信支付 fake notify normalizer 纯函数合同。
+- 只把 verifier result + fake decrypted resource 映射为标准 envelope。
+- 不解密、不接 SDK、不写 inbox、不接 checkout、不执行 payment workflow。
+
+第二百七十轮完成后建议继续：
+
+1. `alipay-notification-normalizer-contract`: pending
+2. `payment-provider-verifier-normalizer-validation`: pending
+3. `payment-runtime-inbox-only-route-gate`: pending

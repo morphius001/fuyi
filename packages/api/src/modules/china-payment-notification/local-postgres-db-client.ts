@@ -4,6 +4,12 @@ import {
   PaymentNotificationDbInboxRow,
   PaymentNotificationDbTransaction,
 } from "./db-inbox-repository";
+import {
+  RefundInboxDbClient,
+  RefundInboxDbEventLogRow,
+  RefundInboxDbRow,
+  RefundInboxDbTransaction,
+} from "./refund-db-inbox-repository";
 
 export type LocalPostgresQueryResult<Row = Record<string, unknown>> = {
   rows: Row[];
@@ -33,6 +39,7 @@ export type LocalPaymentNotificationPostgresClientInput = {
 type LocalDbRefusalReason =
   | "database_url_missing"
   | "production_disabled"
+  | "preproduction_disabled"
   | "local_db_not_enabled"
   | "unsafe_database_name"
   | "remote_host_refused";
@@ -42,7 +49,12 @@ const dryRunDatabasePrefixes = [
   "fuyi_payment_notification_inbox_dry_run_",
 ];
 
-const localHosts = new Set(["127.0.0.1", "localhost"]);
+const refundDryRunDatabasePrefixes = [
+  "fuyi_refund_inbox_route_dry_run_",
+  "fuyi_refund_inbox_repository_dry_run_",
+];
+
+const localHosts = new Set(["127.0.0.1", "::1", "localhost"]);
 
 const createSafeError = (code: string, reason?: string): Error => {
   return Object.assign(new Error(code), {
@@ -137,6 +149,57 @@ const assertLocalDbInput = (
   return safeDatabaseUrl;
 };
 
+export type LocalRefundInboxPostgresClientInput = {
+  databaseUrl?: string;
+  databaseName?: string;
+  nodeEnv?: string;
+  localDbEnabled?: boolean;
+  driver: LocalPostgresDriver;
+};
+
+const assertLocalRefundDbInput = (
+  input: LocalRefundInboxPostgresClientInput,
+): string => {
+  const nodeEnv = String(input.nodeEnv ?? "").toLowerCase();
+
+  if (nodeEnv === "production" || nodeEnv === "prod") {
+    refuse("production_disabled");
+  }
+
+  if (nodeEnv === "preprod" || nodeEnv === "staging") {
+    refuse("preproduction_disabled");
+  }
+
+  if (!input.localDbEnabled) {
+    refuse("local_db_not_enabled");
+  }
+
+  const databaseUrl = input.databaseUrl;
+
+  if (!databaseUrl) {
+    refuse("database_url_missing");
+  }
+
+  const safeDatabaseUrl = databaseUrl as string;
+  const databaseName = input.databaseName ?? databaseNameFromUrl(safeDatabaseUrl);
+
+  if (
+    !refundDryRunDatabasePrefixes.some((prefix) =>
+      databaseName.startsWith(prefix),
+    )
+  ) {
+    refuse("unsafe_database_name");
+  }
+
+  const host = hostFromUrl(safeDatabaseUrl);
+
+  if (!localHosts.has(host)) {
+    refuse("remote_host_refused");
+  }
+
+  return safeDatabaseUrl;
+};
+
 const mapInboxRowFromDb = (
   row: Record<string, unknown>,
 ): PaymentNotificationDbInboxRow => ({
@@ -176,6 +239,149 @@ const mapInboxRowFromDb = (
   updatedAt: String(row.updated_at),
 });
 
+const mapRefundStateToDbStatus = (
+  status: RefundInboxDbRow["processingStatus"] | undefined,
+): string | undefined => {
+  if (!status) {
+    return undefined;
+  }
+
+  if (status === "received") {
+    return "received";
+  }
+
+  if (
+    status === "terminal_rejected" ||
+    status === "digest_conflict_manual_review" ||
+    status === "manual_review_required"
+  ) {
+    return "terminal_failed";
+  }
+
+  if (status === "processed_for_audit_only") {
+    return "processed";
+  }
+
+  if (status === "duplicate_seen") {
+    return "ignored_duplicate";
+  }
+
+  return "verified";
+};
+
+const mapRefundStateFromDbStatus = (
+  status: unknown,
+): RefundInboxDbRow["processingStatus"] => {
+  switch (String(status)) {
+    case "received":
+      return "received";
+    case "ignored_duplicate":
+      return "duplicate_seen";
+    case "terminal_failed":
+      return "terminal_rejected";
+    case "processed":
+      return "processed_for_audit_only";
+    default:
+      return "normalized";
+  }
+};
+
+const mapRefundInboxRowFromDb = (
+  row: Record<string, unknown>,
+  processingStatusOverride?: RefundInboxDbRow["processingStatus"],
+): RefundInboxDbRow => ({
+  id: String(row.id),
+  provider: String(row.provider),
+  eventId: row.event_id ? String(row.event_id) : null,
+  eventType: String(row.event_type) as RefundInboxDbRow["eventType"],
+  idempotencyKey: String(row.idempotency_key),
+  providerRefundId: row.provider_refund_id
+    ? String(row.provider_refund_id)
+    : "",
+  merchantOrderRef: String(row.merchant_order_ref),
+  paymentSessionId: row.payment_session_id
+    ? String(row.payment_session_id)
+    : null,
+  amountMinor: Number(row.amount_value),
+  currency: "CNY",
+  signatureStatus: String(
+    row.signature_status,
+  ) as RefundInboxDbRow["signatureStatus"],
+  rawPayloadDigest: String(row.raw_payload_digest),
+  processingStatus:
+    processingStatusOverride ?? mapRefundStateFromDbStatus(row.processing_status),
+  retryCount: Number(row.retry_count ?? 0),
+  lastErrorCode: row.last_error_code
+    ? String(row.last_error_code)
+    : undefined,
+  lastErrorMessage: row.last_error_message
+    ? String(row.last_error_message)
+    : undefined,
+  createdAt: String(row.created_at),
+  updatedAt: String(row.updated_at),
+  processedAt: row.processed_at ? String(row.processed_at) : undefined,
+});
+
+const mapRefundActorTypeToDb = (
+  actorType: RefundInboxDbEventLogRow["actorType"],
+) => {
+  if (actorType === "provider") {
+    return "provider";
+  }
+
+  if (actorType === "admin" || actorType === "vendor") {
+    return "operator";
+  }
+
+  return "system";
+};
+
+const refundMetadataDeniedKeys = new Set([
+  "providerRefundRequest",
+  "refundStateMutation",
+  "workflowCommand",
+  "workflowExecution",
+  "providerSdkRequest",
+  "providerRequest",
+  "rawProviderPayload",
+  "rawPayload",
+  "privateKey",
+  "certificate",
+  "apiV3Key",
+  "apiV3Secret",
+  "webhookSecret",
+  "fullPhone",
+  "identityNumber",
+  "bankCardNumber",
+  "fullAddress",
+].map((key) => key.toLowerCase().replace(/[^a-z0-9]/g, "")));
+
+const normalizeRefundMetadataKey = (key: string): string =>
+  key.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+const safeRefundMetadataValue = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map(safeRefundMetadataValue);
+  }
+
+  if (value && typeof value === "object") {
+    return safeRefundEventMetadata(value as Record<string, unknown>);
+  }
+
+  return value;
+};
+
+const safeRefundEventMetadata = (
+  metadata: Record<string, unknown>,
+): Record<string, unknown> =>
+  Object.fromEntries(
+    Object.entries(metadata)
+      .filter(([key]) =>
+        !refundMetadataDeniedKeys.has(normalizeRefundMetadataKey(key)),
+      )
+      .map(([key, value]) => [key, safeRefundMetadataValue(value)]),
+  );
+
 const safeEventMetadata = (
   metadata: Record<string, unknown>,
 ): Record<string, unknown> => {
@@ -204,6 +410,173 @@ const safeEventMetadata = (
     }),
   );
 };
+
+const createRefundTransaction = (
+  connection: LocalPostgresConnection,
+): RefundInboxDbTransaction => ({
+  insertInbox: async (row) => {
+    const existing = await connection
+      .query(
+        `
+          select id
+          from payment_notification_inbox
+          where provider = $1 and idempotency_key = $2
+          limit 1
+        `,
+        [row.provider, row.idempotencyKey],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    if (existing.rows.length > 0) {
+      throw createSafeError("REFUND_DB_UNIQUE_CONFLICT");
+    }
+
+    const insertResult = await connection
+      .query(
+        `
+          insert into payment_notification_inbox (
+            id, provider, event_id, event_type, idempotency_key,
+            merchant_order_ref, payment_session_id, provider_refund_id,
+            amount_value, currency, signature_status, raw_payload_digest,
+            processing_status, retry_count, last_error_code, last_error_message,
+            received_at, processed_at, created_at, updated_at
+          )
+          values (
+            $1, $2, $3, $4, $5,
+            $6, $7, $8,
+            $9, $10, $11, $12,
+            $13, $14, $15, $16,
+            $17, $18, $19, $20
+          )
+          on conflict (provider, idempotency_key) do nothing
+          returning id
+        `,
+        [
+          row.id,
+          row.provider,
+          row.eventId,
+          row.eventType,
+          row.idempotencyKey,
+          row.merchantOrderRef,
+          row.paymentSessionId,
+          row.providerRefundId,
+          row.amountMinor,
+          row.currency,
+          row.signatureStatus,
+          row.rawPayloadDigest,
+          mapRefundStateToDbStatus(row.processingStatus),
+          row.retryCount,
+          row.lastErrorCode,
+          row.lastErrorMessage,
+          row.createdAt,
+          row.processedAt,
+          row.createdAt,
+          row.updatedAt,
+        ],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    if (insertResult.rowCount === 0) {
+      throw createSafeError("REFUND_DB_UNIQUE_CONFLICT");
+    }
+  },
+  updateInbox: async (idempotencyKey, patch) => {
+    const result = await connection
+      .query(
+        `
+          update payment_notification_inbox
+          set
+            processing_status = coalesce($2, processing_status),
+            retry_count = coalesce($3, retry_count),
+            last_error_code = coalesce($4, last_error_code),
+            last_error_message = coalesce($5, last_error_message),
+            processed_at = coalesce($6, processed_at),
+            updated_at = coalesce($7, updated_at)
+          where idempotency_key = $1
+          returning *
+        `,
+        [
+          idempotencyKey,
+          mapRefundStateToDbStatus(patch.processingStatus),
+          patch.retryCount,
+          patch.lastErrorCode,
+          patch.lastErrorMessage,
+          patch.processedAt,
+          patch.updatedAt,
+        ],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    if (result.rows.length === 0) {
+      throw createSafeError("REFUND_INBOX_RECORD_NOT_FOUND");
+    }
+
+    return mapRefundInboxRowFromDb(result.rows[0], patch.processingStatus);
+  },
+  findInboxByIdempotencyKey: async (idempotencyKey) => {
+    const result = await connection
+      .query(
+        `
+          select *
+          from payment_notification_inbox
+          where idempotency_key = $1
+          limit 1
+        `,
+        [idempotencyKey],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    return result.rows[0] ? mapRefundInboxRowFromDb(result.rows[0]) : null;
+  },
+  findInboxByProviderRefundId: async (provider, providerRefundId) => {
+    const result = await connection
+      .query(
+        `
+          select *
+          from payment_notification_inbox
+          where provider = $1 and provider_refund_id = $2
+          order by created_at asc
+        `,
+        [provider, providerRefundId],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+
+    return result.rows.map((row) => mapRefundInboxRowFromDb(row));
+  },
+  insertEventLog: async (row) => {
+    await connection
+      .query(
+        `
+          insert into payment_notification_event_log (
+            id, inbox_id, action, actor_type, message, metadata, created_at
+          )
+          values ($1, $2, $3, $4, $5, $6::jsonb, $7)
+        `,
+        [
+          row.id,
+          row.inboxId,
+          row.action,
+          mapRefundActorTypeToDb(row.actorType),
+          row.message,
+          JSON.stringify(safeRefundEventMetadata(row.metadata)),
+          row.createdAt,
+        ],
+      )
+      .catch((error) => {
+        throw mapDbError(error);
+      });
+  },
+});
 
 const createTransaction = (
   connection: LocalPostgresConnection,
@@ -375,6 +748,38 @@ export const createLocalPaymentNotificationPostgresClient = (
           throw mapDbError(error);
         });
         const result = await handler(createTransaction(connection));
+        await connection.query("commit").catch((error) => {
+          throw mapDbError(error);
+        });
+
+        return result;
+      } catch (error) {
+        await connection.query("rollback").catch(() => undefined);
+
+        throw error;
+      } finally {
+        await connection.release();
+      }
+    },
+  };
+};
+
+export const createLocalRefundInboxPostgresClient = (
+  input: LocalRefundInboxPostgresClientInput,
+): RefundInboxDbClient => {
+  const databaseUrl = assertLocalRefundDbInput(input);
+
+  return {
+    transaction: async (handler) => {
+      const connection = await input.driver.connect(databaseUrl).catch((error) => {
+        throw mapDbError(error);
+      });
+
+      try {
+        await connection.query("begin").catch((error) => {
+          throw mapDbError(error);
+        });
+        const result = await handler(createRefundTransaction(connection));
         await connection.query("commit").catch((error) => {
           throw mapDbError(error);
         });

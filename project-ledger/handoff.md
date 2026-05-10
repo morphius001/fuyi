@@ -2043,3 +2043,13 @@
 - 本轮只规划未来 local disposable DB-backed route；未修改 route runtime、未连接 DB、未写 inbox、未注册 module/migration。
 - 下一步如果执行 `refund-inbox-local-db-route`，必须先确认 schema allowlist 支持 refund event log，且只能连接本地 disposable DB。
 - 仍不得接真实支付宝 / 微信支付 refund notify、provider refund request、refund success state、workflow、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 306 更新
+
+- `refund-inbox-local-db-route` 已完成，见 `docs/refund-inbox-local-db-route.md`。
+- 新增 refund-only local PG client：`createLocalRefundInboxPostgresClient()`；仍通过 route scope 的本地 PG connection 和 disposable DB gate，不读取生产 DB URL。
+- `/china/refund-inbox/mock` 现在可在 `mock_local_db_inbox_only` gate 下写入 shared inbox / event log；response 保持 `runtimeMutationBlocked: true`。
+- 验证通过：focused route + local PG client tests 2 suites / 33 tests、API typecheck、payment notification harness 40 suites / 300 tests、payment DB dry-run `2|9`、refund DB dry-run `1|8`、runtime grep 和 `git diff --check`。
+- Typecheck 生成的 `packages/api/.mercur/index.d.ts` 已恢复，未纳入本轮。
+- 下一步建议做 `refund-inbox-local-db-route-validation`，记录 PR 合并后验证。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

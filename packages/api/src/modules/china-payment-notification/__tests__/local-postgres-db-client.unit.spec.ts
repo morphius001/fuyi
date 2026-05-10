@@ -1,12 +1,16 @@
 import {
   createLocalPaymentNotificationPostgresClient,
+  createLocalRefundInboxPostgresClient,
   LocalPostgresConnection,
   LocalPostgresDriver,
   PaymentNotificationDbInboxRow,
+  RefundInboxDbRow,
 } from "..";
 
 const safeDatabaseUrl =
   "postgres://codex@127.0.0.1:15432/fuyi_payment_notification_route_dry_run_unit";
+const safeRefundDatabaseUrl =
+  "postgres://codex@127.0.0.1:15432/fuyi_refund_inbox_route_dry_run_unit";
 
 const makeRow = (
   overrides: Partial<PaymentNotificationDbInboxRow> = {},
@@ -32,6 +36,28 @@ const makeRow = (
   ...overrides,
 });
 
+const makeRefundRow = (
+  overrides: Partial<RefundInboxDbRow> = {},
+): RefundInboxDbRow => ({
+  id: "rinbox_mock_china_pay_key_001",
+  provider: "mock_china_pay",
+  eventId: "evt_refund_001",
+  eventType: "refund.succeeded",
+  idempotencyKey: "refund_notify:mock_china_pay:evt_refund_001",
+  merchantOrderRef: "pay_mock_001",
+  paymentSessionId: "payses_001",
+  providerRefundId: "refund_fake_001",
+  amountMinor: 128560,
+  currency: "CNY",
+  signatureStatus: "verified",
+  rawPayloadDigest: "sha256:refunddigest",
+  processingStatus: "received",
+  retryCount: 0,
+  createdAt: "2026-05-10T00:00:00.000Z",
+  updatedAt: "2026-05-10T00:00:00.000Z",
+  ...overrides,
+});
+
 const makeConnection = () => {
   const connection: LocalPostgresConnection & {
     query: jest.Mock;
@@ -50,6 +76,14 @@ const makeConnection = () => {
 const createClient = (driver: LocalPostgresDriver) =>
   createLocalPaymentNotificationPostgresClient({
     databaseUrl: safeDatabaseUrl,
+    localDbEnabled: true,
+    nodeEnv: "development",
+    driver,
+  });
+
+const createRefundClient = (driver: LocalPostgresDriver) =>
+  createLocalRefundInboxPostgresClient({
+    databaseUrl: safeRefundDatabaseUrl,
     localDbEnabled: true,
     nodeEnv: "development",
     driver,
@@ -332,5 +366,145 @@ describe("createLocalPaymentNotificationPostgresClient", () => {
     expect(JSON.stringify(metadata)).not.toContain("secret");
     expect(JSON.stringify(metadata)).not.toContain("postgres://");
     expect(JSON.stringify(metadata)).not.toContain("signature");
+  });
+});
+
+describe("createLocalRefundInboxPostgresClient", () => {
+  it("refuses unsafe refund database names", () => {
+    const { driver } = makeConnection();
+
+    expect(() =>
+      createLocalRefundInboxPostgresClient({
+        databaseUrl: "postgres://codex@127.0.0.1:15432/mercur",
+        localDbEnabled: true,
+        nodeEnv: "development",
+        driver,
+      }),
+    ).toThrow("LOCAL_DB_CLIENT_REFUSED");
+  });
+
+  it("refuses preproduction environments", () => {
+    const { driver } = makeConnection();
+
+    expect(() =>
+      createLocalRefundInboxPostgresClient({
+        databaseUrl: safeRefundDatabaseUrl,
+        localDbEnabled: true,
+        nodeEnv: "preprod",
+        driver,
+      }),
+    ).toThrow("LOCAL_DB_CLIENT_REFUSED");
+  });
+
+  it("inserts refund inbox rows using shared local DB tables", async () => {
+    const { connection, driver } = makeConnection();
+    const client = createRefundClient(driver);
+    const row = makeRefundRow();
+
+    connection.query.mockImplementation(async (sql: string) => {
+      if (sql.includes("select id") && sql.includes("provider = $1")) {
+        return { rows: [] };
+      }
+
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [{ id: row.id }], rowCount: 1 };
+      }
+
+      return { rows: [] };
+    });
+
+    await client.transaction((transaction) => transaction.insertInbox(row));
+
+    const [sql, params] = connection.query.mock.calls.find(([sql]) =>
+      String(sql).includes("insert into payment_notification_inbox"),
+    );
+
+    expect(sql).toContain("provider_refund_id");
+    expect(params).toContain("refund.succeeded");
+    expect(params).toContain("refund_fake_001");
+    expect(params).toContain("received");
+    expect(JSON.stringify(params)).not.toContain("providerRefundRequest");
+  });
+
+  it("maps refund route-only states to DB-safe statuses while returning refund states", async () => {
+    const { connection, driver } = makeConnection();
+    const client = createRefundClient(driver);
+
+    connection.query.mockImplementation(async (sql: string, params: unknown[]) => {
+      if (sql.includes("update payment_notification_inbox")) {
+        return {
+          rows: [
+            {
+              id: "rinbox_001",
+              provider: "mock_china_pay",
+              event_id: "evt_refund_001",
+              event_type: "refund.succeeded",
+              idempotency_key: "refund_notify:mock_china_pay:evt_refund_001",
+              merchant_order_ref: "pay_mock_001",
+              payment_session_id: "payses_001",
+              provider_refund_id: "refund_fake_001",
+              amount_value: 128560,
+              currency: "CNY",
+              signature_status: "verified",
+              raw_payload_digest: "sha256:refunddigest",
+              processing_status: params[1],
+              retry_count: 0,
+              created_at: "2026-05-10T00:00:00.000Z",
+              updated_at: "2026-05-10T00:02:00.000Z",
+            },
+          ],
+        };
+      }
+
+      return { rows: [] };
+    });
+
+    const updated = await client.transaction((transaction) =>
+      transaction.updateInbox("refund_notify:mock_china_pay:evt_refund_001", {
+        processingStatus: "normalized",
+        updatedAt: "2026-05-10T00:02:00.000Z",
+      }),
+    );
+
+    const [, params] = connection.query.mock.calls.find(([sql]) =>
+      String(sql).includes("update payment_notification_inbox"),
+    );
+
+    expect(params[1]).toBe("verified");
+    expect(updated.processingStatus).toBe("normalized");
+  });
+
+  it("maps refund system_job audit events to DB-safe actor types", async () => {
+    const { connection, driver } = makeConnection();
+    const client = createRefundClient(driver);
+
+    await client.transaction((transaction) =>
+      transaction.insertEventLog({
+        id: "rlog_001",
+        inboxId: "rinbox_001",
+        action: "refund_runtime_mutation_blocked",
+        actorType: "system_job",
+        message: "Refund runtime mutation remains blocked.",
+        metadata: {
+          auditEventId: "raudit_001",
+          providerRefundRequest: "must-not-be-written-by-repository",
+          nested: {
+            workflowCommand: "must-not-be-written",
+            safeNote: "kept",
+          },
+        },
+        createdAt: "2026-05-10T00:00:00.000Z",
+      }),
+    );
+
+    const [, params] = connection.query.mock.calls.find(([sql]) =>
+      String(sql).includes("insert into payment_notification_event_log"),
+    );
+
+    expect(params[3]).toBe("system");
+    expect(params[2]).toBe("refund_runtime_mutation_blocked");
+    expect(String(params[5])).toContain("safeNote");
+    expect(String(params[5])).not.toContain("providerRefundRequest");
+    expect(String(params[5])).not.toContain("workflowCommand");
   });
 });

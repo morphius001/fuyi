@@ -1023,3 +1023,13 @@
 - 计划定义未来 local disposable DB route 的 env gate、DB URL / name / actual connection validation、schema prerequisites、repository adapter scope、response contract、test matrix、verification 和 rollback。
 - 明确 local DB route 仍只能 fake provider / fake secret / disposable DB / inbox-audit-only；accepted、duplicate、manual review 仍不能代表退款成功。
 - 仍 No-Go：真实 Provider refund notify、provider refund request、workflow execution、refund success state、settlement、commission、payout、permission、fulfillment、logistics、预发/生产 DB。
+
+## Round 306 更新
+
+- `refund-inbox-local-db-route`: done，见 `docs/refund-inbox-local-db-route.md`。
+- `/china/refund-inbox/mock` 现在支持 fake/local disposable DB-backed inbox-only gate：`mock_local_db_inbox_only` + `CHINA_REFUND_INBOX_LOCAL_DB=true` + local disposable DB URL/name + fake secret。
+- route 会在读取 body 前校验 actual `current_database()`、server host 和 port；production / prod / preprod / staging blocked。
+- 新增 `createLocalRefundInboxPostgresClient()`，只接受 refund dry-run DB 前缀，把 refund-only state / actor 映射到当前 shared inbox DB 安全值，并递归 redacts event metadata。
+- Focused tests 覆盖 local DB missing、remote host、DB name mismatch、accepted、duplicate、digest conflict manual review、response redaction 和 local client mapping。
+- 验证通过：focused route + local PG client tests 2 suites / 33 tests、API typecheck、payment notification harness 40 suites / 300 tests、payment DB dry-run `2|9`、refund DB dry-run `1|8`、runtime grep 和 `git diff --check`。
+- 当前仍不注册 module/migration，不接真实 Provider refund API，不执行 workflow，不写退款成功状态，不改变 settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -658,3 +658,9 @@
 - Adapter 只暴露配置 key 名和 secret reference key 名，所有 create/query/close/verify/normalize 操作均返回 blocked decision。
 - 本轮不注册 Medusa payment provider，不新增 API route，不修改 `packages/api/medusa-config.ts`，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
 - 验证要求：focused unit test、API typecheck、payment notification harness、`git diff --check`、子智能体复核。
+
+## Round 259 更新
+
+- `wechat-pay-provider-disabled-adapter-validation`: done，记录 PR #305 合并后的主线验证。
+- 验证通过：focused WeChat unit test 5/5、API typecheck、payment notification harness 22 suites / 148 tests、disposable DB dry-run、runtime registration grep、`git diff --check`。
+- 当前 WeChat Pay adapter 仍未注册、不接 route、不接 checkout、不接 SDK、不读真实 secret、不执行 payment workflow。

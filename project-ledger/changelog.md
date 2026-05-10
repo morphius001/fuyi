@@ -316,3 +316,4 @@
 - 完成 `wechat-pay-provider-sandbox-contract`，docs-only 定义微信支付 Provider sandbox 合同；本轮不接 SDK、不接 checkout、不写真实 app id / mch id / private key / APIv3 key / 证书，不执行 payment workflow。
 - 完成 `provider-secret-config-template`，docs-only 整理支付 Provider secret/config key 模板；本轮不修改 `.env` 或 runtime，不写真实密钥或部署配置。
 - 完成 `wechat-pay-provider-disabled-adapter-skeleton`，新增未注册微信支付 disabled adapter skeleton 和 focused tests；本轮不注册 provider、不接 SDK、不接 checkout、不执行 payment workflow。
+- 完成 `wechat-pay-provider-disabled-adapter-validation`，记录 WeChat disabled adapter 合并后 focused test、API typecheck、payment harness、runtime grep 和 diff check 通过。

@@ -1522,6 +1522,22 @@
 
 第二百五十八轮完成后建议继续：
 
-1. `wechat-pay-provider-disabled-adapter-validation`: pending
+1. `wechat-pay-provider-disabled-adapter-validation`: done
 2. `alipay-provider-disabled-adapter-skeleton`: pending
 3. `wechat-pay-provider-fake-notify-test-plan`: pending
+
+## 第二百五十九轮 WeChat Pay Provider Disabled Adapter Validation
+
+1. `wechat-pay-provider-disabled-adapter-validation`: done
+
+第二百五十九轮原则：
+
+- 本轮只记录 PR #305 合并后验证。
+- 不修改 runtime，不新增 route，不注册 provider，不接 checkout、SDK、workflow、DB、migration 或真实 secret。
+- 保持微信支付 adapter disabled-by-default。
+
+第二百五十九轮完成后建议继续：
+
+1. `alipay-provider-disabled-adapter-skeleton`: pending
+2. `wechat-pay-provider-fake-notify-test-plan`: pending
+3. `wechat-pay-provider-official-test-vector-readiness`: pending

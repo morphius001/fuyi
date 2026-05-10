@@ -2576,5 +2576,20 @@
 
 第三百二十五轮完成后建议继续：
 
-1. `refund-provider-real-verifier-plan-validation`: pending
+1. `refund-provider-real-verifier-plan-validation`: done
 2. `refund-wechat-real-verifier-contract`: pending
+
+## 第三百二十六轮 Refund Provider Real Verifier Plan Validation
+
+1. `refund-provider-real-verifier-plan-validation`: done
+
+第三百二十六轮原则：
+
+- 本轮只记录 PR #370-#372 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- provider verifier plan 阶段仍只是文档规划，不代表可接 SDK、route、inbox、workflow 或 refund success state。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十六轮完成后建议继续：
+
+1. `refund-wechat-real-verifier-contract`: pending

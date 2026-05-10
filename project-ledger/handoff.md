@@ -2208,3 +2208,10 @@
 - 计划明确必须先确认 `ALIPAY_REFUND_NOTIFY_MODE`，不能把同步退款响应或交易支付成功通知当作退款成功。
 - 后续 contract PR 建议新增 `alipay-refund-notification-verifier.ts`、redacted test vectors 和 focused tests；仍只能输出 `executable: false`。
 - 下一步建议先做 `refund-provider-real-verifier-plan-validation`，再进入 provider-specific verifier contract；仍不得接 provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 326 更新
+
+- `refund-provider-real-verifier-plan-validation` 已完成，见 `docs/refund-provider-real-verifier-plan-validation.md`。
+- PR #370-#372 合并后验证确认均为 docs / task / queue / ledger only；没有 `apps/**` 或 `packages/**` runtime diff。
+- provider verifier plan 阶段仍不是实现；微信支付 / 支付宝 SDK、真实密钥、真实 route、inbox、workflow 和 refund success state 均未启用。
+- 下一步建议进入 `refund-wechat-real-verifier-contract`；必须保持纯函数、redacted fixtures、focused tests，不接 route、不读真实密钥、不写 inbox。

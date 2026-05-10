@@ -691,3 +691,10 @@
 - 计划覆盖 fake form、canonicalization、verification helper、normalize helper、test matrix、Go / No-Go 和后续 PR 拆分。
 - 本轮不修改 `packages/**` 或 `apps/**` runtime，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
 - 验证要求：`git diff --check`、子智能体复核。
+
+## Round 264 更新
+
+- `provider-disabled-adapter-rollup-validation`: done，汇总 PR #303-#310 支付 Provider sandbox / disabled adapter / fake notify plan 阶段。
+- 验证通过：payment notification harness 23 suites / 153 tests、API typecheck、runtime registration grep、`git diff --check`。
+- 当前支付宝 / 微信支付仍未注册、不接 route、不接 checkout、不接 SDK、不读真实 secret、不执行 payment workflow。
+- 下一步只能进入 fake fixture / pure contract，不应直接接 SDK 或 checkout。

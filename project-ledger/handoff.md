@@ -1733,3 +1733,10 @@
 - 本轮只规划支付宝 fake notify / test vector 阶段，明确 fake RSA key / fake public key / fake certificate metadata、canonicalization、验签/归一化合同和失败矩阵。
 - 没有修改 runtime，没有接 SDK、checkout、DB、workflow 或真实 secret。
 - 下一步建议继续 `provider-disabled-adapter-rollup-validation` 或 fake notify fixtures，仍保持小 PR。
+
+## Round 264 更新
+
+- `provider-disabled-adapter-rollup-validation` 已完成，见 `docs/provider-disabled-adapter-rollup-validation.md`。
+- 汇总 PR #303-#310：支付宝 / 微信支付已具备 sandbox contract、secret key 模板、未注册 disabled adapter skeleton、validation 和 fake notify test plan。
+- 验证通过：payment harness 23 suites / 153 tests、API typecheck、runtime grep 和 `git diff --check`。
+- 当前仍禁止直接接真实 SDK、checkout、provider route、workflow、DB 或真实 secret；下一步只能做 fake fixture / pure contract。

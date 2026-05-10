@@ -990,3 +990,11 @@
 - Runtime grep 仅命中 focused route test 的负断言和 must-not-read fixture，未发现 provider refund request、workflow、checkout 或状态写入命令。
 - 当前 `/china/refund-inbox/mock` 仍 disabled-only，不读取 body、不连接 DB、不调用 verifier / normalizer / repository / provider refund API / workflow、不写 inbox 或 event log。
 - 下一步只能进入 `refund-inbox-local-inbox-only-route-plan` 或 repository rehearsal plan；仍不能接真实 refund runtime、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 302 更新
+
+- `refund-inbox-local-inbox-only-route-plan`: done，见 `docs/refund-inbox-local-inbox-only-route-plan.md`。
+- 本轮只做 docs-only plan；不修改 `apps/**` 或 `packages/**` runtime，不改 route 行为，不连接 DB，不写 inbox。
+- 计划定义未来 fake/local inbox-only route 的 env gate、mock provider gate、local disposable DB / in-memory gate、fake payload contract、response contract、redaction、test matrix、verification 和 rollback。
+- 明确 accepted / duplicate / manual review response 都不能代表退款成功；provider refund API、workflow、refund state mutation、settlement、commission、payout、permission、fulfillment 和 logistics 继续 No-Go。
+- 下一步若实现 `refund-inbox-local-inbox-only-route`，必须继续 fake/local、inbox/audit-only、production blocked，并跑 harness、refund disposable DB dry-run、typecheck 和 runtime grep。

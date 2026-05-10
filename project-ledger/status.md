@@ -1007,3 +1007,11 @@
 - Focused route tests 覆盖 9 个场景：默认 disabled、缺少 local repository disabled、production blocked、GET 405、accepted、duplicate、digest conflict manual review、missing signature rejected、non-CNY rejected。
 - 当前实现不连接 DB、不注册 module/migration、不调用 provider refund API、不执行 payment/refund workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
 - 验证要求：focused route unit test、API typecheck、payment harness、refund disposable DB dry-run、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 304 更新
+
+- `refund-inbox-local-inbox-only-route-validation`: done，见 `docs/refund-inbox-local-inbox-only-route-validation.md`。
+- PR #350 合并后验证通过：focused route test 9/9、API typecheck、payment notification harness 40 suites / 289 tests、payment inbox DB dry-run 2|9、refund inbox DB dry-run 1|8 且 down/drop cleanup 通过。
+- Runtime grep 仅命中 focused route test 的负断言和 must-not-read fixture，未发现 provider refund request、workflow、checkout 或状态写入命令。
+- 当前 `/china/refund-inbox/mock` 仍只支持 fake/local in-memory inbox-only；local DB route wiring、真实 Provider、workflow 和 refund success state 仍未启用。
+- 下一步建议进入 `refund-inbox-local-db-route-plan` 或 repository rehearsal plan，继续保持 no-runtime-mutation gate。

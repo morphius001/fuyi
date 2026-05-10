@@ -361,3 +361,4 @@
 - 完成 `refund-inbox-disabled-route-validation`，记录 PR #347 合并后 focused route test 4/4、API typecheck、payment harness 40 suites / 284 tests、DB dry-run 2|9、runtime grep 和 diff check 通过。
 - 完成 `refund-inbox-local-inbox-only-route-plan`，docs-only 规划未来 `/china/refund-inbox/mock` fake/local inbox-only 路径，覆盖 local-only env gate、mock provider、local DB / in-memory、fake signature、accepted / duplicate / manual review response、redaction、test matrix 和 No-Go。
 - 完成 `refund-inbox-local-inbox-only-route`，`/china/refund-inbox/mock` 在显式本地 in-memory gate 下支持 fake refund notification accepted / duplicate / digest conflict manual review；仍默认 disabled、production blocked、不连接 DB、不调用 provider refund API 或 workflow。
+- 完成 `refund-inbox-local-inbox-only-route-validation`，记录 PR #350 合并后 focused route test 9/9、API typecheck、payment harness 40 suites / 289 tests、payment DB dry-run 2|9、refund DB dry-run 1|8、runtime grep 和 diff check 通过。

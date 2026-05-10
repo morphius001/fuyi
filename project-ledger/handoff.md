@@ -2029,3 +2029,10 @@
 - accepted / duplicate / manual_review response 都带 `runtimeMutationBlocked: true`，只表示本地 inbox 结果，不代表退款成功。
 - 当前未接 local DB route wiring、真实 Provider、workflow、refund state mutation、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议进入 `refund-inbox-local-inbox-only-route-validation`，做合并后验证；随后再规划 local DB-backed route，仍不能接真实 refund runtime。
+
+## Round 304 更新
+
+- `refund-inbox-local-inbox-only-route-validation` 已完成，见 `docs/refund-inbox-local-inbox-only-route-validation.md`。
+- 合并后验证通过：focused route test 9/9、API typecheck、payment harness 40 suites / 289 tests、payment dry-run 2|9、refund dry-run 1|8、runtime grep 仅测试负断言。
+- 当前 route 仍不是可用真实退款入口；只支持 fake/local in-memory inbox-only，local DB route wiring 和真实 Provider 仍未启用。
+- 下一步建议进入 `refund-inbox-local-db-route-plan`，先规划 local disposable DB-backed route；不要直接连接预发/生产、provider refund API、workflow 或状态写入。

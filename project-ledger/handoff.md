@@ -309,6 +309,15 @@
 - 当前 provider route 仍 disabled，不读 body、不写 inbox；`packages/api/.mercur/index.d.ts` 已恢复，未纳入本轮。
 - 下一步：提交 / push / 开 PR / merge 本 validation；之后继续 `refund-provider-inbox-route-local-wiring-plan`，仍先 docs-only。
 
+## Round 335 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-nq-refund-provider-inbox-route-local-wiring-plan`。
+- `refund-provider-inbox-route-local-wiring-plan` 已完成，见 `docs/refund-provider-inbox-route-local-wiring-plan.md`。
+- 本轮只改 docs / task / queue / ledger，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划明确 local wiring 下一步仍只允许 development + local in-memory + fixture config，不连接 DB、不接 SDK、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
+- 下一步：运行 `git diff --check`、`git status --short --branch` 和子智能体只读复核；通过后精确 stage、commit、push、开 PR 并 merge。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

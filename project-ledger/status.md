@@ -1266,3 +1266,12 @@
 - 当前 provider route 仍是 disabled skeleton，不读 body、不写 inbox、不连接 DB、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-inbox-route-local-wiring-plan`，先 docs-only 规划 local in-memory inbox wiring。
 - 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 335 更新
+
+- `refund-provider-inbox-route-local-wiring-plan`: done，见 `docs/refund-provider-inbox-route-local-wiring-plan.md`。
+- 本轮只做 docs-only local wiring plan；不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不注册 module，不接 SDK，不写真实密钥。
+- 计划明确下一步 local wiring 只能在 development + local target + local in-memory + fixture config 下读取 body、调用 verifier contract、写 local inbox。
+- 所有 provider event mapping 均不代表平台退款成功；Alipay query-required 仍不得调用 query API。
+- 下一步如进入 `refund-provider-inbox-route-local-wiring`，必须先实现 local in-memory repository / normalizer tests。
+- 仍 No-Go：provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

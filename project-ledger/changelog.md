@@ -369,3 +369,4 @@
 - 完成 `refund-inbox-repository-real-db-adapter-rehearsal`，新增本地 disposable PostgreSQL rehearsal 脚本，验证 refund inbox repository / SQL adapter 的 DB-safe status / actor mapping、duplicate / digest conflict、forbidden action、metadata redaction、partial rollback、down/drop 和无残留 DB。
 - 完成 `refund-inbox-repository-real-db-adapter-rehearsal-validation`，记录 PR #356 合并后 real-adapter rehearsal `1|8`、unsafe DB guard、production guard、focused 24/24、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund dry-run `1|8` 和 diff check 通过。
 - 完成 `refund-schema-constraint-migration-plan`，docs-only 规划未来 refund schema / constraint migration，明确 processing status、audit action、actor、amount、metadata redaction 和 index 的迁移边界与验证矩阵。
+- 完成 `refund-schema-constraint-migration-rehearsal-plan`，docs-only 规划未来本地 disposable PostgreSQL rehearsal 脚本，覆盖 constraint SQL 草案、DB guard、verification matrix、down/rollback 和 no-runtime-mutation 边界。

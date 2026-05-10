@@ -1875,3 +1875,12 @@
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 输出仍为 `fixtureOnly: true` / `executable: false`；不生成 normalizer envelope，不新增 route、不写 DB、不接 provider API、不执行 workflow。
 - 下一步建议进入 `refund-notification-normalizer-contract`，仍保持 fake-only pure function。
+
+## Round 284 更新
+
+- `refund-notification-normalizer-contract` 已完成，见 `docs/refund-notification-normalizer-contract.md`。
+- 新增 `normalizeRefundNotificationContract()` fake-only normalizer，把 verified refund notification 映射为标准 `ChinaPaymentNotificationEnvelope`。
+- 验证通过：focused unit test 11/11、API typecheck、payment harness 34 suites / 242 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 输出仍为 `fixtureOnly: true` / `executable: false`；不写 inbox、不新增 route、不写 DB、不接 provider API、不执行 workflow、不改变退款状态。
+- 下一步建议进入 `refund-manual-review-audit-plan` 或 `payment-refund-runtime-gate-validation`。

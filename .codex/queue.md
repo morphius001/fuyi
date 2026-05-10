@@ -1925,6 +1925,21 @@
 
 第二百八十三轮完成后建议继续：
 
-1. `refund-notification-normalizer-contract`: pending
+1. `refund-notification-normalizer-contract`: done
 2. `refund-manual-review-audit-plan`: pending
 3. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十四轮 Refund Notification Normalizer Contract
+
+1. `refund-notification-normalizer-contract`: done
+
+第二百八十四轮原则：
+
+- 本轮只新增退款通知 fake-only normalizer 纯函数和 tests。
+- 输出 envelope 只作为后续 inbox / guard 输入合同，不代表退款成功。
+- 不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变退款状态。
+
+第二百八十四轮完成后建议继续：
+
+1. `refund-manual-review-audit-plan`: pending
+2. `payment-refund-runtime-gate-validation`: pending

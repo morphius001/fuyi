@@ -1474,3 +1474,20 @@
 10. `product-discovery-source-tags`: done，给商品发现只读 read model 增加非敏感 sourceTags，不接日志 provider 或交易 runtime。
 11. `product-discovery-source-tags-validation`: done，docs-only 汇总 sourceTags 实现验证、隐私边界和 dev-only debug banner 门槛。
 12. `storefront-discovery-status-sync`: done，docs-only 同步 PR #277-#291 完成状态、安全下一步和阻断项。
+
+## 第二百五十六轮 WeChat Pay Provider Sandbox Contract
+
+1. `wechat-pay-provider-sandbox-contract`: done
+
+第二百五十六轮原则：
+
+- 本轮只定义微信支付 Provider sandbox / disabled adapter 合同。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不接微信支付 SDK，不接 checkout，不写真实 app id、mch id、private key、APIv3 key、证书或 token。
+- 支付状态候选入口只能是后端 `notify_url` 异步通知，且必须验签、解密、幂等、可重试，并写入 inbox / event log。
+
+第二百五十六轮完成后建议继续：
+
+1. `provider-secret-config-template`: pending
+2. `wechat-pay-provider-disabled-adapter-skeleton`: pending
+3. `alipay-provider-disabled-adapter-skeleton`: pending

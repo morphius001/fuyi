@@ -1678,3 +1678,11 @@
 - 本轮只定义支付宝 sandbox / disabled provider 的合同，覆盖 create payment、notify normalize、verify、return_url 和 fake notify tests。
 - 下一步建议继续 `wechat-pay-provider-sandbox-contract`；仍不得接 checkout、SDK、真实 provider、真实密钥或 payment workflow。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 256 更新
+
+- `wechat-pay-provider-sandbox-contract` 已完成，见 `docs/wechat-pay-provider-sandbox-contract.md`。
+- 本轮只定义微信支付 sandbox / disabled provider 的合同，覆盖 create payment、notify normalize、verify/decrypt、return_url 和 fake notify tests。
+- 官方资料确认微信支付成功通知通过 `notify_url` 后端 POST，回调资源为加密数据；商户侧必须按微信支付请求头验签，并使用 APIv3 key 解密。
+- 下一步建议继续 `provider-secret-config-template`；仍不得接 checkout、SDK、真实 provider、真实密钥或 payment workflow。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

@@ -313,3 +313,4 @@
 - 完成 `payment-provider-production-hardening-plan`，docs-only 建立支付宝 / 微信支付真实 Provider 生产加固计划；本轮不接真实 provider、不写密钥、不执行 payment workflow。
 - 完成 `payment-runtime-external-readiness-review`，docs-only 复核 payment runtime 外部 disposable preprod DB readiness；当前仍 blocked-external，不连接外部 DB、不注册 migration、不接 provider。
 - 完成 `alipay-provider-sandbox-contract`，docs-only 定义支付宝 Provider sandbox 合同；本轮不接 SDK、不接 checkout、不写真实密钥、不执行 payment workflow。
+- 完成 `wechat-pay-provider-sandbox-contract`，docs-only 定义微信支付 Provider sandbox 合同；本轮不接 SDK、不接 checkout、不写真实 app id / mch id / private key / APIv3 key / 证书，不执行 payment workflow。

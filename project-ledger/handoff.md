@@ -2169,3 +2169,11 @@
 - 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
 - 下一步建议进入 `refund-route-runtime-readiness-plan`，先审计真实 route/runtime 启用前置条件。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 321 更新
+
+- `refund-route-runtime-readiness-plan` 已完成，见 `docs/refund-route-runtime-readiness-plan.md`。
+- 本轮只新增真实退款通知 route / runtime 启用前 readiness gate，不修改 runtime、不连接 DB、不注册 module、不接 provider。
+- 当前结论仍是 No-Go to real refund runtime：fake/local inbox-only、schema rehearsal 和 adapter rehearsal 不能代表退款成功或可上线真实退款。
+- 后续必须按串行顺序推进：readiness validation、provider real verifier plan/contract、provider inbox-only shadow、state owner handoff、refund state mutation shadow、reconciliation / settlement plan。
+- 仍不得直接接 provider refund request、执行 workflow、写 refund success state、调整 settlement / commission / payout、弱化 permission 或改 fulfillment / logistics。

@@ -1839,3 +1839,9 @@
 - 新增 `evaluateRefundAmountGuardContract()` 纯函数和 12 个 focused tests，输出始终 `executable: false`。
 - 本轮没有新增 refund route、没有写 DB、没有接支付宝 / 微信支付 refund API、没有调用 workflow、没有改变 order / payment / refund 状态。
 - 下一步建议进入 `refund-request-idempotency-plan` 或 `refund-notification-contract-plan`，仍保持高风险串行。
+
+## Round 279 更新
+
+- `refund-request-idempotency-plan` 已完成，见 `docs/refund-request-idempotency-plan.md`。
+- 已规划 local command、provider request、provider notification 三层幂等，明确 provider request accepted / unknown 不代表退款成功。
+- 下一步建议进入 `refund-request-idempotency-contract` 或 `refund-notification-contract-plan`，仍不接真实 provider、不写 DB、不执行 workflow。

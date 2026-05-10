@@ -1924,3 +1924,12 @@
 - inbox state、normalized envelope、manual review decision 和 audit event 都不代表退款成功；当前仍必须保持 `runtime_mutation_blocked`。
 - 本轮不新增 runtime、route、DB repository、migration 注册、provider refund API、workflow 或 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态写入。
 - 下一步建议进入 `refund-inbox-state-transition-contract` 纯函数合同，或先做 `refund-runtime-gate-validation-v2`；仍不能直接接真实支付宝 / 微信支付 refund API、checkout、workflow、退款状态写入、结算、佣金、打款、履约或物流 runtime。
+
+## Round 290 更新
+
+- `refund-inbox-state-transition-contract` 已完成，见 `docs/refund-inbox-state-transition-contract.md`。
+- 新增 `evaluateRefundInboxStateTransitionContract()`、`refundInboxStates` 和 `refundInboxAllowedTransitions`，并导出到 module index。
+- Focused tests 覆盖 verified signature、invalid signature、`refund.succeeded` normalization、payment envelope rejection、duplicate no-op、digest conflict manual review、guard handoff、manual review block、unsupported transition 和敏感可执行 payload 负断言。
+- 当前 contract 仍只输出不可执行 decision：`blockRuntimeMutation: true`、`stateMutationAllowed: false`、`fixtureOnly: true`、`executable: false`。
+- 本轮不新增 route、不写 DB、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 下一步建议进入 `refund-runtime-gate-validation-v2` 汇总验证；如果继续做 repository，也只能先做 docs-only / interface-only plan。

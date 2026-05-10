@@ -21,4 +21,5 @@ export * from "./alipay-test-vectors";
 export * from "./alipay-provider";
 export * from "./wechat-pay-provider";
 export * from "./wechat-pay-test-vectors";
+export * from "./wechat-pay-notification-verifier";
 export * from "./payment-provider-registry";

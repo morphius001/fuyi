@@ -325,3 +325,4 @@
 - 完成 `wechat-pay-fake-notify-fixtures`，新增微信支付 fake-only notify vector 和 focused tests；本轮不实现验签、解密、归一化或 runtime。
 - 完成 `alipay-fake-notify-fixtures`，新增支付宝 fake-only notify vector 和 focused tests；canonical payload 排除 `sign` / `sign_type`，本轮不实现 canonicalization helper、验签、归一化或 runtime。
 - 完成 `provider-fake-notify-contract-validation`，汇总 PR #309-#313 fake notify plan / fixtures，并确认下一步只能进入 verifier / normalizer 纯函数合同。
+- 完成 `wechat-pay-notification-verifier-contract`，新增微信支付 fake notify verifier 纯函数合同；本轮不实现真实 RSA 验签、不解密、不接 SDK、checkout 或 workflow。

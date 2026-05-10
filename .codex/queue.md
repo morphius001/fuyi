@@ -1671,6 +1671,22 @@
 
 第二百六十七轮完成后建议继续：
 
-1. `wechat-pay-notification-verifier-contract`: pending
+1. `wechat-pay-notification-verifier-contract`: done
 2. `alipay-notification-verifier-contract`: pending
 3. `wechat-pay-notification-normalizer-contract`: pending
+
+## 第二百六十八轮 WeChat Pay Notification Verifier Contract
+
+1. `wechat-pay-notification-verifier-contract`: done
+
+第二百六十八轮原则：
+
+- 本轮只新增微信支付 fake notify verifier 纯函数合同。
+- 只校验 fake raw notification 的 header、trusted fake serial、expected fake signature、timestamp tolerance 和 encrypted resource algorithm。
+- 不实现真实 RSA 验签，不解密，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+
+第二百六十八轮完成后建议继续：
+
+1. `alipay-notification-verifier-contract`: pending
+2. `wechat-pay-notification-normalizer-contract`: pending
+3. `alipay-notification-normalizer-contract`: pending

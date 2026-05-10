@@ -719,3 +719,10 @@
 - 验证通过：payment harness 25 suites / 161 tests、API typecheck、runtime registration grep、sensitive credential grep、`git diff --check`。
 - 当前支付宝 / 微信支付仍只具备 fake-only notification vectors，不接 SDK、不接 checkout、不注册 provider、不执行 payment workflow。
 - 下一步只能进入 verifier / normalizer 纯函数合同，不应直接接真实 route、SDK、checkout、退款、结算、佣金、履约或物流。
+
+## Round 268 更新
+
+- `wechat-pay-notification-verifier-contract`: done，新增微信支付 fake notify verifier 纯函数合同。
+- 合同校验 fake raw notification header、trusted fake serial、expected fake signature、timestamp tolerance 和 encrypted resource algorithm。
+- 本轮不实现真实 RSA 验签、不解密、不接 SDK、不读真实 secret、不接 checkout、不执行 payment workflow。
+- 验证要求：focused unit test、API typecheck、payment harness、`git diff --check`、子智能体复核。

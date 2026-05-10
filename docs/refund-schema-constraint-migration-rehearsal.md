@@ -10,7 +10,7 @@
 .codex/scripts/refund-schema-constraint-migration-rehearsal.sh
 ```
 
-脚本只在本地一次性 DB 中验证未来 refund schema / constraint migration 的 SQL 语义。它不修改真实 migration，不注册 module，不新增 route，不连接预发 / 生产，不调用 provider refund API，不执行 workflow，也不改变退款成功、结算、佣金、打款、权限、履约或物流状态。
+脚本只在本地一次性 DB 中验证当前 refund schema / constraint migration skeleton 的 SQL 语义。它不注册 module，不新增 route，不连接预发 / 生产，不调用 provider refund API，不执行 workflow，也不改变退款成功、结算、佣金、打款、权限、履约或物流状态。
 
 ## Disposable DB Guard
 
@@ -26,21 +26,21 @@ fuyi_refund_schema_constraint_dry_run_<timestamp>
 - 非 `localhost` / `127.0.0.1` / `::1` host。
 - production / prod / preprod / staging env hint。
 - 已注册 `china-payment-notification` 的 `medusa-config.ts`。
-- staged runtime / config / lock / env files。
+- staged files 中任何不在 migration rehearsal allowlist 内的路径。
 - 缺少 `psql`、`createdb`、`dropdb` 或 Node。
 - PostgreSQL 未就绪。
 
 ## Rehearsal Coverage
 
-脚本从当前 shared inbox migration skeleton 提取 up / down SQL，在 disposable DB 内：
+脚本从当前 shared inbox migration skeleton 提取 up / down SQL，在 disposable DB 内验证 migration 自带约束：
 
 - 应用 base schema。
-- 临时扩展 `processing_status` constraint，保留 payment statuses 并增加 refund-only statuses。
-- 临时扩展 event log `action` constraint，保留 payment actions 并增加 refund audit actions。
-- 临时扩展 `actor_type`，演练 `system_job`、`admin`、`vendor` 等 refund audit actor。
-- 临时增加 positive amount check。
-- 临时增加递归 metadata redaction helper / constraint。
-- 临时增加 `(provider, provider_refund_id)` 普通索引，避免误设 unique。
+- `processing_status` constraint 保留 payment statuses 并支持 refund-only statuses。
+- event log `action` constraint 保留 payment actions 并支持 refund audit actions。
+- `actor_type` 支持 `system_job`、`admin`、`vendor` 等 refund audit actor。
+- positive amount check 生效。
+- 递归 metadata redaction helper / constraint 生效。
+- `(provider, provider_refund_id)` 普通索引存在，避免误设 unique。
 
 脚本验证：
 
@@ -57,9 +57,8 @@ fuyi_refund_schema_constraint_dry_run_<timestamp>
 - `provider + idempotency_key` duplicate 被拒绝。
 - top-level sensitive / executable metadata 被拒绝。
 - nested sensitive / executable metadata 被拒绝。
-- rollback 恢复 base constraints。
-- rollback 后 refund-only status / action / actor 被 base schema 拒绝。
 - down SQL 移除 tables。
+- down SQL 移除 metadata helper。
 - drop DB 后无残留。
 
 ## 已执行验证

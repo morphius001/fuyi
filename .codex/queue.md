@@ -2425,4 +2425,19 @@
 
 第三百一十五轮完成后建议继续：
 
-1. `refund-schema-constraint-migration`: pending
+1. `refund-schema-constraint-migration`: done
+
+## 第三百一十六轮 Refund Schema Constraint Migration
+
+1. `refund-schema-constraint-migration`: done
+
+第三百一十六轮原则：
+
+- 本轮只修改未注册的 migration skeleton、schema rehearsal 脚本和文档。
+- 不注册 module，不新增 route，不接 provider refund API，不执行 workflow。
+- migration 只扩展 constraint / index / metadata redaction helper，不写退款成功状态。
+- 仍不接结算、佣金、打款、权限、履约或物流。
+
+第三百一十六轮完成后建议继续：
+
+1. `refund-schema-constraint-migration-validation`: pending

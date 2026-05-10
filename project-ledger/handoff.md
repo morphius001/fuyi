@@ -2126,3 +2126,13 @@
 - 计划明确真实 migration PR 前必须有 file/schema/runtime/data gates、operator preflight SQL、rollback runbook、module registration 保持关闭和验证矩阵。
 - 下一步可进入 `refund-schema-constraint-migration`，但只允许修改 migration skeleton / docs / validation，不允许注册 module、启用 route、provider、workflow 或 refund success state。
 - 仍不得连接预发/生产 DB，不得接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 316 更新
+
+- `refund-schema-constraint-migration` 已完成，见 `docs/refund-schema-constraint-migration.md`。
+- 未注册 migration skeleton 已扩展 refund-only status/action/actor、positive amount、metadata redaction helper/check 和 `(provider, provider_refund_id)` 普通索引。
+- `.codex/scripts/refund-schema-constraint-migration-rehearsal.sh` 现在验证当前 migration 自带 constraints，并验证 down SQL 移除 tables / metadata helper。
+- `.codex/scripts/refund-inbox-repository-real-db-adapter-rehearsal.sh` 已同步新 schema 预期：`normalized` / `system_job` 现在应被接受，危险 runtime action 仍被拒绝。
+- 验证通过：schema constraint rehearsal、unsafe DB guard、production guard、focused 29/29、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、diff check。
+- 当前仍未注册 module，未新增 route，未接真实 provider / workflow / refund success state。
+- 下一步建议做 `refund-schema-constraint-migration-validation`；仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

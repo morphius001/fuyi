@@ -799,3 +799,10 @@
 - 覆盖金额、币种、支付状态、provider、seller / market ownership、Admin RBAC、Vendor seller ownership、reason / audit note、pending conflict 和 idempotency replay。
 - 输出始终 `executable: false`；本轮不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 279 更新
+
+- `refund-request-idempotency-plan`: done，docs-only 规划退款请求三层幂等。
+- 区分 local command idempotency、provider request idempotency 和 provider notification idempotency；request accepted 不等于 refund succeeded。
+- 本轮不新增 runtime、不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证要求：`git diff --check`、status/name-only/untracked 范围确认、子智能体复核。

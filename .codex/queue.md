@@ -1844,6 +1844,22 @@
 
 第二百七十八轮完成后建议继续：
 
-1. `refund-request-idempotency-plan`: pending
+1. `refund-request-idempotency-plan`: done
+2. `refund-notification-contract-plan`: pending
+3. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百七十九轮 Refund Request Idempotency Plan
+
+1. `refund-request-idempotency-plan`: done
+
+第二百七十九轮原则：
+
+- 本轮只规划退款请求幂等。
+- 区分 local command、provider request、provider notification 三层幂等。
+- 不新增 runtime、不新增 route、不写 DB、不接 provider refund API、不执行 workflow。
+
+第二百七十九轮完成后建议继续：
+
+1. `refund-request-idempotency-contract`: pending
 2. `refund-notification-contract-plan`: pending
 3. `payment-refund-runtime-gate-validation`: pending

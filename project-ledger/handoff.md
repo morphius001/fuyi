@@ -2094,3 +2094,11 @@
 - 建议后续顺序：`refund-schema-constraint-migration-rehearsal-plan` -> `refund-schema-constraint-migration-rehearsal` -> `refund-schema-constraint-migration` -> validation。
 - 当前分支不修改真实 migration，不连接 DB，不注册 module，不新增 route。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 312 更新
+
+- `refund-schema-constraint-migration-rehearsal-plan` 已完成，见 `docs/refund-schema-constraint-migration-rehearsal-plan.md`。
+- 计划将下一步限定为 local disposable PostgreSQL script：应用 base schema，再在一次性 DB 内演练 expanded constraints、metadata redaction guard、index 和 down/rollback。
+- 未来脚本默认 DB 前缀建议 `fuyi_refund_schema_constraint_dry_run_`，必须拒绝 unsafe name、remote host、production/preprod/staging、staged runtime/config/env。
+- 当前仍未修改真实 migration，未连接 DB，未注册 module，未新增 route。
+- 下一步建议执行 `refund-schema-constraint-migration-rehearsal`；仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -1073,3 +1073,11 @@
 - 计划覆盖 current shared payment-first schema 不匹配点、future processing status / refund audit action / actor / amount / metadata redaction / index strategy、PR 拆分顺序和 verification matrix。
 - 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议进入 `refund-schema-constraint-migration-rehearsal-plan`，继续 docs-only。
+
+## Round 312 更新
+
+- `refund-schema-constraint-migration-rehearsal-plan`: done，见 `docs/refund-schema-constraint-migration-rehearsal-plan.md`。
+- 本轮只规划未来 rehearsal script，不新增脚本，不修改真实 migration，不连接 DB，不注册 module。
+- 计划定义 `fuyi_refund_schema_constraint_dry_run_` disposable DB guard、constraint SQL rehearsal shape、payment/refund compatibility matrix、metadata redaction helper cleanup 和 rollback 要求。
+- 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议进入 `refund-schema-constraint-migration-rehearsal`，只新增本地 disposable DB 脚本。

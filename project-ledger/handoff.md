@@ -289,6 +289,16 @@
 - 计划明确后续 implementation PR 只能做默认 disabled 的 provider inbox-only route shadow，生产阻断，state mutation 阻断，最多写 inbox / audit。
 - 下一步：运行 `git diff --check`、`git status --short --branch` 和子智能体只读复核；通过后精确 stage、commit、push、开 PR 并 merge。
 
+## Round 333 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-no-refund-provider-inbox-route-shadow`。
+- `refund-provider-inbox-route-shadow` 已完成，见 `docs/refund-provider-inbox-route-shadow.md`。
+- 新增 provider route disabled skeleton：`/china/refund-inbox/wechat-pay` 和 `/china/refund-inbox/alipay`。
+- 当前 route 即使 local shadow flags 打开也返回 disabled，不读取 body、不写 inbox。
+- 仍不接 SDK、真实密钥、DB、module registration、provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步：跑 focused tests、API typecheck、payment harness、runtime grep、`git diff --check` 和子智能体复核；通过后精确 stage、commit、push、开 PR 并 merge。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

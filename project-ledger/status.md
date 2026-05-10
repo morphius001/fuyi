@@ -1247,3 +1247,12 @@
 - 后续 implementation 仍必须默认 disabled、production blocked、state mutation blocked，只能写 inbox / audit，不能表达平台退款成功。
 - 下一步如进入 `refund-provider-inbox-route-shadow`，必须保持 disabled skeleton / local gate / tests 优先。
 - 仍 No-Go：provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 333 更新
+
+- `refund-provider-inbox-route-shadow`: done，见 `docs/refund-provider-inbox-route-shadow.md`。
+- 新增支付宝 / 微信支付 refund provider inbox route disabled shadow skeleton、route config parser、safe response redaction helper 和 focused tests。
+- 当前 route 默认 disabled；即使 local shadow flags 打开，也返回 disabled，不读取 body、不写 inbox。
+- 本轮不连接 DB、不注册 module、不接 SDK、不写真实密钥、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-inbox-route-shadow-validation`，验证 focused tests、typecheck、payment harness、runtime grep 和 diff check。
+- 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

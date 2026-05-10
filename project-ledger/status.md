@@ -757,3 +757,10 @@
 - 验证通过：payment harness 29 suites / 194 tests、API typecheck、runtime grep、`git diff --check`。
 - 当前支付宝 / 微信支付仍只具备 fake-only vectors / verifier / normalizer，不接 SDK、不接 checkout、不注册 provider、不执行 payment workflow。
 - 下一步只能进入 inbox-only route gate，不应直接接真实 SDK、checkout、workflow、退款、结算、佣金、履约或物流。
+
+## Round 273 更新
+
+- `payment-runtime-inbox-only-route-gate`: done，审计现有 mock payment runtime inbox-only route gate。
+- 验证通过：payment harness 29 suites / 194 tests、API typecheck、route high-risk grep、`git diff --check`。
+- 当前 route 仍默认关闭，只允许 mock/local DB 或 local in-memory rehearsal，不接支付宝 / 微信支付真实 provider、不接 checkout、不执行 payment workflow。
+- 下一步只能进入 mock inbox-only route plan / local rehearsal，不应直接接 SDK、真实 provider route、checkout、退款、结算、佣金、履约或物流。

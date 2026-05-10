@@ -1751,6 +1751,22 @@
 
 第二百七十二轮完成后建议继续：
 
-1. `payment-runtime-inbox-only-route-gate`: pending
+1. `payment-runtime-inbox-only-route-gate`: done
 2. `payment-runtime-inbox-only-route-plan`: pending
+3. `refund-runtime-risk-gate-plan`: pending
+
+## 第二百七十三轮 Payment Runtime Inbox Only Route Gate
+
+1. `payment-runtime-inbox-only-route-gate`: done
+
+第二百七十三轮原则：
+
+- 本轮只审计现有 mock payment runtime inbox-only route gate。
+- 不新增 route，不注册 provider，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 下一步只允许进入 mock inbox-only route plan / rehearsal。
+
+第二百七十三轮完成后建议继续：
+
+1. `payment-runtime-inbox-only-route-plan`: pending
+2. `payment-runtime-inbox-only-route-local-rehearsal`: pending
 3. `refund-runtime-risk-gate-plan`: pending

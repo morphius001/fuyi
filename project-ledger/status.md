@@ -1116,3 +1116,11 @@
 - 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、`git diff --check`。
 - 当前仍不注册 module、不新增 route、不接 provider refund API、不执行 workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议做 `refund-schema-constraint-migration-validation`，记录合并后验证。
+
+## Round 317 更新
+
+- `refund-schema-constraint-migration-validation-v2`: done，见 `docs/refund-schema-constraint-migration-validation-v2.md`。
+- PR #363 合并后验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、`git diff --check`。
+- 当前 migration skeleton 已扩展，但 module 仍未注册，route / provider / workflow / refund success state 仍未启用。
+- 下一步建议进入 `refund-inbox-schema-adapter-unmapped-state-plan`，先规划 local PG client 是否移除 DB-safe mapping。
+- 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。

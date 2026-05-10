@@ -2440,4 +2440,19 @@
 
 第三百一十六轮完成后建议继续：
 
-1. `refund-schema-constraint-migration-validation`: pending
+1. `refund-schema-constraint-migration-validation-v2`: done
+
+## 第三百一十七轮 Refund Schema Constraint Migration Validation V2
+
+1. `refund-schema-constraint-migration-validation-v2`: done
+
+第三百一十七轮原则：
+
+- 本轮只记录 PR #363 合并后验证。
+- 不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不注册 module。
+- migration skeleton 已扩展，但仍不代表退款成功或 runtime 启用。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十七轮完成后建议继续：
+
+1. `refund-inbox-schema-adapter-unmapped-state-plan`: pending

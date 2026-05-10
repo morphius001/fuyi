@@ -1940,3 +1940,10 @@
 - 本轮只做 docs-only 汇总验证，覆盖退款 amount guard、request idempotency、notification verifier / normalizer、manual review audit、audit allowlist 和 inbox transition contract。
 - 结论仍是 No-Go to real refund runtime：不新增 route、不写 DB-backed runtime、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics。
 - 下一步建议进入 `refund-inbox-repository-plan`，但只能 docs-only 规划 DB owner、transaction boundary、idempotency conflict 和 event log 一致性。
+
+## Round 292 更新
+
+- `refund-inbox-repository-plan` 已完成，见 `docs/refund-inbox-repository-plan.md`。
+- 本轮只做 docs-only repository 计划，定义退款 inbox repository owner、事务边界、幂等冲突、event log 一致性、error mapping、metadata redaction、manual review 和 settlement / commission / payout block。
+- repository 只能作为 inbox / audit log owner，不是退款成功事实表，不能调用 provider refund API、workflow 或写交易 / 结算 / 履约状态。
+- 下一步建议进入 `refund-inbox-repository-interface`，只允许 interface-only / pure error classifier，不连接 DB、不接 route、不注册 runtime。

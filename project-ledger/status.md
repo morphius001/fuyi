@@ -1057,3 +1057,11 @@
 - 脚本验证 fake refund inbox row、DB-safe status / actor mapping、same digest duplicate、different digest conflict、manual review event、forbidden action rejection、metadata redaction、failed subtransaction rollback、down SQL 和 drop DB 无残留。
 - 验证通过：real-adapter rehearsal positive run `1|8`、unsafe DB name guard、production env guard、focused local client + refund repository tests 2 suites / 24 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund DB dry-run `1|8`、`git diff --check`。
 - 当前仍不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不新增 route，不接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 310 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal-validation`: done，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal-validation.md`。
+- PR #356 合并后验证通过：real-adapter rehearsal positive run `1|8`、unsafe DB name guard、production env guard、focused local client + refund repository tests 2 suites / 24 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund DB dry-run `1|8`、`git diff --check`。
+- 验证结束后工作区无 runtime diff。
+- 当前仍只是 local disposable DB rehearsal；真实 refund schema / constraint migration 必须单独规划。
+- 下一步建议进入 `refund-schema-constraint-migration-plan`，继续 docs-only。

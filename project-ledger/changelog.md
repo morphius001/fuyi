@@ -367,3 +367,4 @@
 - 完成 `refund-inbox-local-db-route-validation`，记录 PR #353 合并后 focused 33/33、API typecheck、payment harness 40 suites / 301 tests、payment DB dry-run `2|9`、refund DB dry-run `1|8`、runtime grep 和 diff check 通过。
 - 完成 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，docs-only 规划未来 `DbRefundInboxRepository` 在本地 disposable PostgreSQL 上的真实 SQL adapter 演练，明确不连接预发/生产、不注册 migration、不接 route/provider/workflow。
 - 完成 `refund-inbox-repository-real-db-adapter-rehearsal`，新增本地 disposable PostgreSQL rehearsal 脚本，验证 refund inbox repository / SQL adapter 的 DB-safe status / actor mapping、duplicate / digest conflict、forbidden action、metadata redaction、partial rollback、down/drop 和无残留 DB。
+- 完成 `refund-inbox-repository-real-db-adapter-rehearsal-validation`，记录 PR #356 合并后 real-adapter rehearsal `1|8`、unsafe DB guard、production guard、focused 24/24、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund dry-run `1|8` 和 diff check 通过。

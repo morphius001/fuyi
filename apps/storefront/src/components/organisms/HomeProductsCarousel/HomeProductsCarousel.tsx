@@ -9,6 +9,12 @@ type CarouselProduct = Product | HttpTypes.StoreProduct
 const isDisplayableProduct = (product: CarouselProduct) =>
   Boolean(product?.id && product?.handle && product?.title && product?.thumbnail)
 
+const hasCalculatedPrice = (product: HttpTypes.StoreProduct) =>
+  Boolean(product.variants?.some((variant) => variant.calculated_price))
+
+const isDisplayableStoreProduct = (product: HttpTypes.StoreProduct) =>
+  isDisplayableProduct(product) && hasCalculatedPrice(product)
+
 export const HomeProductsCarousel = async ({
   locale,
   sellerProducts,
@@ -32,8 +38,8 @@ export const HomeProductsCarousel = async ({
     forceCache: !home,
   })
 
-  const displayableProducts = (sellerProducts.length ? sellerProducts : products)
-    .filter(isDisplayableProduct)
+  const displayableProducts = products
+    .filter(isDisplayableStoreProduct)
     .slice(0, home ? 4 : undefined)
 
   if (!displayableProducts.length) {

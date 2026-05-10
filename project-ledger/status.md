@@ -572,3 +572,11 @@
 - 审计发现阻断风险：商品详情页“同档口更多鲜货”经 `prod.seller?.products -> HomeProductsCarousel` 可能把缺少 variants/calculated price 的 `Product[]` 传给 ProductCard；上线前必须回查 Store API 完整商品或降级为不可加购展示。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不改变 add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
 - 验证要求：ProductCard 使用点 grep、product discovery 展示字段 grep、Storefront build、`git diff --check`、子智能体复核。
+
+## Round 248 更新
+
+- `productdetails-related-products-store-api-guard`: done，修复商品详情页同档口更多鲜货的 ProductCard 输入边界。
+- `HomeProductsCarousel` 现在只把 Store API 回查到、且带 `variants.calculated_price` 的商品传给 ProductCard；`sellerProducts` 仅作为 handle 查询条件。
+- 如果回查不到完整商品，保留既有空态，不把不完整 seller product 伪装成真实可加购 ProductCard。
+- 本轮不修改 ProductCard add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
+- 验证要求：Storefront build、`git diff --check`、子智能体复核。

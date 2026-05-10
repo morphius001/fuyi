@@ -249,11 +249,28 @@
 
 第二百四十七轮完成后建议继续：
 
-1. `productdetails-related-products-store-api-guard`: pending
+1. `productdetails-related-products-store-api-guard`: done
 2. `cart-checkout-launch-safety-audit`: pending
 3. `payment-risk-register`: pending
 4. `permission-rbac-launch-matrix`: pending
 5. `fulfillment-logistics-runtime-gate-plan`: pending
+
+## 第二百四十八轮 ProductDetails 相关商品 ProductCard Guard
+
+1. `productdetails-related-products-store-api-guard`: done
+
+第二百四十八轮原则：
+
+- 只修复商品详情页同档口更多鲜货的 ProductCard 输入边界。
+- sellerProducts 只作为 handle 查询条件，ProductCard 只接 Store API 回查且带 calculated price 的商品。
+- 不改 add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
+
+第二百四十八轮完成后建议继续：
+
+1. `cart-checkout-launch-safety-audit`: pending
+2. `payment-risk-register`: pending
+3. `permission-rbac-launch-matrix`: pending
+4. `fulfillment-logistics-runtime-gate-plan`: pending
 
 第十七轮队列已清空。
 

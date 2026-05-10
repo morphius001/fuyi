@@ -1616,3 +1616,11 @@
 - 审计发现 ProductDetailsPage 同档口更多鲜货阻断风险：`prod.seller?.products` 可能是不带 variants/calculated price 的 `Product[]`，当前会被 `HomeProductsCarousel` 优先传给 ProductCard。上线前必须做 `productdetails-related-products-store-api-guard`，回查 Store API 完整商品或降级为不可加购展示。
 - 下一步建议先修复/降级商品详情页同档口更多鲜货，再继续 `cart-checkout-launch-safety-audit`；如果继续审计 cart/checkout，重点审计 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、支付提示、CN cart smoke 和无 cart redirect。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 248 更新
+
+- `productdetails-related-products-store-api-guard` 已完成，见 `docs/productdetails-related-products-store-api-guard.md`。
+- `HomeProductsCarousel` 不再把 `sellerProducts` 直接传给 ProductCard；现在只展示 `listProducts()` 回查到并带 calculated price 的 Store API 商品。
+- 商品详情页同档口更多鲜货如果回查不到完整商品，会显示空态，不再展示不完整可加购卡片。
+- 下一步建议继续 `cart-checkout-launch-safety-audit`，重点审计 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、支付提示、CN cart smoke 和无 cart redirect。
+- 本轮不修改 ProductCard add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。

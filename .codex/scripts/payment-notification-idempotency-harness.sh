@@ -45,6 +45,7 @@ echo "RUN payment notification unit tests"
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-composition.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-payment-webhook-handler.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/mock-webhook-repository-resolver.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/wechat-pay-provider.unit.spec.ts \
     src/api/admin/china/mock-payment-webhooks/__tests__/route.unit.spec.ts \
     src/api/china/payment-webhooks/mock/__tests__/route.unit.spec.ts \
     src/api/china/payment-providers/mock/__tests__/route.unit.spec.ts

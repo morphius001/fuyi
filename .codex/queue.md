@@ -1505,6 +1505,23 @@
 
 第二百五十七轮完成后建议继续：
 
-1. `wechat-pay-provider-disabled-adapter-skeleton`: pending
+1. `wechat-pay-provider-disabled-adapter-skeleton`: done
 2. `alipay-provider-disabled-adapter-skeleton`: pending
 3. `provider-secret-config-template-validation`: pending
+
+## 第二百五十八轮 WeChat Pay Provider Disabled Adapter Skeleton
+
+1. `wechat-pay-provider-disabled-adapter-skeleton`: done
+
+第二百五十八轮原则：
+
+- 本轮只新增未注册微信支付 disabled adapter skeleton 和 focused unit test。
+- 不注册 Medusa payment provider，不新增 API route，不修改 `packages/api/medusa-config.ts`。
+- 不接微信支付 SDK，不读取真实 secret，不接 checkout，不返回真实 payment URL 或微信调起 payload。
+- 所有操作只能返回 blocked decision，不执行 payment workflow。
+
+第二百五十八轮完成后建议继续：
+
+1. `wechat-pay-provider-disabled-adapter-validation`: pending
+2. `alipay-provider-disabled-adapter-skeleton`: pending
+3. `wechat-pay-provider-fake-notify-test-plan`: pending

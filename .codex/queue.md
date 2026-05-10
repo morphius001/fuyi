@@ -2160,5 +2160,21 @@
 
 第二百九十八轮完成后建议继续：
 
-1. `refund-inbox-disabled-route-skeleton-plan`: pending
+1. `refund-inbox-disabled-route-skeleton-plan`: done
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第二百九十九轮 Refund Inbox Disabled Route Skeleton Plan
+
+1. `refund-inbox-disabled-route-skeleton-plan`: done
+
+第二百九十九轮原则：
+
+- 本轮只做 refund inbox disabled route skeleton docs-only 计划。
+- 不新增 route、不修改 `apps/**` 或 `packages/**` runtime、不注册 migration/module。
+- 未来 skeleton 只能默认 disabled / production blocked，且不读 body、不接 DB、不调 verifier/repository/workflow。
+- disabled route 不能表达 refund inbox accepted，更不能代表退款成功。
+
+第二百九十九轮完成后建议继续：
+
+1. `refund-inbox-disabled-route-skeleton`: pending
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

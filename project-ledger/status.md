@@ -972,3 +972,13 @@
 - 未来 skeleton 必须不读 body、不验签、不 normalize、不生成 idempotency key、不调 verifier / normalizer / repository / provider refund API / workflow、不写 inbox 或 event log。
 - disabled route 不能表达 inbox accepted、duplicate 或 refund success；settlement、commission、payout、permission、fulfillment 和 logistics 继续阻断。
 - 验证要求：`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。
+
+## Round 300 更新
+
+- `refund-inbox-disabled-route-skeleton`: done，见 `docs/refund-inbox-disabled-route-skeleton.md`。
+- 新增 `packages/api/src/api/china/refund-inbox/mock/route.ts` 和 focused route tests。
+- `POST /china/refund-inbox/mock` 默认返回 disabled；`NODE_ENV=production` 返回 production blocked；`GET` 返回 405。
+- 当前 route 不读 body、不验签、不 normalize、不计算 digest、不生成 idempotency key、不连接 DB、不调 verifier / normalizer / repository / provider refund API / workflow、不写 inbox 或 event log。
+- Focused tests 覆盖默认 disabled、mock env requested 仍 disabled、production blocked、GET 405 和 response redaction；payment notification harness 已纳入该 route test。
+- 本轮不注册 migration/module，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：focused route unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。

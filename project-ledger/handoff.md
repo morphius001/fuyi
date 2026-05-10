@@ -2144,3 +2144,11 @@
 - 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
 - 下一步建议进入 `refund-inbox-schema-adapter-unmapped-state-plan`，先规划 local PG client 的 DB-safe state / actor mapping 是否可以移除。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 318 更新
+
+- `refund-inbox-schema-adapter-unmapped-state-plan` 已完成，见 `docs/refund-inbox-schema-adapter-unmapped-state-plan.md`。
+- 计划指出当前 `local-postgres-db-client.ts` 仍把 refund-only states 映射到 payment-first statuses，并把 `system_job` / `admin` / `vendor` 映射到 `system` / `operator`。
+- 下一步可执行 `refund-inbox-schema-adapter-unmapped-state`，只调整 local PG client / focused tests / rehearsal，使新 schema 下 refund state / actor 原样写入和读回。
+- 当前仍未注册 module，未新增 route，未接真实 provider / workflow / refund success state。
+- 仍不得连接预发/生产 DB，不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

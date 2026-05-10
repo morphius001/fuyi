@@ -1124,3 +1124,11 @@
 - 当前 migration skeleton 已扩展，但 module 仍未注册，route / provider / workflow / refund success state 仍未启用。
 - 下一步建议进入 `refund-inbox-schema-adapter-unmapped-state-plan`，先规划 local PG client 是否移除 DB-safe mapping。
 - 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 318 更新
+
+- `refund-inbox-schema-adapter-unmapped-state-plan`: done，见 `docs/refund-inbox-schema-adapter-unmapped-state-plan.md`。
+- 本轮只规划 local PG client / refund inbox adapter 去除 DB-safe state / actor mapping，不修改 `apps/**`、`packages/**` runtime，不连接 DB，不注册 module。
+- 计划覆盖 current mapping、future adapter scope、new schema / old schema compatibility、verification matrix、required commands 和 rollback。
+- 下一步如进入 `refund-inbox-schema-adapter-unmapped-state`，仍只能改 local PG client / tests / rehearsal，不得启用 route、provider、workflow 或 refund success state。
+- 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。

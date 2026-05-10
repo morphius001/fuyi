@@ -839,3 +839,13 @@
 - 验证通过：focused unit test 12/12、API typecheck、payment harness 33 suites / 231 tests、runtime grep 和 `git diff --check`。
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 提交前仍需子智能体只读复核。
+
+## Round 284 更新
+
+- `refund-notification-normalizer-contract`: done，新增退款通知 fake-only normalizer 纯函数和 focused tests。
+- 覆盖 verified signature、provider、event id/type、idempotency key、providerRefundId、merchant order ref、payment session、provider transaction、CNY 和 requested amount。
+- 输出标准 envelope 但仍 `fixtureOnly: true` / `executable: false`；envelope 只作为后续 inbox / guard 输入合同，不代表退款成功。
+- 本轮不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证通过：focused unit test 11/11、API typecheck、payment harness 34 suites / 242 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 提交前仍需子智能体只读复核。

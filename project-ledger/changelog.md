@@ -341,3 +341,4 @@
 - 完成 `refund-notification-contract-plan`，docs-only 规划 `refund.succeeded` / `refund.failed` 通知 verifier / normalizer 合同，要求 providerRefundId、验签、金额/币种/引用匹配和 notification idempotency，输出仍不可执行。
 - 完成 `refund-notification-fake-fixtures`，新增 `refund.succeeded` / `refund.failed` fake-only 通知向量和 focused tests；fixture 标记 `fixtureOnly: true` / `executable: false`，不实现 verifier、normalizer、route、DB 或 workflow。
 - 完成 `refund-notification-verifier-contract`，新增退款通知 fake-only verifier 纯函数和 focused tests；校验 fake signature、algorithm、provider、event id/type、providerRefundId、CNY 和 amount，输出仍不可执行，不实现 normalizer、route、DB 或 workflow。
+- 完成 `refund-notification-normalizer-contract`，新增退款通知 fake-only normalizer 纯函数和 focused tests；把 verified fake refund notification 映射为标准 envelope，但不写 inbox、不接 route/provider、不执行 workflow、不改变退款状态。

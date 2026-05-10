@@ -120,7 +120,7 @@ const makeLocalDbRequest = ({
 const makeLocalDbRow = ({
   eventId,
   rawBody,
-  processingStatus = "verified",
+  processingStatus = "normalized",
 }: {
   eventId: string;
   rawBody: string;

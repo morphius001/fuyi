@@ -242,48 +242,32 @@ const mapInboxRowFromDb = (
 const mapRefundStateToDbStatus = (
   status: RefundInboxDbRow["processingStatus"] | undefined,
 ): string | undefined => {
-  if (!status) {
-    return undefined;
-  }
-
-  if (status === "received") {
-    return "received";
-  }
-
-  if (
-    status === "terminal_rejected" ||
-    status === "digest_conflict_manual_review" ||
-    status === "manual_review_required"
-  ) {
-    return "terminal_failed";
-  }
-
-  if (status === "processed_for_audit_only") {
-    return "processed";
-  }
-
-  if (status === "duplicate_seen") {
-    return "ignored_duplicate";
-  }
-
-  return "verified";
+  return status;
 };
+
+const refundInboxDbStatuses = new Set([
+  "received",
+  "signature_verified",
+  "normalized",
+  "guard_checked",
+  "manual_review_required",
+  "runtime_mutation_blocked",
+  "processed_for_audit_only",
+  "terminal_rejected",
+  "duplicate_seen",
+  "digest_conflict_manual_review",
+]);
 
 const mapRefundStateFromDbStatus = (
   status: unknown,
 ): RefundInboxDbRow["processingStatus"] => {
-  switch (String(status)) {
-    case "received":
-      return "received";
-    case "ignored_duplicate":
-      return "duplicate_seen";
-    case "terminal_failed":
-      return "terminal_rejected";
-    case "processed":
-      return "processed_for_audit_only";
-    default:
-      return "normalized";
+  const normalized = String(status);
+
+  if (refundInboxDbStatuses.has(normalized)) {
+    return normalized as RefundInboxDbRow["processingStatus"];
   }
+
+  throw createSafeError("REFUND_DB_INVALID_STATE_TRANSITION", normalized);
 };
 
 const mapRefundInboxRowFromDb = (
@@ -324,17 +308,7 @@ const mapRefundInboxRowFromDb = (
 
 const mapRefundActorTypeToDb = (
   actorType: RefundInboxDbEventLogRow["actorType"],
-) => {
-  if (actorType === "provider") {
-    return "provider";
-  }
-
-  if (actorType === "admin" || actorType === "vendor") {
-    return "operator";
-  }
-
-  return "system";
-};
+) => actorType;
 
 const refundMetadataDeniedKeys = new Set([
   "providerRefundRequest",

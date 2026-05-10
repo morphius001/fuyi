@@ -426,7 +426,7 @@ describe("createLocalRefundInboxPostgresClient", () => {
     expect(JSON.stringify(params)).not.toContain("providerRefundRequest");
   });
 
-  it("maps refund route-only states to DB-safe statuses while returning refund states", async () => {
+  it("writes and returns refund route-only states without DB-safe mapping", async () => {
     const { connection, driver } = makeConnection();
     const client = createRefundClient(driver);
 
@@ -470,11 +470,11 @@ describe("createLocalRefundInboxPostgresClient", () => {
       String(sql).includes("update payment_notification_inbox"),
     );
 
-    expect(params[1]).toBe("verified");
+    expect(params[1]).toBe("normalized");
     expect(updated.processingStatus).toBe("normalized");
   });
 
-  it("maps refund system_job audit events to DB-safe actor types", async () => {
+  it("writes refund system_job audit events without DB-safe actor mapping", async () => {
     const { connection, driver } = makeConnection();
     const client = createRefundClient(driver);
 
@@ -501,7 +501,7 @@ describe("createLocalRefundInboxPostgresClient", () => {
       String(sql).includes("insert into payment_notification_event_log"),
     );
 
-    expect(params[3]).toBe("system");
+    expect(params[3]).toBe("system_job");
     expect(params[2]).toBe("refund_runtime_mutation_blocked");
     expect(String(params[5])).toContain("safeNote");
     expect(String(params[5])).not.toContain("providerRefundRequest");

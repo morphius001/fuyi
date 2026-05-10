@@ -312,3 +312,4 @@
 - 完成 `fulfillment-logistics-runtime-gate-plan`，docs-only 建立履约、物流、配送供应商、checkout shipping adapter、tracking 和面单 provider 的 runtime gate；本轮不修改运行时代码。
 - 完成 `payment-provider-production-hardening-plan`，docs-only 建立支付宝 / 微信支付真实 Provider 生产加固计划；本轮不接真实 provider、不写密钥、不执行 payment workflow。
 - 完成 `payment-runtime-external-readiness-review`，docs-only 复核 payment runtime 外部 disposable preprod DB readiness；当前仍 blocked-external，不连接外部 DB、不注册 migration、不接 provider。
+- 完成 `alipay-provider-sandbox-contract`，docs-only 定义支付宝 Provider sandbox 合同；本轮不接 SDK、不接 checkout、不写真实密钥、不执行 payment workflow。

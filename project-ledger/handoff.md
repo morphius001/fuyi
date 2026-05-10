@@ -1671,3 +1671,10 @@
 - 脚本 `.codex/scripts/payment-notification-preprod-disposable-db-smoke.sh` 只能 `--print-plan` 和 `--validate-inputs-only`，不能连接外部 DB。
 - 下一步可继续 `alipay-provider-sandbox-contract` 或 `wechat-pay-provider-sandbox-contract`；仍不得接真实 provider 或 payment workflow。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 255 更新
+
+- `alipay-provider-sandbox-contract` 已完成，见 `docs/alipay-provider-sandbox-contract.md`。
+- 本轮只定义支付宝 sandbox / disabled provider 的合同，覆盖 create payment、notify normalize、verify、return_url 和 fake notify tests。
+- 下一步建议继续 `wechat-pay-provider-sandbox-contract`；仍不得接 checkout、SDK、真实 provider、真实密钥或 payment workflow。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

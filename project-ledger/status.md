@@ -1090,3 +1090,11 @@
 - 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、`git diff --check`。
 - 当前仍不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不注册 module，不新增 route，不接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议做 `refund-schema-constraint-migration-validation`，记录合并后验证；或单独规划真实 migration PR。
+
+## Round 314 更新
+
+- `refund-schema-constraint-migration-validation`: done，见 `docs/refund-schema-constraint-migration-validation.md`。
+- PR #360 合并后验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、`git diff --check`。
+- 当前仍只是 local disposable DB constraint rehearsal；真实 migration 必须单独 PR，并提供 rollback runbook。
+- 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议进入 `refund-schema-constraint-migration-prereadiness-plan`，继续 docs-only。

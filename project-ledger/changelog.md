@@ -343,3 +343,4 @@
 - 完成 `refund-notification-verifier-contract`，新增退款通知 fake-only verifier 纯函数和 focused tests；校验 fake signature、algorithm、provider、event id/type、providerRefundId、CNY 和 amount，输出仍不可执行，不实现 normalizer、route、DB 或 workflow。
 - 完成 `refund-notification-normalizer-contract`，新增退款通知 fake-only normalizer 纯函数和 focused tests；把 verified fake refund notification 映射为标准 envelope，但不写 inbox、不接 route/provider、不执行 workflow、不改变退款状态。
 - 完成 `refund-manual-review-audit-plan`，docs-only 规划退款人工复核触发条件、审计 action allowlist、metadata、RBAC / ownership gate 和 settlement / commission / payout block；本轮不新增 runtime。
+- 完成 `payment-refund-runtime-gate-validation`，docs-only 汇总 payment / refund gate 验证；API typecheck、payment harness 34/242、disposable DB dry-run、高风险 grep 和 diff check 通过，结论仍是 No-Go to real refund runtime。

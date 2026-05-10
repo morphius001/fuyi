@@ -856,3 +856,11 @@
 - 覆盖 manual review 触发条件、decision 形状、audit action allowlist、metadata、Admin / Vendor / System job RBAC 与 ownership gate，以及 settlement / commission / payout block。
 - 本轮不新增 TypeScript runtime、不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
 - 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。
+
+## Round 286 更新
+
+- `payment-refund-runtime-gate-validation`: done，docs-only 汇总 payment / refund runtime gate 验证。
+- 验证通过：API typecheck、payment notification harness 34 suites / 242 tests、disposable DB dry-run、高风险 grep 和 `git diff --check`。
+- grep 显示 `china-payment-notification` 仍未注册到 `medusa-config.ts`；高风险命中仅为既有 event log action enum / migration allowlist、focused tests 负断言和既有 mock payment route imports。
+- 当前结论仍是 No-Go to real refund runtime；不接真实支付宝 / 微信支付 payment 或 refund API、不执行 workflow、不改 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 下一步建议只进入 `refund-manual-review-audit-contract`、`refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan` 这类不可执行合同 / docs-only 任务。

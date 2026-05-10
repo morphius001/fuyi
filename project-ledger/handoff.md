@@ -1891,3 +1891,10 @@
 - 本轮只做 docs-only 计划，定义退款 manual review 触发条件、audit action allowlist、metadata、RBAC / ownership gate 和 settlement / commission / payout block。
 - 未新增 runtime、route、DB、provider API 或 workflow；不改变退款、订单、支付、结算、佣金、打款、履约或物流状态。
 - 下一步建议进入 `payment-refund-runtime-gate-validation`。
+
+## Round 286 更新
+
+- `payment-refund-runtime-gate-validation` 已完成，见 `docs/payment-refund-runtime-gate-validation.md`。
+- 验证通过：API typecheck、payment harness 34 suites / 242 tests、disposable DB dry-run、高风险 grep 和 `git diff --check`。
+- 当前结论仍是 No-Go to real refund runtime；`china-payment-notification` 未注册到 `medusa-config.ts`，没有新增真实 refund route、provider API、workflow 或状态写入。
+- 下一步建议只进入 `refund-manual-review-audit-contract`、`refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan`。

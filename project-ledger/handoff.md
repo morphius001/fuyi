@@ -1970,3 +1970,11 @@
 - Focused tests 覆盖 receive、duplicate no-op、digest conflict manual review、状态标记、查询、metadata redaction 和 event log failure。
 - 当前仍没有 route、migration 注册、provider refund API、workflow 或退款状态写入。
 - 下一步建议进入 `refund-inbox-repository-disposable-db-dry-run-plan`，先 docs-only 规划 local disposable DB dry-run。
+
+## Round 296 更新
+
+- `refund-inbox-repository-disposable-db-dry-run-plan` 已完成，见 `docs/refund-inbox-repository-disposable-db-dry-run-plan.md`。
+- 本轮只规划后续本地一次性 DB dry-run；未新增脚本、未连接 DB、未注册 migration/module、未新增 route、未接 provider refund API、未执行 workflow。
+- 计划要求后续脚本验证 unique/idempotency、duplicate same digest、digest conflict manual review、refund event action allowlist、禁止动作 rejection、metadata redaction、rollback/drop 和 disposable DB 无残留。
+- 仍禁止连接预发/生产，禁止写 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 下一步建议进入 `refund-inbox-repository-disposable-db-dry-run`，只创建本地 disposable DB dry-run 脚本；或者进入 `refund-inbox-route-plan`，继续 docs-only route gate 规划。

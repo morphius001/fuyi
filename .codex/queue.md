@@ -2112,5 +2112,21 @@
 
 第二百九十五轮完成后建议继续：
 
-1. `refund-inbox-repository-disposable-db-dry-run-plan`: pending
+1. `refund-inbox-repository-disposable-db-dry-run-plan`: done
+2. `refund-inbox-route-plan`: pending
+
+## 第二百九十六轮 Refund Inbox Repository Disposable DB Dry-run Plan
+
+1. `refund-inbox-repository-disposable-db-dry-run-plan`: done
+
+第二百九十六轮原则：
+
+- 本轮只做本地 disposable DB dry-run docs-only 计划。
+- 不连接预发 / 生产，不注册 migration，不接 route、provider API 或 workflow。
+- 后续 dry-run 必须验证 unique/idempotency/digest conflict/action allowlist/redaction/rollback。
+- `refund.succeeded`、inbox accepted、manual review 和 audit event 都不能代表退款成功。
+
+第二百九十六轮完成后建议继续：
+
+1. `refund-inbox-repository-disposable-db-dry-run`: pending
 2. `refund-inbox-route-plan`: pending

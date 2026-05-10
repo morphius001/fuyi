@@ -353,3 +353,4 @@
 - 完成 `refund-inbox-repository-interface`，新增退款 inbox repository interface-only 合同、receive result 类型和纯 error classifier；不写 DB adapter、不接 route、不注册 migration、不调用 provider API 或 workflow。
 - 完成 `refund-inbox-repository-db-adapter-skeleton-plan`，docs-only 规划未来 mocked DB adapter skeleton 的文件边界、事务要求、mock client 测试、error mapping、runtime grep 和后续 dry-run 顺序。
 - 完成 `refund-inbox-repository-db-adapter-skeleton`，新增退款 inbox mocked DB adapter skeleton 和 focused tests；只使用 injected transaction / mock DB client，不连接真实 DB、不接 route、不注册 migration、不调用 provider API 或 workflow。
+- 完成 `refund-inbox-repository-disposable-db-dry-run-plan`，docs-only 规划退款 inbox repository 本地一次性 DB dry-run，覆盖 unique/idempotency、duplicate replay、digest conflict、event action allowlist、metadata redaction、rollback/drop guard 和禁止预发/生产连接边界。

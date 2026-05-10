@@ -1805,3 +1805,10 @@
 - 审计现有 mock route gate：默认关闭、production blocked、mock provider only、local DB / local in-memory rehearsal only。
 - 验证通过：payment notification harness 29 suites / 194 tests、API typecheck、route high-risk grep 和 `git diff --check`。
 - 下一步建议继续 `payment-runtime-inbox-only-route-plan`，仍不能接支付宝 / 微信支付 SDK、checkout、真实 route 或 payment workflow。
+
+## Round 274 更新
+
+- `payment-runtime-inbox-only-route-plan` 已完成，见 `docs/payment-runtime-inbox-only-route-plan.md`。
+- 计划把下一步限定为 mock provider route local inbox-only rehearsal：fake payload + fake local secret + local disposable DB / local in-memory。
+- 仍不能注册 provider、接支付宝 / 微信支付 SDK、读取真实 secret、接 checkout、执行 payment workflow，不能处理退款、结算、佣金、履约或物流。
+- 下一步建议继续 `payment-runtime-inbox-only-route-local-rehearsal`，先补本地 rehearsal 验证，不进入真实 provider runtime。

@@ -764,3 +764,10 @@
 - 验证通过：payment harness 29 suites / 194 tests、API typecheck、route high-risk grep、`git diff --check`。
 - 当前 route 仍默认关闭，只允许 mock/local DB 或 local in-memory rehearsal，不接支付宝 / 微信支付真实 provider、不接 checkout、不执行 payment workflow。
 - 下一步只能进入 mock inbox-only route plan / local rehearsal，不应直接接 SDK、真实 provider route、checkout、退款、结算、佣金、履约或物流。
+
+## Round 274 更新
+
+- `payment-runtime-inbox-only-route-plan`: done，规划 mock provider route local inbox-only rehearsal。
+- 下一步只允许 fake payload、fake local secret、local disposable DB / local in-memory route rehearsal。
+- 仍不注册 Medusa payment provider，不接支付宝 / 微信支付 SDK、不读真实 secret、不接 checkout、不执行 payment workflow。
+- 验证要求：payment harness、API typecheck、route high-risk grep、`git diff --check`。

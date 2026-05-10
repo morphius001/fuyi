@@ -1165,3 +1165,11 @@
 - 合并提交文件范围仅为 `.codex/queue.md`、`.codex/tasks/refund-route-runtime-readiness-plan.md`、`docs/refund-route-runtime-readiness-plan.md`、`project-ledger/changelog.md`、`project-ledger/handoff.md`、`project-ledger/status.md`。
 - 当前仍无 `apps/**` 或 `packages/**` runtime 变更，真实 refund route / provider / workflow / refund success state 仍未启用。
 - 下一步建议进入 `refund-provider-real-verifier-plan`；仍不接 SDK、不写真实密钥、不接 route、不执行 workflow。
+
+## Round 323 更新
+
+- `refund-provider-real-verifier-plan`: done，见 `docs/refund-provider-real-verifier-plan.md`。
+- 本轮只做 docs-only provider verifier 规划；不修改 `apps/**` 或 `packages/**` runtime，不接 SDK、不写真实密钥、不新增 route、不写 inbox。
+- 计划覆盖微信支付退款结果回调的 header 验签、平台证书 / 公钥选择、`AEAD_AES_256_GCM` 解密、event type 和 idempotency；覆盖支付宝异步通知的 `sign` / `sign_type` canonicalization、产品模式确认、refund request ref 和 amount / currency 校验。
+- 下一步建议拆成 `refund-wechat-real-verifier-plan` 与 `refund-alipay-real-verifier-plan`，继续 docs-only provider-specific 细化。
+- 仍 No-Go：真实 provider refund request、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

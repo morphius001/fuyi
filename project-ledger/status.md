@@ -1213,3 +1213,10 @@
 - 合同输出始终 `fixtureOnly: true`、`executable: false`；trade-only / query-required 场景不代表退款成功。
 - 本轮不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-real-verifier-contract-validation`。
+
+## Round 329 更新
+
+- `refund-provider-real-verifier-contract-validation`: done，见 `docs/refund-provider-real-verifier-contract-validation.md`。
+- PR #374-#375 合并后验证通过：focused WeChat + Alipay refund verifier tests 2 suites / 21 tests、API typecheck、payment notification harness 42 suites / 322 tests、payment DB dry-run `2|9`、`git diff --check`。
+- 当前 provider verifier 合同仍只输出 `fixtureOnly: true` / `executable: false`，不接 route、不写 inbox、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-inbox-route-plan`，继续先规划 provider inbox-only route shadow。

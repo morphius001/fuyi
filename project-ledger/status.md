@@ -908,3 +908,10 @@
 - 覆盖 refund amount guard、request idempotency、notification verifier / normalizer、manual review audit、audit event allowlist 和 inbox state transition contract。
 - 验证结论仍是 No-Go to real refund runtime：没有真实 refund route、DB-backed refund inbox runtime、provider refund API、workflow execution、退款状态写入、结算、佣金或打款联动。
 - 验证要求：API typecheck、payment harness、registration grep、high-risk runtime grep、`git diff --check`、子智能体复核。
+
+## Round 292 更新
+
+- `refund-inbox-repository-plan`: done，docs-only 规划退款 inbox repository。
+- 覆盖 repository owner / non-owner、method contract、transaction boundary、idempotency / duplicate replay / digest conflict、event log consistency、error mapping、metadata redaction、manual review 和 settlement / commission / payout block。
+- 明确 repository 不是退款成功事实表，不能调用 provider API、workflow 或写 order / payment / refund / settlement / commission / payout 状态。
+- 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。

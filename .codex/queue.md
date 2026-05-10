@@ -2048,5 +2048,21 @@
 
 第二百九十一轮完成后建议继续：
 
-1. `refund-inbox-repository-plan`: pending
+1. `refund-inbox-repository-plan`: done
 2. `refund-inbox-repository-interface`: pending
+
+## 第二百九十二轮 Refund Inbox Repository Plan
+
+1. `refund-inbox-repository-plan`: done
+
+第二百九十二轮原则：
+
+- 本轮只做 refund inbox repository docs-only 计划。
+- repository 只能作为 inbox / audit log owner，不是退款成功事实表。
+- 不新增 route、DB repository runtime、migration 注册、provider API、workflow 或状态写入。
+- 下一步只能做 interface-only / pure error classifier。
+
+第二百九十二轮完成后建议继续：
+
+1. `refund-inbox-repository-interface`: pending
+2. `refund-inbox-repository-db-adapter-skeleton-plan`: pending

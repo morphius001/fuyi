@@ -349,3 +349,4 @@
 - 完成 `refund-inbox-state-transition-plan`，docs-only 规划退款通知 inbox 状态机、owner 边界、幂等、审计动作映射、failure matrix 和 Go / No-Go；明确 inbox state、normalized envelope、manual review decision 和 audit event 都不代表退款成功，本轮不新增 runtime、route、DB、provider API、workflow 或状态写入。
 - 完成 `refund-inbox-state-transition-contract`，新增退款 inbox state transition 纯函数和 focused tests；所有 decision 均不可执行并阻断 runtime mutation，`refund.succeeded` 只进入 inbox / audit 状态，不代表退款成功，不写 DB、不接 route/provider/workflow。
 - 完成 `refund-runtime-gate-validation-v2`，docs-only 汇总退款 gate 第二版验证；覆盖 amount guard、request idempotency、notification verifier / normalizer、manual review、audit allowlist 和 inbox transition contract，结论仍是 No-Go to real refund runtime。
+- 完成 `refund-inbox-repository-plan`，docs-only 规划退款 inbox repository owner、事务边界、幂等冲突、event log 一致性、error mapping、metadata redaction、manual review / settlement block 和后续 interface-only 顺序。

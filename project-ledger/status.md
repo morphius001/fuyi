@@ -1220,3 +1220,12 @@
 - PR #374-#375 合并后验证通过：focused WeChat + Alipay refund verifier tests 2 suites / 21 tests、API typecheck、payment notification harness 42 suites / 322 tests、payment DB dry-run `2|9`、`git diff --check`。
 - 当前 provider verifier 合同仍只输出 `fixtureOnly: true` / `executable: false`，不接 route、不写 inbox、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-inbox-route-plan`，继续先规划 provider inbox-only route shadow。
+
+## Round 330 更新
+
+- `refund-provider-inbox-route-plan`: done，见 `docs/refund-provider-inbox-route-plan.md`。
+- 本轮只做 docs-only provider inbox route 规划；不修改 `apps/**` 或 `packages/**` runtime，不新增 route，不连接 DB，不注册 module，不接 SDK，不写真实密钥。
+- 计划明确未来 provider route shadow 默认 disabled、production blocked，只能在 local / disposable preprod gate 下写 inbox / audit。
+- `accepted`、`duplicate`、`manual_review`、`processed_for_audit_only` 和 `query_required` 均不代表平台退款成功。
+- 下一步建议进入 `refund-provider-inbox-route-plan-validation`，先验证本计划 PR 文件范围和安全边界。
+- 仍 No-Go：真实 provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -2637,4 +2637,21 @@
 
 第三百二十九轮完成后建议继续：
 
-1. `refund-provider-inbox-route-plan`: pending
+1. `refund-provider-inbox-route-plan`: done
+
+## 第三百三十轮 Refund Provider Inbox Route Plan
+
+1. `refund-provider-inbox-route-plan`: done
+
+第三百三十轮原则：
+
+- 本轮只规划真实 provider refund notification inbox-only route shadow。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增真实 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- provider route shadow 即使未来实现，也只能在 local / disposable preprod gate 下写 inbox / audit。
+- `accepted`、`duplicate`、`manual_review`、`processed_for_audit_only` 均不代表退款成功。
+- 仍不接 provider refund API、refund query API、workflow、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十轮完成后建议继续：
+
+1. `refund-provider-inbox-route-plan-validation`: pending

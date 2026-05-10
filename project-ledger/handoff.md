@@ -1624,3 +1624,12 @@
 - 商品详情页同档口更多鲜货如果回查不到完整商品，会显示空态，不再展示不完整可加购卡片。
 - 下一步建议继续 `cart-checkout-launch-safety-audit`，重点审计 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、支付提示、CN cart smoke 和无 cart redirect。
 - 本轮不修改 ProductCard add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
+
+## Round 249 更新
+
+- `cart-checkout-launch-safety-audit` 已完成，见 `docs/cart-checkout-launch-safety-audit.md`。
+- 审计确认 `/checkout` 无 cart 会 redirect 到 cart；address、shipping、payment 和 review 分别使用 `setAddresses`、`setShippingMethod`、`initiatePaymentSession` 和 `placeOrder`。
+- 当前风险：Stripe 分支会在前端 `confirmCardPayment()` 返回 `requires_capture` 或 `succeeded` 后调用 `placeOrder()`，manual test payment 也会直接调用 `placeOrder()`。这些只能作为既有 Stripe / 测试路径审计结果，不能作为中国支付 provider 上线模式。
+- 中国支付 provider 后续必须进入 payment notification runtime gate：后端异步通知、验签、幂等、可重试、DB inbox / event log、workflow execution adapter。
+- 下一步建议继续 `payment-risk-register`，把支付、退款、对账、结算、佣金、权限风险统一登记。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

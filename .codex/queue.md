@@ -267,10 +267,26 @@
 
 第二百四十八轮完成后建议继续：
 
-1. `cart-checkout-launch-safety-audit`: pending
+1. `cart-checkout-launch-safety-audit`: done
 2. `payment-risk-register`: pending
 3. `permission-rbac-launch-matrix`: pending
 4. `fulfillment-logistics-runtime-gate-plan`: pending
+
+## 第二百四十九轮 Cart Checkout 上线安全审计
+
+1. `cart-checkout-launch-safety-audit`: done
+
+第二百四十九轮原则：
+
+- 只审计 cart / checkout 调用点和中国支付上线阻断条件。
+- 不修改 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、`placeOrder` 语义。
+- 中国支付 provider 不得复用前端确认后直接 `placeOrder()` 的模式。
+
+第二百四十九轮完成后建议继续：
+
+1. `payment-risk-register`: pending
+2. `permission-rbac-launch-matrix`: pending
+3. `fulfillment-logistics-runtime-gate-plan`: pending
 
 第十七轮队列已清空。
 

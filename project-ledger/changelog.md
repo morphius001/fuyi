@@ -351,3 +351,4 @@
 - 完成 `refund-runtime-gate-validation-v2`，docs-only 汇总退款 gate 第二版验证；覆盖 amount guard、request idempotency、notification verifier / normalizer、manual review、audit allowlist 和 inbox transition contract，结论仍是 No-Go to real refund runtime。
 - 完成 `refund-inbox-repository-plan`，docs-only 规划退款 inbox repository owner、事务边界、幂等冲突、event log 一致性、error mapping、metadata redaction、manual review / settlement block 和后续 interface-only 顺序。
 - 完成 `refund-inbox-repository-interface`，新增退款 inbox repository interface-only 合同、receive result 类型和纯 error classifier；不写 DB adapter、不接 route、不注册 migration、不调用 provider API 或 workflow。
+- 完成 `refund-inbox-repository-db-adapter-skeleton-plan`，docs-only 规划未来 mocked DB adapter skeleton 的文件边界、事务要求、mock client 测试、error mapping、runtime grep 和后续 dry-run 顺序。

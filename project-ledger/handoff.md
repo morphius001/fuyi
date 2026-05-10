@@ -1986,3 +1986,10 @@
 - 脚本会拒绝非本机 DB、非指定前缀 DB 名、production/preprod/staging env、已注册 `china-payment-notification`、以及 staged 高风险文件。
 - 脚本只在 disposable DB 内追加 refund-only validation constraints；不修改真实 migration，不新增 route，不接 provider refund API，不执行 workflow。
 - 下一步建议进入 `refund-inbox-route-plan`，继续 docs-only route gate 规划；或者先做 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，但仍不能接真实退款 runtime。
+
+## Round 298 更新
+
+- `refund-inbox-route-plan` 已完成，见 `docs/refund-inbox-route-plan.md`。
+- 本轮只规划未来 route gate；未新增 route、未修改 runtime、未注册 migration/module、未接 provider refund API、未执行 workflow。
+- 未来 route 第一阶段只能是 fake/local inbox-only，默认 disabled，production blocked；accepted / duplicate / manual review response 都不能代表退款成功。
+- 下一步建议进入 `refund-inbox-disabled-route-skeleton-plan`，继续 docs-only 规划 disabled route skeleton；或者进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，但仍不得接真实退款 runtime。

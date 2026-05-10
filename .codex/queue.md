@@ -2561,4 +2561,20 @@
 
 第三百二十四轮完成后建议继续：
 
-1. `refund-alipay-real-verifier-plan`: pending
+1. `refund-alipay-real-verifier-plan`: done
+
+## 第三百二十五轮 Refund Alipay Real Verifier Plan
+
+1. `refund-alipay-real-verifier-plan`: done
+
+第三百二十五轮原则：
+
+- 本轮只细化支付宝退款相关异步通知 verifier plan。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不接支付宝 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十五轮完成后建议继续：
+
+1. `refund-provider-real-verifier-plan-validation`: pending
+2. `refund-wechat-real-verifier-contract`: pending

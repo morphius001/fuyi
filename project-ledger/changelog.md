@@ -382,3 +382,4 @@
 - 完成 `refund-route-runtime-readiness-validation`，记录 PR #368 合并后文件范围和 diff check；确认本轮只新增 readiness 文档、任务文件、queue 和 ledger，未修改 `apps/**` 或 `packages/**` runtime，真实退款 runtime 仍 No-Go。
 - 完成 `refund-provider-real-verifier-plan`，docs-only 规划支付宝 / 微信支付真实退款通知 verifier 边界，覆盖微信支付回调验签与 AES-256-GCM 解密、支付宝异步通知 canonicalization 与产品模式确认、统一 verifier result、failure code、fixture / sandbox vector、后续 PR 顺序和 No-Go。
 - 完成 `refund-wechat-real-verifier-plan`，docs-only 细化微信支付退款结果回调 verifier 的 planned files、contract 输入输出、验签 / 解密顺序、event mapping、idempotency、failure code、test vector、redaction、验证命令和 No-Go；不接 SDK、route、DB 或 workflow。
+- 完成 `refund-alipay-real-verifier-plan`，docs-only 细化支付宝退款相关异步通知 verifier 的产品模式 gate、planned files、contract 输入输出、canonicalization、event mapping、idempotency、failure code、test vector、redaction、验证命令和 No-Go；不接 SDK、route、DB、refund query 或 workflow。

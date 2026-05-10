@@ -1719,3 +1719,10 @@
 - `alipay-provider-disabled-adapter-validation` 已完成，见 `docs/alipay-provider-disabled-adapter-validation.md`。
 - 合并后验证通过：focused unit test 5/5、API typecheck、payment notification harness 23 suites / 153 tests、disposable DB dry-run、runtime grep 和 `git diff --check`。
 - 当前支付宝 adapter 仍只作为未注册 disabled skeleton；下一步建议做微信 / 支付宝 fake notify test plan，不能直接进入真实 SDK 或 checkout。
+
+## Round 262 更新
+
+- `wechat-pay-provider-fake-notify-test-plan` 已完成，见 `docs/wechat-pay-provider-fake-notify-test-plan.md`。
+- 本轮只规划微信支付 fake notify / test vector 阶段，明确 fake key / fake cert / fake ciphertext、验签/解密/归一化合同和失败矩阵。
+- 没有修改 runtime，没有接 SDK、checkout、DB、workflow 或真实 secret。
+- 下一步建议继续 `alipay-provider-fake-notify-test-plan`，仍保持 docs-only 或纯函数小 PR。

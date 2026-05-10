@@ -677,3 +677,10 @@
 - `alipay-provider-disabled-adapter-validation`: done，记录 PR #307 合并后的主线验证。
 - 验证通过：focused Alipay unit test 5/5、API typecheck、payment notification harness 23 suites / 153 tests、disposable DB dry-run、runtime registration grep、`git diff --check`。
 - 当前 Alipay adapter 仍未注册、不接 route、不接 checkout、不接 SDK、不读真实 secret、不执行 payment workflow。
+
+## Round 262 更新
+
+- `wechat-pay-provider-fake-notify-test-plan`: done，docs-only 规划微信支付 fake notify / test vector 阶段。
+- 计划覆盖 fake raw notification、fake decrypted resource、verification helper、normalize helper、test matrix、Go / No-Go 和后续 PR 拆分。
+- 本轮不修改 `packages/**` 或 `apps/**` runtime，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 验证要求：`git diff --check`、子智能体复核。

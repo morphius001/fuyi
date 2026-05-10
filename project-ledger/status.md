@@ -1081,3 +1081,12 @@
 - 计划定义 `fuyi_refund_schema_constraint_dry_run_` disposable DB guard、constraint SQL rehearsal shape、payment/refund compatibility matrix、metadata redaction helper cleanup 和 rollback 要求。
 - 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议进入 `refund-schema-constraint-migration-rehearsal`，只新增本地 disposable DB 脚本。
+
+## Round 313 更新
+
+- `refund-schema-constraint-migration-rehearsal`: done，见 `docs/refund-schema-constraint-migration-rehearsal.md`。
+- 新增 `.codex/scripts/refund-schema-constraint-migration-rehearsal.sh`，只连接本地 disposable PostgreSQL，默认 DB 名 `fuyi_refund_schema_constraint_dry_run_<timestamp>`。
+- 脚本验证 base schema apply、proposed constraint expansion、payment compatibility、refund-only status / action / actor、forbidden runtime action rejection、positive amount、metadata redaction、rollback to base schema、down SQL 和 drop DB 无残留。
+- 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、`git diff --check`。
+- 当前仍不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不注册 module，不新增 route，不接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议做 `refund-schema-constraint-migration-validation`，记录合并后验证；或单独规划真实 migration PR。

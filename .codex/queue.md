@@ -2255,5 +2255,21 @@
 
 第三百零四轮完成后建议继续：
 
-1. `refund-inbox-local-db-route-plan`: pending
+1. `refund-inbox-local-db-route-plan`: done
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第三百零五轮 Refund Inbox Local DB Route Plan
+
+1. `refund-inbox-local-db-route-plan`: done
+
+第三百零五轮原则：
+
+- 本轮只做 local disposable DB-backed route docs-only 计划。
+- 不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不改 route 行为。
+- 未来 local DB route 必须继续 fake/local、disposable DB、inbox/audit-only、production blocked。
+- accepted / duplicate / manual_review 仍不能代表退款成功。
+
+第三百零五轮完成后建议继续：
+
+1. `refund-inbox-local-db-route`: pending
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

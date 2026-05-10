@@ -2000,3 +2000,10 @@
 - 本轮只规划未来 disabled route skeleton；未新增 route、未修改 `packages/**`、未连接 DB、未注册 migration/module。
 - 下一步如果执行 `refund-inbox-disabled-route-skeleton`，只能新增 disabled / production blocked route 和 focused tests，且不读 body、不调用 verifier / normalizer / repository / provider API / workflow。
 - 仍不得接 fake accepted inbox-only、真实退款 runtime、provider refund request、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 300 更新
+
+- `refund-inbox-disabled-route-skeleton` 已完成，见 `docs/refund-inbox-disabled-route-skeleton.md`。
+- 新增 `/china/refund-inbox/mock` disabled-only route skeleton 和 focused tests。
+- 当前 route 只返回 disabled / production blocked / method not allowed，不读 body、不连接 DB、不调 verifier / normalizer / repository / provider API / workflow，不写 inbox/event log。
+- 下一步建议进入 `refund-inbox-disabled-route-validation` 做合并后验证；或先规划 `refund-inbox-local-inbox-only-route-plan`，但仍不得接真实退款 runtime。

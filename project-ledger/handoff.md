@@ -1641,3 +1641,11 @@
 - 当前硬阻塞仍是缺 disposable preprod DB 授权、备份/回滚/操作 owner、migration rehearsal、payment workflow execution adapter、真实 provider sandbox 和 RBAC/ownership guard。
 - 下一步建议继续 `permission-rbac-launch-matrix`，因为权限/资源归属必须成为所有资金、订单和履约写接口的前置门禁。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider。
+
+## Round 251 更新
+
+- `permission-rbac-launch-matrix` 已完成，见 `docs/permission-rbac-launch-matrix.md`。
+- 上线前权限矩阵覆盖商品、库存、购物车、订单、支付、退款、对账、结算、佣金、打款、权限、履约和物流写操作。
+- 结论：capability view 不是权限系统；任何写接口都必须有后端 RBAC、seller ownership、market ownership、resource ownership、negative tests、audit、idempotency 和 rollback。
+- 下一步建议继续 `fulfillment-logistics-runtime-gate-plan`，把履约、物流、配送供应商和面单也收束到 runtime gate。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

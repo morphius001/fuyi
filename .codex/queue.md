@@ -300,10 +300,26 @@
 
 第二百五十轮完成后建议继续：
 
-1. `permission-rbac-launch-matrix`: pending
+1. `permission-rbac-launch-matrix`: done
 2. `payment-provider-production-hardening-plan`: pending
 3. `payment-runtime-external-readiness-review`: pending
 4. `fulfillment-logistics-runtime-gate-plan`: pending
+
+## 第二百五十一轮 Permission RBAC Launch Matrix
+
+1. `permission-rbac-launch-matrix`: done
+
+第二百五十一轮原则：
+
+- 只建立权限 / RBAC / 资源归属上线矩阵。
+- capability view 只能用于展示和入口提示，不能替代后端权限。
+- 不实现权限中间件、route guard、写接口或 runtime。
+
+第二百五十一轮完成后建议继续：
+
+1. `fulfillment-logistics-runtime-gate-plan`: pending
+2. `payment-provider-production-hardening-plan`: pending
+3. `payment-runtime-external-readiness-review`: pending
 
 第十七轮队列已清空。
 

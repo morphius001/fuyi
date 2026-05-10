@@ -333,9 +333,26 @@
 
 第二百五十二轮完成后建议继续：
 
-1. `payment-provider-production-hardening-plan`: pending
+1. `payment-provider-production-hardening-plan`: done
 2. `payment-runtime-external-readiness-review`: pending
 3. `fulfillment-runtime-readonly-validation`: pending
+
+## 第二百五十三轮 Payment Provider Production Hardening
+
+1. `payment-provider-production-hardening-plan`: done
+
+第二百五十三轮原则：
+
+- 只做真实支付宝 / 微信支付 Provider 生产加固计划。
+- 查阅官方文档后记录密钥、证书、验签、回调、幂等、日志、回滚和发布门禁。
+- 不接真实 provider，不写真实密钥，不执行 payment workflow。
+
+第二百五十三轮完成后建议继续：
+
+1. `payment-runtime-external-readiness-review`: pending
+2. `alipay-provider-sandbox-contract`: pending
+3. `wechat-pay-provider-sandbox-contract`: pending
+4. `provider-secret-config-template`: pending
 
 第十七轮队列已清空。
 

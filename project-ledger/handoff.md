@@ -1713,3 +1713,9 @@
 - 新增 `createDisabledAlipayProviderAdapter()`，默认 `enabled: false` / `mode: disabled`，只返回 blocked decision。
 - 本轮没有注册 Medusa payment provider，没有新增 route，没有读取 env 或真实 secret，没有接 checkout、SDK 或 payment workflow。
 - 下一步建议先做 `alipay-provider-disabled-adapter-validation`，继续保持高风险串行。
+
+## Round 261 更新
+
+- `alipay-provider-disabled-adapter-validation` 已完成，见 `docs/alipay-provider-disabled-adapter-validation.md`。
+- 合并后验证通过：focused unit test 5/5、API typecheck、payment notification harness 23 suites / 153 tests、disposable DB dry-run、runtime grep 和 `git diff --check`。
+- 当前支付宝 adapter 仍只作为未注册 disabled skeleton；下一步建议做微信 / 支付宝 fake notify test plan，不能直接进入真实 SDK 或 checkout。

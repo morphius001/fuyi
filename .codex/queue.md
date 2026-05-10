@@ -1555,6 +1555,22 @@
 
 第二百六十轮完成后建议继续：
 
-1. `alipay-provider-disabled-adapter-validation`: pending
+1. `alipay-provider-disabled-adapter-validation`: done
 2. `wechat-pay-provider-fake-notify-test-plan`: pending
 3. `alipay-provider-fake-notify-test-plan`: pending
+
+## 第二百六十一轮 Alipay Provider Disabled Adapter Validation
+
+1. `alipay-provider-disabled-adapter-validation`: done
+
+第二百六十一轮原则：
+
+- 本轮只记录 PR #307 合并后验证。
+- 不修改 runtime，不新增 route，不注册 provider，不接 checkout、SDK、workflow、DB、migration 或真实 secret。
+- 保持支付宝 adapter disabled-by-default。
+
+第二百六十一轮完成后建议继续：
+
+1. `wechat-pay-provider-fake-notify-test-plan`: pending
+2. `alipay-provider-fake-notify-test-plan`: pending
+3. `provider-disabled-adapter-rollup-validation`: pending

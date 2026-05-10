@@ -612,3 +612,11 @@
 - 明确只读配送展示不能直接改 checkout shipping options，真实 provider 不能改支付、退款、结算、佣金或权限状态。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不创建 fulfillment/shipment/tracking/waybill，不接真实物流 provider。
 - 验证要求：`git diff --check`、子智能体复核。
+
+## Round 253 更新
+
+- `payment-provider-production-hardening-plan`: done，docs-only 建立支付宝 / 微信支付 Provider 生产加固计划。
+- 已参考官方微信支付商户文档、微信支付 API v3 官方 SDK、支付宝开放平台与签名文档。
+- 计划覆盖密钥/证书、notify_url / return_url、验签、解密、幂等、sandbox、disabled-by-default、日志脱敏、回滚和发布门禁。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不接真实 provider，不写真实密钥，不注册 migration，不执行 payment workflow。
+- 验证要求：`git diff --check`。

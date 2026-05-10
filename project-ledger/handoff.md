@@ -1656,3 +1656,10 @@
 - 履约 / 物流 / 面单被拆成 L0 展示、L1 配置合同、L2 mock provider、L3 checkout shipping adapter、L4 fulfillment creation、L5 shipment tracking、L6 waybill provider。
 - 下一步如果继续履约方向，建议先做 `fulfillment-runtime-readonly-validation` 或 mock provider contract；仍不得直接改 checkout shipping options、创建 fulfillment、生成真实面单或接真实物流 provider。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 253 更新
+
+- `payment-provider-production-hardening-plan` 已完成，见 `docs/payment-provider-production-hardening-plan.md`。
+- 本轮查阅官方资料后记录支付宝 / 微信支付真实 Provider 进入 sandbox / production-disabled 前的密钥、证书、验签、回调、幂等、日志、回滚和发布门禁。
+- 下一步建议继续 `payment-runtime-external-readiness-review`；真实 provider 仍不能接 checkout，不能写真实密钥，不能执行 payment workflow。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

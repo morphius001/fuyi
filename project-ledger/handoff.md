@@ -259,6 +259,17 @@
 
 - `payment-inbox-repository-db-adapter-skeleton-plan` 已完成，见 `docs/payment-inbox-repository-db-adapter-skeleton-plan.md`。
 
+## Round 330 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-nl-refund-provider-inbox-route-plan`。
+- `refund-provider-inbox-route-plan` 已完成，见 `docs/refund-provider-inbox-route-plan.md`。
+- 本轮只改 docs / task / queue / ledger，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划约束：未来真实支付宝 / 微信支付退款通知 route 只能先做 provider inbox-only shadow，默认 disabled，production blocked，local / disposable preprod gate 下最多写 inbox / audit。
+- `accepted`、`duplicate`、`manual_review`、`processed_for_audit_only`、`query_required` 都不能表达平台退款成功。
+- 仍不接 SDK、真实密钥、provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步：运行 `git diff --check`、`git status --short --branch` 和子智能体只读复核；通过后精确 stage、commit、push、开 PR 并 merge，然后继续 `refund-provider-inbox-route-plan-validation`。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

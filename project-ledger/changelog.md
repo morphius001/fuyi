@@ -377,3 +377,4 @@
 - 完成 `refund-schema-constraint-migration-validation-v2`，记录 PR #363 合并后 schema constraint rehearsal、unsafe DB guard、production guard、focused 29/29、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9` 和 diff check 通过。
 - 完成 `refund-inbox-schema-adapter-unmapped-state-plan`，docs-only 规划 local PG client / refund inbox adapter 在新 schema 下移除 DB-safe state / actor mapping 的范围、兼容策略、验证矩阵和回滚。
 - 完成 `refund-inbox-schema-adapter-unmapped-state`，更新 local PG refund inbox adapter，使 refund-only state / actor 原样写入和读回，并更新 focused / route tests；focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9` 通过。
+- 完成 `refund-inbox-schema-adapter-unmapped-state-validation`，记录 PR #366 合并后 schema rehearsal、focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9` 和 diff check 通过。

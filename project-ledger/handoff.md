@@ -2161,3 +2161,11 @@
 - 验证通过：schema constraint rehearsal、focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、diff check。
 - 当前仍只影响 local disposable DB / mock refund inbox gate；未注册 module，未新增 route，未接真实 provider / workflow / refund success state。
 - 下一步建议做 `refund-inbox-schema-adapter-unmapped-state-validation`；仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 320 更新
+
+- `refund-inbox-schema-adapter-unmapped-state-validation` 已完成，见 `docs/refund-inbox-schema-adapter-unmapped-state-validation.md`。
+- PR #366 合并后验证通过：schema rehearsal、focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9`、diff check。
+- 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
+- 下一步建议进入 `refund-route-runtime-readiness-plan`，先审计真实 route/runtime 启用前置条件。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

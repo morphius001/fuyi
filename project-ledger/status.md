@@ -1141,3 +1141,11 @@
 - 验证通过：schema constraint rehearsal、focused tests 4 suites / 45 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、`git diff --check`。
 - 当前仍不注册 module、不新增 route、不接 provider refund API、不执行 workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议做 `refund-inbox-schema-adapter-unmapped-state-validation`。
+
+## Round 320 更新
+
+- `refund-inbox-schema-adapter-unmapped-state-validation`: done，见 `docs/refund-inbox-schema-adapter-unmapped-state-validation.md`。
+- PR #366 合并后验证通过：schema constraint rehearsal、focused tests 4 suites / 45 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、`git diff --check`。
+- 当前 adapter 原样 state / actor 仍只属于 local disposable DB / mock gate；真实 refund provider、workflow、refund success state 仍未启用。
+- 下一步建议进入 `refund-route-runtime-readiness-plan`，继续先规划真实 runtime 前置条件。
+- 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。

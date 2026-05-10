@@ -750,3 +750,10 @@
 - 校验 expected app id、expected seller id、trade status、CNY currency、amount 和 order / trade / notify reference。
 - 本轮不接 SDK、不写 inbox、不接 checkout、不执行 payment workflow。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 272 更新
+
+- `payment-provider-verifier-normalizer-validation`: done，汇总 PR #315-#318 的 verifier / normalizer 合同阶段。
+- 验证通过：payment harness 29 suites / 194 tests、API typecheck、runtime grep、`git diff --check`。
+- 当前支付宝 / 微信支付仍只具备 fake-only vectors / verifier / normalizer，不接 SDK、不接 checkout、不注册 provider、不执行 payment workflow。
+- 下一步只能进入 inbox-only route gate，不应直接接真实 SDK、checkout、workflow、退款、结算、佣金、履约或物流。

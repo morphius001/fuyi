@@ -1791,3 +1791,10 @@
 - `total_amount` 使用字符串解析为分，避免浮点金额重算。
 - 当前 normalizer 返回 `fixtureOnly: true` 和 `executable: false`，不写 inbox、不执行 payment workflow。
 - 下一步建议继续 `payment-provider-verifier-normalizer-validation`。
+
+## Round 272 更新
+
+- `payment-provider-verifier-normalizer-validation` 已完成，见 `docs/payment-provider-verifier-normalizer-validation.md`。
+- 汇总 PR #315-#318：WeChat Pay / Alipay fake-only verifier + normalizer contracts 均已完成。
+- 验证通过：payment notification harness 29 suites / 194 tests、API typecheck、runtime grep 和 `git diff --check`。
+- 下一步建议继续 `payment-runtime-inbox-only-route-gate`，仍不能接 SDK、checkout、真实 route 或 payment workflow。

@@ -1735,6 +1735,22 @@
 
 第二百七十一轮完成后建议继续：
 
-1. `payment-provider-verifier-normalizer-validation`: pending
+1. `payment-provider-verifier-normalizer-validation`: done
 2. `payment-runtime-inbox-only-route-gate`: pending
+3. `refund-runtime-risk-gate-plan`: pending
+
+## 第二百七十二轮 Payment Provider Verifier Normalizer Validation
+
+1. `payment-provider-verifier-normalizer-validation`: done
+
+第二百七十二轮原则：
+
+- 本轮只汇总 PR #315-#318 的 verifier / normalizer 合同和验证状态。
+- 不新增 route，不注册 provider，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 下一步只允许进入 runtime inbox-only route gate。
+
+第二百七十二轮完成后建议继续：
+
+1. `payment-runtime-inbox-only-route-gate`: pending
+2. `payment-runtime-inbox-only-route-plan`: pending
 3. `refund-runtime-risk-gate-plan`: pending

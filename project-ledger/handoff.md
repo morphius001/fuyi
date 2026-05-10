@@ -1649,3 +1649,10 @@
 - 结论：capability view 不是权限系统；任何写接口都必须有后端 RBAC、seller ownership、market ownership、resource ownership、negative tests、audit、idempotency 和 rollback。
 - 下一步建议继续 `fulfillment-logistics-runtime-gate-plan`，把履约、物流、配送供应商和面单也收束到 runtime gate。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 252 更新
+
+- `fulfillment-logistics-runtime-gate-plan` 已完成，见 `docs/fulfillment-logistics-runtime-gate-plan.md`。
+- 履约 / 物流 / 面单被拆成 L0 展示、L1 配置合同、L2 mock provider、L3 checkout shipping adapter、L4 fulfillment creation、L5 shipment tracking、L6 waybill provider。
+- 下一步如果继续履约方向，建议先做 `fulfillment-runtime-readonly-validation` 或 mock provider contract；仍不得直接改 checkout shipping options、创建 fulfillment、生成真实面单或接真实物流 provider。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

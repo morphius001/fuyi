@@ -604,3 +604,11 @@
 - 明确 capability view 只能用于只读提示和入口降级，不能替代 RBAC、seller ownership、market ownership、order/payment/refund/settlement 权限。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不实现权限中间件、route guard、写接口或状态变更。
 - 验证要求：`git diff --check`、子智能体复核。
+
+## Round 252 更新
+
+- `fulfillment-logistics-runtime-gate-plan`: done，docs-only 建立履约 / 物流 / 面单 runtime gate。
+- Gate 覆盖展示层、配置合同、mock provider、checkout shipping option adapter、fulfillment creation、shipment tracking 和 waybill provider。
+- 明确只读配送展示不能直接改 checkout shipping options，真实 provider 不能改支付、退款、结算、佣金或权限状态。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不创建 fulfillment/shipment/tracking/waybill，不接真实物流 provider。
+- 验证要求：`git diff --check`、子智能体复核。

@@ -2733,4 +2733,20 @@
 
 第三百三十五轮完成后建议继续：
 
-1. `refund-provider-inbox-route-local-wiring`: pending
+1. `refund-provider-inbox-route-local-wiring`: done
+
+## 第三百三十六轮 Refund Provider Inbox Route Local Wiring
+
+1. `refund-provider-inbox-route-local-wiring`: done
+
+第三百三十六轮原则：
+
+- 本轮只启用 development/local/in-memory/fixture-only provider inbox wiring。
+- 未通过 local gate 时 route 不读 body。
+- 通过 local gate 后只写 local in-memory inbox / audit-only response，不连接 DB。
+- 不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API 或 refund query API。
+- 不执行 workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十六轮完成后建议继续：
+
+1. `refund-provider-inbox-route-local-wiring-validation`: pending

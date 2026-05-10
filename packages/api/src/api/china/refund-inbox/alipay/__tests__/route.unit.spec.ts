@@ -1,5 +1,10 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 
+import {
+  alipayRefundQueryRequiredNotifyVector,
+  alipayRefundSuccessNotifyVector,
+  alipayRefundTradeOnlyNotifyVector,
+} from "../../../../../modules/china-payment-notification";
 import { GET, POST } from "../route";
 
 const oldEnv = process.env;
@@ -39,7 +44,27 @@ const enableLocalAlipay = () => {
   process.env.CHINA_REFUND_ROUTE_MODE = "provider_inbox_only";
   process.env.CHINA_REFUND_TARGET_ENV = "local";
   process.env.CHINA_REFUND_INBOX_LOCAL_INMEMORY = "true";
+  process.env.CHINA_REFUND_ALIPAY_FIXTURE_EXPECTED_SIGNATURE =
+    alipayRefundSuccessNotifyVector.expectedFakeSignature;
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_APP_ID = "app_fake_refund_001";
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_SELLER_ID =
+    "merchant_fake_refund_001";
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_OUT_TRADE_NO =
+    "pay_alipay_refund_order_001";
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_TRADE_NO =
+    "trade_alipay_refund_001";
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_OUT_REQUEST_NO =
+    "refund_req_alipay_001";
+  process.env.CHINA_REFUND_ALIPAY_EXPECTED_AMOUNT_VALUE = "128560";
+  process.env.CHINA_REFUND_ALIPAY_REFUND_NOTIFY_MODE =
+    "product_specific_refund_notify";
 };
+
+const makeAlipayRequest = (form = alipayRefundSuccessNotifyVector.rawNotification.form) =>
+  ({
+    body: form,
+    headers: {},
+  }) as unknown as MedusaRequest & { text?: jest.Mock };
 
 const expectSafeBody = (body: unknown) => {
   const serialized = JSON.stringify(body);
@@ -86,8 +111,31 @@ describe("Alipay refund provider inbox route disabled skeleton", () => {
     expectSafeBody(res.json.mock.calls[0]?.[0]);
   });
 
-  it("stays disabled even when local shadow flags are enabled", async () => {
+  it("accepts verified local fixture into inbox-only response", async () => {
     enableLocalAlipay();
+    const req = makeAlipayRequest();
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "accepted",
+      provider: "alipay",
+      mode: "provider_inbox_only",
+      refundSuccessState: false,
+      record: {
+        provider: "alipay",
+        eventId: alipayRefundSuccessNotifyVector.notifyId,
+        processingStatus: "runtime_mutation_blocked",
+      },
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("does not read body when local gate is enabled but fixture config is missing", async () => {
+    enableLocalAlipay();
+    delete process.env.CHINA_REFUND_ALIPAY_FIXTURE_EXPECTED_SIGNATURE;
     const req = makeRequest();
     const res = makeResponse();
 
@@ -98,7 +146,59 @@ describe("Alipay refund provider inbox route disabled skeleton", () => {
     expect(res.json.mock.calls[0]?.[0]).toMatchObject({
       status: "disabled",
       provider: "alipay",
-      code: "REFUND_PROVIDER_ROUTE_DISABLED",
+      code: "ALIPAY_REFUND_FIXTURE_CONFIG_MISSING",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("returns duplicate for same verified local fixture digest", async () => {
+    enableLocalAlipay();
+    const firstRes = makeResponse();
+    const secondRes = makeResponse();
+
+    await POST(makeAlipayRequest(), firstRes);
+    await POST(makeAlipayRequest(), secondRes);
+
+    expect(secondRes.status).toHaveBeenCalledWith(200);
+    expect(secondRes.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "duplicate",
+      provider: "alipay",
+      refundSuccessState: false,
+    });
+    expectSafeBody(secondRes.json.mock.calls[0]?.[0]);
+  });
+
+  it("processes Alipay trade-only notification for audit only", async () => {
+    enableLocalAlipay();
+    process.env.CHINA_REFUND_ALIPAY_REFUND_NOTIFY_MODE = "trade_async_notify";
+    process.env.CHINA_REFUND_ALIPAY_EXPECTED_OUT_REQUEST_NO = "";
+    process.env.CHINA_REFUND_ALIPAY_EXPECTED_AMOUNT_VALUE = "";
+    const res = makeResponse();
+
+    await POST(makeAlipayRequest(alipayRefundTradeOnlyNotifyVector.rawNotification.form), res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "processed_for_audit_only",
+      provider: "alipay",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("marks Alipay query-required notification without calling query API", async () => {
+    enableLocalAlipay();
+    process.env.CHINA_REFUND_ALIPAY_REFUND_NOTIFY_MODE =
+      "refund_query_follow_up";
+    const res = makeResponse();
+
+    await POST(makeAlipayRequest(alipayRefundQueryRequiredNotifyVector.rawNotification.form), res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "query_required",
+      provider: "alipay",
       refundSuccessState: false,
     });
     expectSafeBody(res.json.mock.calls[0]?.[0]);

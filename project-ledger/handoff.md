@@ -318,6 +318,15 @@
 - 计划明确 local wiring 下一步仍只允许 development + local in-memory + fixture config，不连接 DB、不接 SDK、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
 - 下一步：运行 `git diff --check`、`git status --short --branch` 和子智能体只读复核；通过后精确 stage、commit、push、开 PR 并 merge。
 
+## Round 336 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-nr-refund-provider-inbox-route-local-wiring`。
+- `refund-provider-inbox-route-local-wiring` 已完成，见 `docs/refund-provider-inbox-route-local-wiring.md`。
+- Provider route 支持 development/local/in-memory/fixture-only wiring；未通过 local gate 时不读 body。
+- 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API / query API、不执行 workflow、不写 refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步：跑 focused tests、API typecheck、payment harness、runtime grep、`git diff --check` 和子智能体复核；通过后精确 stage、commit、push、开 PR 并 merge。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

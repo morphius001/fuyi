@@ -1,5 +1,9 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 
+import {
+  wechatPayRefundAbnormalNotifyVector,
+  wechatPayRefundSuccessNotifyVector,
+} from "../../../../../modules/china-payment-notification";
 import { GET, POST } from "../route";
 
 const oldEnv = process.env;
@@ -39,7 +43,31 @@ const enableLocalWechat = () => {
   process.env.CHINA_REFUND_ROUTE_MODE = "provider_inbox_only";
   process.env.CHINA_REFUND_TARGET_ENV = "local";
   process.env.CHINA_REFUND_INBOX_LOCAL_INMEMORY = "true";
+  process.env.CHINA_REFUND_WECHAT_FIXTURE_EXPECTED_SIGNATURE =
+    wechatPayRefundSuccessNotifyVector.expectedSignature;
+  process.env.CHINA_REFUND_WECHAT_FIXTURE_EXPECTED_CIPHERTEXT =
+    wechatPayRefundSuccessNotifyVector.expectedCiphertext;
+  process.env.CHINA_REFUND_WECHAT_FIXTURE_PLATFORM_SERIAL =
+    "serial_fake_wechat_refund_001";
+  process.env.CHINA_REFUND_WECHAT_FIXTURE_CURRENT_UNIX_SECONDS = "1770000000";
+  process.env.CHINA_REFUND_WECHAT_FIXTURE_DECRYPTED_RESOURCE_JSON =
+    JSON.stringify(wechatPayRefundSuccessNotifyVector.decryptedResource);
+  process.env.CHINA_REFUND_WECHAT_EXPECTED_MCH_ID = "mch_fake_refund_001";
+  process.env.CHINA_REFUND_WECHAT_EXPECTED_APP_ID = "wx_fake_refund_app";
+  process.env.CHINA_REFUND_WECHAT_EXPECTED_OUT_TRADE_NO =
+    "pay_wechat_refund_order_001";
+  process.env.CHINA_REFUND_WECHAT_EXPECTED_OUT_REFUND_NO =
+    "refund_req_wechat_001";
+  process.env.CHINA_REFUND_WECHAT_EXPECTED_AMOUNT_VALUE = "128560";
 };
+
+const makeSignedWechatRequest = (
+  vector = wechatPayRefundSuccessNotifyVector,
+) =>
+  ({
+    text: jest.fn(async () => vector.rawNotification.rawBody),
+    headers: vector.rawNotification.headers,
+  }) as unknown as MedusaRequest & { text: jest.Mock };
 
 const expectSafeBody = (body: unknown) => {
   const serialized = JSON.stringify(body);
@@ -86,8 +114,32 @@ describe("WeChat Pay refund provider inbox route disabled skeleton", () => {
     expectSafeBody(res.json.mock.calls[0]?.[0]);
   });
 
-  it("stays disabled even when local shadow flags are enabled", async () => {
+  it("accepts verified local fixture into inbox-only response", async () => {
     enableLocalWechat();
+    const req = makeSignedWechatRequest();
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(req.text).toHaveBeenCalledTimes(1);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "accepted",
+      provider: "wechat_pay",
+      mode: "provider_inbox_only",
+      refundSuccessState: false,
+      record: {
+        provider: "wechat_pay",
+        eventId: wechatPayRefundSuccessNotifyVector.eventId,
+        processingStatus: "runtime_mutation_blocked",
+      },
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("does not read body when local gate is enabled but fixture config is missing", async () => {
+    enableLocalWechat();
+    delete process.env.CHINA_REFUND_WECHAT_FIXTURE_DECRYPTED_RESOURCE_JSON;
     const req = makeRequest();
     const res = makeResponse();
 
@@ -98,7 +150,46 @@ describe("WeChat Pay refund provider inbox route disabled skeleton", () => {
     expect(res.json.mock.calls[0]?.[0]).toMatchObject({
       status: "disabled",
       provider: "wechat_pay",
-      code: "REFUND_PROVIDER_ROUTE_DISABLED",
+      code: "WECHAT_REFUND_FIXTURE_CONFIG_MISSING",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("returns duplicate for same verified local fixture digest", async () => {
+    enableLocalWechat();
+    const first = makeSignedWechatRequest();
+    const second = makeSignedWechatRequest();
+    const firstRes = makeResponse();
+    const secondRes = makeResponse();
+
+    await POST(first, firstRes);
+    await POST(second, secondRes);
+
+    expect(secondRes.status).toHaveBeenCalledWith(200);
+    expect(secondRes.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "duplicate",
+      provider: "wechat_pay",
+      refundSuccessState: false,
+    });
+    expectSafeBody(secondRes.json.mock.calls[0]?.[0]);
+  });
+
+  it("routes WeChat abnormal refund notification to manual review", async () => {
+    enableLocalWechat();
+    process.env.CHINA_REFUND_WECHAT_FIXTURE_EXPECTED_CIPHERTEXT =
+      wechatPayRefundAbnormalNotifyVector.expectedCiphertext;
+    process.env.CHINA_REFUND_WECHAT_FIXTURE_DECRYPTED_RESOURCE_JSON =
+      JSON.stringify(wechatPayRefundAbnormalNotifyVector.decryptedResource);
+    const req = makeSignedWechatRequest(wechatPayRefundAbnormalNotifyVector);
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "manual_review",
+      provider: "wechat_pay",
       refundSuccessState: false,
     });
     expectSafeBody(res.json.mock.calls[0]?.[0]);

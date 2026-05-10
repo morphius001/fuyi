@@ -1866,3 +1866,12 @@
 - runtime grep 只命中既有 event type / migration check、fake fixture / tests 和负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 本轮不实现 verifier / normalizer，不新增 refund route、不写 DB、不接 provider API、不执行 workflow。
 - 下一步建议进入 `refund-notification-verifier-contract`，仍保持 fake-only pure function。
+
+## Round 283 更新
+
+- `refund-notification-verifier-contract` 已完成，见 `docs/refund-notification-verifier-contract.md`。
+- 新增 `verifyRefundNotificationContract()` fake-only verifier，校验 fake signature、algorithm、provider、event id/type、providerRefundId、CNY 和 amount。
+- 验证通过：focused unit test 12/12、API typecheck、payment harness 33 suites / 231 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 输出仍为 `fixtureOnly: true` / `executable: false`；不生成 normalizer envelope，不新增 route、不写 DB、不接 provider API、不执行 workflow。
+- 下一步建议进入 `refund-notification-normalizer-contract`，仍保持 fake-only pure function。

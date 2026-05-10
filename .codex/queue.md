@@ -1908,7 +1908,23 @@
 
 第二百八十二轮完成后建议继续：
 
-1. `refund-notification-verifier-contract`: pending
+1. `refund-notification-verifier-contract`: done
 2. `refund-notification-normalizer-contract`: pending
 3. `refund-manual-review-audit-plan`: pending
 4. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十三轮 Refund Notification Verifier Contract
+
+1. `refund-notification-verifier-contract`: done
+
+第二百八十三轮原则：
+
+- 本轮只新增退款通知 fake-only verifier 纯函数和 tests。
+- 不实现 normalizer，不新增 route、不写 DB、不接 provider refund API、不执行 workflow。
+- `verified: true` 只表示 fake verifier 合同通过，不是退款成功 runtime。
+
+第二百八十三轮完成后建议继续：
+
+1. `refund-notification-normalizer-contract`: pending
+2. `refund-manual-review-audit-plan`: pending
+3. `payment-refund-runtime-gate-validation`: pending

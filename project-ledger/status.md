@@ -829,3 +829,13 @@
 - 验证通过：focused unit test 4/4、API typecheck、payment harness 32 suites / 219 tests、runtime grep 和 `git diff --check`。
 - runtime grep 只命中既有 event type / migration check、fake fixture / tests 和负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 提交前仍需子智能体只读复核。
+
+## Round 283 更新
+
+- `refund-notification-verifier-contract`: done，新增退款通知 fake-only verifier 纯函数和 focused tests。
+- 覆盖 fake signature、algorithm、provider、event id/type、providerRefundId、CNY currency 和 positive minor amount。
+- 输出始终 `fixtureOnly: true` / `executable: false`；`verified: true` 只代表 fake verifier 合同通过，不代表真实退款成功。
+- 本轮不实现 normalizer，不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证通过：focused unit test 12/12、API typecheck、payment harness 33 suites / 231 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 提交前仍需子智能体只读复核。

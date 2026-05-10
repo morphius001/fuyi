@@ -1049,3 +1049,11 @@
 - 计划将 real DB adapter rehearsal 限定为本地 disposable PostgreSQL，验证 repository / SQL adapter 的真实 SQL 行为。
 - 明确当前 refund state / actor DB-safe mapping 只是 rehearsal 兼容层；未来真实 schema 仍需单独 migration / constraint PR。
 - 仍 No-Go：预发/生产 DB、真实 provider refund notify、provider refund request、workflow、refund success state、settlement、commission、payout、permission、fulfillment、logistics。
+
+## Round 309 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal`: done，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal.md`。
+- 新增 `.codex/scripts/refund-inbox-repository-real-db-adapter-rehearsal.sh`，只连接本地 disposable PostgreSQL，默认 DB 名 `fuyi_refund_inbox_real_adapter_dry_run_<timestamp>`。
+- 脚本验证 fake refund inbox row、DB-safe status / actor mapping、same digest duplicate、different digest conflict、manual review event、forbidden action rejection、metadata redaction、failed subtransaction rollback、down SQL 和 drop DB 无残留。
+- 验证通过：real-adapter rehearsal positive run `1|8`、unsafe DB name guard、production env guard、focused local client + refund repository tests 2 suites / 24 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund DB dry-run `1|8`、`git diff --check`。
+- 当前仍不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不新增 route，不接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -2069,3 +2069,12 @@
 - 下一步如执行 `refund-inbox-repository-real-db-adapter-rehearsal`，必须仍是 local disposable DB script + focused tests，不得连接预发/生产。
 - `refund-schema-constraint-migration-plan` 应单独规划，因为当前 refund state / actor mapping 只是兼容 payment-first shared schema 的 rehearsal 层。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 309 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal` 已完成，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal.md`。
+- 新增本地 disposable DB rehearsal 脚本 `.codex/scripts/refund-inbox-repository-real-db-adapter-rehearsal.sh`。
+- 验证通过：real-adapter rehearsal positive run `1|8`、unsafe DB name guard、production env guard、focused local client + refund repository tests 24/24、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund dry-run `1|8`、diff check。
+- 脚本使用短 DB 前缀 `fuyi_refund_inbox_real_adapter_dry_run_`，避免 PostgreSQL identifier 截断。
+- 下一步建议做 `refund-inbox-repository-real-db-adapter-rehearsal-validation`，记录 PR 合并后验证；或先规划 `refund-schema-constraint-migration-plan`。
+- 仍不得接预发/生产 DB、真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

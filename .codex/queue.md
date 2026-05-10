@@ -2318,5 +2318,21 @@
 
 第三百零八轮完成后建议继续：
 
-1. `refund-inbox-repository-real-db-adapter-rehearsal`: pending
+1. `refund-inbox-repository-real-db-adapter-rehearsal`: done
 2. `refund-schema-constraint-migration-plan`: pending
+
+## 第三百零九轮 Refund Inbox Repository Real DB Adapter Rehearsal
+
+1. `refund-inbox-repository-real-db-adapter-rehearsal`: done
+
+第三百零九轮原则：
+
+- 本轮新增本地 disposable PostgreSQL rehearsal 脚本。
+- 不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不新增 route。
+- rehearsal 只验证 repository / SQL adapter 相关 DB 语义，不代表退款成功。
+- 仍不连接预发/生产 DB，不调用 provider refund API，不执行 workflow。
+
+第三百零九轮完成后建议继续：
+
+1. `refund-schema-constraint-migration-plan`: pending
+2. `refund-inbox-repository-real-db-adapter-rehearsal-validation`: pending

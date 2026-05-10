@@ -901,3 +901,10 @@
 - `refund.succeeded` envelope 只能进入 inbox `normalized` 状态，不代表退款成功；accepted guard 只能进入 `state_owner_pending`，不能执行 workflow。
 - 本轮不新增 route、不写 DB、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 291 更新
+
+- `refund-runtime-gate-validation-v2`: done，docs-only 汇总退款 runtime gate 第二版验证。
+- 覆盖 refund amount guard、request idempotency、notification verifier / normalizer、manual review audit、audit event allowlist 和 inbox state transition contract。
+- 验证结论仍是 No-Go to real refund runtime：没有真实 refund route、DB-backed refund inbox runtime、provider refund API、workflow execution、退款状态写入、结算、佣金或打款联动。
+- 验证要求：API typecheck、payment harness、registration grep、high-risk runtime grep、`git diff --check`、子智能体复核。

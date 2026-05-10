@@ -1800,4 +1800,19 @@
 
 第二百七十五轮完成后建议继续：
 
-1. `refund-runtime-risk-gate-plan`: pending
+1. `refund-runtime-risk-gate-plan`: done
+
+## 第二百七十六轮 Refund Runtime Risk Gate Plan
+
+1. `refund-runtime-risk-gate-plan`: done
+
+第二百七十六轮原则：
+
+- 本轮只做退款 runtime 风险门禁文档。
+- 不新增 refund route，不接支付宝 / 微信支付 refund API，不调用 workflow，不改 order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 后续必须先做 refund command contract、amount guard、request idempotency、notification inbox、manual review、permission / audit。
+
+第二百七十六轮完成后建议继续：
+
+1. `refund-command-contract-plan`: pending
+2. `payment-refund-runtime-gate-validation`: pending

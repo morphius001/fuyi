@@ -2223,5 +2223,21 @@
 
 第三百零二轮完成后建议继续：
 
-1. `refund-inbox-local-inbox-only-route`: pending
+1. `refund-inbox-local-inbox-only-route`: done
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第三百零三轮 Refund Inbox Local Inbox-only Route
+
+1. `refund-inbox-local-inbox-only-route`: done
+
+第三百零三轮原则：
+
+- 本轮只把 refund inbox mock route 扩展到 fake/local in-memory inbox-only。
+- 默认 disabled，production / preprod / staging blocked；local DB route wiring 仍未启用。
+- accepted / duplicate / manual_review 只代表本地 inbox 语义，不代表退款成功。
+- 不连接 DB、不调用 provider refund API、不执行 workflow、不改变交易/结算/权限/履约/物流 runtime。
+
+第三百零三轮完成后建议继续：
+
+1. `refund-inbox-local-inbox-only-route-validation`: pending
+2. `refund-inbox-local-db-route-plan`: pending

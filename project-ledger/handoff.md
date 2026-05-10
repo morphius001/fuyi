@@ -2021,3 +2021,11 @@
 - 本轮只规划未来 fake/local inbox-only route；未修改 route runtime、未连接 DB、未写 inbox、未执行 workflow。
 - 下一步如果执行 `refund-inbox-local-inbox-only-route`，只能 fake provider、fake secret、本地 disposable DB / in-memory、inbox/audit-only，且所有响应必须保留 `runtimeMutationBlocked: true`。
 - 仍不得接真实支付宝 / 微信支付 refund notify、provider refund request、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 303 更新
+
+- `refund-inbox-local-inbox-only-route` 已完成，见 `docs/refund-inbox-local-inbox-only-route.md`。
+- Route 仍默认 disabled，生产 / 预发 / staging blocked；只有本地 fake in-memory env gate 通过时才进入 inbox-only。
+- accepted / duplicate / manual_review response 都带 `runtimeMutationBlocked: true`，只表示本地 inbox 结果，不代表退款成功。
+- 当前未接 local DB route wiring、真实 Provider、workflow、refund state mutation、settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议进入 `refund-inbox-local-inbox-only-route-validation`，做合并后验证；随后再规划 local DB-backed route，仍不能接真实 refund runtime。

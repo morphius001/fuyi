@@ -1663,3 +1663,11 @@
 - 本轮查阅官方资料后记录支付宝 / 微信支付真实 Provider 进入 sandbox / production-disabled 前的密钥、证书、验签、回调、幂等、日志、回滚和发布门禁。
 - 下一步建议继续 `payment-runtime-external-readiness-review`；真实 provider 仍不能接 checkout，不能写真实密钥，不能执行 payment workflow。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 254 更新
+
+- `payment-runtime-external-readiness-review` 已完成，见 `docs/payment-runtime-external-readiness-review.md`。
+- 当前 payment runtime 仍 blocked-external；缺 disposable preprod DB 和明确连接/备份/回滚/操作授权。
+- 脚本 `.codex/scripts/payment-notification-preprod-disposable-db-smoke.sh` 只能 `--print-plan` 和 `--validate-inputs-only`，不能连接外部 DB。
+- 下一步可继续 `alipay-provider-sandbox-contract` 或 `wechat-pay-provider-sandbox-contract`；仍不得接真实 provider 或 payment workflow。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

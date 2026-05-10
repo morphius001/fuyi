@@ -1860,6 +1860,22 @@
 
 第二百七十九轮完成后建议继续：
 
-1. `refund-request-idempotency-contract`: pending
+1. `refund-request-idempotency-contract`: done
 2. `refund-notification-contract-plan`: pending
+3. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十轮 Refund Request Idempotency Contract
+
+1. `refund-request-idempotency-contract`: done
+
+第二百八十轮原则：
+
+- 本轮只新增退款请求幂等 key 纯函数和 tests。
+- 不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不输出 refund success。
+- key 不是 provider 请求结果，也不是退款成功凭证。
+
+第二百八十轮完成后建议继续：
+
+1. `refund-notification-contract-plan`: pending
+2. `refund-manual-review-audit-plan`: pending
 3. `payment-refund-runtime-gate-validation`: pending

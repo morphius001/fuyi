@@ -1845,3 +1845,10 @@
 - `refund-request-idempotency-plan` 已完成，见 `docs/refund-request-idempotency-plan.md`。
 - 已规划 local command、provider request、provider notification 三层幂等，明确 provider request accepted / unknown 不代表退款成功。
 - 下一步建议进入 `refund-request-idempotency-contract` 或 `refund-notification-contract-plan`，仍不接真实 provider、不写 DB、不执行 workflow。
+
+## Round 280 更新
+
+- `refund-request-idempotency-contract` 已完成，见 `docs/refund-request-idempotency-contract.md`。
+- 新增 local command key 与 provider refund request key helper，focused tests 7/7 通过。
+- key 只用于幂等标识，不代表 provider request 已发出或退款成功；本轮不新增 route、不写 DB、不接 provider、不执行 workflow。
+- 下一步建议进入 `refund-notification-contract-plan` 或 `refund-manual-review-audit-plan`。

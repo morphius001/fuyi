@@ -963,3 +963,12 @@
 - 计划定义未来 fake/local inbox-only route 的 path 草案、runtime gate、request / response contract、accepted / duplicate / digest conflict / rejected 语义、response redaction 和测试矩阵。
 - 明确 route response、inbox accepted、duplicate、manual review 和 audit event 都不能代表退款成功；refund state mutation、settlement、commission、payout、permission、fulfillment 和 logistics 继续阻断。
 - 验证要求：`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。
+
+## Round 299 更新
+
+- `refund-inbox-disabled-route-skeleton-plan`: done，见 `docs/refund-inbox-disabled-route-skeleton-plan.md`。
+- 本轮只做 docs-only disabled route skeleton 计划；不新增 route，不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不连接 DB。
+- 计划定义未来 disabled skeleton 的文件范围、默认 disabled response、production blocked response、method handling、response redaction 和 focused tests。
+- 未来 skeleton 必须不读 body、不验签、不 normalize、不生成 idempotency key、不调 verifier / normalizer / repository / provider refund API / workflow、不写 inbox 或 event log。
+- disabled route 不能表达 inbox accepted、duplicate 或 refund success；settlement、commission、payout、permission、fulfillment 和 logistics 继续阻断。
+- 验证要求：`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。

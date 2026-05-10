@@ -1993,3 +1993,10 @@
 - 本轮只规划未来 route gate；未新增 route、未修改 runtime、未注册 migration/module、未接 provider refund API、未执行 workflow。
 - 未来 route 第一阶段只能是 fake/local inbox-only，默认 disabled，production blocked；accepted / duplicate / manual review response 都不能代表退款成功。
 - 下一步建议进入 `refund-inbox-disabled-route-skeleton-plan`，继续 docs-only 规划 disabled route skeleton；或者进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，但仍不得接真实退款 runtime。
+
+## Round 299 更新
+
+- `refund-inbox-disabled-route-skeleton-plan` 已完成，见 `docs/refund-inbox-disabled-route-skeleton-plan.md`。
+- 本轮只规划未来 disabled route skeleton；未新增 route、未修改 `packages/**`、未连接 DB、未注册 migration/module。
+- 下一步如果执行 `refund-inbox-disabled-route-skeleton`，只能新增 disabled / production blocked route 和 focused tests，且不读 body、不调用 verifier / normalizer / repository / provider API / workflow。
+- 仍不得接 fake accepted inbox-only、真实退款 runtime、provider refund request、settlement、commission、payout、permission、fulfillment 或 logistics。

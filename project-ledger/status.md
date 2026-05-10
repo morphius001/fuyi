@@ -1229,3 +1229,12 @@
 - `accepted`、`duplicate`、`manual_review`、`processed_for_audit_only` 和 `query_required` 均不代表平台退款成功。
 - 下一步建议进入 `refund-provider-inbox-route-plan-validation`，先验证本计划 PR 文件范围和安全边界。
 - 仍 No-Go：真实 provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 331 更新
+
+- `refund-provider-inbox-route-plan-validation`: done，见 `docs/refund-provider-inbox-route-plan-validation.md`。
+- PR #377 合并后验证通过：`git diff --check`、`git status --short --branch`、`git diff-tree --no-commit-id --name-status -r d4f1fe6` 和 `git show --stat --oneline --no-renames d4f1fe6`。
+- 合并提交文件范围仅为 `.codex/queue.md`、`.codex/tasks/refund-provider-inbox-route-plan.md`、`docs/refund-provider-inbox-route-plan.md`、`project-ledger/changelog.md`、`project-ledger/handoff.md`、`project-ledger/status.md`。
+- 当前仍无 `apps/**` 或 `packages/**` runtime 变更，provider inbox route shadow 仍未实现或启用。
+- 下一步建议进入 `refund-provider-inbox-route-shadow-plan`，继续 docs-only 细化 implementation PR 文件范围和 route gate。
+- 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

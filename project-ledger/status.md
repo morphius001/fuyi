@@ -946,3 +946,12 @@
 - 计划覆盖 `provider + idempotency_key` 唯一约束、same digest duplicate no-op、different digest manual review / conflict、CNY / positive amount、refund audit action allowlist、禁止动作 rejection 和 metadata redaction。
 - 本轮不新增脚本、不连接 DB、不修改 `apps/**` 或 `packages/**`，不注册 migration/module，不接 route、provider refund API 或 workflow，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 验证要求：`git diff --check`、`git diff --name-only`、status/untracked 范围确认、子智能体复核。
+
+## Round 297 更新
+
+- `refund-inbox-repository-disposable-db-dry-run`: done，见 `docs/refund-inbox-repository-disposable-db-dry-run.md`。
+- 新增 `.codex/scripts/refund-inbox-repository-disposable-db-dry-run.sh`，只连接本地 disposable PostgreSQL DB，默认 DB 名为 `fuyi_refund_inbox_repository_dry_run_<timestamp>`。
+- 脚本从未注册 shared inbox migration skeleton 提取 up/down SQL，在 disposable DB 内追加 refund-only positive amount、event action allowlist 和 metadata redaction 约束；不修改真实 migration。
+- dry-run 覆盖 fake `refund.succeeded` inbox row、unique idempotency、same digest duplicate no-op、different digest conflict manual review、forbidden action rejection、non-CNY / zero amount rejection、metadata redaction、down SQL 和 drop DB 无残留。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不新增 route，不调用 provider refund API 或 workflow，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态。
+- 验证要求：dry-run 脚本、`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。

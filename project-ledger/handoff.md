@@ -2119,3 +2119,10 @@
 - 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
 - 下一步建议进入 `refund-schema-constraint-migration-prereadiness-plan`，先审计真实 migration PR 的上线前置条件、rollback runbook 和 module registration gate。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 315 更新
+
+- `refund-schema-constraint-migration-prereadiness-plan` 已完成，见 `docs/refund-schema-constraint-migration-prereadiness-plan.md`。
+- 计划明确真实 migration PR 前必须有 file/schema/runtime/data gates、operator preflight SQL、rollback runbook、module registration 保持关闭和验证矩阵。
+- 下一步可进入 `refund-schema-constraint-migration`，但只允许修改 migration skeleton / docs / validation，不允许注册 module、启用 route、provider、workflow 或 refund success state。
+- 仍不得连接预发/生产 DB，不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

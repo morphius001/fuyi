@@ -53,6 +53,7 @@ echo "RUN payment notification unit tests"
     src/modules/china-payment-notification/__tests__/wechat-pay-test-vectors.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/wechat-pay-notification-verifier.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/wechat-pay-notification-normalizer.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/wechat-pay-refund-notification-verifier.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/refund-amount-guard.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/refund-request-idempotency.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/refund-notification-test-vectors.unit.spec.ts \

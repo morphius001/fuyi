@@ -1197,3 +1197,11 @@
 - 三项 PR 文件范围均为 `.codex/queue.md`、`.codex/tasks/**`、`docs/**`、`project-ledger/**`；没有 `apps/**` 或 `packages/**` runtime 变更。
 - 当前仍未接 SDK、真实密钥、route、inbox、provider refund API、refund query API、workflow 或 refund success state。
 - 下一步建议进入 `refund-wechat-real-verifier-contract`，第一版只做纯函数 + redacted fixtures + focused tests。
+
+## Round 327 更新
+
+- `refund-wechat-real-verifier-contract`: done，见 `docs/refund-wechat-real-verifier-contract.md`。
+- 新增微信支付退款结果回调 verifier 纯函数合同、redacted success / abnormal / closed fixtures 和 focused tests。
+- 合同输出始终 `fixtureOnly: true`、`executable: false`；`refund.succeeded` 不代表平台退款成功。
+- 本轮不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-alipay-real-verifier-contract`。

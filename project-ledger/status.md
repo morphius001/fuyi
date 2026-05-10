@@ -792,3 +792,10 @@
 - 合同覆盖 actor、ownership、payment snapshot、refund snapshot、block codes、reason codes 和 audit metadata。
 - 下一步只允许 `refund-amount-guard-contract` 纯函数 + tests，且输出仍必须不可执行。
 - 本轮不新增 TypeScript runtime、不新增 route、不写 DB、不接 provider、不执行 workflow、不改变资金或订单状态。
+
+## Round 278 更新
+
+- `refund-amount-guard-contract`: done，新增退款金额 guard 纯函数和 focused tests。
+- 覆盖金额、币种、支付状态、provider、seller / market ownership、Admin RBAC、Vendor seller ownership、reason / audit note、pending conflict 和 idempotency replay。
+- 输出始终 `executable: false`；本轮不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。

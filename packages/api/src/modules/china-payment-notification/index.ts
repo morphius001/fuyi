@@ -39,3 +39,5 @@ export * from "./refund-audit-event-allowlist";
 export * from "./refund-inbox-state-transition";
 export * from "./refund-inbox-repository-contract";
 export * from "./refund-db-inbox-repository";
+export * from "./refund-provider-inbox-route-config";
+export * from "./refund-provider-inbox-response";

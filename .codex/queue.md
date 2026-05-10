@@ -2685,4 +2685,20 @@
 
 第三百三十二轮完成后建议继续：
 
-1. `refund-provider-inbox-route-shadow`: pending
+1. `refund-provider-inbox-route-shadow`: done
+
+## 第三百三十三轮 Refund Provider Inbox Route Shadow
+
+1. `refund-provider-inbox-route-shadow`: done
+
+第三百三十三轮原则：
+
+- 本轮只新增 provider inbox route disabled shadow skeleton。
+- Route 默认 disabled，即使 local shadow flags 打开也不读取 body、不写 inbox。
+- 不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不调用 provider refund API、refund query API、workflow，不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十三轮完成后建议继续：
+
+1. `refund-provider-inbox-route-shadow-validation`: pending

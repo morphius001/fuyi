@@ -874,3 +874,13 @@
 - 验证通过：focused unit test 7/7、API typecheck、payment harness 35 suites / 249 tests、runtime grep 和 `git diff --check`。
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 提交前仍需子智能体只读复核。
+
+## Round 288 更新
+
+- `refund-audit-event-allowlist-contract`: done，新增退款 audit event allowlist 纯函数和 focused tests。
+- 允许 command / guard / notification / manual review / runtime mutation blocked / settlement blocked 审计动作。
+- 明确禁止 `refund_state_mutated`、`refund_workflow_executed`、`provider_refund_request_sent`、`settlement_adjusted`、`commission_adjusted`、`payout_adjusted`。
+- 本轮不写 DB、不注册 migration、不新增 route、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证通过：focused unit test 7/7、API typecheck、payment harness 36 suites / 256 tests、runtime grep 和 `git diff --check`。
+- runtime grep 中源码命中 `providerRefundRequest` / `refundStateMutation` 是 executable metadata denylist；其余命中为 focused test fixture / 负断言，未发现 route、provider refund API、workflow command 执行或退款状态写入。
+- 提交前仍需子智能体只读复核。

@@ -1907,3 +1907,12 @@
 - runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
 - 输出强制 `blockRuntimeMutation: true`、`fixtureOnly: true`、`executable: false`；不写 DB、不新增 route、不接 provider API、不执行 workflow、不改变退款状态。
 - 下一步建议进入 `refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan`。
+
+## Round 288 更新
+
+- `refund-audit-event-allowlist-contract` 已完成，见 `docs/refund-audit-event-allowlist-contract.md`。
+- 新增 `validateRefundAuditEventAllowlistContract()`，校验 audit action allowlist、required metadata、敏感字段和可执行 payload。
+- 验证通过：focused unit test 7/7、API typecheck、payment harness 36 suites / 256 tests、runtime grep 和 `git diff --check`。
+- runtime grep 中源码命中 `providerRefundRequest` / `refundStateMutation` 是 executable metadata denylist；其余命中为 focused test fixture / 负断言，未发现 route、provider refund API、workflow command 执行或退款状态写入。
+- 本轮不写 DB、不注册 migration、不新增 route、不接 provider API、不执行 workflow、不改变退款状态。
+- 下一步建议进入 `refund-inbox-state-transition-plan`。

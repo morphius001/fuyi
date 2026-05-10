@@ -345,3 +345,4 @@
 - 完成 `refund-manual-review-audit-plan`，docs-only 规划退款人工复核触发条件、审计 action allowlist、metadata、RBAC / ownership gate 和 settlement / commission / payout block；本轮不新增 runtime。
 - 完成 `payment-refund-runtime-gate-validation`，docs-only 汇总 payment / refund gate 验证；API typecheck、payment harness 34/242、disposable DB dry-run、高风险 grep 和 diff check 通过，结论仍是 No-Go to real refund runtime。
 - 完成 `refund-manual-review-audit-contract`，新增退款 manual review audit 纯函数和 focused tests；输出不可执行 decision、block runtime mutation、redaction policy 和 audit metadata，不写 DB、不接 provider、不执行 workflow。
+- 完成 `refund-audit-event-allowlist-contract`，新增退款 audit event allowlist 纯函数和 focused tests；允许不可执行审计动作，明确阻断 refund state mutation、workflow、provider request、settlement / commission / payout 调整动作。

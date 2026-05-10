@@ -1986,5 +1986,19 @@
 
 第二百八十七轮完成后建议继续：
 
-1. `refund-audit-event-allowlist-contract`: pending
+1. `refund-audit-event-allowlist-contract`: done
 2. `refund-inbox-state-transition-plan`: pending
+
+## 第二百八十八轮 Refund Audit Event Allowlist Contract
+
+1. `refund-audit-event-allowlist-contract`: done
+
+第二百八十八轮原则：
+
+- 本轮只新增退款 audit event allowlist 纯函数和 tests。
+- 不写 DB、不注册 migration、不新增 route、不接 provider API、不执行 workflow。
+- allowlist 不代表事件已写库，也不代表退款成功。
+
+第二百八十八轮完成后建议继续：
+
+1. `refund-inbox-state-transition-plan`: pending

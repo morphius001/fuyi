@@ -1106,3 +1106,13 @@
 - 计划覆盖 file/schema/runtime/data gates、operator preflight SQL、rollback runbook、required verification、release sequence 和 Go / No-Go。
 - 下一步如进入 `refund-schema-constraint-migration`，仍只能修改 migration skeleton / docs / validation，不能启用 route、provider、workflow 或 refund success state。
 - 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 316 更新
+
+- `refund-schema-constraint-migration`: done，见 `docs/refund-schema-constraint-migration.md`。
+- 更新未注册 migration skeleton：扩展 refund-only `processing_status`、refund audit actions、`system_job` / `admin` / `vendor` actor、positive amount check、metadata redaction helper / constraint、provider refund 普通索引。
+- 更新 `.codex/scripts/refund-schema-constraint-migration-rehearsal.sh`，改为验证当前 migration skeleton 自带约束，而不是临时追加同一套 constraints。
+- 更新 `.codex/scripts/refund-inbox-repository-real-db-adapter-rehearsal.sh`，使其验证新 schema 接受 `normalized` 与 `system_job`，同时继续拒绝 provider refund request / workflow / settlement / commission / payout 等危险动作。
+- 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused tests 3 suites / 29 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、existing refund real-adapter rehearsal `1|9`、`git diff --check`。
+- 当前仍不注册 module、不新增 route、不接 provider refund API、不执行 workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+- 下一步建议做 `refund-schema-constraint-migration-validation`，记录合并后验证。

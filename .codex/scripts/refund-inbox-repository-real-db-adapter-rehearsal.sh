@@ -339,27 +339,18 @@ begin
       '{"auditEventId":"raudit_manual_review","severity":"high"}'::jsonb
     );
 
-  begin
-    update payment_notification_inbox
-    set processing_status = 'normalized'
-    where id = 'rinbox_real_adapter_001';
-    raise exception 'shared schema accepted unmapped refund processing status';
-  exception when check_violation then
-    null;
-  end;
+  update payment_notification_inbox
+  set processing_status = 'normalized'
+  where id = 'rinbox_real_adapter_001';
 
-  begin
-    insert into payment_notification_event_log (
-      id, inbox_id, action, actor_type, message, metadata
-    ) values (
-      'rlog_real_adapter_bad_actor', 'rinbox_real_adapter_001',
-      'refund_notification_normalized', 'system_job',
-      'bad actor fixture', '{"auditEventId":"raudit_bad_actor"}'::jsonb
-    );
-    raise exception 'shared schema accepted unmapped system_job actor';
-  exception when check_violation then
-    null;
-  end;
+  insert into payment_notification_event_log (
+    id, inbox_id, action, actor_type, message, metadata
+  ) values (
+    'rlog_real_adapter_system_job_actor', 'rinbox_real_adapter_001',
+    'refund_notification_normalized', 'system_job',
+    'Refund normalized by schema-supported system job actor.',
+    '{"auditEventId":"raudit_system_job_actor","processingStatus":"normalized"}'::jsonb
+  );
 
   foreach forbidden_action in array array[
     'refund_state_mutated',

@@ -95,6 +95,37 @@ const setLocalDbEnv = (secret: string) => {
   process.env.NODE_ENV = "development";
 };
 
+const expectInboxOnlySafeResponse = ({
+  body,
+  rawBody,
+  secret,
+}: {
+  body: unknown;
+  rawBody?: string;
+  secret?: string;
+}) => {
+  const responseBody = JSON.stringify(body);
+
+  if (rawBody) {
+    expect(responseBody).not.toContain(rawBody);
+  }
+
+  if (secret) {
+    expect(responseBody).not.toContain(secret);
+    expect(responseBody).not.toContain(
+      buildMockPaymentSignature(rawBody ?? "", secret),
+    );
+  }
+
+  expect(responseBody).not.toContain(localDbUrl);
+  expect(responseBody).not.toContain("x-mock-payment-signature");
+  expect(responseBody).not.toContain("execute_workflow");
+  expect(responseBody).not.toContain("checkout");
+  expect(responseBody).not.toContain("paymentStateCommand");
+  expect(responseBody).not.toContain("orderStateCommand");
+  expect(responseBody).not.toContain("payment.succeeded");
+};
+
 describe("mock China payment provider runtime disabled route", () => {
   beforeEach(() => {
     process.env = { ...oldEnv };
@@ -261,6 +292,42 @@ describe("mock China payment provider runtime disabled route", () => {
     );
   });
 
+  it("keeps local DB route disabled when the actual DB port does not match the local URL", async () => {
+    const rawBody = JSON.stringify({
+      event_id: "evt_provider_port_mismatch_001",
+      event_type: "payment.succeeded",
+      merchant_order_ref: "pay_provider_port_mismatch_001",
+      amount: 128560,
+      currency: "CNY",
+    });
+    setLocalDbEnv("mock_secret_should_not_leak");
+    const req = makeLocalDbRequest({
+      rawBody,
+      query: jest.fn(),
+      serverHost: "127.0.0.1",
+      serverPort: 15433,
+    }) as unknown as MedusaRequest & { text: jest.Mock };
+    req.text = jest.fn(async () => {
+      throw new Error("body should not be read before actual local DB check");
+    });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(res.json).toHaveBeenCalledWith({
+      status: "disabled",
+      provider: "mock_china_pay",
+      runtime: "disabled",
+      reason: "Mock China payment provider runtime is disabled.",
+      runtimeRequested: true,
+    });
+    expect(req.text).not.toHaveBeenCalled();
+    expect(JSON.stringify(res.json.mock.calls[0]?.[0])).not.toContain(
+      "mock_secret_should_not_leak",
+    );
+  });
+
   it("keeps local DB route disabled without Medusa DB scope injection", async () => {
     setLocalDbEnv("mock_secret_should_not_leak");
 
@@ -346,11 +413,11 @@ describe("mock China payment provider runtime disabled route", () => {
       ]),
     );
 
-    const responseBody = JSON.stringify(res.json.mock.calls[0][0]);
-    expect(responseBody).not.toContain(rawBody);
-    expect(responseBody).not.toContain(secret);
-    expect(responseBody).not.toContain(localDbUrl);
-    expect(responseBody).not.toContain("x-mock-payment-signature");
+    expectInboxOnlySafeResponse({
+      body: res.json.mock.calls[0][0],
+      rawBody,
+      secret,
+    });
   });
 
   it("returns duplicate for local DB idempotency replays", async () => {
@@ -395,6 +462,11 @@ describe("mock China payment provider runtime disabled route", () => {
         route: "mock_payment_provider_runtime_local_inbox_only",
       }),
     );
+    expectInboxOnlySafeResponse({
+      body: res.json.mock.calls[0][0],
+      rawBody,
+      secret,
+    });
   });
 
   it("rejects local DB payloads without signatures", async () => {
@@ -439,8 +511,49 @@ describe("mock China payment provider runtime disabled route", () => {
       }),
     );
 
-    const responseBody = JSON.stringify(res.json.mock.calls[0][0]);
-    expect(responseBody).not.toContain(rawBody);
-    expect(responseBody).not.toContain(secret);
+    expectInboxOnlySafeResponse({
+      body: res.json.mock.calls[0][0],
+      rawBody,
+      secret,
+    });
+  });
+
+  it("rejects local DB payloads with invalid signatures without leaking runtime material", async () => {
+    const secret = "provider_local_db_secret";
+    const rawBody = JSON.stringify({
+      event_id: "evt_provider_invalid_signature_001",
+      event_type: "payment.succeeded",
+      merchant_order_ref: "pay_provider_invalid_signature_001",
+      amount: 128560,
+      currency: "CNY",
+    });
+    setLocalDbEnv(secret);
+    const req = makeLocalDbRequest({
+      rawBody,
+      headers: {
+        "x-mock-payment-signature": "bad_signature",
+      },
+      query: jest.fn(),
+    });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: "rejected",
+        code: "SIGNATURE_INVALID",
+        route: "mock_payment_provider_runtime_local_inbox_only",
+      }),
+    );
+    expectInboxOnlySafeResponse({
+      body: res.json.mock.calls[0][0],
+      rawBody,
+      secret,
+    });
+    expect(JSON.stringify(res.json.mock.calls[0][0])).not.toContain(
+      "bad_signature",
+    );
   });
 });

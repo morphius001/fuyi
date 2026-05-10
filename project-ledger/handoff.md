@@ -1768,3 +1768,11 @@
 - 新增 `verifyWechatPayNotificationContract()`，只验证 fake raw notification 的 header / serial / fake signature / timestamp / resource algorithm。
 - 当前 verifier 返回 `fixtureOnly: true` 和 `executable: false`，不输出 decrypted payload，不执行 payment workflow。
 - 下一步建议继续 `alipay-notification-verifier-contract`。
+
+## Round 269 更新
+
+- `alipay-notification-verifier-contract` 已完成，见 `docs/alipay-notification-verifier-contract.md`。
+- 新增 `buildAlipayNotificationCanonicalPayloadContract()` 和 `verifyAlipayNotificationContract()`。
+- Canonical payload 排除 `sign` 和 `sign_type`；`sign_type=RSA2` 只作为独立字段校验。
+- 当前 verifier 返回 `fixtureOnly: true` 和 `executable: false`，不输出 canonical payload 明文，不执行 payment workflow。
+- 下一步建议继续 `wechat-pay-notification-normalizer-contract`。

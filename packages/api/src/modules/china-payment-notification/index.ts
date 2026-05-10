@@ -19,6 +19,7 @@ export * from "./mock-webhook-repository-resolver";
 export * from "./mock-china-payment-provider";
 export * from "./alipay-test-vectors";
 export * from "./alipay-provider";
+export * from "./alipay-notification-verifier";
 export * from "./wechat-pay-provider";
 export * from "./wechat-pay-test-vectors";
 export * from "./wechat-pay-notification-verifier";

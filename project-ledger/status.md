@@ -726,3 +726,11 @@
 - 合同校验 fake raw notification header、trusted fake serial、expected fake signature、timestamp tolerance 和 encrypted resource algorithm。
 - 本轮不实现真实 RSA 验签、不解密、不接 SDK、不读真实 secret、不接 checkout、不执行 payment workflow。
 - 验证要求：focused unit test、API typecheck、payment harness、`git diff --check`、子智能体复核。
+
+## Round 269 更新
+
+- `alipay-notification-verifier-contract`: done，新增支付宝 fake notify verifier 纯函数合同。
+- 合同校验 `sign`、`sign_type=RSA2`、expected app id、expected seller id、expected fake signature 和 expected canonical payload。
+- Canonical payload 排除 `sign` 和 `sign_type`，不输出 canonical payload 明文。
+- 本轮不实现真实 RSA 验签、不接 SDK、不读真实 secret、不接 checkout、不执行 payment workflow。
+- 验证要求：focused unit test、API typecheck、payment harness、`git diff --check`、子智能体复核。

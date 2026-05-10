@@ -1798,3 +1798,10 @@
 - 汇总 PR #315-#318：WeChat Pay / Alipay fake-only verifier + normalizer contracts 均已完成。
 - 验证通过：payment notification harness 29 suites / 194 tests、API typecheck、runtime grep 和 `git diff --check`。
 - 下一步建议继续 `payment-runtime-inbox-only-route-gate`，仍不能接 SDK、checkout、真实 route 或 payment workflow。
+
+## Round 273 更新
+
+- `payment-runtime-inbox-only-route-gate` 已完成，见 `docs/payment-runtime-inbox-only-route-gate.md`。
+- 审计现有 mock route gate：默认关闭、production blocked、mock provider only、local DB / local in-memory rehearsal only。
+- 验证通过：payment notification harness 29 suites / 194 tests、API typecheck、route high-risk grep 和 `git diff --check`。
+- 下一步建议继续 `payment-runtime-inbox-only-route-plan`，仍不能接支付宝 / 微信支付 SDK、checkout、真实 route 或 payment workflow。

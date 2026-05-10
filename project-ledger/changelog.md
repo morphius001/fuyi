@@ -330,3 +330,4 @@
 - 完成 `wechat-pay-notification-normalizer-contract`，新增微信支付 fake notify normalizer 纯函数合同；本轮不解密、不接 SDK、不写 inbox、checkout 或 workflow。
 - 完成 `alipay-notification-normalizer-contract`，新增支付宝 fake notify normalizer 纯函数合同；金额字符串解析为分，本轮不接 SDK、不写 inbox、checkout 或 workflow。
 - 完成 `payment-provider-verifier-normalizer-validation`，汇总支付宝 / 微信支付 fake-only verifier + normalizer 阶段，确认下一步只能进入 inbox-only route gate。
+- 完成 `payment-runtime-inbox-only-route-gate`，docs-only 审计现有 mock inbox-only route gate；本轮不新增 route、不接 SDK、checkout 或 workflow。

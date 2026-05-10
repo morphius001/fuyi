@@ -2455,4 +2455,19 @@
 
 第三百一十七轮完成后建议继续：
 
-1. `refund-inbox-schema-adapter-unmapped-state-plan`: pending
+1. `refund-inbox-schema-adapter-unmapped-state-plan`: done
+
+## 第三百一十八轮 Refund Inbox Schema Adapter Unmapped State Plan
+
+1. `refund-inbox-schema-adapter-unmapped-state-plan`: done
+
+第三百一十八轮原则：
+
+- 本轮只规划 local PG client / refund inbox adapter 去除 DB-safe mapping。
+- 不修改 runtime，不连接 DB，不注册 module，不新增 route。
+- 未来 adapter PR 仍只允许 local/mock/disposable DB gate。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十八轮完成后建议继续：
+
+1. `refund-inbox-schema-adapter-unmapped-state`: pending

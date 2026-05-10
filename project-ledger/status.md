@@ -628,3 +628,11 @@
 - `.codex/scripts/payment-notification-preprod-disposable-db-smoke.sh` 当前只支持 `--print-plan` 与 `--validate-inputs-only`，不会连接外部 DB。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider，不执行 payment workflow。
 - 验证通过：`--print-plan`、`git diff --check`。
+
+## Round 255 更新
+
+- `alipay-provider-sandbox-contract`: done，docs-only 定义支付宝 Provider sandbox contract。
+- 合同覆盖 provider id、配置 key 名、create payment、notify normalize、verify、return_url、fake notify test matrix 和 No-Go。
+- 明确支付宝 `notify_url` 才是支付状态候选入口，`return_url` 只能展示 pending；不能接 checkout、不能写真实密钥、不能执行 payment workflow。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不接支付宝 SDK，不注册 migration，不连接外部 DB。
+- 验证要求：`git diff --check`。

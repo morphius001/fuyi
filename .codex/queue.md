@@ -366,9 +366,25 @@
 
 第二百五十四轮完成后建议继续：
 
-1. `alipay-provider-sandbox-contract`: pending
+1. `alipay-provider-sandbox-contract`: done
 2. `wechat-pay-provider-sandbox-contract`: pending
 3. `provider-secret-config-template`: pending
+
+## 第二百五十五轮 Alipay Provider Sandbox Contract
+
+1. `alipay-provider-sandbox-contract`: done
+
+第二百五十五轮原则：
+
+- 只定义支付宝 sandbox contract。
+- 不接支付宝 SDK，不接 checkout，不写真实密钥，不执行 payment workflow。
+- `notify_url` 是唯一支付状态候选入口；`return_url` 只能展示 pending。
+
+第二百五十五轮完成后建议继续：
+
+1. `wechat-pay-provider-sandbox-contract`: pending
+2. `provider-secret-config-template`: pending
+3. `alipay-provider-disabled-adapter-skeleton`: pending
 
 第十七轮队列已清空。
 

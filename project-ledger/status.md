@@ -998,3 +998,12 @@
 - 计划定义未来 fake/local inbox-only route 的 env gate、mock provider gate、local disposable DB / in-memory gate、fake payload contract、response contract、redaction、test matrix、verification 和 rollback。
 - 明确 accepted / duplicate / manual review response 都不能代表退款成功；provider refund API、workflow、refund state mutation、settlement、commission、payout、permission、fulfillment 和 logistics 继续 No-Go。
 - 下一步若实现 `refund-inbox-local-inbox-only-route`，必须继续 fake/local、inbox/audit-only、production blocked，并跑 harness、refund disposable DB dry-run、typecheck 和 runtime grep。
+
+## Round 303 更新
+
+- `refund-inbox-local-inbox-only-route`: done，见 `docs/refund-inbox-local-inbox-only-route.md`。
+- `/china/refund-inbox/mock` 现在支持 fake/local in-memory inbox-only：显式 env gate 通过后读取 fake body、验证 fake signature、normalize fake refund notification、写入进程内 refund inbox repository。
+- 默认仍 disabled；production / preprod / staging blocked；local DB route wiring 仍 disabled。
+- Focused route tests 覆盖 9 个场景：默认 disabled、缺少 local repository disabled、production blocked、GET 405、accepted、duplicate、digest conflict manual review、missing signature rejected、non-CNY rejected。
+- 当前实现不连接 DB、不注册 module/migration、不调用 provider refund API、不执行 payment/refund workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+- 验证要求：focused route unit test、API typecheck、payment harness、refund disposable DB dry-run、runtime grep、`git diff --check`、子智能体复核。

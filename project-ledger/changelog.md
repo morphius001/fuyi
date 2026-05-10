@@ -309,3 +309,4 @@
 - 完成 `cart-checkout-launch-safety-audit`，docs-only 审计 cart / checkout 调用点、Stripe / manual test payment 风险和中国支付上线门禁；本轮不修改运行时代码。
 - 完成 `payment-risk-register`，docs-only 建立支付、退款、对账、结算、佣金、打款、权限和审计日志风险登记表；本轮不连接外部 DB、不注册 migration、不接真实 provider。
 - 完成 `permission-rbac-launch-matrix`，docs-only 建立 Admin/Vendor/商户/配送供应商/消费者/System job 的权限、RBAC 和资源归属上线矩阵；本轮不修改运行时代码。
+- 完成 `fulfillment-logistics-runtime-gate-plan`，docs-only 建立履约、物流、配送供应商、checkout shipping adapter、tracking 和面单 provider 的 runtime gate；本轮不修改运行时代码。

@@ -892,3 +892,12 @@
 - 明确 inbox state、normalized envelope、manual review decision 和 audit event 都不能代表退款成功。
 - 本轮不新增 runtime、route、DB repository、migration 注册、provider refund API、workflow、checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态写入。
 - 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。
+
+## Round 290 更新
+
+- `refund-inbox-state-transition-contract`: done，新增退款 inbox state transition 纯函数合同和 focused tests。
+- 覆盖 signature verified、terminal rejected、normalized、duplicate same digest、duplicate digest conflict、guard checked / resolved、manual review resolved、runtime mutation blocked 和 audit-only processed。
+- 所有输出固定 `blockRuntimeMutation: true`、`stateMutationAllowed: false`、`fixtureOnly: true`、`executable: false`。
+- `refund.succeeded` envelope 只能进入 inbox `normalized` 状态，不代表退款成功；accepted guard 只能进入 `state_owner_pending`，不能执行 workflow。
+- 本轮不新增 route、不写 DB、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。

@@ -2016,5 +2016,21 @@
 
 第二百八十九轮完成后建议继续：
 
-1. `refund-inbox-state-transition-contract`: pending
+1. `refund-inbox-state-transition-contract`: done
 2. `refund-runtime-gate-validation-v2`: pending
+
+## 第二百九十轮 Refund Inbox State Transition Contract
+
+1. `refund-inbox-state-transition-contract`: done
+
+第二百九十轮原则：
+
+- 本轮只新增 refund inbox state transition 纯函数合同和 tests。
+- 输出必须始终不可执行，并强制 block runtime mutation。
+- `refund.succeeded` envelope、inbox state、manual review 和 audit-only processed 都不能代表退款成功。
+- 不新增 route、DB repository runtime、migration 注册、provider refund API、workflow 或状态写入。
+
+第二百九十轮完成后建议继续：
+
+1. `refund-runtime-gate-validation-v2`: pending
+2. `refund-inbox-repository-plan`: pending

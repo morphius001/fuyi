@@ -1852,3 +1852,9 @@
 - 新增 local command key 与 provider refund request key helper，focused tests 7/7 通过。
 - key 只用于幂等标识，不代表 provider request 已发出或退款成功；本轮不新增 route、不写 DB、不接 provider、不执行 workflow。
 - 下一步建议进入 `refund-notification-contract-plan` 或 `refund-manual-review-audit-plan`。
+
+## Round 281 更新
+
+- `refund-notification-contract-plan` 已完成，见 `docs/refund-notification-contract-plan.md`。
+- 已规划退款通知 verifier / normalizer 合同，要求验签、providerRefundId、金额/币种/引用匹配和独立 notification idempotency。
+- 下一步建议进入 `refund-notification-fake-fixtures` 或 `refund-manual-review-audit-plan`，仍不新增 route、不写 DB、不接 provider SDK、不执行 workflow。

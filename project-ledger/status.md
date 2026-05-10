@@ -813,3 +813,10 @@
 - 覆盖 local command key、provider refund request key、Asia/Shanghai day bucket、key 分叉、规范化和敏感值排除。
 - 本轮不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不输出 refund success、不改变资金或订单状态。
 - 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。
+
+## Round 281 更新
+
+- `refund-notification-contract-plan`: done，docs-only 规划退款通知 verifier / normalizer 合同。
+- 覆盖 `refund.succeeded` / `refund.failed`、providerRefundId、signature、amount / currency / reference matching、notification idempotency 和 failure matrix。
+- 本轮不新增 runtime、不新增 route、不写 DB、不接 provider SDK、不执行 workflow、不改变资金或订单状态。
+- 验证要求：`git diff --check`、status/name-only/untracked 范围确认、子智能体复核。

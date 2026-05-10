@@ -1876,6 +1876,22 @@
 
 第二百八十轮完成后建议继续：
 
-1. `refund-notification-contract-plan`: pending
+1. `refund-notification-contract-plan`: done
+2. `refund-manual-review-audit-plan`: pending
+3. `payment-refund-runtime-gate-validation`: pending
+
+## 第二百八十一轮 Refund Notification Contract Plan
+
+1. `refund-notification-contract-plan`: done
+
+第二百八十一轮原则：
+
+- 本轮只规划退款通知 verifier / normalizer 合同。
+- 不新增 route、不写 DB、不接 provider SDK、不执行 workflow、不改变退款状态。
+- 退款通知必须验签、幂等、匹配 providerRefundId / amount / currency / reference。
+
+第二百八十一轮完成后建议继续：
+
+1. `refund-notification-fake-fixtures`: pending
 2. `refund-manual-review-audit-plan`: pending
 3. `payment-refund-runtime-gate-validation`: pending

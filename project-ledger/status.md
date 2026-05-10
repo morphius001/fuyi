@@ -884,3 +884,11 @@
 - 验证通过：focused unit test 7/7、API typecheck、payment harness 36 suites / 256 tests、runtime grep 和 `git diff --check`。
 - runtime grep 中源码命中 `providerRefundRequest` / `refundStateMutation` 是 executable metadata denylist；其余命中为 focused test fixture / 负断言，未发现 route、provider refund API、workflow command 执行或退款状态写入。
 - 提交前仍需子智能体只读复核。
+
+## Round 289 更新
+
+- `refund-inbox-state-transition-plan`: done，docs-only 规划退款通知 inbox 状态机和 owner 边界。
+- 覆盖 proposed states、allowed transitions、notification idempotency、duplicate replay、digest conflict、provider callback / repository / guard / manual review / state owner / settlement owner 分工、audit action mapping、failure matrix 和 Go / No-Go。
+- 明确 inbox state、normalized envelope、manual review decision 和 audit event 都不能代表退款成功。
+- 本轮不新增 runtime、route、DB repository、migration 注册、provider refund API、workflow、checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态写入。
+- 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。

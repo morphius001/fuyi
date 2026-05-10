@@ -2001,4 +2001,20 @@
 
 第二百八十八轮完成后建议继续：
 
-1. `refund-inbox-state-transition-plan`: pending
+1. `refund-inbox-state-transition-plan`: done
+
+## 第二百八十九轮 Refund Inbox State Transition Plan
+
+1. `refund-inbox-state-transition-plan`: done
+
+第二百八十九轮原则：
+
+- 本轮只做 refund inbox 状态机和 owner 边界 docs-only 计划。
+- 不新增 runtime、route、DB repository、migration 注册、provider API、workflow 或 state mutation。
+- inbox state、normalized envelope、manual review decision 和 audit event 都不能代表退款成功。
+- settlement、commission、payout、permission、fulfillment 和 logistics 继续保持高风险串行。
+
+第二百八十九轮完成后建议继续：
+
+1. `refund-inbox-state-transition-contract`: pending
+2. `refund-runtime-gate-validation-v2`: pending

@@ -322,3 +322,4 @@
 - 完成 `wechat-pay-provider-fake-notify-test-plan`，docs-only 规划微信支付 fake notify / test vector 阶段；本轮不接 SDK、不读真实密钥、不接 checkout、不执行 payment workflow。
 - 完成 `alipay-provider-fake-notify-test-plan`，docs-only 规划支付宝 fake notify / test vector 阶段；本轮不接 SDK、不读真实密钥、不接 checkout、不执行 payment workflow。
 - 完成 `provider-disabled-adapter-rollup-validation`，汇总 PR #303-#310 并验证 payment harness、API typecheck、runtime grep 和 diff check 通过。
+- 完成 `wechat-pay-fake-notify-fixtures`，新增微信支付 fake-only notify vector 和 focused tests；本轮不实现验签、解密、归一化或 runtime。

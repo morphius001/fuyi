@@ -1621,6 +1621,22 @@
 
 第二百六十四轮完成后建议继续：
 
-1. `wechat-pay-fake-notify-fixtures`: pending
+1. `wechat-pay-fake-notify-fixtures`: done
 2. `alipay-fake-notify-fixtures`: pending
 3. `provider-fake-notify-contract-validation`: pending
+
+## 第二百六十五轮 WeChat Pay Fake Notify Fixtures
+
+1. `wechat-pay-fake-notify-fixtures`: done
+
+第二百六十五轮原则：
+
+- 本轮只新增微信支付 fake-only notification fixtures 和 focused tests。
+- 不实现验签、解密或归一化 helper。
+- 不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+
+第二百六十五轮完成后建议继续：
+
+1. `alipay-fake-notify-fixtures`: pending
+2. `wechat-pay-notification-verifier-contract`: pending
+3. `wechat-pay-notification-normalizer-contract`: pending

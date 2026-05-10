@@ -698,3 +698,10 @@
 - 验证通过：payment notification harness 23 suites / 153 tests、API typecheck、runtime registration grep、`git diff --check`。
 - 当前支付宝 / 微信支付仍未注册、不接 route、不接 checkout、不接 SDK、不读真实 secret、不执行 payment workflow。
 - 下一步只能进入 fake fixture / pure contract，不应直接接 SDK 或 checkout。
+
+## Round 265 更新
+
+- `wechat-pay-fake-notify-fixtures`: done，新增微信支付 fake-only notify vector。
+- Fixture 只包含 fake raw body、fake encrypted resource、fake decrypted resource、expected idempotency key 和 payload digest。
+- 本轮不实现验签、解密或归一化，不新增 route，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 验证要求：focused unit test、API typecheck、payment harness、`git diff --check`、子智能体复核。

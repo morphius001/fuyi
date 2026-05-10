@@ -33,3 +33,4 @@ export * from "./refund-notification-normalizer";
 export * from "./refund-manual-review-audit";
 export * from "./refund-audit-event-allowlist";
 export * from "./refund-inbox-state-transition";
+export * from "./refund-inbox-repository-contract";

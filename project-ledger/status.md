@@ -1041,3 +1041,11 @@
 - Runtime grep 只命中 route test 负断言和 local client redaction denylist；未发现可执行 provider refund request、workflow、state mutation、settlement / commission / payout 调整或 checkout 调用。
 - 当前 refund inbox local DB route 仍只是 fake/local disposable DB-backed inbox-only rehearsal；accepted、duplicate、manual review 不代表退款成功。
 - 下一步建议进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，继续先 docs-only 规划。
+
+## Round 308 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal-plan`: done，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal-plan.md`。
+- 本轮只做 docs-only plan；不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不注册 module/migration，不新增 route。
+- 计划将 real DB adapter rehearsal 限定为本地 disposable PostgreSQL，验证 repository / SQL adapter 的真实 SQL 行为。
+- 明确当前 refund state / actor DB-safe mapping 只是 rehearsal 兼容层；未来真实 schema 仍需单独 migration / constraint PR。
+- 仍 No-Go：预发/生产 DB、真实 provider refund notify、provider refund request、workflow、refund success state、settlement、commission、payout、permission、fulfillment、logistics。

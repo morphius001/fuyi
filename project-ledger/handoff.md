@@ -2061,3 +2061,11 @@
 - 工作区验证后无 runtime diff；本轮只新增验证文档和 ledger。
 - 当前 route 仍不是可用真实退款入口，只是 fake/local disposable DB inbox-only rehearsal。
 - 下一步建议进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`；仍不要接预发/生产 DB、真实 Provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 308 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal-plan` 已完成，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal-plan.md`。
+- 本轮只规划未来 repository-level real SQL rehearsal；未修改 runtime、未连接 DB、未注册 migration/module、未新增 route。
+- 下一步如执行 `refund-inbox-repository-real-db-adapter-rehearsal`，必须仍是 local disposable DB script + focused tests，不得连接预发/生产。
+- `refund-schema-constraint-migration-plan` 应单独规划，因为当前 refund state / actor mapping 只是兼容 payment-first shared schema 的 rehearsal 层。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

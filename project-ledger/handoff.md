@@ -2053,3 +2053,11 @@
 - Typecheck 生成的 `packages/api/.mercur/index.d.ts` 已恢复，未纳入本轮。
 - 下一步建议做 `refund-inbox-local-db-route-validation`，记录 PR 合并后验证。
 - 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 307 更新
+
+- `refund-inbox-local-db-route-validation` 已完成，见 `docs/refund-inbox-local-db-route-validation.md`。
+- PR #353 合并后验证通过：focused route + local PG client tests 33/33、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund dry-run `1|8`、runtime grep 和 diff check。
+- 工作区验证后无 runtime diff；本轮只新增验证文档和 ledger。
+- 当前 route 仍不是可用真实退款入口，只是 fake/local disposable DB inbox-only rehearsal。
+- 下一步建议进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`；仍不要接预发/生产 DB、真实 Provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -1238,3 +1238,12 @@
 - 当前仍无 `apps/**` 或 `packages/**` runtime 变更，provider inbox route shadow 仍未实现或启用。
 - 下一步建议进入 `refund-provider-inbox-route-shadow-plan`，继续 docs-only 细化 implementation PR 文件范围和 route gate。
 - 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 332 更新
+
+- `refund-provider-inbox-route-shadow-plan`: done，见 `docs/refund-provider-inbox-route-shadow-plan.md`。
+- 本轮只做 docs-only implementation plan；不修改 `apps/**` 或 `packages/**` runtime，不新增 route，不连接 DB，不注册 module，不接 SDK，不写真实密钥。
+- 计划细化后续 route shadow 的 planned files、feature flag contract、request handling order、provider wiring、response redaction helper、test matrix、runtime grep、rollback 和 PR sequence。
+- 后续 implementation 仍必须默认 disabled、production blocked、state mutation blocked，只能写 inbox / audit，不能表达平台退款成功。
+- 下一步如进入 `refund-provider-inbox-route-shadow`，必须保持 disabled skeleton / local gate / tests 优先。
+- 仍 No-Go：provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

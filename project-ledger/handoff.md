@@ -1706,3 +1706,10 @@
 - `wechat-pay-provider-disabled-adapter-validation` 已完成，见 `docs/wechat-pay-provider-disabled-adapter-validation.md`。
 - 合并后验证通过：focused unit test 5/5、API typecheck、payment notification harness 22 suites / 148 tests、disposable DB dry-run、runtime grep 和 `git diff --check`。
 - 当前微信支付 adapter 仍只作为未注册 disabled skeleton；下一步建议做 `alipay-provider-disabled-adapter-skeleton`，不要直接进入真实微信支付 SDK 或 checkout。
+
+## Round 260 更新
+
+- `alipay-provider-disabled-adapter-skeleton` 已完成，见 `docs/alipay-provider-disabled-adapter-skeleton.md`。
+- 新增 `createDisabledAlipayProviderAdapter()`，默认 `enabled: false` / `mode: disabled`，只返回 blocked decision。
+- 本轮没有注册 Medusa payment provider，没有新增 route，没有读取 env 或真实 secret，没有接 checkout、SDK 或 payment workflow。
+- 下一步建议先做 `alipay-provider-disabled-adapter-validation`，继续保持高风险串行。

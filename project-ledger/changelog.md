@@ -317,3 +317,4 @@
 - 完成 `provider-secret-config-template`，docs-only 整理支付 Provider secret/config key 模板；本轮不修改 `.env` 或 runtime，不写真实密钥或部署配置。
 - 完成 `wechat-pay-provider-disabled-adapter-skeleton`，新增未注册微信支付 disabled adapter skeleton 和 focused tests；本轮不注册 provider、不接 SDK、不接 checkout、不执行 payment workflow。
 - 完成 `wechat-pay-provider-disabled-adapter-validation`，记录 WeChat disabled adapter 合并后 focused test、API typecheck、payment harness、runtime grep 和 diff check 通过。
+- 完成 `alipay-provider-disabled-adapter-skeleton`，新增未注册支付宝 disabled adapter skeleton 和 focused tests；本轮不注册 provider、不接 SDK、不接 checkout、不执行 payment workflow。

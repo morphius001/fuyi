@@ -644,3 +644,10 @@
 - 明确微信支付支付状态候选入口只能是后端 `notify_url` 异步通知，必须验签、解密、幂等、可重试，并写入 inbox / event log。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不接微信支付 SDK，不注册 migration，不连接外部 DB，不执行 payment workflow。
 - 验证要求：`git diff --check`。
+
+## Round 257 更新
+
+- `provider-secret-config-template`: done，docs-only 整理中国本地支付 Provider secret/config key 模板。
+- 模板覆盖 shared runtime gate、支付宝、微信支付、环境矩阵、日志脱敏、轮换、回滚和 No-Go。
+- 本轮不修改 `.env`、`.env.template`、`apps/**` 或 `packages/**` runtime，不写真实密钥，不接 SDK，不接 checkout，不执行 payment workflow。
+- 验证要求：`git diff --check`。

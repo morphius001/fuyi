@@ -1686,3 +1686,10 @@
 - 官方资料确认微信支付成功通知通过 `notify_url` 后端 POST，回调资源为加密数据；商户侧必须按微信支付请求头验签，并使用 APIv3 key 解密。
 - 下一步建议继续 `provider-secret-config-template`；仍不得接 checkout、SDK、真实 provider、真实密钥或 payment workflow。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 257 更新
+
+- `provider-secret-config-template` 已完成，见 `docs/provider-secret-config-template.md`。
+- 本轮只整理 shared runtime gate、支付宝和微信支付的 secret/config key 名、环境矩阵、日志脱敏、轮换和回滚边界。
+- 没有修改 `.env`、`.env.template`、`apps/**` 或 `packages/**` runtime；没有写真实密钥或部署配置。
+- 下一步建议继续 `wechat-pay-provider-disabled-adapter-skeleton` 或 `alipay-provider-disabled-adapter-skeleton`，且仍必须默认 disabled、不接 checkout、不执行 payment workflow。

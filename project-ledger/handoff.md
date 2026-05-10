@@ -1898,3 +1898,12 @@
 - 验证通过：API typecheck、payment harness 34 suites / 242 tests、disposable DB dry-run、高风险 grep 和 `git diff --check`。
 - 当前结论仍是 No-Go to real refund runtime；`china-payment-notification` 未注册到 `medusa-config.ts`，没有新增真实 refund route、provider API、workflow 或状态写入。
 - 下一步建议只进入 `refund-manual-review-audit-contract`、`refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan`。
+
+## Round 287 更新
+
+- `refund-manual-review-audit-contract` 已完成，见 `docs/refund-manual-review-audit-contract.md`。
+- 新增 `buildRefundManualReviewAuditDecision()`，把 guard decision 和 risk signals 映射为不可执行 manual review / audit decision。
+- 验证通过：focused unit test 7/7、API typecheck、payment harness 35 suites / 249 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中 focused test 负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 输出强制 `blockRuntimeMutation: true`、`fixtureOnly: true`、`executable: false`；不写 DB、不新增 route、不接 provider API、不执行 workflow、不改变退款状态。
+- 下一步建议进入 `refund-audit-event-allowlist-contract` 或 `refund-inbox-state-transition-plan`。

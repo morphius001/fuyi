@@ -1098,3 +1098,11 @@
 - 当前仍只是 local disposable DB constraint rehearsal；真实 migration 必须单独 PR，并提供 rollback runbook。
 - 当前仍 No-Go：真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步建议进入 `refund-schema-constraint-migration-prereadiness-plan`，继续 docs-only。
+
+## Round 315 更新
+
+- `refund-schema-constraint-migration-prereadiness-plan`: done，见 `docs/refund-schema-constraint-migration-prereadiness-plan.md`。
+- 本轮只规划真实 migration PR 前置条件，不修改 `apps/**`、`packages/**` runtime，不修改 migration，不连接 DB，不注册 module。
+- 计划覆盖 file/schema/runtime/data gates、operator preflight SQL、rollback runbook、required verification、release sequence 和 Go / No-Go。
+- 下一步如进入 `refund-schema-constraint-migration`，仍只能修改 migration skeleton / docs / validation，不能启用 route、provider、workflow 或 refund success state。
+- 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。

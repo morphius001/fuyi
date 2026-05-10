@@ -2410,4 +2410,19 @@
 
 第三百一十四轮完成后建议继续：
 
-1. `refund-schema-constraint-migration-prereadiness-plan`: pending
+1. `refund-schema-constraint-migration-prereadiness-plan`: done
+
+## 第三百一十五轮 Refund Schema Constraint Migration Prereadiness Plan
+
+1. `refund-schema-constraint-migration-prereadiness-plan`: done
+
+第三百一十五轮原则：
+
+- 本轮只规划真实 migration PR 前置条件和 rollback runbook。
+- 不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不注册 module。
+- migration PR 仍只能改 schema constraint skeleton，不能启用退款 runtime。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十五轮完成后建议继续：
+
+1. `refund-schema-constraint-migration`: pending

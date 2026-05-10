@@ -31,3 +31,4 @@ export * from "./refund-notification-test-vectors";
 export * from "./refund-notification-verifier";
 export * from "./refund-notification-normalizer";
 export * from "./refund-manual-review-audit";
+export * from "./refund-audit-event-allowlist";

@@ -284,9 +284,26 @@
 
 第二百四十九轮完成后建议继续：
 
-1. `payment-risk-register`: pending
+1. `payment-risk-register`: done
 2. `permission-rbac-launch-matrix`: pending
 3. `fulfillment-logistics-runtime-gate-plan`: pending
+
+## 第二百五十轮 Payment Risk Register
+
+1. `payment-risk-register`: done
+
+第二百五十轮原则：
+
+- 只做支付、退款、对账、结算、佣金、打款、权限风险登记。
+- 不连接预发/生产 DB，不注册 migration，不接真实 provider，不执行 payment workflow。
+- 所有资金状态推进继续串行。
+
+第二百五十轮完成后建议继续：
+
+1. `permission-rbac-launch-matrix`: pending
+2. `payment-provider-production-hardening-plan`: pending
+3. `payment-runtime-external-readiness-review`: pending
+4. `fulfillment-logistics-runtime-gate-plan`: pending
 
 第十七轮队列已清空。
 

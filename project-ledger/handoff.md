@@ -1633,3 +1633,11 @@
 - 中国支付 provider 后续必须进入 payment notification runtime gate：后端异步通知、验签、幂等、可重试、DB inbox / event log、workflow execution adapter。
 - 下一步建议继续 `payment-risk-register`，把支付、退款、对账、结算、佣金、权限风险统一登记。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 250 更新
+
+- `payment-risk-register` 已完成，见 `docs/payment-risk-register.md`。
+- 风险登记表覆盖支付成功、支付通知、migration、Provider 配置、支付宝、微信支付、退款、对账、结算、佣金、打款、权限、商户归属和审计日志。
+- 当前硬阻塞仍是缺 disposable preprod DB 授权、备份/回滚/操作 owner、migration rehearsal、payment workflow execution adapter、真实 provider sandbox 和 RBAC/ownership guard。
+- 下一步建议继续 `permission-rbac-launch-matrix`，因为权限/资源归属必须成为所有资金、订单和履约写接口的前置门禁。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider。

@@ -327,6 +327,15 @@
 - 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API / query API、不执行 workflow、不写 refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步：跑 focused tests、API typecheck、payment harness、runtime grep、`git diff --check` 和子智能体复核；通过后精确 stage、commit、push、开 PR 并 merge。
 
+## Round 337 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-ns-refund-provider-inbox-route-local-wiring-validation`。
+- PR #383 `[china] Refund provider inbox route local wiring` 已合并，merge commit `825ef3f2ee8986af0a09f068119db166137a7d4e`。
+- `refund-provider-inbox-route-local-wiring-validation` 已完成，见 `docs/refund-provider-inbox-route-local-wiring-validation.md`。
+- 验证通过：focused tests 6 suites / 29 tests、API typecheck、payment harness 42 suites / 322 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check`。
+- 下一步：提交 / push / 开 PR / merge 本 validation；之后继续 `refund-provider-inbox-route-disposable-db-plan`，仍先 docs-only。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

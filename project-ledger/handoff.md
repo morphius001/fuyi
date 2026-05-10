@@ -1978,3 +1978,11 @@
 - 计划要求后续脚本验证 unique/idempotency、duplicate same digest、digest conflict manual review、refund event action allowlist、禁止动作 rejection、metadata redaction、rollback/drop 和 disposable DB 无残留。
 - 仍禁止连接预发/生产，禁止写 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 下一步建议进入 `refund-inbox-repository-disposable-db-dry-run`，只创建本地 disposable DB dry-run 脚本；或者进入 `refund-inbox-route-plan`，继续 docs-only route gate 规划。
+
+## Round 297 更新
+
+- `refund-inbox-repository-disposable-db-dry-run` 已完成，见 `docs/refund-inbox-repository-disposable-db-dry-run.md`。
+- 新增 `.codex/scripts/refund-inbox-repository-disposable-db-dry-run.sh`，用于本地 disposable PostgreSQL 验证 refund inbox repository storage semantics。
+- 脚本会拒绝非本机 DB、非指定前缀 DB 名、production/preprod/staging env、已注册 `china-payment-notification`、以及 staged 高风险文件。
+- 脚本只在 disposable DB 内追加 refund-only validation constraints；不修改真实 migration，不新增 route，不接 provider refund API，不执行 workflow。
+- 下一步建议进入 `refund-inbox-route-plan`，继续 docs-only route gate 规划；或者先做 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，但仍不能接真实退款 runtime。

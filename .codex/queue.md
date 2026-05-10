@@ -2128,5 +2128,21 @@
 
 第二百九十六轮完成后建议继续：
 
-1. `refund-inbox-repository-disposable-db-dry-run`: pending
+1. `refund-inbox-repository-disposable-db-dry-run`: done
 2. `refund-inbox-route-plan`: pending
+
+## 第二百九十七轮 Refund Inbox Repository Disposable DB Dry-run
+
+1. `refund-inbox-repository-disposable-db-dry-run`: done
+
+第二百九十七轮原则：
+
+- 本轮只新增本地 disposable DB dry-run 脚本和记录文档。
+- 不修改 `apps/**` 或 `packages/**`，不注册 migration/module，不接 route、provider API 或 workflow。
+- dry-run 只验证 fake-only refund inbox storage semantics，不代表退款成功。
+- settlement、commission、payout、permission、fulfillment 和 logistics 继续阻断。
+
+第二百九十七轮完成后建议继续：
+
+1. `refund-inbox-route-plan`: pending
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

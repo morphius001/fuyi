@@ -1598,3 +1598,12 @@
 - 当前安全下一步仅限 docs-only debug banner plan、audience field plan 或后续 validation。
 - 不得自动进入真实搜索排序、广告、推荐、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实 provider、Admin 写接口或 migration。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 246 更新
+
+- `china-launch-high-risk-sequence-plan` 已完成，见 `docs/china-launch-high-risk-sequence-plan.md`。
+- 用户要求全面推进 ProductCard、cart、checkout、订单、支付、退款、结算、佣金、权限、履约和物流；本轮将这些域收束成 KF1-KF12 串行上线门禁。
+- 推荐下一步按顺序做 `productcard-launch-readiness-audit`、`cart-checkout-launch-safety-audit`、`payment-risk-register`、`permission-rbac-launch-matrix` 和 `fulfillment-logistics-runtime-gate-plan`。
+- 不要把真实支付宝、微信支付、退款、结算、佣金、打款、权限、履约或物流 runtime 混进 ProductCard / cart / checkout 审计 PR。
+- 支付 runtime 仍受 disposable preprod DB、migration rehearsal、验签、幂等、重试和 workflow execution 门禁约束。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

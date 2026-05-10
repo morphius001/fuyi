@@ -218,6 +218,25 @@
 - `market-api-post-merge-validation`: done，PR U-X 合并后 API typecheck、2 组单元测试 8/8、Medusa build 均通过。
 - `storefront-connect-market-readonly-api-plan`: done，已规划 Storefront market client、首页、搜索、店铺页分阶段接入 markets API。
 
+## 第二百四十六轮 Launch 高风险串行推进
+
+1. `china-launch-high-risk-sequence-plan`: done
+
+第二百四十六轮原则：
+
+- 用户要求全面推进 ProductCard、cart、checkout、订单、支付、退款、结算、佣金、权限、履约和物流。
+- 当前轮只建立上线串行门禁和 PR 顺序，不修改 `apps/**` 或 `packages/**` runtime。
+- 后续必须按 ProductCard、cart/checkout、订单、支付通知、支付 workflow、真实 provider、退款、对账、结算/佣金/打款、权限、履约/物流顺序小 PR 推进。
+- 支付成功仍必须以后端异步通知为准；退款、结算、佣金、权限、履约和物流不得与支付 provider 混在同一 PR。
+
+第二百四十六轮完成后建议立即继续：
+
+1. `productcard-launch-readiness-audit`: pending
+2. `cart-checkout-launch-safety-audit`: pending
+3. `payment-risk-register`: pending
+4. `permission-rbac-launch-matrix`: pending
+5. `fulfillment-logistics-runtime-gate-plan`: pending
+
 第十七轮队列已清空。
 
 第十八轮建议：

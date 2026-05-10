@@ -306,3 +306,4 @@
 - 完成 `china-launch-high-risk-sequence-plan`，docs-only 建立 ProductCard、cart、checkout、订单、支付、退款、结算、佣金、权限、履约和物流的上线高风险串行推进图；本轮不修改三端或 API runtime。
 - 完成 `productcard-launch-readiness-audit`，docs-only 审计 ProductCard 真实商品事实来源、Store API 使用点和 product discovery 展示字段边界；发现 ProductDetailsPage 同档口更多鲜货可能把不完整 seller products 传给 ProductCard 的上线阻断风险；本轮不修改运行时代码。
 - 完成 `productdetails-related-products-store-api-guard`，`HomeProductsCarousel` 现在只把 Store API 回查且带 calculated price 的商品传给 ProductCard；不改变 add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
+- 完成 `cart-checkout-launch-safety-audit`，docs-only 审计 cart / checkout 调用点、Stripe / manual test payment 风险和中国支付上线门禁；本轮不修改运行时代码。

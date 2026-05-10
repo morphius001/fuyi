@@ -580,3 +580,11 @@
 - 如果回查不到完整商品，保留既有空态，不把不完整 seller product 伪装成真实可加购 ProductCard。
 - 本轮不修改 ProductCard add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
 - 验证要求：Storefront build、`git diff --check`、子智能体复核。
+
+## Round 249 更新
+
+- `cart-checkout-launch-safety-audit`: done，docs-only 审计 cart / checkout 上线前安全边界。
+- 当前结论：现有 Medusa Store API + Stripe / manual test payment 可作为本地 QA 基线，但中国支付 provider 不能复用前端确认后直接 `placeOrder()` 的模式。
+- 阻断项已记录：Stripe 前端确认路径、manual test payment、gift card zero total、地址/手机号、配送方式和 payment notification runtime gate。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不改变 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、`placeOrder`、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
+- 验证要求：敏感调用点 grep、Storefront build、`git diff --check`、子智能体复核。

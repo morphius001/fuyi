@@ -556,3 +556,11 @@
 - 当前安全下一步仅限 docs-only debug banner plan、audience field plan 或后续 validation。
 - 不得自动进入真实搜索排序、广告、推荐、库存占用、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约、物流、真实 provider、Admin 写接口或 migration。
 - 验证通过：Storefront build、`git diff --check`、子智能体 docs-only 只读复核；Storefront build 仅保留既有 React Hook dependency warnings。
+
+## Round 246 更新
+
+- `china-launch-high-risk-sequence-plan`: done，docs-only 建立上线高风险串行推进图。
+- 覆盖 ProductCard、cart、checkout、订单、支付通知、支付 workflow、真实支付 provider、退款、对账、结算、佣金、打款、权限、履约、物流和面单。
+- 当前结论：可以继续推进上线，但必须按小 PR 串行；不能把交易、资金、权限和履约 runtime 混在一个大改里。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不注册 migration，不接真实 provider，不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流状态。
+- 验证要求：Storefront build、`git diff --check`、子智能体 docs-only 复核。

@@ -303,3 +303,4 @@
 - 完成 `product-discovery-source-tags`，商品发现只读 read model 增加非敏感 `sourceTags`，覆盖 response source、item count、row count、seller context count、fallback、filter keys 和 display-only 标记；不接真实日志 provider 或交易 runtime。
 - 完成 `product-discovery-source-tags-validation`，docs-only 汇总 PR #290 的 sourceTags 验证、隐私边界和下一步 dev-only debug banner 门槛。
 - 完成 `storefront-discovery-status-sync`，docs-only 同步 PR #277-#291 的 Storefront discovery / product discovery 完成状态、安全下一步和高风险阻断项。
+- 完成 `china-launch-high-risk-sequence-plan`，docs-only 建立 ProductCard、cart、checkout、订单、支付、退款、结算、佣金、权限、履约和物流的上线高风险串行推进图；本轮不修改三端或 API runtime。

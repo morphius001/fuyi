@@ -1605,6 +1605,22 @@
 
 第二百六十三轮完成后建议继续：
 
-1. `provider-disabled-adapter-rollup-validation`: pending
+1. `provider-disabled-adapter-rollup-validation`: done
 2. `wechat-pay-fake-notify-fixtures`: pending
 3. `alipay-fake-notify-fixtures`: pending
+
+## 第二百六十四轮 Provider Disabled Adapter Rollup Validation
+
+1. `provider-disabled-adapter-rollup-validation`: done
+
+第二百六十四轮原则：
+
+- 本轮只汇总 PR #303-#310 的支付 Provider contract / disabled adapter / fake notify plan 状态。
+- 不修改 runtime，不新增 route，不注册 provider，不接 checkout、SDK、workflow、DB、migration 或真实 secret。
+- 验证 payment harness、API typecheck、runtime grep 和 diff check。
+
+第二百六十四轮完成后建议继续：
+
+1. `wechat-pay-fake-notify-fixtures`: pending
+2. `alipay-fake-notify-fixtures`: pending
+3. `provider-fake-notify-contract-validation`: pending

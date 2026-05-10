@@ -2485,4 +2485,19 @@
 
 第三百一十九轮完成后建议继续：
 
-1. `refund-inbox-schema-adapter-unmapped-state-validation`: pending
+1. `refund-inbox-schema-adapter-unmapped-state-validation`: done
+
+## 第三百二十轮 Refund Inbox Schema Adapter Unmapped State Validation
+
+1. `refund-inbox-schema-adapter-unmapped-state-validation`: done
+
+第三百二十轮原则：
+
+- 本轮只记录 PR #366 合并后验证。
+- 不修改 runtime，不连接 DB，不注册 module，不新增 route。
+- adapter 原样 state / actor 仍只属于 local/mock/disposable DB gate。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百二十轮完成后建议继续：
+
+1. `refund-route-runtime-readiness-plan`: pending

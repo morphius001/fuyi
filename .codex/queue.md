@@ -1767,6 +1767,22 @@
 
 第二百七十三轮完成后建议继续：
 
-1. `payment-runtime-inbox-only-route-plan`: pending
+1. `payment-runtime-inbox-only-route-plan`: done
 2. `payment-runtime-inbox-only-route-local-rehearsal`: pending
 3. `refund-runtime-risk-gate-plan`: pending
+
+## 第二百七十四轮 Payment Runtime Inbox Only Route Plan
+
+1. `payment-runtime-inbox-only-route-plan`: done
+
+第二百七十四轮原则：
+
+- 本轮只规划 mock provider route local inbox-only rehearsal。
+- 下一步只允许 fake payload + fake local secret + local disposable DB / local in-memory。
+- 不新增真实支付宝 / 微信支付 route，不注册 provider，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 退款、对账、结算、佣金、打款、分账、履约和物流仍保持高风险串行。
+
+第二百七十四轮完成后建议继续：
+
+1. `payment-runtime-inbox-only-route-local-rehearsal`: pending
+2. `refund-runtime-risk-gate-plan`: pending

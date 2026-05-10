@@ -588,3 +588,11 @@
 - 阻断项已记录：Stripe 前端确认路径、manual test payment、gift card zero total、地址/手机号、配送方式和 payment notification runtime gate。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不改变 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、`placeOrder`、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
 - 验证要求：敏感调用点 grep、Storefront build、`git diff --check`、子智能体复核。
+
+## Round 250 更新
+
+- `payment-risk-register`: done，docs-only 建立支付、退款、对账、结算、佣金、打款和权限上线风险登记表。
+- 当前结论：资金状态推进仍受 disposable preprod DB、migration rehearsal、payment notification runtime、workflow execution adapter、真实 provider sandbox 和 RBAC/ownership guard 阻塞。
+- 风险登记覆盖 PAY、REF、REC、SET、COM、PAYOUT、PERM 和 LOG 风险项，并明确 Go / No-Go。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider，不改变订单、支付、退款、结算、佣金、权限、履约或物流状态。
+- 验证要求：`git diff --check`、子智能体复核。

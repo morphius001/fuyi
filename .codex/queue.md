@@ -2717,4 +2717,20 @@
 
 第三百三十四轮完成后建议继续：
 
-1. `refund-provider-inbox-route-local-wiring-plan`: pending
+1. `refund-provider-inbox-route-local-wiring-plan`: done
+
+## 第三百三十五轮 Refund Provider Inbox Route Local Wiring Plan
+
+1. `refund-provider-inbox-route-local-wiring-plan`: done
+
+第三百三十五轮原则：
+
+- 本轮只规划 provider route local in-memory inbox wiring。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- local wiring 未来也只允许 development + local in-memory + fixture config，不能写平台退款成功状态。
+- 仍不接 provider refund API、refund query API、workflow、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十五轮完成后建议继续：
+
+1. `refund-provider-inbox-route-local-wiring`: pending

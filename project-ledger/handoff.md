@@ -2102,3 +2102,12 @@
 - 未来脚本默认 DB 前缀建议 `fuyi_refund_schema_constraint_dry_run_`，必须拒绝 unsafe name、remote host、production/preprod/staging、staged runtime/config/env。
 - 当前仍未修改真实 migration，未连接 DB，未注册 module，未新增 route。
 - 下一步建议执行 `refund-schema-constraint-migration-rehearsal`；仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 313 更新
+
+- `refund-schema-constraint-migration-rehearsal` 已完成，见 `docs/refund-schema-constraint-migration-rehearsal.md`。
+- 新增 `.codex/scripts/refund-schema-constraint-migration-rehearsal.sh`，只在 local disposable PostgreSQL 中演练 proposed refund schema constraints。
+- 脚本会先应用当前 shared migration skeleton，再扩展 processing status、event action、actor、positive amount、metadata redaction 和 provider refund index，随后 rollback 到 base constraints 并执行 down/drop。
+- 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused 29/29、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、diff check。
+- 当前仍未修改真实 migration，未注册 module，未新增 route，未接真实 refund provider / workflow / refund success state。
+- 下一步建议做 `refund-schema-constraint-migration-validation` 或单独规划真实 migration PR；仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

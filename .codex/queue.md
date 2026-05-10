@@ -2380,4 +2380,19 @@
 
 第三百一十二轮完成后建议继续：
 
-1. `refund-schema-constraint-migration-rehearsal`: pending
+1. `refund-schema-constraint-migration-rehearsal`: done
+
+## 第三百一十三轮 Refund Schema Constraint Migration Rehearsal
+
+1. `refund-schema-constraint-migration-rehearsal`: done
+
+第三百一十三轮原则：
+
+- 本轮只新增 local disposable PostgreSQL rehearsal 脚本和验证文档。
+- 不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不注册 module，不新增 route。
+- rehearsal 只验证 proposed constraints / rollback，不代表退款成功。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十三轮完成后建议继续：
+
+1. `refund-schema-constraint-migration-validation`: pending

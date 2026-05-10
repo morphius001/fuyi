@@ -26,3 +26,4 @@ export * from "./wechat-pay-test-vectors";
 export * from "./wechat-pay-notification-verifier";
 export * from "./wechat-pay-notification-normalizer";
 export * from "./payment-provider-registry";
+export * from "./refund-amount-guard";

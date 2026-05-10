@@ -1832,3 +1832,10 @@
 - `refund-command-contract-plan` 已完成，见 `docs/refund-command-contract-plan.md`。
 - 已定义退款命令输入、actor / ownership / payment / refund snapshots、block codes、reason codes、audit metadata 和 non-executable decision。
 - 下一步建议进入 `refund-amount-guard-contract`，只做纯函数和 tests，不新增 route、不写 DB、不接 provider、不执行 workflow。
+
+## Round 278 更新
+
+- `refund-amount-guard-contract` 已完成，见 `docs/refund-amount-guard-contract.md`。
+- 新增 `evaluateRefundAmountGuardContract()` 纯函数和 12 个 focused tests，输出始终 `executable: false`。
+- 本轮没有新增 refund route、没有写 DB、没有接支付宝 / 微信支付 refund API、没有调用 workflow、没有改变 order / payment / refund 状态。
+- 下一步建议进入 `refund-request-idempotency-plan` 或 `refund-notification-contract-plan`，仍保持高风险串行。

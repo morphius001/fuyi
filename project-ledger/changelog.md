@@ -335,3 +335,4 @@
 - 完成 `payment-runtime-inbox-only-route-local-rehearsal`，在 mock provider route focused tests 中补充 local inbox-only 演练断言：local DB port mismatch blocked、invalid signature rejected、accepted / duplicate / rejected response 不泄露 raw body、fake secret、signature、DB URL、checkout、workflow 或 payment/order state command；不修改 runtime 实现。
 - 完成 `refund-runtime-risk-gate-plan`，docs-only 建立退款 runtime 串行门禁：refund command contract、amount guard、provider request idempotency、refund notification inbox、manual review、permission / audit 和 settlement / commission / payout block；本轮不修改 runtime。
 - 完成 `refund-command-contract-plan`，docs-only 定义退款命令合同输入、actor / ownership / payment / refund snapshots、non-executable decision、block codes、reason codes 和 audit metadata；为后续 `refund-amount-guard-contract` 纯函数任务提供边界。
+- 完成 `refund-amount-guard-contract`，新增退款金额 guard 纯函数和 focused tests；覆盖金额、币种、支付状态、actor、ownership、reason、audit note 和幂等重放边界，输出始终 `executable: false`，不接 provider / DB / workflow。

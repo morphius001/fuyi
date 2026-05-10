@@ -1826,3 +1826,9 @@
 - 退款后续只能按 command contract、amount guard、provider request idempotency、refund notification inbox、manual review、permission / audit、settlement block 的顺序推进。
 - 本轮只改 docs / task / ledger / queue，不新增 refund route、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
 - 下一步建议继续 `refund-command-contract-plan` 或做 payment / refund runtime validation；仍不能进入真实退款 runtime。
+
+## Round 277 更新
+
+- `refund-command-contract-plan` 已完成，见 `docs/refund-command-contract-plan.md`。
+- 已定义退款命令输入、actor / ownership / payment / refund snapshots、block codes、reason codes、audit metadata 和 non-executable decision。
+- 下一步建议进入 `refund-amount-guard-contract`，只做纯函数和 tests，不新增 route、不写 DB、不接 provider、不执行 workflow。

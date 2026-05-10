@@ -1284,3 +1284,12 @@
 - 本轮不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-inbox-route-local-wiring-validation`。
 - 仍 No-Go：settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 337 更新
+
+- `refund-provider-inbox-route-local-wiring-validation`: done，见 `docs/refund-provider-inbox-route-local-wiring-validation.md`。
+- PR #383 合并后验证通过：focused tests 6 suites / 29 tests、API typecheck、payment harness 42 suites / 322 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`。
+- Runtime grep 只命中测试负断言和 response redaction denylist。
+- 当前 provider route 仍只支持 development/local/in-memory/fixture-only wiring；未通过 gate 不读取 body。
+- 下一步建议进入 `refund-provider-inbox-route-disposable-db-plan`，先 docs-only 规划 disposable DB wiring。
+- 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

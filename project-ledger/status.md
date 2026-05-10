@@ -1181,3 +1181,11 @@
 - 计划明确后续 contract 文件、输入输出、header 验签、证书 / 公钥选择、`AEAD_AES_256_GCM` 解密、`REFUND.SUCCESS` / `REFUND.ABNORMAL` / `REFUND.CLOSED` 映射、幂等、failure code、fixture / sandbox vector 和 runtime grep。
 - 下一步建议进入 `refund-alipay-real-verifier-plan`。
 - 仍 No-Go：真实 provider refund request、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 325 更新
+
+- `refund-alipay-real-verifier-plan`: done，见 `docs/refund-alipay-real-verifier-plan.md`。
+- 本轮只做 docs-only 支付宝退款 verifier 细化；不修改 `apps/**` 或 `packages/**` runtime，不接 SDK、不写真实密钥、不新增 route、不写 inbox。
+- 计划明确支付宝产品模式 gate，不能假设 `alipay.trade.refund` 一定提供独立退款通知；后续 verifier 必须校验 `sign` / `sign_type`、canonical payload、app / seller / order / request ref、金额、币种和 idempotency。
+- 下一步建议进入 `refund-provider-real-verifier-plan-validation` 或 `refund-wechat-real-verifier-contract`。
+- 仍 No-Go：真实 provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

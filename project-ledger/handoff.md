@@ -2200,3 +2200,11 @@
 - 后续 contract PR 建议新增 `wechat-pay-refund-notification-verifier.ts`、redacted test vectors 和 focused tests；仍只能输出 `executable: false`。
 - `REFUND.SUCCESS` 只能进入 verified envelope / inbox 后续输入，不代表平台退款成功；`REFUND.ABNORMAL` 和 `REFUND.CLOSED` 必须保持人工复核 / 本地快照校验。
 - 下一步建议进入 `refund-alipay-real-verifier-plan`；仍不得接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 325 更新
+
+- `refund-alipay-real-verifier-plan` 已完成，见 `docs/refund-alipay-real-verifier-plan.md`。
+- 本轮只细化支付宝退款相关 verifier 计划，不改 runtime、不接 SDK、不写真实密钥、不新增 route。
+- 计划明确必须先确认 `ALIPAY_REFUND_NOTIFY_MODE`，不能把同步退款响应或交易支付成功通知当作退款成功。
+- 后续 contract PR 建议新增 `alipay-refund-notification-verifier.ts`、redacted test vectors 和 focused tests；仍只能输出 `executable: false`。
+- 下一步建议先做 `refund-provider-real-verifier-plan-validation`，再进入 provider-specific verifier contract；仍不得接 provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -930,3 +930,11 @@
 - 覆盖文件边界、adapter 职责 / 非职责、mocked DB client tests、transaction requirements、error mapping、metadata redaction、runtime grep guard 和后续 PR 顺序。
 - 明确未来 skeleton 也只能使用 injected transaction / mocked DB client，不能创建连接、读取 env、注册 module、接 route、调用 provider API 或 workflow。
 - 验证要求：`git diff --check`、`git diff --name-only`、untracked 范围确认、子智能体复核。
+
+## Round 295 更新
+
+- `refund-inbox-repository-db-adapter-skeleton`: done，新增退款 inbox mocked DB adapter skeleton 和 focused tests。
+- 覆盖 receive、duplicate same digest、duplicate digest conflict、signature verified、normalized、manual review required、runtime mutation blocked、audit-only processed、terminal rejected 和查询方法。
+- metadata 顶层和嵌套敏感 / 可执行字段会被清洗；event log write failure 不被吞掉。
+- 本轮不连接真实 DB、不读取 env、不注册 migration/module、不接 route、不调用 provider refund API 或 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：focused unit test、API typecheck、payment harness、runtime grep、`git diff --check`、子智能体复核。

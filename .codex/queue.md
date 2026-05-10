@@ -2096,5 +2096,21 @@
 
 第二百九十四轮完成后建议继续：
 
-1. `refund-inbox-repository-db-adapter-skeleton`: pending
+1. `refund-inbox-repository-db-adapter-skeleton`: done
 2. `refund-inbox-repository-disposable-db-dry-run-plan`: pending
+
+## 第二百九十五轮 Refund Inbox Repository DB Adapter Skeleton
+
+1. `refund-inbox-repository-db-adapter-skeleton`: done
+
+第二百九十五轮原则：
+
+- 本轮只新增 refund inbox mocked DB adapter skeleton 和 focused tests。
+- 只使用 injected transaction / mocked DB client。
+- 不连接真实 DB、不读取 env、不接 route、不注册 migration、不调用 provider API 或 workflow。
+- adapter 不是退款成功事实表，只写 inbox / audit log 语义。
+
+第二百九十五轮完成后建议继续：
+
+1. `refund-inbox-repository-disposable-db-dry-run-plan`: pending
+2. `refund-inbox-route-plan`: pending

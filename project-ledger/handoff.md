@@ -1607,3 +1607,12 @@
 - 不要把真实支付宝、微信支付、退款、结算、佣金、打款、权限、履约或物流 runtime 混进 ProductCard / cart / checkout 审计 PR。
 - 支付 runtime 仍受 disposable preprod DB、migration rehearsal、验签、幂等、重试和 workflow execution 门禁约束。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime。
+
+## Round 247 更新
+
+- `productcard-launch-readiness-audit` 已完成，见 `docs/productcard-launch-readiness-audit.md`。
+- 审计确认 ProductCard price 通过 `getProductPrice()` 从 variant `calculated_price` 获取；真实可加购列表继续来自 `/store/products` 和 seller product ids。
+- 商品发现 `priceText`、`stockText`、`sourceTags` 和 fallback 商品只能作为展示输入，不能影响价格、库存、可买性、购物车、checkout、订单、支付、退款、结算、佣金、权限、履约或物流。
+- 审计发现 ProductDetailsPage 同档口更多鲜货阻断风险：`prod.seller?.products` 可能是不带 variants/calculated price 的 `Product[]`，当前会被 `HomeProductsCarousel` 优先传给 ProductCard。上线前必须做 `productdetails-related-products-store-api-guard`，回查 Store API 完整商品或降级为不可加购展示。
+- 下一步建议先修复/降级商品详情页同档口更多鲜货，再继续 `cart-checkout-launch-safety-audit`；如果继续审计 cart/checkout，重点审计 `setAddresses`、`setShippingMethod`、`initiatePaymentSession`、支付提示、CN cart smoke 和无 cart redirect。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime。

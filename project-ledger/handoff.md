@@ -2184,3 +2184,11 @@
 - PR #368 合并后验证确认文件范围为 docs / task / queue / ledger only；没有 `apps/**` 或 `packages/**` runtime diff。
 - readiness plan 仍只是 gate，不是实现；真实 refund route、provider verifier、workflow、refund success state、settlement、commission、payout、permission、fulfillment 和 logistics 仍未启用。
 - 下一步建议做 `refund-provider-real-verifier-plan`，只规划支付宝 / 微信支付真实退款通知验签边界，不接 SDK、不写真实密钥、不接 route。
+
+## Round 323 更新
+
+- `refund-provider-real-verifier-plan` 已完成，见 `docs/refund-provider-real-verifier-plan.md`。
+- 本轮使用官方微信支付 / 支付宝异步通知资料做 docs-only provider verifier 规划，不修改 runtime、不接 SDK、不写真实密钥。
+- 微信支付后续需单独规划退款回调 header 验签、证书 / 公钥选择、AES-256-GCM 解密、event type 映射和幂等。
+- 支付宝后续需单独确认产品模式：不能假设 `alipay.trade.refund` 一定有独立 refund notify_url；需按异步通知参数验签、refund request ref、amount/currency 和交易状态字段进入 verifier / manual review。
+- 下一步建议进入 `refund-wechat-real-verifier-plan`，再做 `refund-alipay-real-verifier-plan`；仍不得接 route、provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

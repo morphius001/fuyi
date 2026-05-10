@@ -2530,4 +2530,20 @@
 
 第三百二十二轮完成后建议继续：
 
-1. `refund-provider-real-verifier-plan`: pending
+1. `refund-provider-real-verifier-plan`: done
+
+## 第三百二十三轮 Refund Provider Real Verifier Plan
+
+1. `refund-provider-real-verifier-plan`: done
+
+第三百二十三轮原则：
+
+- 本轮只规划支付宝 / 微信支付真实退款通知 verifier。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十三轮完成后建议继续：
+
+1. `refund-wechat-real-verifier-plan`: pending
+2. `refund-alipay-real-verifier-plan`: pending

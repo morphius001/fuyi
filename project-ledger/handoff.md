@@ -2078,3 +2078,11 @@
 - 脚本使用短 DB 前缀 `fuyi_refund_inbox_real_adapter_dry_run_`，避免 PostgreSQL identifier 截断。
 - 下一步建议做 `refund-inbox-repository-real-db-adapter-rehearsal-validation`，记录 PR 合并后验证；或先规划 `refund-schema-constraint-migration-plan`。
 - 仍不得接预发/生产 DB、真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 310 更新
+
+- `refund-inbox-repository-real-db-adapter-rehearsal-validation` 已完成，见 `docs/refund-inbox-repository-real-db-adapter-rehearsal-validation.md`。
+- PR #356 合并后验证通过：real-adapter rehearsal `1|8`、unsafe DB guard、production guard、focused 24/24、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund dry-run `1|8`、diff check。
+- 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
+- 下一步建议进入 `refund-schema-constraint-migration-plan`，先规划真实 refund schema / constraint，不要直接修改 migration 或连接预发/生产。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

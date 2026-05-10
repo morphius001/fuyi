@@ -2500,4 +2500,19 @@
 
 第三百二十轮完成后建议继续：
 
-1. `refund-route-runtime-readiness-plan`: pending
+1. `refund-route-runtime-readiness-plan`: done
+
+## 第三百二十一轮 Refund Route Runtime Readiness Plan
+
+1. `refund-route-runtime-readiness-plan`: done
+
+第三百二十一轮原则：
+
+- 本轮只规划真实退款通知 route / runtime 启用前 readiness gate。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不启用真实 route、provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+- readiness 结论仍为 No-Go to real refund runtime；后续必须按 provider verifier、inbox-only shadow、state owner handoff 和 reconciliation 串行拆分。
+
+第三百二十一轮完成后建议继续：
+
+1. `refund-route-runtime-readiness-validation`: pending

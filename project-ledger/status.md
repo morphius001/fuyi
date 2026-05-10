@@ -1149,3 +1149,11 @@
 - 当前 adapter 原样 state / actor 仍只属于 local disposable DB / mock gate；真实 refund provider、workflow、refund success state 仍未启用。
 - 下一步建议进入 `refund-route-runtime-readiness-plan`，继续先规划真实 runtime 前置条件。
 - 仍 No-Go：settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 321 更新
+
+- `refund-route-runtime-readiness-plan`: done，见 `docs/refund-route-runtime-readiness-plan.md`。
+- 本轮只做 docs-only readiness gate；不修改 `apps/**` 或 `packages/**` runtime，不启用真实 route，不注册 module，不连接 DB。
+- 计划明确真实退款通知 route / runtime 当前仍为 No-Go，后续必须先通过 feature flag、provider verification、inbox idempotency、schema / migration、state owner handoff、permission / manual review、finance / fulfillment block、observability 和 rollback gates。
+- 建议后续顺序：`refund-route-runtime-readiness-validation` -> provider real verifier plan / contract -> provider inbox-only shadow -> state owner handoff -> reconciliation / settlement plan。
+- 仍 No-Go：真实 provider refund request、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

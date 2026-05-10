@@ -2207,5 +2207,21 @@
 
 第三百零一轮完成后建议继续：
 
-1. `refund-inbox-local-inbox-only-route-plan`: pending
+1. `refund-inbox-local-inbox-only-route-plan`: done
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第三百零二轮 Refund Inbox Local Inbox-only Route Plan
+
+1. `refund-inbox-local-inbox-only-route-plan`: done
+
+第三百零二轮原则：
+
+- 本轮只做 fake/local inbox-only route docs-only 计划。
+- 不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不改 route 行为。
+- 未来 implementation 只能 local disposable DB / in-memory、fake provider、fake secret、inbox / audit log-only。
+- accepted / duplicate / manual_review response 仍不能代表退款成功。
+
+第三百零二轮完成后建议继续：
+
+1. `refund-inbox-local-inbox-only-route`: pending
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

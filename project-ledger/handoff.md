@@ -1933,3 +1933,10 @@
 - 当前 contract 仍只输出不可执行 decision：`blockRuntimeMutation: true`、`stateMutationAllowed: false`、`fixtureOnly: true`、`executable: false`。
 - 本轮不新增 route、不写 DB、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
 - 下一步建议进入 `refund-runtime-gate-validation-v2` 汇总验证；如果继续做 repository，也只能先做 docs-only / interface-only plan。
+
+## Round 291 更新
+
+- `refund-runtime-gate-validation-v2` 已完成，见 `docs/refund-runtime-gate-validation-v2.md`。
+- 本轮只做 docs-only 汇总验证，覆盖退款 amount guard、request idempotency、notification verifier / normalizer、manual review audit、audit allowlist 和 inbox transition contract。
+- 结论仍是 No-Go to real refund runtime：不新增 route、不写 DB-backed runtime、不注册 migration、不接 provider refund API、不执行 workflow、不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics。
+- 下一步建议进入 `refund-inbox-repository-plan`，但只能 docs-only 规划 DB owner、transaction boundary、idempotency conflict 和 event log 一致性。

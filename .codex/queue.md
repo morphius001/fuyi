@@ -2032,5 +2032,21 @@
 
 第二百九十轮完成后建议继续：
 
-1. `refund-runtime-gate-validation-v2`: pending
+1. `refund-runtime-gate-validation-v2`: done
 2. `refund-inbox-repository-plan`: pending
+
+## 第二百九十一轮 Refund Runtime Gate Validation V2
+
+1. `refund-runtime-gate-validation-v2`: done
+
+第二百九十一轮原则：
+
+- 本轮只做 refund runtime gate docs-only 汇总验证。
+- 不新增 runtime、route、DB repository、migration 注册、provider API、workflow 或状态写入。
+- 验证结论仍是 No-Go to real refund runtime。
+- 下一步只能继续 repository docs-only / interface-only plan。
+
+第二百九十一轮完成后建议继续：
+
+1. `refund-inbox-repository-plan`: pending
+2. `refund-inbox-repository-interface`: pending

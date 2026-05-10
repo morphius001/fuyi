@@ -1819,3 +1819,10 @@
 - provider mock route focused tests 已覆盖 local DB port mismatch blocked、invalid signature rejected、accepted / duplicate / rejected response redaction 和 no checkout / workflow / state command。
 - 本轮没有修改 route runtime，没有注册 provider，没有接支付宝 / 微信支付 SDK、真实 secret、checkout 或 payment workflow。
 - 下一步建议做 payment runtime route rehearsal validation 或进入 `refund-runtime-risk-gate-plan`，仍保持高风险串行。
+
+## Round 276 更新
+
+- `refund-runtime-risk-gate-plan` 已完成，见 `docs/refund-runtime-risk-gate-plan.md`。
+- 退款后续只能按 command contract、amount guard、provider request idempotency、refund notification inbox、manual review、permission / audit、settlement block 的顺序推进。
+- 本轮只改 docs / task / ledger / queue，不新增 refund route、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 下一步建议继续 `refund-command-contract-plan` 或做 payment / refund runtime validation；仍不能进入真实退款 runtime。

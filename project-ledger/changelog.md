@@ -333,3 +333,4 @@
 - 完成 `payment-runtime-inbox-only-route-gate`，docs-only 审计现有 mock inbox-only route gate；本轮不新增 route、不接 SDK、checkout 或 workflow。
 - 完成 `payment-runtime-inbox-only-route-plan`，docs-only 规划 mock provider route local inbox-only rehearsal；下一步只允许 fake payload + local disposable DB / local in-memory，不接真实支付宝 / 微信支付 SDK、checkout、workflow、退款、结算、佣金、履约或物流。
 - 完成 `payment-runtime-inbox-only-route-local-rehearsal`，在 mock provider route focused tests 中补充 local inbox-only 演练断言：local DB port mismatch blocked、invalid signature rejected、accepted / duplicate / rejected response 不泄露 raw body、fake secret、signature、DB URL、checkout、workflow 或 payment/order state command；不修改 runtime 实现。
+- 完成 `refund-runtime-risk-gate-plan`，docs-only 建立退款 runtime 串行门禁：refund command contract、amount guard、provider request idempotency、refund notification inbox、manual review、permission / audit 和 settlement / commission / payout block；本轮不修改 runtime。

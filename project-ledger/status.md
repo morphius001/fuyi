@@ -778,3 +778,10 @@
 - 新增 local DB port mismatch blocked、invalid signature rejected，以及 accepted / duplicate / rejected response redaction / no workflow / no checkout / no state command 断言。
 - 本轮只改 focused tests、docs、task 和 ledger，不修改 route runtime，不接真实 provider、checkout 或 payment workflow。
 - 验证要求：provider route focused test、payment harness、API typecheck、route high-risk grep、`git diff --check`、子智能体复核。
+
+## Round 276 更新
+
+- `refund-runtime-risk-gate-plan`: done，docs-only 建立退款 runtime 风险门禁和后续 PR 顺序。
+- 后续退款必须先过 command contract、amount guard、provider request idempotency、refund notification inbox、manual review、permission / audit gate。
+- 本轮不新增 refund route，不接支付宝 / 微信支付 refund API，不调用 workflow，不改 order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。
+- 验证要求：`git diff --check`、`git diff --name-only`、子智能体复核。

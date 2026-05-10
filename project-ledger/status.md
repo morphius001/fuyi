@@ -820,3 +820,12 @@
 - 覆盖 `refund.succeeded` / `refund.failed`、providerRefundId、signature、amount / currency / reference matching、notification idempotency 和 failure matrix。
 - 本轮不新增 runtime、不新增 route、不写 DB、不接 provider SDK、不执行 workflow、不改变资金或订单状态。
 - 验证要求：`git diff --check`、status/name-only/untracked 范围确认、子智能体复核。
+
+## Round 282 更新
+
+- `refund-notification-fake-fixtures`: done，新增退款通知 fake-only fixtures 和 focused tests。
+- 覆盖 `refund.succeeded` / `refund.failed`、providerRefundId、refund notification idempotency key、raw payload digest 和敏感 / executable 字段负断言。
+- 本轮不实现 verifier / normalizer，不新增 route、不写 DB、不接 provider refund API、不执行 workflow、不改变资金或订单状态。
+- 验证通过：focused unit test 4/4、API typecheck、payment harness 32 suites / 219 tests、runtime grep 和 `git diff --check`。
+- runtime grep 只命中既有 event type / migration check、fake fixture / tests 和负断言；未发现 route、provider refund API、workflow command 或退款状态写入。
+- 提交前仍需子智能体只读复核。

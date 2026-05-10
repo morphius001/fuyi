@@ -1205,3 +1205,11 @@
 - 合同输出始终 `fixtureOnly: true`、`executable: false`；`refund.succeeded` 不代表平台退款成功。
 - 本轮不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-alipay-real-verifier-contract`。
+
+## Round 328 更新
+
+- `refund-alipay-real-verifier-contract`: done，见 `docs/refund-alipay-real-verifier-contract.md`。
+- 新增支付宝退款相关通知 verifier 纯函数合同、redacted refund / trade-only fixtures 和 focused tests。
+- 合同输出始终 `fixtureOnly: true`、`executable: false`；trade-only / query-required 场景不代表退款成功。
+- 本轮不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-real-verifier-contract-validation`。

@@ -2607,4 +2607,19 @@
 
 第三百二十七轮完成后建议继续：
 
-1. `refund-alipay-real-verifier-contract`: pending
+1. `refund-alipay-real-verifier-contract`: done
+
+## 第三百二十八轮 Refund Alipay Real Verifier Contract
+
+1. `refund-alipay-real-verifier-contract`: done
+
+第三百二十八轮原则：
+
+- 本轮只新增支付宝退款相关通知 verifier 纯函数合同和 redacted fixtures。
+- 不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- trade-only / query-required 场景仍不代表退款成功。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十八轮完成后建议继续：
+
+1. `refund-provider-real-verifier-contract-validation`: pending

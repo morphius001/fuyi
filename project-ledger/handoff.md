@@ -2222,3 +2222,10 @@
 - 本轮新增微信支付退款结果回调 verifier 纯函数、redacted fixtures 和 focused tests，并纳入 payment notification harness。
 - 合同只做 verifier output，不写 inbox、不接 route、不执行 workflow；`refund.succeeded` 仍不代表平台退款成功。
 - 下一步建议进入 `refund-alipay-real-verifier-contract`；仍不得接 SDK、真实密钥、provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 328 更新
+
+- `refund-alipay-real-verifier-contract` 已完成，见 `docs/refund-alipay-real-verifier-contract.md`。
+- 本轮新增支付宝退款相关 verifier 纯函数、redacted fixtures 和 focused tests，并纳入 payment notification harness。
+- 合同只做 verifier output，不写 inbox、不接 route、不执行 workflow；同步退款响应、trade-only notification 和 query-required mode 仍不代表退款成功。
+- 下一步建议进入 `refund-provider-real-verifier-contract-validation`；仍不得接 SDK、真实密钥、provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

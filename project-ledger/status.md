@@ -1189,3 +1189,11 @@
 - 计划明确支付宝产品模式 gate，不能假设 `alipay.trade.refund` 一定提供独立退款通知；后续 verifier 必须校验 `sign` / `sign_type`、canonical payload、app / seller / order / request ref、金额、币种和 idempotency。
 - 下一步建议进入 `refund-provider-real-verifier-plan-validation` 或 `refund-wechat-real-verifier-contract`。
 - 仍 No-Go：真实 provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 326 更新
+
+- `refund-provider-real-verifier-plan-validation`: done，见 `docs/refund-provider-real-verifier-plan-validation.md`。
+- PR #370-#372 合并后验证通过：`git diff --check`、`git status --short --branch`、三项 merge commit 的 `git diff-tree --name-status` 和 `git show --stat`。
+- 三项 PR 文件范围均为 `.codex/queue.md`、`.codex/tasks/**`、`docs/**`、`project-ledger/**`；没有 `apps/**` 或 `packages/**` runtime 变更。
+- 当前仍未接 SDK、真实密钥、route、inbox、provider refund API、refund query API、workflow 或 refund success state。
+- 下一步建议进入 `refund-wechat-real-verifier-contract`，第一版只做纯函数 + redacted fixtures + focused tests。

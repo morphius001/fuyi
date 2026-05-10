@@ -651,3 +651,10 @@
 - 模板覆盖 shared runtime gate、支付宝、微信支付、环境矩阵、日志脱敏、轮换、回滚和 No-Go。
 - 本轮不修改 `.env`、`.env.template`、`apps/**` 或 `packages/**` runtime，不写真实密钥，不接 SDK，不接 checkout，不执行 payment workflow。
 - 验证要求：`git diff --check`。
+
+## Round 258 更新
+
+- `wechat-pay-provider-disabled-adapter-skeleton`: done，新增未注册微信支付 disabled adapter skeleton。
+- Adapter 只暴露配置 key 名和 secret reference key 名，所有 create/query/close/verify/normalize 操作均返回 blocked decision。
+- 本轮不注册 Medusa payment provider，不新增 API route，不修改 `packages/api/medusa-config.ts`，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- 验证要求：focused unit test、API typecheck、payment notification harness、`git diff --check`、子智能体复核。

@@ -1693,3 +1693,10 @@
 - 本轮只整理 shared runtime gate、支付宝和微信支付的 secret/config key 名、环境矩阵、日志脱敏、轮换和回滚边界。
 - 没有修改 `.env`、`.env.template`、`apps/**` 或 `packages/**` runtime；没有写真实密钥或部署配置。
 - 下一步建议继续 `wechat-pay-provider-disabled-adapter-skeleton` 或 `alipay-provider-disabled-adapter-skeleton`，且仍必须默认 disabled、不接 checkout、不执行 payment workflow。
+
+## Round 258 更新
+
+- `wechat-pay-provider-disabled-adapter-skeleton` 已完成，见 `docs/wechat-pay-provider-disabled-adapter-skeleton.md`。
+- 新增 `createDisabledWechatPayProviderAdapter()`，默认 `enabled: false` / `mode: disabled`，只返回 blocked decision。
+- 本轮没有注册 Medusa payment provider，没有新增 route，没有读取 env 或真实 secret，没有接 checkout、SDK 或 payment workflow。
+- 下一步建议先做 `wechat-pay-provider-disabled-adapter-validation` 或继续 `alipay-provider-disabled-adapter-skeleton`，继续保持高风险串行。

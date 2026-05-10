@@ -2395,4 +2395,19 @@
 
 第三百一十三轮完成后建议继续：
 
-1. `refund-schema-constraint-migration-validation`: pending
+1. `refund-schema-constraint-migration-validation`: done
+
+## 第三百一十四轮 Refund Schema Constraint Migration Validation
+
+1. `refund-schema-constraint-migration-validation`: done
+
+第三百一十四轮原则：
+
+- 本轮只记录 PR #360 合并后验证。
+- 不修改真实 migration，不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不注册 module。
+- 当前 rehearsal 仍只证明本地 disposable DB proposed constraints 可行，不代表退款成功。
+- 仍不接 provider refund API、workflow、结算、佣金、打款、权限、履约或物流。
+
+第三百一十四轮完成后建议继续：
+
+1. `refund-schema-constraint-migration-prereadiness-plan`: pending

@@ -2111,3 +2111,11 @@
 - 验证通过：schema constraint rehearsal positive run、unsafe DB name guard、production env guard、focused 29/29、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、diff check。
 - 当前仍未修改真实 migration，未注册 module，未新增 route，未接真实 refund provider / workflow / refund success state。
 - 下一步建议做 `refund-schema-constraint-migration-validation` 或单独规划真实 migration PR；仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 314 更新
+
+- `refund-schema-constraint-migration-validation` 已完成，见 `docs/refund-schema-constraint-migration-validation.md`。
+- PR #360 合并后验证通过：schema constraint rehearsal positive run、unsafe DB guard、production guard、focused 29/29、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、existing refund real-adapter rehearsal `1|8`、diff check。
+- 当前工作区无 runtime diff；本轮只新增 validation 文档和 ledger。
+- 下一步建议进入 `refund-schema-constraint-migration-prereadiness-plan`，先审计真实 migration PR 的上线前置条件、rollback runbook 和 module registration gate。
+- 仍不得接真实 refund provider、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

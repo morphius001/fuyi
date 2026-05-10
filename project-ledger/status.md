@@ -771,3 +771,10 @@
 - 下一步只允许 fake payload、fake local secret、local disposable DB / local in-memory route rehearsal。
 - 仍不注册 Medusa payment provider，不接支付宝 / 微信支付 SDK、不读真实 secret、不接 checkout、不执行 payment workflow。
 - 验证要求：payment harness、API typecheck、route high-risk grep、`git diff --check`。
+
+## Round 275 更新
+
+- `payment-runtime-inbox-only-route-local-rehearsal`: done，补充 mock provider route local inbox-only focused tests。
+- 新增 local DB port mismatch blocked、invalid signature rejected，以及 accepted / duplicate / rejected response redaction / no workflow / no checkout / no state command 断言。
+- 本轮只改 focused tests、docs、task 和 ledger，不修改 route runtime，不接真实 provider、checkout 或 payment workflow。
+- 验证要求：provider route focused test、payment harness、API typecheck、route high-risk grep、`git diff --check`、子智能体复核。

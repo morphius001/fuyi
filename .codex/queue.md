@@ -1784,5 +1784,20 @@
 
 第二百七十四轮完成后建议继续：
 
-1. `payment-runtime-inbox-only-route-local-rehearsal`: pending
+1. `payment-runtime-inbox-only-route-local-rehearsal`: done
 2. `refund-runtime-risk-gate-plan`: pending
+
+## 第二百七十五轮 Payment Runtime Inbox Only Route Local Rehearsal
+
+1. `payment-runtime-inbox-only-route-local-rehearsal`: done
+
+第二百七十五轮原则：
+
+- 本轮只补 mock provider route focused tests 和文档。
+- 不修改 route runtime，不注册 provider，不接 SDK，不读真实 secret，不接 checkout，不执行 payment workflow。
+- local rehearsal 只允许 fake payload、fake local secret、mocked local DB scope。
+- 退款、对账、结算、佣金、打款、分账、履约和物流仍保持高风险串行。
+
+第二百七十五轮完成后建议继续：
+
+1. `refund-runtime-risk-gate-plan`: pending

@@ -1812,3 +1812,10 @@
 - 计划把下一步限定为 mock provider route local inbox-only rehearsal：fake payload + fake local secret + local disposable DB / local in-memory。
 - 仍不能注册 provider、接支付宝 / 微信支付 SDK、读取真实 secret、接 checkout、执行 payment workflow，不能处理退款、结算、佣金、履约或物流。
 - 下一步建议继续 `payment-runtime-inbox-only-route-local-rehearsal`，先补本地 rehearsal 验证，不进入真实 provider runtime。
+
+## Round 275 更新
+
+- `payment-runtime-inbox-only-route-local-rehearsal` 已完成，见 `docs/payment-runtime-inbox-only-route-local-rehearsal.md`。
+- provider mock route focused tests 已覆盖 local DB port mismatch blocked、invalid signature rejected、accepted / duplicate / rejected response redaction 和 no checkout / workflow / state command。
+- 本轮没有修改 route runtime，没有注册 provider，没有接支付宝 / 微信支付 SDK、真实 secret、checkout 或 payment workflow。
+- 下一步建议做 payment runtime route rehearsal validation 或进入 `refund-runtime-risk-gate-plan`，仍保持高风险串行。

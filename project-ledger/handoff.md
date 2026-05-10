@@ -2177,3 +2177,10 @@
 - 当前结论仍是 No-Go to real refund runtime：fake/local inbox-only、schema rehearsal 和 adapter rehearsal 不能代表退款成功或可上线真实退款。
 - 后续必须按串行顺序推进：readiness validation、provider real verifier plan/contract、provider inbox-only shadow、state owner handoff、refund state mutation shadow、reconciliation / settlement plan。
 - 仍不得直接接 provider refund request、执行 workflow、写 refund success state、调整 settlement / commission / payout、弱化 permission 或改 fulfillment / logistics。
+
+## Round 322 更新
+
+- `refund-route-runtime-readiness-validation` 已完成，见 `docs/refund-route-runtime-readiness-validation.md`。
+- PR #368 合并后验证确认文件范围为 docs / task / queue / ledger only；没有 `apps/**` 或 `packages/**` runtime diff。
+- readiness plan 仍只是 gate，不是实现；真实 refund route、provider verifier、workflow、refund success state、settlement、commission、payout、permission、fulfillment 和 logistics 仍未启用。
+- 下一步建议做 `refund-provider-real-verifier-plan`，只规划支付宝 / 微信支付真实退款通知验签边界，不接 SDK、不写真实密钥、不接 route。

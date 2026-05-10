@@ -2515,4 +2515,19 @@
 
 第三百二十一轮完成后建议继续：
 
-1. `refund-route-runtime-readiness-validation`: pending
+1. `refund-route-runtime-readiness-validation`: done
+
+## 第三百二十二轮 Refund Route Runtime Readiness Validation
+
+1. `refund-route-runtime-readiness-validation`: done
+
+第三百二十二轮原则：
+
+- 本轮只记录 PR #368 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- readiness plan 仍只是 gate，不代表真实退款 route / provider / workflow / refund success state 可上线。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十二轮完成后建议继续：
+
+1. `refund-provider-real-verifier-plan`: pending

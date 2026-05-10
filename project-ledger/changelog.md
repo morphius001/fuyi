@@ -379,3 +379,4 @@
 - 完成 `refund-inbox-schema-adapter-unmapped-state`，更新 local PG refund inbox adapter，使 refund-only state / actor 原样写入和读回，并更新 focused / route tests；focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9` 通过。
 - 完成 `refund-inbox-schema-adapter-unmapped-state-validation`，记录 PR #366 合并后 schema rehearsal、focused 45/45、API typecheck、payment harness 40 suites / 301 tests、payment dry-run `2|9`、refund real-adapter rehearsal `1|9` 和 diff check 通过。
 - 完成 `refund-route-runtime-readiness-plan`，docs-only 建立真实退款通知 route / runtime 启用前 readiness gate，覆盖 feature flag、provider 验签、inbox 幂等、schema/migration、state owner handoff、权限/人工复核、财务/履约阻断、observability、rollback 和发布顺序；结论仍为 No-Go to real refund runtime。
+- 完成 `refund-route-runtime-readiness-validation`，记录 PR #368 合并后文件范围和 diff check；确认本轮只新增 readiness 文档、任务文件、queue 和 ledger，未修改 `apps/**` 或 `packages/**` runtime，真实退款 runtime 仍 No-Go。

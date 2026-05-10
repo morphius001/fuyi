@@ -1157,3 +1157,11 @@
 - 计划明确真实退款通知 route / runtime 当前仍为 No-Go，后续必须先通过 feature flag、provider verification、inbox idempotency、schema / migration、state owner handoff、permission / manual review、finance / fulfillment block、observability 和 rollback gates。
 - 建议后续顺序：`refund-route-runtime-readiness-validation` -> provider real verifier plan / contract -> provider inbox-only shadow -> state owner handoff -> reconciliation / settlement plan。
 - 仍 No-Go：真实 provider refund request、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 322 更新
+
+- `refund-route-runtime-readiness-validation`: done，见 `docs/refund-route-runtime-readiness-validation.md`。
+- PR #368 合并后验证通过：`git diff --check`、`git status --short --branch`、`git diff-tree --no-commit-id --name-status -r HEAD` 和 `git show --stat --oneline --no-renames HEAD`。
+- 合并提交文件范围仅为 `.codex/queue.md`、`.codex/tasks/refund-route-runtime-readiness-plan.md`、`docs/refund-route-runtime-readiness-plan.md`、`project-ledger/changelog.md`、`project-ledger/handoff.md`、`project-ledger/status.md`。
+- 当前仍无 `apps/**` 或 `packages/**` runtime 变更，真实 refund route / provider / workflow / refund success state 仍未启用。
+- 下一步建议进入 `refund-provider-real-verifier-plan`；仍不接 SDK、不写真实密钥、不接 route、不执行 workflow。

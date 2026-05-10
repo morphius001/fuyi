@@ -2215,3 +2215,10 @@
 - PR #370-#372 合并后验证确认均为 docs / task / queue / ledger only；没有 `apps/**` 或 `packages/**` runtime diff。
 - provider verifier plan 阶段仍不是实现；微信支付 / 支付宝 SDK、真实密钥、真实 route、inbox、workflow 和 refund success state 均未启用。
 - 下一步建议进入 `refund-wechat-real-verifier-contract`；必须保持纯函数、redacted fixtures、focused tests，不接 route、不读真实密钥、不写 inbox。
+
+## Round 327 更新
+
+- `refund-wechat-real-verifier-contract` 已完成，见 `docs/refund-wechat-real-verifier-contract.md`。
+- 本轮新增微信支付退款结果回调 verifier 纯函数、redacted fixtures 和 focused tests，并纳入 payment notification harness。
+- 合同只做 verifier output，不写 inbox、不接 route、不执行 workflow；`refund.succeeded` 仍不代表平台退款成功。
+- 下一步建议进入 `refund-alipay-real-verifier-contract`；仍不得接 SDK、真实密钥、provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -2592,4 +2592,19 @@
 
 第三百二十六轮完成后建议继续：
 
-1. `refund-wechat-real-verifier-contract`: pending
+1. `refund-wechat-real-verifier-contract`: done
+
+## 第三百二十七轮 Refund WeChat Real Verifier Contract
+
+1. `refund-wechat-real-verifier-contract`: done
+
+第三百二十七轮原则：
+
+- 本轮只新增微信支付退款结果回调 verifier 纯函数合同和 redacted fixtures。
+- 不接 SDK、不写真实密钥、不新增 route、不写 inbox、不执行 workflow、不写 refund success state。
+- `refund.succeeded` 仍只代表 provider callback verifier output，不代表平台退款成功。
+- 仍不接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百二十七轮完成后建议继续：
+
+1. `refund-alipay-real-verifier-contract`: pending

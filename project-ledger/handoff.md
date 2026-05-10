@@ -2192,3 +2192,11 @@
 - 微信支付后续需单独规划退款回调 header 验签、证书 / 公钥选择、AES-256-GCM 解密、event type 映射和幂等。
 - 支付宝后续需单独确认产品模式：不能假设 `alipay.trade.refund` 一定有独立 refund notify_url；需按异步通知参数验签、refund request ref、amount/currency 和交易状态字段进入 verifier / manual review。
 - 下一步建议进入 `refund-wechat-real-verifier-plan`，再做 `refund-alipay-real-verifier-plan`；仍不得接 route、provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 324 更新
+
+- `refund-wechat-real-verifier-plan` 已完成，见 `docs/refund-wechat-real-verifier-plan.md`。
+- 本轮只细化微信支付退款结果回调 verifier 计划，不改 runtime、不接 SDK、不写真实密钥、不新增 route。
+- 后续 contract PR 建议新增 `wechat-pay-refund-notification-verifier.ts`、redacted test vectors 和 focused tests；仍只能输出 `executable: false`。
+- `REFUND.SUCCESS` 只能进入 verified envelope / inbox 后续输入，不代表平台退款成功；`REFUND.ABNORMAL` 和 `REFUND.CLOSED` 必须保持人工复核 / 本地快照校验。
+- 下一步建议进入 `refund-alipay-real-verifier-plan`；仍不得接 provider refund API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

@@ -2654,4 +2654,19 @@
 
 第三百三十轮完成后建议继续：
 
-1. `refund-provider-inbox-route-plan-validation`: pending
+1. `refund-provider-inbox-route-plan-validation`: done
+
+## 第三百三十一轮 Refund Provider Inbox Route Plan Validation
+
+1. `refund-provider-inbox-route-plan-validation`: done
+
+第三百三十一轮原则：
+
+- 本轮只记录 PR #377 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- provider inbox route plan 仍只是文档规划，不代表 route、DB、SDK、workflow 或 refund success state 可上线。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十一轮完成后建议继续：
+
+1. `refund-provider-inbox-route-shadow-plan`: pending

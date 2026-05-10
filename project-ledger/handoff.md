@@ -270,6 +270,16 @@
 - 仍不接 SDK、真实密钥、provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
 - 下一步：运行 `git diff --check`、`git status --short --branch` 和子智能体只读复核；通过后精确 stage、commit、push、开 PR 并 merge，然后继续 `refund-provider-inbox-route-plan-validation`。
 
+## Round 331 更新
+
+- 当前 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`。
+- 当前分支：`china/pr-nm-refund-provider-inbox-route-plan-validation`。
+- PR #377 `[china] Refund provider inbox route plan` 已合并，merge commit `d4f1fe65881fe87a038d27e32b0292dfef21638e`。
+- `refund-provider-inbox-route-plan-validation` 已完成，见 `docs/refund-provider-inbox-route-plan-validation.md`。
+- 验证确认 PR #377 只改 docs / task / queue / ledger，不修改 `apps/**` 或 `packages/**` runtime。
+- 当前仍未实现 provider route、DB wiring、module registration、SDK、真实密钥、workflow 或 refund success state。
+- 下一步：提交 / push / 开 PR / merge 本 validation；之后继续 `refund-provider-inbox-route-shadow-plan`，仍先 docs-only。
+
 ## Round 94 更新
 
 - `mock-webhook-admin-route-disabled-only` 已完成，见 `docs/mock-webhook-admin-route-disabled-only.md`。

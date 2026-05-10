@@ -2287,5 +2287,20 @@
 
 第三百零六轮完成后建议继续：
 
-1. `refund-inbox-local-db-route-validation`: pending
+1. `refund-inbox-local-db-route-validation`: done
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第三百零七轮 Refund Inbox Local DB Route Validation
+
+1. `refund-inbox-local-db-route-validation`: done
+
+第三百零七轮原则：
+
+- 本轮只记录 PR #353 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 refund inbox local DB route 仍只是 fake/local disposable DB inbox-only rehearsal。
+- accepted / duplicate / manual_review 仍不能代表退款成功。
+
+第三百零七轮完成后建议继续：
+
+1. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

@@ -1033,3 +1033,11 @@
 - Focused tests 覆盖 local DB missing、remote host、DB name mismatch、accepted、duplicate、digest conflict manual review、response redaction 和 local client mapping。
 - 验证通过：focused route + local PG client tests 2 suites / 33 tests、API typecheck、payment notification harness 40 suites / 300 tests、payment DB dry-run `2|9`、refund DB dry-run `1|8`、runtime grep 和 `git diff --check`。
 - 当前仍不注册 module/migration，不接真实 Provider refund API，不执行 workflow，不写退款成功状态，不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 307 更新
+
+- `refund-inbox-local-db-route-validation`: done，见 `docs/refund-inbox-local-db-route-validation.md`。
+- PR #353 合并后验证通过：focused route + local PG client tests 2 suites / 33 tests、API typecheck、payment notification harness 40 suites / 301 tests、payment DB dry-run `2|9`、refund DB dry-run `1|8`。
+- Runtime grep 只命中 route test 负断言和 local client redaction denylist；未发现可执行 provider refund request、workflow、state mutation、settlement / commission / payout 调整或 checkout 调用。
+- 当前 refund inbox local DB route 仍只是 fake/local disposable DB-backed inbox-only rehearsal；accepted、duplicate、manual review 不代表退款成功。
+- 下一步建议进入 `refund-inbox-repository-real-db-adapter-rehearsal-plan`，继续先 docs-only 规划。

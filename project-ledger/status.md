@@ -955,3 +955,11 @@
 - dry-run 覆盖 fake `refund.succeeded` inbox row、unique idempotency、same digest duplicate no-op、different digest conflict manual review、forbidden action rejection、non-CNY / zero amount rejection、metadata redaction、down SQL 和 drop DB 无残留。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不新增 route，不调用 provider refund API 或 workflow，不改变 checkout / order / payment / refund / settlement / commission / payout / permission / fulfillment / logistics 状态。
 - 验证要求：dry-run 脚本、`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。
+
+## Round 298 更新
+
+- `refund-inbox-route-plan`: done，见 `docs/refund-inbox-route-plan.md`。
+- 本轮只做 docs-only route gate 计划；不新增 route，不修改 `apps/**` 或 `packages/**` runtime，不注册 migration/module，不连接 DB，不调用 provider refund API 或 workflow。
+- 计划定义未来 fake/local inbox-only route 的 path 草案、runtime gate、request / response contract、accepted / duplicate / digest conflict / rejected 语义、response redaction 和测试矩阵。
+- 明确 route response、inbox accepted、duplicate、manual review 和 audit event 都不能代表退款成功；refund state mutation、settlement、commission、payout、permission、fulfillment 和 logistics 继续阻断。
+- 验证要求：`git diff --check`、name-only/status/untracked 范围确认、子智能体复核。

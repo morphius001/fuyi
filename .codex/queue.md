@@ -2144,5 +2144,21 @@
 
 第二百九十七轮完成后建议继续：
 
-1. `refund-inbox-route-plan`: pending
+1. `refund-inbox-route-plan`: done
+2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending
+
+## 第二百九十八轮 Refund Inbox Route Plan
+
+1. `refund-inbox-route-plan`: done
+
+第二百九十八轮原则：
+
+- 本轮只做 refund inbox route gate docs-only 计划。
+- 不新增 route、不修改 `apps/**` 或 `packages/**` runtime、不注册 migration/module。
+- 未来 route 第一阶段只能 fake/local inbox-only，默认 disabled，production blocked。
+- route response、inbox accepted、duplicate 或 manual review 都不能代表退款成功。
+
+第二百九十八轮完成后建议继续：
+
+1. `refund-inbox-disabled-route-skeleton-plan`: pending
 2. `refund-inbox-repository-real-db-adapter-rehearsal-plan`: pending

@@ -1015,3 +1015,11 @@
 - Runtime grep 仅命中 focused route test 的负断言和 must-not-read fixture，未发现 provider refund request、workflow、checkout 或状态写入命令。
 - 当前 `/china/refund-inbox/mock` 仍只支持 fake/local in-memory inbox-only；local DB route wiring、真实 Provider、workflow 和 refund success state 仍未启用。
 - 下一步建议进入 `refund-inbox-local-db-route-plan` 或 repository rehearsal plan，继续保持 no-runtime-mutation gate。
+
+## Round 305 更新
+
+- `refund-inbox-local-db-route-plan`: done，见 `docs/refund-inbox-local-db-route-plan.md`。
+- 本轮只做 docs-only plan；不修改 `apps/**` 或 `packages/**` runtime，不连接 DB，不改 route 行为。
+- 计划定义未来 local disposable DB route 的 env gate、DB URL / name / actual connection validation、schema prerequisites、repository adapter scope、response contract、test matrix、verification 和 rollback。
+- 明确 local DB route 仍只能 fake provider / fake secret / disposable DB / inbox-audit-only；accepted、duplicate、manual review 仍不能代表退款成功。
+- 仍 No-Go：真实 Provider refund notify、provider refund request、workflow execution、refund success state、settlement、commission、payout、permission、fulfillment、logistics、预发/生产 DB。

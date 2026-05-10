@@ -2036,3 +2036,10 @@
 - 合并后验证通过：focused route test 9/9、API typecheck、payment harness 40 suites / 289 tests、payment dry-run 2|9、refund dry-run 1|8、runtime grep 仅测试负断言。
 - 当前 route 仍不是可用真实退款入口；只支持 fake/local in-memory inbox-only，local DB route wiring 和真实 Provider 仍未启用。
 - 下一步建议进入 `refund-inbox-local-db-route-plan`，先规划 local disposable DB-backed route；不要直接连接预发/生产、provider refund API、workflow 或状态写入。
+
+## Round 305 更新
+
+- `refund-inbox-local-db-route-plan` 已完成，见 `docs/refund-inbox-local-db-route-plan.md`。
+- 本轮只规划未来 local disposable DB-backed route；未修改 route runtime、未连接 DB、未写 inbox、未注册 module/migration。
+- 下一步如果执行 `refund-inbox-local-db-route`，必须先确认 schema allowlist 支持 refund event log，且只能连接本地 disposable DB。
+- 仍不得接真实支付宝 / 微信支付 refund notify、provider refund request、refund success state、workflow、settlement、commission、payout、permission、fulfillment 或 logistics。

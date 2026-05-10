@@ -620,3 +620,11 @@
 - 计划覆盖密钥/证书、notify_url / return_url、验签、解密、幂等、sandbox、disabled-by-default、日志脱敏、回滚和发布门禁。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不接真实 provider，不写真实密钥，不注册 migration，不执行 payment workflow。
 - 验证要求：`git diff --check`。
+
+## Round 254 更新
+
+- `payment-runtime-external-readiness-review`: done，docs-only 复核 payment runtime 外部执行 readiness。
+- 当前结论：仍为 `blocked-external`；缺 disposable preprod DB host/port/user/name、备份 owner、回滚 owner、操作 owner、连接授权和可丢弃/可回滚确认。
+- `.codex/scripts/payment-notification-preprod-disposable-db-smoke.sh` 当前只支持 `--print-plan` 与 `--validate-inputs-only`，不会连接外部 DB。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不连接外部 DB，不注册 migration，不接真实 provider，不执行 payment workflow。
+- 验证通过：`--print-plan`、`git diff --check`。

@@ -349,10 +349,26 @@
 
 第二百五十三轮完成后建议继续：
 
-1. `payment-runtime-external-readiness-review`: pending
+1. `payment-runtime-external-readiness-review`: done
 2. `alipay-provider-sandbox-contract`: pending
 3. `wechat-pay-provider-sandbox-contract`: pending
 4. `provider-secret-config-template`: pending
+
+## 第二百五十四轮 Payment Runtime External Readiness Review
+
+1. `payment-runtime-external-readiness-review`: done
+
+第二百五十四轮原则：
+
+- 只复核外部 disposable preprod DB readiness。
+- 不连接外部 DB，不执行 smoke，不注册 migration，不接真实 provider。
+- `payment-notification-preprod-disposable-db-execution` 继续保持 blocked-external。
+
+第二百五十四轮完成后建议继续：
+
+1. `alipay-provider-sandbox-contract`: pending
+2. `wechat-pay-provider-sandbox-contract`: pending
+3. `provider-secret-config-template`: pending
 
 第十七轮队列已清空。
 

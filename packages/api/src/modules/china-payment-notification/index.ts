@@ -21,6 +21,8 @@ export * from "./alipay-test-vectors";
 export * from "./alipay-provider";
 export * from "./alipay-notification-verifier";
 export * from "./alipay-notification-normalizer";
+export * from "./alipay-refund-notification-test-vectors";
+export * from "./alipay-refund-notification-verifier";
 export * from "./wechat-pay-provider";
 export * from "./wechat-pay-test-vectors";
 export * from "./wechat-pay-notification-verifier";

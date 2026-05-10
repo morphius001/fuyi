@@ -564,3 +564,11 @@
 - 当前结论：可以继续推进上线，但必须按小 PR 串行；不能把交易、资金、权限和履约 runtime 混在一个大改里。
 - 本轮不修改 `apps/**` 或 `packages/**` runtime，不注册 migration，不接真实 provider，不改变 cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流状态。
 - 验证要求：Storefront build、`git diff --check`、子智能体 docs-only 复核。
+
+## Round 247 更新
+
+- `productcard-launch-readiness-audit`: done，docs-only 审计 ProductCard 上线前事实来源。
+- 当前结论：搜索页、店铺页等主购买链路的真实可加购 ProductCard 继续以 Store API / Medusa product、variant 和 calculated price 为准；product discovery 的 `priceText`、`stockText`、`sourceTags` 和 fallback 只能用于展示。
+- 审计发现阻断风险：商品详情页“同档口更多鲜货”经 `prod.seller?.products -> HomeProductsCarousel` 可能把缺少 variants/calculated price 的 `Product[]` 传给 ProductCard；上线前必须回查 Store API 完整商品或降级为不可加购展示。
+- 本轮不修改 `apps/**` 或 `packages/**` runtime，不改变 add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
+- 验证要求：ProductCard 使用点 grep、product discovery 展示字段 grep、Storefront build、`git diff --check`、子智能体复核。

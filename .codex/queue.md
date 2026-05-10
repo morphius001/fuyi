@@ -231,7 +231,25 @@
 
 第二百四十六轮完成后建议立即继续：
 
-1. `productcard-launch-readiness-audit`: pending
+1. `productcard-launch-readiness-audit`: done
+2. `cart-checkout-launch-safety-audit`: pending
+3. `payment-risk-register`: pending
+4. `permission-rbac-launch-matrix`: pending
+5. `fulfillment-logistics-runtime-gate-plan`: pending
+
+## 第二百四十七轮 ProductCard 上线审计
+
+1. `productcard-launch-readiness-audit`: done
+
+第二百四十七轮原则：
+
+- 只审计 ProductCard 输入、价格来源、Store API 商品事实和 product discovery 展示字段边界。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不改变 add-to-cart、cart、checkout、订单、支付、退款、结算、佣金、权限、履约或物流行为。
+
+第二百四十七轮完成后建议继续：
+
+1. `productdetails-related-products-store-api-guard`: pending
 2. `cart-checkout-launch-safety-audit`: pending
 3. `payment-risk-register`: pending
 4. `permission-rbac-launch-matrix`: pending

@@ -1956,4 +1956,20 @@
 
 第二百八十五轮完成后建议继续：
 
-1. `payment-refund-runtime-gate-validation`: pending
+1. `payment-refund-runtime-gate-validation`: done
+
+## 第二百八十六轮 Payment Refund Runtime Gate Validation
+
+1. `payment-refund-runtime-gate-validation`: done
+
+第二百八十六轮原则：
+
+- 本轮只做 payment / refund runtime gate docs-only 汇总验证。
+- 不新增 runtime、不新增 route、不写 DB、不接 provider API、不执行 workflow。
+- 验证结论仍是 No-Go to real refund runtime。
+
+第二百八十六轮完成后建议继续：
+
+1. `refund-manual-review-audit-contract`: pending
+2. `refund-audit-event-allowlist-contract`: pending
+3. `refund-inbox-state-transition-plan`: pending

@@ -1962,3 +1962,11 @@
 - 本轮只做 docs-only 计划，定义未来 mocked DB adapter skeleton 的文件边界、transaction requirement、mock DB client tests、error mapping、metadata redaction 和 runtime grep guard。
 - 未来 skeleton 也不能连接真实 DB、读取 env、注册 migration、接 route、调用 provider refund API、workflow 或写交易 / 结算 / 履约状态。
 - 下一步如果继续 `refund-inbox-repository-db-adapter-skeleton`，只能写 mocked DB adapter skeleton + focused tests，不接 runtime。
+
+## Round 295 更新
+
+- `refund-inbox-repository-db-adapter-skeleton` 已完成，见 `docs/refund-inbox-repository-db-adapter-skeleton.md`。
+- 新增 `DbRefundInboxRepository`，只依赖外部注入的 `RefundInboxDbClient.transaction()` 和 mock transaction，不创建 DB 连接、不读取 env。
+- Focused tests 覆盖 receive、duplicate no-op、digest conflict manual review、状态标记、查询、metadata redaction 和 event log failure。
+- 当前仍没有 route、migration 注册、provider refund API、workflow 或退款状态写入。
+- 下一步建议进入 `refund-inbox-repository-disposable-db-dry-run-plan`，先 docs-only 规划 local disposable DB dry-run。

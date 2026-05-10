@@ -17,5 +17,6 @@ export * from "./mock-webhook-composition";
 export * from "./mock-webhook-handler";
 export * from "./mock-webhook-repository-resolver";
 export * from "./mock-china-payment-provider";
+export * from "./alipay-provider";
 export * from "./wechat-pay-provider";
 export * from "./payment-provider-registry";

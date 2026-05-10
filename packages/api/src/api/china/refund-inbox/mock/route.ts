@@ -1,12 +1,18 @@
 import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
+import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
 
 import {
   AppendRefundInboxEventInput,
   buildMockPaymentSignature,
+  createLocalRefundInboxPostgresClient,
+  DbRefundInboxRepository,
   MarkRefundGuardCheckedInput,
   MarkRefundInboxFailedInput,
   MarkRefundManualReviewRequiredInput,
   MarkRefundRuntimeMutationBlockedInput,
+  LocalPostgresConnection,
+  LocalPostgresDriver,
+  RefundInboxDbClient,
   normalizeRefundNotificationContract,
   ReceiveRefundNotificationInput,
   RefundFakeNotificationBody,
@@ -25,7 +31,8 @@ type RefundInboxRouteStatus =
 
 const runtimeRequested = () =>
   process.env.CHINA_REFUND_INBOX_ROUTE_ENABLED === "true" ||
-  process.env.CHINA_REFUND_INBOX_ROUTE_MODE === "mock_local_inbox_only";
+  process.env.CHINA_REFUND_INBOX_ROUTE_MODE === "mock_local_inbox_only" ||
+  process.env.CHINA_REFUND_INBOX_ROUTE_MODE === "mock_local_db_inbox_only";
 
 const routeMode = () => process.env.CHINA_REFUND_INBOX_ROUTE_MODE;
 
@@ -47,6 +54,15 @@ const localInboxGateAllowsInMemory = () =>
   Boolean(process.env.CHINA_REFUND_INBOX_MOCK_SECRET) &&
   localInMemoryRequested() &&
   !localDbRequested() &&
+  !productionLikeEnvironment();
+
+const localDbGateRequested = () =>
+  process.env.CHINA_REFUND_INBOX_ROUTE_ENABLED === "true" &&
+  routeMode() === "mock_local_db_inbox_only" &&
+  process.env.CHINA_REFUND_INBOX_PROVIDER === "mock_china_pay" &&
+  Boolean(process.env.CHINA_REFUND_INBOX_MOCK_SECRET) &&
+  localDbRequested() &&
+  !localInMemoryRequested() &&
   !productionLikeEnvironment();
 
 const disabledBody = (productionBlocked: boolean) => ({
@@ -156,13 +172,15 @@ const routeSafeBody = (input: {
   status: RefundInboxRouteStatus;
   httpStatus: number;
   code?: string;
-  mode?: "mock_local_inbox_only";
+  mode?: "mock_local_inbox_only" | "mock_local_db_inbox_only";
+  storage?: "local_inmemory" | "local_disposable_db";
   record?: RefundInboxRecord;
 }) => ({
   status: input.status,
   surface: "refund_inbox",
   provider: "mock_china_pay",
   mode: input.mode,
+  storage: input.storage,
   code: input.code,
   runtimeMutationBlocked: true,
   record: input.record
@@ -175,6 +193,217 @@ const routeSafeBody = (input: {
       }
     : undefined,
 });
+
+type KnexPgConnection = {
+  raw: (
+    sql: string,
+    params?: unknown[],
+  ) => Promise<{ rows?: Record<string, unknown>[] }>;
+  transaction?: () => Promise<{
+    raw: (
+      sql: string,
+      params?: unknown[],
+    ) => Promise<{ rows?: Record<string, unknown>[]; rowCount?: number }>;
+    commit: () => Promise<unknown>;
+    rollback: () => Promise<unknown>;
+  }>;
+};
+
+const localServerHosts = new Set([
+  "127.0.0.1",
+  "::1",
+  "localhost",
+  "local_socket",
+]);
+
+const getLocalDbNameFromUrl = (databaseUrl?: string) => {
+  if (!databaseUrl) {
+    return undefined;
+  }
+
+  try {
+    return decodeURIComponent(new URL(databaseUrl).pathname.replace(/^\//, ""));
+  } catch {
+    return undefined;
+  }
+};
+
+const getLocalDbPortFromUrl = (databaseUrl?: string) => {
+  if (!databaseUrl) {
+    return undefined;
+  }
+
+  try {
+    const port = new URL(databaseUrl).port;
+
+    return port ? Number(port) : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+const readCurrentDatabaseName = async (pg: KnexPgConnection) => {
+  const result = await pg.raw("select current_database() as database_name");
+
+  return result.rows?.[0]?.database_name
+    ? String(result.rows[0].database_name)
+    : undefined;
+};
+
+const readCurrentServerInfo = async (pg: KnexPgConnection) => {
+  const result = await pg.raw(
+    "select coalesce(inet_server_addr()::text, 'local_socket') as server_host, inet_server_port() as server_port",
+  );
+  const row = result.rows?.[0];
+  const host = row?.server_host ? String(row.server_host) : undefined;
+
+  return {
+    host: host?.replace(/\/\d+$/, ""),
+    port:
+      typeof row?.server_port === "number"
+        ? row.server_port
+        : row?.server_port
+          ? Number(row.server_port)
+          : undefined,
+  };
+};
+
+const isActualLocalDbConnection = async (
+  pg: KnexPgConnection,
+  databaseName: string,
+  databaseUrl?: string,
+) => {
+  const [currentDatabaseName, serverInfo] = await Promise.all([
+    readCurrentDatabaseName(pg).catch(() => undefined),
+    readCurrentServerInfo(pg).catch(() => ({
+      host: undefined,
+      port: undefined,
+    })),
+  ]);
+  const expectedPort = getLocalDbPortFromUrl(databaseUrl);
+
+  if (currentDatabaseName !== databaseName) {
+    return false;
+  }
+
+  if (!serverInfo.host || !localServerHosts.has(serverInfo.host)) {
+    return false;
+  }
+
+  return !expectedPort || !serverInfo.port || serverInfo.port === expectedPort;
+};
+
+const toKnexRawSql = (sql: string) => sql.replace(/\$\d+/g, "?");
+const toKnexRawParams = (params?: unknown[]) =>
+  params?.map((param) => (param === undefined ? null : param));
+
+const buildKnexLocalPostgresDriver = (
+  pg: KnexPgConnection,
+): LocalPostgresDriver => ({
+  connect: async (): Promise<LocalPostgresConnection> => {
+    let transaction:
+      | Awaited<ReturnType<NonNullable<KnexPgConnection["transaction"]>>>
+      | undefined;
+
+    const ensureTransaction = async () => {
+      if (!pg.transaction) {
+        throw Object.assign(new Error("LOCAL_DB_CLIENT_REFUSED"), {
+          code: "LOCAL_DB_CLIENT_REFUSED",
+        });
+      }
+
+      transaction ??= await pg.transaction();
+
+      return transaction;
+    };
+
+    return {
+      query: async (sql, params) => {
+        const normalizedSql = sql.trim().toLowerCase();
+
+        if (normalizedSql === "begin") {
+          await ensureTransaction();
+
+          return { rows: [] };
+        }
+
+        if (normalizedSql === "commit") {
+          await transaction?.commit();
+          transaction = undefined;
+
+          return { rows: [] };
+        }
+
+        if (normalizedSql === "rollback") {
+          await transaction?.rollback();
+          transaction = undefined;
+
+          return { rows: [] };
+        }
+
+        const activeTransaction = await ensureTransaction();
+        const result = await activeTransaction.raw(
+          toKnexRawSql(sql),
+          toKnexRawParams(params),
+        );
+
+        return {
+          rows: (result.rows ?? []) as never[],
+          rowCount:
+            "rowCount" in result &&
+            typeof result.rowCount === "number" &&
+            result.rowCount > 0
+              ? result.rowCount
+              : undefined,
+        };
+      },
+      release: async () => undefined,
+    };
+  },
+});
+
+const resolveLocalDbRepository = async (req: MedusaRequest) => {
+  if (!localDbGateRequested()) {
+    return undefined;
+  }
+
+  const databaseUrl = process.env.CHINA_REFUND_INBOX_LOCAL_DB_URL;
+  const databaseName =
+    process.env.CHINA_REFUND_INBOX_LOCAL_DB_NAME ??
+    getLocalDbNameFromUrl(databaseUrl);
+
+  if (!databaseUrl || !databaseName) {
+    return undefined;
+  }
+
+  const scope = (req as unknown as { scope?: { resolve?: unknown } }).scope;
+
+  if (!scope || typeof scope.resolve !== "function") {
+    return undefined;
+  }
+
+  const pg = scope.resolve(
+    ContainerRegistrationKeys.PG_CONNECTION,
+  ) as KnexPgConnection;
+
+  if (!(await isActualLocalDbConnection(pg, databaseName, databaseUrl))) {
+    return undefined;
+  }
+
+  try {
+    const client = createLocalRefundInboxPostgresClient({
+      databaseUrl,
+      databaseName,
+      localDbEnabled: true,
+      nodeEnv: process.env.NODE_ENV,
+      driver: buildKnexLocalPostgresDriver(pg),
+    }) as RefundInboxDbClient;
+
+    return new DbRefundInboxRepository(client);
+  } catch {
+    return undefined;
+  }
+};
 
 const nowIso = () => new Date().toISOString();
 
@@ -397,6 +626,13 @@ const appendAuditTrail = async (
 const handleLocalInMemoryInbox = async (
   req: MedusaRequest,
   res: MedusaResponse,
+) => handleLocalInbox(req, res, inMemoryRepository, "local_inmemory");
+
+const handleLocalInbox = async (
+  req: MedusaRequest,
+  res: MedusaResponse,
+  repository: RefundInboxRepositoryContract,
+  storage: "local_inmemory" | "local_disposable_db",
 ) => {
   const rawBody = await readRawBody(req);
 
@@ -472,28 +708,35 @@ const handleLocalInMemoryInbox = async (
     );
   }
 
-  const receiveResult = await inMemoryRepository.receiveNotification({
+  const receiveResult = await repository.receiveNotification({
     envelope: normalized.envelope,
     receivedAt,
     sanitizedMetadata: {
       fixtureOnly: true,
-      route: "refund_inbox_mock_local_inmemory",
+      route:
+        storage === "local_disposable_db"
+          ? "refund_inbox_mock_local_db"
+          : "refund_inbox_mock_local_inmemory",
     },
   });
 
   if (receiveResult.status === "received") {
-    await inMemoryRepository.markSignatureVerified(
+    await repository.markSignatureVerified(
       receiveResult.record.idempotencyKey,
     );
-    const normalizedRecord = await inMemoryRepository.markNormalized(
+    const normalizedRecord = await repository.markNormalized(
       receiveResult.record.idempotencyKey,
     );
-    await appendAuditTrail(inMemoryRepository, normalizedRecord);
+    await appendAuditTrail(repository, normalizedRecord);
 
     return res.status(202).json(
       routeSafeBody({
         status: "accepted",
-        mode: "mock_local_inbox_only",
+        mode:
+          storage === "local_disposable_db"
+            ? "mock_local_db_inbox_only"
+            : "mock_local_inbox_only",
+        storage,
         httpStatus: 202,
         record: normalizedRecord,
       }),
@@ -504,14 +747,18 @@ const handleLocalInMemoryInbox = async (
     return res.status(200).json(
       routeSafeBody({
         status: "duplicate",
-        mode: "mock_local_inbox_only",
+        mode:
+          storage === "local_disposable_db"
+            ? "mock_local_db_inbox_only"
+            : "mock_local_inbox_only",
+        storage,
         httpStatus: 200,
         record: receiveResult.record,
       }),
     );
   }
 
-  await inMemoryRepository.markManualReviewRequired({
+  await repository.markManualReviewRequired({
     idempotencyKey: receiveResult.record.idempotencyKey,
     reasonCodes: ["digest_conflict"],
     severity: "high",
@@ -520,7 +767,11 @@ const handleLocalInMemoryInbox = async (
   return res.status(409).json(
     routeSafeBody({
       status: "manual_review_required",
-      mode: "mock_local_inbox_only",
+      mode:
+        storage === "local_disposable_db"
+          ? "mock_local_db_inbox_only"
+          : "mock_local_inbox_only",
+      storage,
       httpStatus: 409,
       code: "DIGEST_CONFLICT",
       record: receiveResult.record,
@@ -540,6 +791,21 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
   }
 
   if (!localInboxGateAllowsInMemory()) {
+    if (localDbRequested()) {
+      const repository = await resolveLocalDbRepository(req);
+
+      if (!repository) {
+        return res.status(503).json(
+          disabledWithCodeBody(
+            "LOCAL_DB_REQUIRED",
+            "Refund inbox route requires explicit local disposable DB inbox mode.",
+          ),
+        );
+      }
+
+      return handleLocalInbox(req, res, repository, "local_disposable_db");
+    }
+
     return res.status(503).json(
       disabledWithCodeBody(
         "LOCAL_INMEMORY_REPOSITORY_REQUIRED",

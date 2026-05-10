@@ -328,3 +328,4 @@
 - 完成 `wechat-pay-notification-verifier-contract`，新增微信支付 fake notify verifier 纯函数合同；本轮不实现真实 RSA 验签、不解密、不接 SDK、checkout 或 workflow。
 - 完成 `alipay-notification-verifier-contract`，新增支付宝 fake notify verifier 纯函数合同；canonical payload 排除 `sign` / `sign_type`，本轮不实现真实 RSA 验签、不接 SDK、checkout 或 workflow。
 - 完成 `wechat-pay-notification-normalizer-contract`，新增微信支付 fake notify normalizer 纯函数合同；本轮不解密、不接 SDK、不写 inbox、checkout 或 workflow。
+- 完成 `alipay-notification-normalizer-contract`，新增支付宝 fake notify normalizer 纯函数合同；金额字符串解析为分，本轮不接 SDK、不写 inbox、checkout 或 workflow。

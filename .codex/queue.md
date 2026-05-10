@@ -1719,6 +1719,22 @@
 
 第二百七十轮完成后建议继续：
 
-1. `alipay-notification-normalizer-contract`: pending
+1. `alipay-notification-normalizer-contract`: done
 2. `payment-provider-verifier-normalizer-validation`: pending
 3. `payment-runtime-inbox-only-route-gate`: pending
+
+## 第二百七十一轮 Alipay Notification Normalizer Contract
+
+1. `alipay-notification-normalizer-contract`: done
+
+第二百七十一轮原则：
+
+- 本轮只新增支付宝 fake notify normalizer 纯函数合同。
+- 只把 verifier result + fake form 映射为标准 envelope。
+- 不接 SDK、不写 inbox、不接 checkout、不执行 payment workflow。
+
+第二百七十一轮完成后建议继续：
+
+1. `payment-provider-verifier-normalizer-validation`: pending
+2. `payment-runtime-inbox-only-route-gate`: pending
+3. `refund-runtime-risk-gate-plan`: pending

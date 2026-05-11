@@ -2846,4 +2846,20 @@
 
 第三百四十二轮完成后建议继续：
 
-1. `refund-state-owner-handoff-validation`: pending
+1. `refund-state-owner-handoff-validation`: done
+
+## 第三百四十三轮 Refund State Owner Handoff Validation
+
+1. `refund-state-owner-handoff-validation`: done
+
+第三百四十三轮原则：
+
+- 本轮只记录 PR #389 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 handoff contract 仍只输出不可执行 decision / shadow DTO。
+- 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不执行 workflow、不写 refund success state。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十三轮完成后建议继续：
+
+1. `refund-workflow-shadow-command-plan`: pending

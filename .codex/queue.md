@@ -2765,4 +2765,21 @@
 
 第三百三十七轮完成后建议继续：
 
-1. `refund-provider-inbox-route-disposable-db-plan`: pending
+1. `refund-provider-inbox-route-disposable-db-plan`: done
+
+## 第三百三十八轮 Refund Provider Inbox Route Disposable DB Plan
+
+1. `refund-provider-inbox-route-disposable-db-plan`: done
+
+第三百三十八轮原则：
+
+- 本轮只规划 provider route local disposable DB inbox-only wiring。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不连接预发、生产或普通共享数据库。
+- 不注册 module、不接 SDK、不写真实密钥。
+- disposable DB wiring 未来也只能在 development + local disposable DB + fixture config 下读取 body 和写 inbox，不能写平台退款成功状态。
+- 仍不接 provider refund API、refund query API、workflow、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百三十八轮完成后建议继续：
+
+1. `refund-provider-inbox-route-disposable-db`: pending

@@ -2313,3 +2313,11 @@
 - PR #374-#375 合并后验证通过：focused provider refund verifier tests、API typecheck、payment notification harness 和 payment DB dry-run。
 - 微信 / 支付宝 verifier 合同仍只是纯函数输出，不写 inbox、不接 route、不执行 workflow；`refund.succeeded` verifier output 仍不代表平台退款成功。
 - 下一步建议进入 `refund-provider-inbox-route-plan`，只规划 provider inbox-only route shadow；仍不得接 provider refund API、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 338 更新
+
+- `refund-provider-inbox-route-disposable-db-plan` 已完成，见 `docs/refund-provider-inbox-route-disposable-db-plan.md`。
+- 本轮只新增 provider refund inbox route local disposable DB wiring 计划，不修改 runtime、不连接任何真实外部 DB、不注册 module、不接 SDK。
+- 计划将下一步限定为 development + local target + disposable DB name prefix + fixture-only provider config，未通过 gate 前 route 不读取 body。
+- Disposable DB inbox accepted / duplicate / manual_review / processed_for_audit_only / query_required 仍都不代表平台退款成功。
+- 下一步建议进入 `refund-provider-inbox-route-disposable-db`，但仍只能写 local disposable DB inbox / event log，不得接 provider refund request、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。

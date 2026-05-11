@@ -1293,3 +1293,12 @@
 - 当前 provider route 仍只支持 development/local/in-memory/fixture-only wiring；未通过 gate 不读取 body。
 - 下一步建议进入 `refund-provider-inbox-route-disposable-db-plan`，先 docs-only 规划 disposable DB wiring。
 - 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 338 更新
+
+- `refund-provider-inbox-route-disposable-db-plan`: done，见 `docs/refund-provider-inbox-route-disposable-db-plan.md`。
+- 本轮只做 docs-only local disposable DB wiring plan；不修改 `apps/**` 或 `packages/**` runtime，不连接预发、生产或普通共享 DB。
+- 计划明确下一步 disposable DB wiring 只能在 development + local target + disposable PostgreSQL DB + fixture config 下读取 body、调用 verifier contract、写 inbox / event log。
+- 所有 provider event mapping 均不代表平台退款成功；Alipay query-required 仍不得调用 query API。
+- 下一步如进入 `refund-provider-inbox-route-disposable-db`，必须先实现 DB gate / existing local PG repository reuse / focused tests / disposable DB rehearsal。
+- 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

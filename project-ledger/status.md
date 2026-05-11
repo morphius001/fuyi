@@ -1320,3 +1320,11 @@
 - 当前 provider route 仍只支持 development/local/disposable DB/fixture-only inbox rehearsal；未通过 gate 不读取 body。
 - 当前仍无 `apps/**` 改动，无 module registration，无 SDK / 真实密钥 / provider refund request / provider refund query / workflow / refund success state / settlement / commission / payout / permission / fulfillment / logistics mutation。
 - 下一步建议进入 `refund-state-owner-handoff-plan`，先 docs-only 规划退款状态 owner 和 workflow handoff。
+
+## Round 341 更新
+
+- `refund-state-owner-handoff-plan`: done，见 `docs/refund-state-owner-handoff-plan.md`。
+- 本轮只做 docs-only handoff 规划，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划将 provider notification inbox、manual review、platform refund state owner、workflow command adapter 和 reconciliation 分层，明确 route 不得直接写退款成功状态。
+- 下一步建议进入 `refund-state-owner-handoff-contract`，只实现纯函数合同和不可执行 decision。
+- 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -2338,3 +2338,10 @@
 - 合并后 focused provider route tests 8 suites / 60 tests 通过；文件范围确认没有 `apps/**`、module registration、真实 SDK / secret 或高风险交易/退款状态写入。
 - 当前 provider route 仍只是 local disposable DB inbox-only rehearsal；accepted / duplicate / manual_review / processed_for_audit_only / query_required 都不代表平台退款成功。
 - 下一步建议进入 `refund-state-owner-handoff-plan`，必须先 docs-only 规划 state owner、manual review gate、workflow command handoff 和 reconciliation boundary。
+
+## Round 341 更新
+
+- `refund-state-owner-handoff-plan` 已完成，见 `docs/refund-state-owner-handoff-plan.md`。
+- 本轮没有 runtime 改动，只规划 provider inbox 到平台退款状态 owner 的分层 handoff。
+- 计划要求后续 `refund-state-owner-handoff-contract` 只输出不可执行 decision：`runtimeMutationBlocked: true`、`refundSuccessState: false`。
+- Route / inbox accepted 仍不得直接写平台退款成功；provider query、workflow、settlement、commission、payout、permission、fulfillment、logistics 继续分开规划。

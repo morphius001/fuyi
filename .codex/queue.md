@@ -2814,4 +2814,20 @@
 
 第三百四十轮完成后建议继续：
 
-1. `refund-state-owner-handoff-plan`: pending
+1. `refund-state-owner-handoff-plan`: done
+
+## 第三百四十一轮 Refund State Owner Handoff Plan
+
+1. `refund-state-owner-handoff-plan`: done
+
+第三百四十一轮原则：
+
+- 本轮只规划 provider refund inbox 到平台退款状态 owner 的 handoff。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 workflow、不写 refund success state。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十一轮完成后建议继续：
+
+1. `refund-state-owner-handoff-contract`: pending

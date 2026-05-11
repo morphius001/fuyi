@@ -2330,3 +2330,11 @@
 - 当前仍未连接预发/生产 DB，未注册 module，未接 SDK，未调用 provider refund request / query API，未执行 workflow，未写 refund success state。
 - 下一步建议做 `refund-provider-inbox-route-disposable-db-validation`，记录合并后 focused tests、API typecheck、payment harness、refund rehearsal、runtime grep 和 diff check。
 - 仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 340 更新
+
+- `refund-provider-inbox-route-disposable-db-validation` 已完成，见 `docs/refund-provider-inbox-route-disposable-db-validation.md`。
+- PR #386 已合并，merge commit `2386086b19fd6ff541d551018d041f12c84a76d7`。
+- 合并后 focused provider route tests 8 suites / 60 tests 通过；文件范围确认没有 `apps/**`、module registration、真实 SDK / secret 或高风险交易/退款状态写入。
+- 当前 provider route 仍只是 local disposable DB inbox-only rehearsal；accepted / duplicate / manual_review / processed_for_audit_only / query_required 都不代表平台退款成功。
+- 下一步建议进入 `refund-state-owner-handoff-plan`，必须先 docs-only 规划 state owner、manual review gate、workflow command handoff 和 reconciliation boundary。

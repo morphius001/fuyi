@@ -1312,3 +1312,11 @@
 - 验证通过：focused tests 8 suites / 60 tests、API typecheck、payment harness 42 suites / 323 tests、payment DB dry-run `2|9`、refund real-adapter rehearsal `1|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
 - 下一步建议进入 `refund-provider-inbox-route-disposable-db-validation`。
 - 仍 No-Go：settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 340 更新
+
+- `refund-provider-inbox-route-disposable-db-validation`: done，见 `docs/refund-provider-inbox-route-disposable-db-validation.md`。
+- PR #386 合并后验证通过：合并提交 `2386086b19fd6ff541d551018d041f12c84a76d7` 文件范围符合预期，focused tests 8 suites / 60 tests 通过。
+- 当前 provider route 仍只支持 development/local/disposable DB/fixture-only inbox rehearsal；未通过 gate 不读取 body。
+- 当前仍无 `apps/**` 改动，无 module registration，无 SDK / 真实密钥 / provider refund request / provider refund query / workflow / refund success state / settlement / commission / payout / permission / fulfillment / logistics mutation。
+- 下一步建议进入 `refund-state-owner-handoff-plan`，先 docs-only 规划退款状态 owner 和 workflow handoff。

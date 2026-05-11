@@ -11,6 +11,12 @@ const localWechatEnv = {
   CHINA_REFUND_INBOX_LOCAL_INMEMORY: "true",
 };
 
+const localWechatDbEnv = {
+  ...localWechatEnv,
+  CHINA_REFUND_INBOX_LOCAL_INMEMORY: "false",
+  CHINA_REFUND_INBOX_LOCAL_DB: "true",
+};
+
 describe("refund provider inbox route config", () => {
   it("is disabled by default", () => {
     const decision = parseRefundProviderInboxRouteConfig({}, "wechat_pay");
@@ -86,11 +92,27 @@ describe("refund provider inbox route config", () => {
     });
   });
 
-  it("blocks local DB in this disabled skeleton stage", () => {
+  it("allows exactly one local disposable DB storage mode", () => {
+    const decision = parseRefundProviderInboxRouteConfig(
+      localWechatDbEnv,
+      "wechat_pay",
+    );
+
+    expect(decision).toMatchObject({
+      enabled: true,
+      provider: "wechat_pay",
+      storage: "local_disposable_db",
+      runtimeMutationBlocked: true,
+      stateMutationBlocked: true,
+      fixtureOnly: true,
+      executable: false,
+    });
+  });
+
+  it("blocks ambiguous local storage modes", () => {
     const decision = parseRefundProviderInboxRouteConfig(
       {
         ...localWechatEnv,
-        CHINA_REFUND_INBOX_LOCAL_INMEMORY: "false",
         CHINA_REFUND_INBOX_LOCAL_DB: "true",
       },
       "wechat_pay",
@@ -99,6 +121,21 @@ describe("refund provider inbox route config", () => {
     expect(decision).toMatchObject({
       enabled: false,
       code: "REFUND_PROVIDER_ROUTE_STORAGE_UNSUPPORTED",
+    });
+  });
+
+  it("blocks app-level production-like environments", () => {
+    const decision = parseRefundProviderInboxRouteConfig(
+      {
+        ...localWechatDbEnv,
+        APP_ENV: "preprod",
+      },
+      "wechat_pay",
+    );
+
+    expect(decision).toMatchObject({
+      enabled: false,
+      code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
     });
   });
 

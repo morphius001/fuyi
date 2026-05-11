@@ -1302,3 +1302,13 @@
 - 所有 provider event mapping 均不代表平台退款成功；Alipay query-required 仍不得调用 query API。
 - 下一步如进入 `refund-provider-inbox-route-disposable-db`，必须先实现 DB gate / existing local PG repository reuse / focused tests / disposable DB rehearsal。
 - 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 339 更新
+
+- `refund-provider-inbox-route-disposable-db`: done，见 `docs/refund-provider-inbox-route-disposable-db.md`。
+- Provider refund inbox route 已支持 development/local/disposable DB/fixture-only wiring；未通过 config / DB gate 时仍不读取 body。
+- 新增 provider route local DB resolver，复用 `createLocalRefundInboxPostgresClient()` 和 `DbRefundInboxRepository`，并校验当前 Medusa PG connection 的 DB name、host 和 port。
+- 本轮不连接预发/生产 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
+- 验证通过：focused tests 8 suites / 60 tests、API typecheck、payment harness 42 suites / 323 tests、payment DB dry-run `2|9`、refund real-adapter rehearsal `1|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
+- 下一步建议进入 `refund-provider-inbox-route-disposable-db-validation`。
+- 仍 No-Go：settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

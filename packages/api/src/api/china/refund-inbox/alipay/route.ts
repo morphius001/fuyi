@@ -6,8 +6,10 @@ import {
   InMemoryRefundProviderInboxRouteRepository,
   normalizeAlipayRefundProviderInboxRouteResult,
   parseRefundProviderInboxRouteConfig,
+  RefundInboxRepositoryContract,
   verifyAlipayRefundNotificationContract,
 } from "../../../../modules/china-payment-notification";
+import { resolveRefundProviderLocalDbRepository } from "../provider-local-db";
 
 const repository = new InMemoryRefundProviderInboxRouteRepository();
 
@@ -32,6 +34,24 @@ export const POST = async (_req: MedusaRequest, res: MedusaResponse) => {
         mode: decision.mode,
         code: decision.code,
         reason: decision.reason,
+      }),
+    );
+  }
+
+  const inboxRepository =
+    decision.storage === "local_disposable_db"
+      ? await resolveRefundProviderLocalDbRepository(_req)
+      : repository;
+
+  if (!inboxRepository) {
+    return res.status(503).json(
+      buildRefundProviderInboxRouteSafeResponse({
+        status: "disabled",
+        provider: "alipay",
+        mode: decision.mode,
+        code: "REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE",
+        reason:
+          "Alipay refund provider inbox route requires an actual local disposable DB connection.",
       }),
     );
   }
@@ -82,7 +102,13 @@ export const POST = async (_req: MedusaRequest, res: MedusaResponse) => {
   });
   const normalized = normalizeAlipayRefundProviderInboxRouteResult(verification);
 
-  return handleNormalizedDecision(normalized, decision.mode, res);
+  return handleNormalizedDecision(
+    normalized,
+    decision.mode,
+    inboxRepository,
+    decision.storage,
+    res,
+  );
 };
 
 export const GET = async (_req: MedusaRequest, res: MedusaResponse) =>
@@ -185,6 +211,8 @@ const parseAlipayFixtureConfig = (
 const handleNormalizedDecision = async (
   normalized: ReturnType<typeof normalizeAlipayRefundProviderInboxRouteResult>,
   mode: string,
+  inboxRepository: RefundInboxRepositoryContract,
+  storage: "local_inmemory" | "local_disposable_db",
   res: MedusaResponse,
 ) => {
   if (!("envelope" in normalized)) {
@@ -205,12 +233,14 @@ const handleNormalizedDecision = async (
     );
   }
 
-  const receiveResult = await repository.receiveNotification({
+  const receiveResult = await inboxRepository.receiveNotification({
     envelope: normalized.envelope,
     receivedAt: normalized.envelope.receivedAt,
     sanitizedMetadata: {
       provider: "alipay",
-      localWiring: true,
+      storage,
+      localWiring: storage === "local_inmemory",
+      localDisposableDb: storage === "local_disposable_db",
     },
   });
 
@@ -226,7 +256,7 @@ const handleNormalizedDecision = async (
   }
 
   if (receiveResult.status === "duplicate_digest_conflict") {
-    await repository.markManualReviewRequired({
+    await inboxRepository.markManualReviewRequired({
       idempotencyKey: receiveResult.record.idempotencyKey,
       reasonCodes: ["digest_conflict"],
       severity: "high",
@@ -244,11 +274,11 @@ const handleNormalizedDecision = async (
     );
   }
 
-  await repository.markSignatureVerified(receiveResult.record.idempotencyKey);
-  await repository.markNormalized(receiveResult.record.idempotencyKey);
+  await inboxRepository.markSignatureVerified(receiveResult.record.idempotencyKey);
+  await inboxRepository.markNormalized(receiveResult.record.idempotencyKey);
 
   if (normalized.status === "manual_review") {
-    const record = await repository.markManualReviewRequired({
+    const record = await inboxRepository.markManualReviewRequired({
       idempotencyKey: receiveResult.record.idempotencyKey,
       reasonCodes: ["provider_non_success_event"],
       severity: "high",
@@ -265,7 +295,7 @@ const handleNormalizedDecision = async (
     );
   }
 
-  const record = await repository.markRuntimeMutationBlocked({
+  const record = await inboxRepository.markRuntimeMutationBlocked({
     idempotencyKey: receiveResult.record.idempotencyKey,
     reason: "Provider inbox local wiring does not mutate refund state.",
   });

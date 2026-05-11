@@ -2345,3 +2345,10 @@
 - 本轮没有 runtime 改动，只规划 provider inbox 到平台退款状态 owner 的分层 handoff。
 - 计划要求后续 `refund-state-owner-handoff-contract` 只输出不可执行 decision：`runtimeMutationBlocked: true`、`refundSuccessState: false`。
 - Route / inbox accepted 仍不得直接写平台退款成功；provider query、workflow、settlement、commission、payout、permission、fulfillment、logistics 继续分开规划。
+
+## Round 342 更新
+
+- `refund-state-owner-handoff-contract` 已完成，见 `docs/refund-state-owner-handoff-contract.md`。
+- 新增纯函数合同 `evaluateRefundStateOwnerHandoffContract()`，覆盖 shadow command prepared、signature blocked、digest conflict、provider refund id query、amount/currency/session mismatch、terminal conflict、ownership / permission failed 和 manual review decisions。
+- 当前仍不新增 route、不连 DB、不注册 module、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-owner-handoff-validation`。

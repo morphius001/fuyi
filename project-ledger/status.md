@@ -1328,3 +1328,11 @@
 - 计划将 provider notification inbox、manual review、platform refund state owner、workflow command adapter 和 reconciliation 分层，明确 route 不得直接写退款成功状态。
 - 下一步建议进入 `refund-state-owner-handoff-contract`，只实现纯函数合同和不可执行 decision。
 - 仍 No-Go：真实 SDK、真实密钥、provider refund request、refund query API、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 342 更新
+
+- `refund-state-owner-handoff-contract`: done，见 `docs/refund-state-owner-handoff-contract.md`。
+- 新增 `evaluateRefundStateOwnerHandoffContract()` 纯函数和 focused tests，输出始终 `executable: false`、`runtimeMutationBlocked: true`、`refundSuccessState: false`。
+- 合同只准备 `refund_state_shadow` DTO，不执行 workflow、不写平台退款成功状态。
+- 验证通过：focused test 1 suite / 8 tests、API typecheck、payment harness 43 suites / 331 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
+- 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

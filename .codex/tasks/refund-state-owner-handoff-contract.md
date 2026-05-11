@@ -1,0 +1,34 @@
+# Refund State Owner Handoff Contract
+
+## 任务
+
+实现 `refund-state-owner-handoff-contract` 纯函数合同，用于把 provider refund inbox 结果映射为不可执行 state-owner handoff decision。
+
+## 范围
+
+- 新增 `packages/api/src/modules/china-payment-notification/refund-state-owner-handoff.ts`。
+- 新增 focused tests。
+- 导出新合同。
+- 将 focused test 纳入 payment notification harness。
+- 新增 `docs/refund-state-owner-handoff-contract.md`。
+- 更新 `.codex/queue.md` 和 `project-ledger/**`。
+
+## 非目标
+
+- 不新增 route。
+- 不连接 DB。
+- 不注册 module。
+- 不接 SDK 或真实密钥。
+- 不调用 provider refund API / refund query API。
+- 不执行 workflow。
+- 不写 refund success state。
+- 不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## 验证
+
+- Focused unit test。
+- API typecheck。
+- Payment notification harness。
+- Runtime grep。
+- `git diff --check`。
+- 子智能体只读复核。

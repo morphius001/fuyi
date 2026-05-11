@@ -21,7 +21,7 @@ export type RefundProviderInboxRouteConfigDecision =
       provider: RefundProviderInboxRouteProvider;
       mode: Exclude<RefundProviderInboxRouteMode, "disabled">;
       targetEnv: "local";
-      storage: "local_inmemory";
+      storage: "local_inmemory" | "local_disposable_db";
       stateMutationBlocked: true;
       runtimeMutationBlocked: true;
       fixtureOnly: true;
@@ -87,11 +87,15 @@ export const parseRefundProviderInboxRouteConfig = (
   routeProvider: RefundProviderInboxRouteProvider,
 ): RefundProviderInboxRouteConfigDecision => {
   const nodeEnv = value(env, "NODE_ENV")?.toLowerCase();
+  const appEnv = value(env, "APP_ENV")?.toLowerCase();
   const mode = (value(env, "CHINA_REFUND_ROUTE_MODE") ??
     "disabled") as RefundProviderInboxRouteMode;
   const configuredProvider = value(env, "CHINA_REFUND_PROVIDER");
 
-  if (productionLikeEnvironments.has(nodeEnv ?? "")) {
+  if (
+    productionLikeEnvironments.has(nodeEnv ?? "") ||
+    productionLikeEnvironments.has(appEnv ?? "")
+  ) {
     return disabled(
       routeProvider,
       mode,
@@ -153,15 +157,15 @@ export const parseRefundProviderInboxRouteConfig = (
     );
   }
 
-  if (
-    !isTrue(env, "CHINA_REFUND_INBOX_LOCAL_INMEMORY") ||
-    isTrue(env, "CHINA_REFUND_INBOX_LOCAL_DB")
-  ) {
+  const localInMemory = isTrue(env, "CHINA_REFUND_INBOX_LOCAL_INMEMORY");
+  const localDb = isTrue(env, "CHINA_REFUND_INBOX_LOCAL_DB");
+
+  if (localInMemory === localDb) {
     return disabled(
       routeProvider,
       mode,
       "REFUND_PROVIDER_ROUTE_STORAGE_UNSUPPORTED",
-      "Refund provider inbox route shadow currently requires local in-memory inbox only.",
+      "Refund provider inbox route shadow requires exactly one local storage mode.",
     );
   }
 
@@ -181,7 +185,7 @@ export const parseRefundProviderInboxRouteConfig = (
     provider: routeProvider,
     mode,
     targetEnv: "local",
-    storage: "local_inmemory",
+    storage: localDb ? "local_disposable_db" : "local_inmemory",
     stateMutationBlocked: true,
     runtimeMutationBlocked: true,
     fixtureOnly: true,

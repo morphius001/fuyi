@@ -61,6 +61,17 @@ const enableLocalWechat = () => {
   process.env.CHINA_REFUND_WECHAT_EXPECTED_AMOUNT_VALUE = "128560";
 };
 
+const localDbName = "fuyi_refund_provider_inbox_route_dry_run_unit";
+const localDbUrl = `postgres://codex@127.0.0.1:15432/${localDbName}`;
+
+const enableLocalWechatDb = () => {
+  enableLocalWechat();
+  process.env.CHINA_REFUND_INBOX_LOCAL_INMEMORY = "false";
+  process.env.CHINA_REFUND_INBOX_LOCAL_DB = "true";
+  process.env.CHINA_REFUND_INBOX_DATABASE_URL = localDbUrl;
+  process.env.CHINA_REFUND_INBOX_DATABASE_NAME = localDbName;
+};
+
 const makeSignedWechatRequest = (
   vector = wechatPayRefundSuccessNotifyVector,
 ) =>
@@ -68,6 +79,64 @@ const makeSignedWechatRequest = (
     text: jest.fn(async () => vector.rawNotification.rawBody),
     headers: vector.rawNotification.headers,
   }) as unknown as MedusaRequest & { text: jest.Mock };
+
+const makeSignedWechatLocalDbRequest = ({
+  query,
+  databaseName = localDbName,
+  serverHost = "127.0.0.1",
+  serverPort = 15432,
+}: {
+  query: jest.Mock;
+  databaseName?: string;
+  serverHost?: string;
+  serverPort?: number;
+}) =>
+  ({
+    text: jest.fn(async () => wechatPayRefundSuccessNotifyVector.rawNotification.rawBody),
+    headers: wechatPayRefundSuccessNotifyVector.rawNotification.headers,
+    scope: {
+      resolve: jest.fn(() => ({
+        raw: jest.fn(async (sql: string) => {
+          if (sql.includes("current_database")) {
+            return { rows: [{ database_name: databaseName }] };
+          }
+
+          if (sql.includes("inet_server_addr")) {
+            return {
+              rows: [{ server_host: serverHost, server_port: serverPort }],
+            };
+          }
+
+          return { rows: [] };
+        }),
+        transaction: jest.fn(async () => ({
+          raw: query,
+          commit: jest.fn(async () => undefined),
+          rollback: jest.fn(async () => undefined),
+        })),
+      })),
+    },
+  }) as unknown as MedusaRequest & { text: jest.Mock };
+
+const makeLocalDbRow = (processingStatus = "normalized") => ({
+  id: "rinbox_wechat_provider_route_001",
+  provider: "wechat_pay",
+  event_id: wechatPayRefundSuccessNotifyVector.eventId,
+  event_type: "refund.succeeded",
+  idempotency_key: `refund_notify:wechat_pay:${wechatPayRefundSuccessNotifyVector.eventId}`,
+  merchant_order_ref: "pay_wechat_refund_order_001",
+  payment_session_id: null,
+  provider_refund_id: "refund_wx_001",
+  amount_value: 128560,
+  currency: "CNY",
+  signature_status: "verified",
+  raw_payload_digest: "sha256:wechat_provider_route_digest",
+  processing_status: processingStatus,
+  retry_count: 0,
+  received_at: "2026-05-12T00:00:00.000Z",
+  created_at: "2026-05-12T00:00:00.000Z",
+  updated_at: "2026-05-12T00:00:00.000Z",
+});
 
 const expectSafeBody = (body: unknown) => {
   const serialized = JSON.stringify(body);
@@ -153,6 +222,65 @@ describe("WeChat Pay refund provider inbox route disabled skeleton", () => {
       code: "WECHAT_REFUND_FIXTURE_CONFIG_MISSING",
       refundSuccessState: false,
     });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("does not read body when local DB gate lacks Medusa DB scope", async () => {
+    enableLocalWechatDb();
+    const req = makeRequest();
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(req.text).not.toHaveBeenCalled();
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "disabled",
+      provider: "wechat_pay",
+      code: "REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("accepts verified local fixture into disposable DB inbox-only response", async () => {
+    enableLocalWechatDb();
+    const query = jest.fn(async (sql: string, params?: unknown[]) => {
+      if (sql.includes("select id") && sql.includes("provider = ?")) {
+        return { rows: [] };
+      }
+
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [{ id: "rinbox_wechat_provider_route_001" }], rowCount: 1 };
+      }
+
+      if (sql.includes("update payment_notification_inbox")) {
+        return { rows: [makeLocalDbRow(String(params?.[1]))] };
+      }
+
+      return { rows: [] };
+    });
+    const req = makeSignedWechatLocalDbRequest({ query });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(202);
+    expect(req.text).toHaveBeenCalledTimes(1);
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "accepted",
+      provider: "wechat_pay",
+      mode: "provider_inbox_only",
+      refundSuccessState: false,
+      record: {
+        provider: "wechat_pay",
+        eventId: wechatPayRefundSuccessNotifyVector.eventId,
+        processingStatus: "runtime_mutation_blocked",
+      },
+    });
+    expect(JSON.stringify(query.mock.calls)).toContain(
+      "insert into payment_notification_inbox",
+    );
     expectSafeBody(res.json.mock.calls[0]?.[0]);
   });
 

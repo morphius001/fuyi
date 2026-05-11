@@ -52,6 +52,7 @@ const dryRunDatabasePrefixes = [
 const refundDryRunDatabasePrefixes = [
   "fuyi_refund_inbox_route_dry_run_",
   "fuyi_refund_inbox_repository_dry_run_",
+  "fuyi_refund_provider_inbox_route_dry_run_",
 ];
 
 const localHosts = new Set(["127.0.0.1", "::1", "localhost"]);

@@ -11,6 +11,8 @@ const safeDatabaseUrl =
   "postgres://codex@127.0.0.1:15432/fuyi_payment_notification_route_dry_run_unit";
 const safeRefundDatabaseUrl =
   "postgres://codex@127.0.0.1:15432/fuyi_refund_inbox_route_dry_run_unit";
+const safeProviderRefundDatabaseUrl =
+  "postgres://codex@127.0.0.1:15432/fuyi_refund_provider_inbox_route_dry_run_unit";
 
 const makeRow = (
   overrides: Partial<PaymentNotificationDbInboxRow> = {},
@@ -84,6 +86,14 @@ const createClient = (driver: LocalPostgresDriver) =>
 const createRefundClient = (driver: LocalPostgresDriver) =>
   createLocalRefundInboxPostgresClient({
     databaseUrl: safeRefundDatabaseUrl,
+    localDbEnabled: true,
+    nodeEnv: "development",
+    driver,
+  });
+
+const createProviderRefundClient = (driver: LocalPostgresDriver) =>
+  createLocalRefundInboxPostgresClient({
+    databaseUrl: safeProviderRefundDatabaseUrl,
     localDbEnabled: true,
     nodeEnv: "development",
     driver,
@@ -394,6 +404,29 @@ describe("createLocalRefundInboxPostgresClient", () => {
         driver,
       }),
     ).toThrow("LOCAL_DB_CLIENT_REFUSED");
+  });
+
+  it("allows provider refund inbox route disposable DB prefixes", async () => {
+    const { connection, driver } = makeConnection();
+    const client = createProviderRefundClient(driver);
+
+    connection.query.mockImplementation(async (sql: string) => {
+      if (sql.includes("select id") && sql.includes("provider = $1")) {
+        return { rows: [] };
+      }
+
+      if (sql.includes("insert into payment_notification_inbox")) {
+        return { rows: [{ id: "rinbox_provider_route_001" }], rowCount: 1 };
+      }
+
+      return { rows: [] };
+    });
+
+    await expect(
+      client.transaction((transaction) =>
+        transaction.insertInbox(makeRefundRow({ provider: "wechat_pay" })),
+      ),
+    ).resolves.toBeUndefined();
   });
 
   it("inserts refund inbox rows using shared local DB tables", async () => {

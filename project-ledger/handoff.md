@@ -2321,3 +2321,12 @@
 - 计划将下一步限定为 development + local target + disposable DB name prefix + fixture-only provider config，未通过 gate 前 route 不读取 body。
 - Disposable DB inbox accepted / duplicate / manual_review / processed_for_audit_only / query_required 仍都不代表平台退款成功。
 - 下一步建议进入 `refund-provider-inbox-route-disposable-db`，但仍只能写 local disposable DB inbox / event log，不得接 provider refund request、refund query API、workflow、refund success state、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+## Round 339 更新
+
+- `refund-provider-inbox-route-disposable-db` 已完成，见 `docs/refund-provider-inbox-route-disposable-db.md`。
+- 微信支付 / 支付宝 provider refund inbox route 现在可在 development/local/disposable DB/fixture-only gate 下写入 local DB inbox / event log。
+- DB resolver 要求 env DB URL / name、Medusa 当前 PG connection 的 `current_database()`、server host 和 port 都匹配；失败时 503 且不读 body。
+- 当前仍未连接预发/生产 DB，未注册 module，未接 SDK，未调用 provider refund request / query API，未执行 workflow，未写 refund success state。
+- 下一步建议做 `refund-provider-inbox-route-disposable-db-validation`，记录合并后 focused tests、API typecheck、payment harness、refund rehearsal、runtime grep 和 diff check。
+- 仍不得接 settlement、commission、payout、permission、fulfillment 或 logistics。

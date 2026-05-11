@@ -2352,3 +2352,10 @@
 - 新增纯函数合同 `evaluateRefundStateOwnerHandoffContract()`，覆盖 shadow command prepared、signature blocked、digest conflict、provider refund id query、amount/currency/session mismatch、terminal conflict、ownership / permission failed 和 manual review decisions。
 - 当前仍不新增 route、不连 DB、不注册 module、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-owner-handoff-validation`。
+
+## Round 343 更新
+
+- `refund-state-owner-handoff-validation` 已完成，见 `docs/refund-state-owner-handoff-validation.md`。
+- PR #389 已合并，merge commit `7f9fa473c4e0c29943f1638869e46d1cf1101e59`。
+- 合并后 focused state owner handoff test 1 suite / 8 tests 通过。
+- 下一步建议进入 `refund-workflow-shadow-command-plan`，仍只能规划 shadow command DTO，不得执行 workflow 或写 refund success state。

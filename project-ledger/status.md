@@ -1336,3 +1336,11 @@
 - 合同只准备 `refund_state_shadow` DTO，不执行 workflow、不写平台退款成功状态。
 - 验证通过：focused test 1 suite / 8 tests、API typecheck、payment harness 43 suites / 331 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
 - 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 343 更新
+
+- `refund-state-owner-handoff-validation`: done，见 `docs/refund-state-owner-handoff-validation.md`。
+- PR #389 合并后验证通过：合并提交 `7f9fa473c4e0c29943f1638869e46d1cf1101e59` 文件范围符合预期，focused test 1 suite / 8 tests 通过。
+- 当前 handoff contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-workflow-shadow-command-plan`。
+- 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

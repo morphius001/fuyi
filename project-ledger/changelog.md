@@ -399,3 +399,4 @@
 - 完成 `refund-provider-inbox-route-disposable-db`，Provider refund inbox route 支持 development/local/disposable DB/fixture-only wiring：DB gate 通过后调用微信支付 / 支付宝 refund verifier contract，归一化 envelope，复用 local refund PG client 和 `DbRefundInboxRepository` 写 inbox / event log；仍不连接预发/生产、不接 SDK、不调用 provider refund API / query API、不执行 workflow、不写 refund success state。
 - 完成 `refund-provider-inbox-route-disposable-db-validation`，记录 PR #386 合并后文件范围和 focused provider route tests 8 suites / 60 tests；确认当前 route 仍只是 local disposable DB inbox-only rehearsal，不代表可写退款成功状态或可接财务/权限/履约链路。
 - 完成 `refund-state-owner-handoff-plan`，docs-only 规划 provider refund inbox、manual review、platform refund state owner、workflow command adapter 和 reconciliation 的 handoff 分层；下一步只能做不可执行纯函数合同，不得让 route 直接写退款成功状态。
+- 完成 `refund-state-owner-handoff-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 `refund_state_shadow` DTO，阻断签名、金额、币种、归属、权限、终态冲突和人工复核风险，不执行 workflow、不写退款成功状态。

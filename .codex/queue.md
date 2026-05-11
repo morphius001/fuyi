@@ -2830,4 +2830,20 @@
 
 第三百四十一轮完成后建议继续：
 
-1. `refund-state-owner-handoff-contract`: pending
+1. `refund-state-owner-handoff-contract`: done
+
+## 第三百四十二轮 Refund State Owner Handoff Contract
+
+1. `refund-state-owner-handoff-contract`: done
+
+第三百四十二轮原则：
+
+- 本轮只新增退款状态 owner handoff 纯函数合同。
+- 合同输出不可执行 decision 和 shadow command DTO，不执行 workflow。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不写 refund success state。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十二轮完成后建议继续：
+
+1. `refund-state-owner-handoff-validation`: pending

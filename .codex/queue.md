@@ -3519,3 +3519,19 @@
 第三百八十四轮完成后建议继续：
 
 1. `refund-state-mutation-audit-persistence-plan`: pending
+
+## 第三百八十五轮 Refund State Mutation Audit Persistence Plan
+
+1. `refund-state-mutation-audit-persistence-plan`: done
+
+第三百八十五轮原则：
+
+- 本轮只规划 audit write persistence。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十五轮完成后建议继续：
+
+1. `refund-state-mutation-audit-persistence-validation`: pending

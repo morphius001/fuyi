@@ -1438,3 +1438,11 @@
 - 当前 fixtures 仍只是 redacted fake vectors，不发网络请求、不调用 provider query API、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-readiness-plan`，只能先规划状态写入 readiness，不直接实现。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 355 更新
+
+- `refund-state-mutation-readiness-plan`: done，见 `docs/refund-state-mutation-readiness-plan.md`。
+- 本轮只做 docs-only readiness / Go-No-Go 规划，不修改 `apps/**` 或 `packages/**` runtime。
+- 结论仍是 No-Go to real refund state mutation；已有 inbox / handoff / shadow command / query / reconciliation / fixtures 都仍是不可执行输入。
+- 下一步建议进入 `refund-state-mutation-readiness-contract`，只能新增纯函数合同和 focused tests，输出仍保持 `stateMutationAllowed=false`。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

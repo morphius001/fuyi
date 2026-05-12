@@ -2679,3 +2679,10 @@
 - `refund-state-mutation-audit-persistence-plan` 已完成，见 `docs/refund-state-mutation-audit-persistence-plan.md`。
 - 本轮只规划 audit write persistence，不修改 runtime。
 - 真实生产退款状态写入仍 No-Go；下一步进入 `refund-state-mutation-audit-persistence-validation`。
+
+## Round 386 更新
+
+- `refund-state-mutation-audit-persistence-validation` 已完成，见 `docs/refund-state-mutation-audit-persistence-validation.md`。
+- PR #432 已合并，merge commit `ac3cda1d0acb792cce828e30190d1144c1e5cedc`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-audit-persistence-contract`：只能新增不可执行纯函数合同和 focused tests。

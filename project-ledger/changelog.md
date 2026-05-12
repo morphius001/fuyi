@@ -443,3 +443,4 @@
 - 完成 `refund-state-mutation-approval-persistence-contract`，新增 disabled / non-executable approval persistence intent 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 55 suites / 390 tests、DB dry-run `2|9` 和 runtime grep；合同不连接生产 DB、不写 approval record、不写 production refund success state。
 - 完成 `refund-state-mutation-approval-persistence-contract-validation`，记录 PR #430 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 approval persistence contract 仍 disabled / non-executable。
 - 完成 `refund-state-mutation-audit-persistence-plan`，docs-only 规划 audit write persistence；仍不新增 migration、不连接生产 DB、不写 production refund success state。
+- 完成 `refund-state-mutation-audit-persistence-validation`，记录 PR #432 合并后文件范围、diff check 和无 runtime diff；确认 audit persistence plan 仍 docs-only。

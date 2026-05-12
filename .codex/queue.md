@@ -3535,3 +3535,20 @@
 第三百八十五轮完成后建议继续：
 
 1. `refund-state-mutation-audit-persistence-validation`: pending
+
+## 第三百八十六轮 Refund State Mutation Audit Persistence Validation
+
+1. `refund-state-mutation-audit-persistence-validation`: done
+
+第三百八十六轮原则：
+
+- 本轮只记录 PR #432 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 audit persistence plan 仍 docs-only。
+- 仍不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十六轮完成后建议继续：
+
+1. `refund-state-mutation-audit-persistence-contract`: pending

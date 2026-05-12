@@ -2529,3 +2529,11 @@
 - adapter 只能接收 operator approval candidate，不能让 provider inbox / query 直接输入。
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
 - 下一步进入 `refund-state-mutation-runtime-adapter-contract`：只能新增 disabled / non-executable adapter contract 和 focused tests。
+
+## Round 366 更新
+
+- `refund-state-mutation-runtime-adapter-contract` 已完成，见 `docs/refund-state-mutation-runtime-adapter-contract.md`。
+- 新增纯函数合同 `mapOperatorApprovalToRuntimeAdapterDecision()`，覆盖 disabled adapter、feature flag / registration ignored、non-candidate rejected 和 unsafe approval blocked。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、DB dry-run `2|9`、runtime grep；子智能体复核 No Findings。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-runtime-adapter-validation`。

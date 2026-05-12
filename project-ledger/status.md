@@ -1570,3 +1570,12 @@
 - 合同只准备 disabled audit write intent / audit event，不写 DB、不执行 workflow、不写退款成功状态。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 52 suites / 378 tests、payment DB dry-run `2|9`、runtime grep；子智能体指出 metadata secret / DB alias denylist 与 generated audit field override 风险后已修复并重跑验证，二次复核 No Findings。`git diff --check` 在 PR 收口前运行。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 370 更新
+
+- `refund-state-mutation-audit-write-validation`: done，见 `docs/refund-state-mutation-audit-write-validation.md`。
+- PR #416 已合并，merge commit `e29279519df9694f253f84f95ac1d1440f515353`。
+- 合并后 focused audit write test 1 suite / 4 tests、API typecheck、payment harness 52 suites / 378 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 audit write contract 仍 disabled / non-executable，不写 DB、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-workflow-adapter-plan`，只能规划 workflow adapter 边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -2456,3 +2456,11 @@
 - 新增纯函数合同 `evaluateRefundStateMutationReadiness()`，覆盖 all gates passed、runtime mutation request、manual review missing、mismatch reconciliation、terminal conflict 和 rollback / side-effect isolation 阻断。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-readiness-validation`。
+
+## Round 357 更新
+
+- `refund-state-mutation-readiness-validation` 已完成，见 `docs/refund-state-mutation-readiness-validation.md`。
+- PR #403 已合并，merge commit `d2f09dd14bf2bea1ee36b68542bf77356ffc2673`。
+- 合并后 focused readiness test 1 suite / 6 tests 通过；子智能体指出 rollback gate 覆盖不足后，本轮补充 financial / fulfillment / rollback 三个独立用例，focused readiness test 1 suite / 8 tests 通过。
+- 当前 readiness contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-state-mutation-shadow-command-plan`：只能规划 shadow-only state mutation command，不直接实现真实状态写入或接财务、权限、履约、物流变更。

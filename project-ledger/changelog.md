@@ -414,3 +414,4 @@
 - 完成 `refund-provider-query-local-fixture-validation`，记录 PR #400 合并后文件范围和 focused test 1 suite / 3 tests；确认 fixtures 仍只是 redacted fake vectors。
 - 完成 `refund-state-mutation-readiness-plan`，docs-only 规划真实退款状态写入前 readiness / Go-No-Go gate；当前仍 No-Go to real refund state mutation。
 - 完成 `refund-state-mutation-readiness-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 readiness decision / shadow DTO，保持 `stateMutationAllowed=false` 且不写退款成功状态。
+- 完成 `refund-state-mutation-readiness-validation`，记录 PR #403 合并后文件范围，并补充 readiness focused tests 到 1 suite / 8 tests；确认 readiness contract 仍只输出不可执行 decision / shadow DTO。

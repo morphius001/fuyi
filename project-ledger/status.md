@@ -1454,3 +1454,12 @@
 - 合同只准备 readiness decision / shadow DTO，不执行 workflow、不写退款成功状态。
 - 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 48 suites / 357 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 357 更新
+
+- `refund-state-mutation-readiness-validation`: done，见 `docs/refund-state-mutation-readiness-validation.md`。
+- PR #403 已合并，merge commit `d2f09dd14bf2bea1ee36b68542bf77356ffc2673`。
+- 合并后 focused readiness test 1 suite / 6 tests 通过；子智能体指出 rollback gate 覆盖不足后，本轮补充测试并验证 focused readiness test 1 suite / 8 tests、API typecheck、payment harness 48 suites / 359 tests、payment DB dry-run `2|9` 和 `git diff --check` 通过。
+- 当前 readiness contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-shadow-command-plan`，只能规划 shadow-only command。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

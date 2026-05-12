@@ -2593,3 +2593,11 @@
 - 合并后 focused workflow adapter test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前 workflow adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-state-mutation-preprod-dry-run-plan`：只能规划一次性预发 dry-run gate，不写生产 refund success state。
+
+## Round 374 更新
+
+- `refund-state-mutation-preprod-dry-run-plan` 已完成，见 `docs/refund-state-mutation-preprod-dry-run-plan.md`。
+- 本轮只规划真实执行前的一次性预发 dry-run gate，不修改 runtime。
+- 第一版 preprod dry-run contract 必须不可执行，保持 `productionExecutionAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
+- dry-run 不能连接生产 DB、生产 provider、生产 webhook 或生产密钥；不能触发财务、权限、履约、物流链路。
+- 下一步进入 `refund-state-mutation-preprod-dry-run-contract`：只能新增不可执行纯函数合同和 focused tests。

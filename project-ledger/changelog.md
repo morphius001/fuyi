@@ -483,3 +483,4 @@
 - 完成 `refund-state-mutation-preprod-rehearsal-refresh-plan`，docs-only 刷新一次性预发 rehearsal gate、operator checklist、环境门禁和 approval / audit / runtime attempt / terminal conflict persistence 交叉证据链；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-preprod-rehearsal-refresh-validation`，记录 PR #470 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal refresh plan 仍 docs-only。
 - 完成 `refund-state-mutation-preprod-rehearsal-operator-pack`，docs-only 整理 rehearsal 输入模板、evidence capture 清单、回滚确认项和 operator sign-off；仍不执行 workflow、不写 production refund success state。
+- 完成 `refund-state-mutation-preprod-rehearsal-operator-pack-validation`，记录 PR #472 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal operator pack 仍 docs-only。

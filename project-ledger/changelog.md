@@ -432,3 +432,4 @@
 - 完成 `refund-state-mutation-workflow-adapter-contract`，新增 disabled / non-executable workflow adapter command candidate 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep；合同不执行 workflow、不写 refund success state。
 - 完成 `refund-state-mutation-workflow-adapter-validation`，记录 PR #419 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 workflow adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
 - 完成 `refund-state-mutation-preprod-dry-run-plan`，docs-only 规划真实执行前的一次性预发 dry-run gate；第一版 dry-run contract 必须不可执行，不连接生产 DB、不执行生产 workflow、不写生产 refund success state。
+- 完成 `refund-state-mutation-preprod-dry-run-contract`，新增 disabled / non-executable preprod dry-run request 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 54 suites / 386 tests、DB dry-run `2|9` 和 runtime grep；合同不执行生产 workflow、不写生产 refund success state。

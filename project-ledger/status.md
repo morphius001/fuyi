@@ -1616,3 +1616,11 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-preprod-dry-run-contract`，只能新增不可执行纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 375 更新
+
+- `refund-state-mutation-preprod-dry-run-contract`: done，见 `docs/refund-state-mutation-preprod-dry-run-contract.md`。
+- 新增 `mapWorkflowAdapterCommandToPreprodDryRun()` 纯函数和 focused tests，输出始终 `preprodDryRunEnabled=false`、`productionExecutionAllowed=false`、`executable=false`、`workflowDryRunOnly=true`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 disabled preprod dry-run request / audit event，不执行生产 workflow、不写生产退款成功状态。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、payment DB dry-run `2|9`、runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。`git diff --check` 在 PR 收口前运行。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

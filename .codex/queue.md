@@ -2878,4 +2878,20 @@
 
 第三百四十四轮完成后建议继续：
 
-1. `refund-workflow-shadow-command-contract`: pending
+1. `refund-workflow-shadow-command-contract`: done
+
+## 第三百四十五轮 Refund Workflow Shadow Command Contract
+
+1. `refund-workflow-shadow-command-contract`: done
+
+第三百四十五轮原则：
+
+- 本轮只新增 refund workflow shadow command 纯函数合同。
+- 合同输出不可执行 DTO 和 audit event，不执行 workflow。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不写 refund success state。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十五轮完成后建议继续：
+
+1. `refund-workflow-shadow-command-validation`: pending

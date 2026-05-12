@@ -2366,3 +2366,10 @@
 - 本轮只规划 shadow workflow command DTO / audit event，不修改 runtime。
 - 下一步建议进入 `refund-workflow-shadow-command-contract`，只能新增纯函数和 tests，输出必须保持 `workflowExecutionAllowed=false`、`refundSuccessState=false`。
 - 仍不得接 provider refund request/query、执行 workflow、写退款成功、调整财务/权限/履约/物流。
+
+## Round 345 更新
+
+- `refund-workflow-shadow-command-contract` 已完成，见 `docs/refund-workflow-shadow-command-contract.md`。
+- 新增纯函数合同 `mapRefundHandoffToWorkflowShadowCommand()`，覆盖 shadow command、manual review、query required、reconciliation required 和 blocked mapping。
+- 当前仍不新增 route、不连 DB、不注册 module、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-workflow-shadow-command-validation`。

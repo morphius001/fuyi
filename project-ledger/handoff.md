@@ -2434,3 +2434,11 @@
 - 新增 redacted fake provider query snapshot fixtures：WeChat succeeded、Alipay processing、Alipay mismatch。
 - Fixtures 只服务 reconciliation / manual review tests；不发网络请求、不接 SDK、不调用真实 provider query API、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-local-fixture-validation`。
+
+## Round 354 更新
+
+- `refund-provider-query-local-fixture-validation` 已完成，见 `docs/refund-provider-query-local-fixture-validation.md`。
+- PR #400 已合并，merge commit `36b950c0aea958739998296d2d9bc894910be09d`。
+- 合并后 focused local fixture test 1 suite / 3 tests 通过；合并文件范围确认符合预期。
+- 当前 fixtures 仍只是 redacted fake vectors，不发网络请求、不调用 provider query API、不写 refund success state。
+- 下一步进入 `refund-state-mutation-readiness-plan`：只能规划 refund state mutation readiness / Go-No-Go，不直接实现状态写入或接财务、权限、履约、物流变更。

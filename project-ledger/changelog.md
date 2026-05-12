@@ -411,3 +411,4 @@
 - 完成 `refund-provider-query-reconciliation-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 reconciliation decision / manual review handoff，保持 `workflowExecutionAllowed=false` 且不写退款成功状态。
 - 完成 `refund-provider-query-reconciliation-validation`，记录 PR #398 合并后文件范围和 focused test 1 suite / 6 tests；确认 reconciliation contract 仍只输出不可执行 decision / manual review handoff。
 - 完成 `refund-provider-query-local-fixture-contract`，新增 redacted fake provider query snapshot vectors 和 focused tests；fixtures 不发网络请求、不调用 provider query API、不写退款成功状态。
+- 完成 `refund-provider-query-local-fixture-validation`，记录 PR #400 合并后文件范围和 focused test 1 suite / 3 tests；确认 fixtures 仍只是 redacted fake vectors。

@@ -420,3 +420,4 @@
 - 完成 `refund-state-mutation-shadow-command-validation`，记录 PR #406 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run、runtime grep 和 diff check；确认 shadow command contract 仍不可执行。
 - 完成 `refund-state-mutation-operator-approval-plan`，docs-only 规划退款状态写入前 operator approval / permission / audit gate；第一版 approval 仍必须不可执行且不写 refund success state。
 - 完成 `refund-state-mutation-operator-approval-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 operator approval candidate / audit event，不执行 workflow、不写 refund success state；子智能体指出的 generic provider / finance metadata alias denylist 缺口已补齐。
+- 完成 `refund-state-mutation-operator-approval-validation`，记录 PR #409 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 operator approval contract 仍不可执行。

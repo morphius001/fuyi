@@ -1360,3 +1360,12 @@
 - 合同只准备 `refund_workflow_shadow` DTO 和 audit event，不执行 workflow、不写平台退款成功状态。
 - 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 44 suites / 336 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
 - 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 346 更新
+
+- `refund-workflow-shadow-command-validation`: done，见 `docs/refund-workflow-shadow-command-validation.md`。
+- PR #392 已合并，merge commit `e77c8c50a515b56250af1a8eb2973b9fce595fe7`。
+- 合并后 focused shadow command test 1 suite / 5 tests 通过；文件范围符合预期。
+- 当前 shadow command contract 仍只输出不可执行 DTO / audit event，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-follow-up-plan`，先 docs-only 规划 query follow-up owner 和边界。
+- 仍 No-Go：provider refund request、refund query API runtime、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

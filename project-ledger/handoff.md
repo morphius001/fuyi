@@ -2601,3 +2601,11 @@
 - 第一版 preprod dry-run contract 必须不可执行，保持 `productionExecutionAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
 - dry-run 不能连接生产 DB、生产 provider、生产 webhook 或生产密钥；不能触发财务、权限、履约、物流链路。
 - 下一步进入 `refund-state-mutation-preprod-dry-run-contract`：只能新增不可执行纯函数合同和 focused tests。
+
+## Round 375 更新
+
+- `refund-state-mutation-preprod-dry-run-contract` 已完成，见 `docs/refund-state-mutation-preprod-dry-run-contract.md`。
+- 新增纯函数合同 `mapWorkflowAdapterCommandToPreprodDryRun()`，覆盖 disabled dry-run request、production environment blocked、workflow command candidate missing 和 unsafe workflow decision blocked。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、DB dry-run `2|9` 和 runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行生产 workflow、不写生产 refund success state。
+- 下一步建议进入 `refund-state-mutation-preprod-dry-run-validation`。

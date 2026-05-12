@@ -3355,3 +3355,18 @@
 第三百七十四轮完成后建议继续：
 
 1. `refund-state-mutation-preprod-dry-run-contract`: pending
+
+## 第三百七十五轮 Refund State Mutation Preprod Dry-Run Contract
+
+1. `refund-state-mutation-preprod-dry-run-contract`: done
+
+第三百七十五轮原则：
+
+- 本轮只新增 workflow adapter command candidate 到 preprod dry-run request 的 disabled / non-executable 纯函数合同。
+- 合同输出 preprod dry-run request / audit event，不执行生产 workflow、不写生产 refund success state。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百七十五轮完成后建议继续：
+
+1. `refund-state-mutation-preprod-dry-run-validation`: pending

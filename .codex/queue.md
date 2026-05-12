@@ -3736,3 +3736,20 @@
 第三百九十七轮完成后建议继续：
 
 1. `refund-state-mutation-runtime-attempt-contract-validation`: pending
+
+## 第三百九十八轮 Refund State Mutation Runtime Attempt Contract Validation
+
+1. `refund-state-mutation-runtime-attempt-contract-validation`: done
+
+第三百九十八轮原则：
+
+- 本轮只记录 PR #444 合并后验证。
+- 当前 runtime attempt contract 仍 disabled / non-executable。
+- 仍不连接生产 DB、不写 workflow attempt。
+- 仍不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百九十八轮完成后建议继续：
+
+1. `refund-state-mutation-production-execution-go-no-go`: pending

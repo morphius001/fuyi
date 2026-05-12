@@ -1633,3 +1633,13 @@
 - 当前 preprod dry-run contract 仍 disabled / non-executable，不执行生产 workflow、不写生产 refund success state。
 - 下一步建议进入 `refund-state-mutation-final-go-no-go-plan`，只能做真实状态写入前最终 Go / No-Go 清单。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 377 更新
+
+- `refund-state-mutation-final-go-no-go-plan`: done，见 `docs/refund-state-mutation-final-go-no-go-plan.md`。
+- 本轮只整理真实退款状态写入前最终 Go / No-Go 清单，不修改 `apps/**` 或 `packages/**` runtime。
+- 结论仍 No-Go：现有链路均为 disabled / non-executable 合同链，不能视作上线可执行许可。
+- 清单要求真实生产执行前补齐 production feature flag、provider evidence、operator approval persistence、audit write persistence、workflow idempotency / retry / replay、terminal state conflict guard、rollback runbook 和人工复核入口。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-final-go-no-go-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

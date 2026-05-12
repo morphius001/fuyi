@@ -2632,3 +2632,9 @@
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 当前最终清单结论仍 No-Go，不能视作上线可执行许可。
 - 下一步进入 `refund-state-mutation-persistence-gap-plan`：只能规划生产持久化差距，不实现生产写入。
+
+## Round 379 更新
+
+- `refund-state-mutation-persistence-gap-plan` 已完成，见 `docs/refund-state-mutation-persistence-gap-plan.md`。
+- 本轮只规划 operator approval、audit write、runtime idempotency / replay / terminal conflict evidence 的生产持久化差距，不修改 runtime。
+- 真实生产退款状态写入仍 No-Go；下一步进入 `refund-state-mutation-persistence-gap-validation`。

@@ -436,3 +436,4 @@
 - 完成 `refund-state-mutation-preprod-dry-run-validation`，记录 PR #422 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 preprod dry-run contract 仍 disabled / non-executable，不执行生产 workflow、不写生产 refund success state。
 - 完成 `refund-state-mutation-final-go-no-go-plan`，docs-only 整理真实退款状态写入前最终 Go / No-Go 清单；结论仍 No-Go，现有链路均为 disabled / non-executable 合同链。
 - 完成 `refund-state-mutation-final-go-no-go-validation`，记录 PR #424 合并后文件范围、diff check 和无 runtime diff；确认最终清单结论仍 No-Go。
+- 完成 `refund-state-mutation-persistence-gap-plan`，docs-only 规划 operator approval、audit write、runtime idempotency / replay / terminal conflict evidence 的生产持久化差距；仍不实现生产写入。

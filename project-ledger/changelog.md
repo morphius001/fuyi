@@ -458,3 +458,4 @@
 - 完成 `refund-state-mutation-runtime-attempt-contract-validation`，记录 PR #444 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 runtime attempt contract 仍 disabled / non-executable。
 - 完成 `refund-state-mutation-production-execution-go-no-go`，docs-only 重新评估真实退款状态写入生产执行前置条件；结论仍 No-Go，仍缺真实 feature flag、persistence、terminal lock、workflow dry-run 和 rollback rehearsal。
 - 完成 `refund-state-mutation-production-execution-go-no-go-validation`，记录 PR #446 合并后文件范围、diff check 和无 runtime diff；确认 production execution 仍 No-Go。
+- 完成 `refund-state-mutation-production-feature-flag-plan`，docs-only 规划 production feature flag、global kill switch、scope gate、operation mode、rollback owner 和验证矩阵；仍不执行 workflow、不写 production refund success state。

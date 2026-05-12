@@ -1412,3 +1412,12 @@
 - 合同只准备 reconciliation decision / manual review handoff，不调用 provider query API、不写退款成功状态。
 - 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 46 suites / 348 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 352 更新
+
+- `refund-provider-query-reconciliation-validation`: done，见 `docs/refund-provider-query-reconciliation-validation.md`。
+- PR #398 已合并，merge commit `20f02e9221dc4f4492366c0aa696ed0e1a9726b3`。
+- 合并后 focused reconciliation test 1 suite / 6 tests 通过；文件范围符合预期。
+- 当前 reconciliation contract 仍只输出不可执行 decision / manual review handoff，不调用 provider query API、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-local-fixture-contract`，如需 fixtures 只能使用 redacted fake vectors。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

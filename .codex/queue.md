@@ -2989,4 +2989,20 @@
 
 第三百五十一轮完成后建议继续：
 
-1. `refund-provider-query-reconciliation-validation`: pending
+1. `refund-provider-query-reconciliation-validation`: done
+
+## 第三百五十二轮 Refund Provider Query Reconciliation Validation
+
+1. `refund-provider-query-reconciliation-validation`: done
+
+第三百五十二轮原则：
+
+- 本轮只记录 PR #398 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 reconciliation contract 仍只输出不可执行 decision / manual review handoff。
+- 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider query API、不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百五十二轮完成后建议继续：
+
+1. `refund-provider-query-local-fixture-contract`: pending

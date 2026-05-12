@@ -1813,3 +1813,11 @@
 - 当前 runtime attempt plan 仍 docs-only，不能视作 workflow attempt persistence 或 production workflow execution 许可。
 - 下一步建议进入 `refund-state-mutation-runtime-attempt-contract`，只能新增不可执行纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 397 更新
+
+- `refund-state-mutation-runtime-attempt-contract`: done，见 `docs/refund-state-mutation-runtime-attempt-contract.md`。
+- 新增 `mapTerminalConflictToRuntimeAttemptIntent()` 纯函数和 focused tests，输出始终 `attemptWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 disabled runtime attempt intent / audit event，不连接生产 DB、不写 workflow attempt。
+- 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 58 suites / 404 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

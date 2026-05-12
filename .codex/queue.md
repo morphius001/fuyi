@@ -3720,3 +3720,19 @@
 第三百九十六轮完成后建议继续：
 
 1. `refund-state-mutation-runtime-attempt-contract`: pending
+
+## 第三百九十七轮 Refund State Mutation Runtime Attempt Contract
+
+1. `refund-state-mutation-runtime-attempt-contract`: done
+
+第三百九十七轮原则：
+
+- 本轮只新增 terminal conflict decision 到 runtime attempt intent 的 disabled / non-executable 纯函数合同。
+- 合同输出 runtime attempt intent / audit event，不连接生产 DB、不写 workflow attempt。
+- 不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百九十七轮完成后建议继续：
+
+1. `refund-state-mutation-runtime-attempt-contract-validation`: pending

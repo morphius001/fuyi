@@ -460,3 +460,4 @@
 - 完成 `refund-state-mutation-production-execution-go-no-go-validation`，记录 PR #446 合并后文件范围、diff check 和无 runtime diff；确认 production execution 仍 No-Go。
 - 完成 `refund-state-mutation-production-feature-flag-plan`，docs-only 规划 production feature flag、global kill switch、scope gate、operation mode、rollback owner 和验证矩阵；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-production-feature-flag-validation`，记录 PR #448 合并后文件范围、diff check 和无 runtime diff；确认 production feature flag plan 仍 docs-only。
+- 完成 `refund-state-mutation-production-feature-flag-contract`，新增 disabled / non-executable production feature flag 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 59 suites / 409 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；合同不实现生产开关、不执行 workflow、不写 production refund success state。

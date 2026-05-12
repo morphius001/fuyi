@@ -2801,3 +2801,11 @@
 - PR #448 已合并，merge commit `63c063ecad4ad993ce13db02cc24df229376a2a0`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-production-feature-flag-contract`：只能新增不可执行纯函数合同和 focused tests。
+
+## Round 403 更新
+
+- `refund-state-mutation-production-feature-flag-contract` 已完成，见 `docs/refund-state-mutation-production-feature-flag-contract.md`。
+- 新增纯函数合同 `evaluateRefundStateMutationProductionFeatureFlag()`，覆盖 disabled、dry_run、shadow_only、execute blocked、missing ownership / rollback / prerequisite blocked。
+- 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 59 suites / 409 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不执行生产 workflow、不写 production refund success state。
+- 下一步建议进入 `refund-state-mutation-production-feature-flag-contract-validation`。

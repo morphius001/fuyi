@@ -2837,3 +2837,10 @@
 - 本轮只规划未注册 approval persistence migration skeleton、local disposable DB dry-run、up/down SQL 验证矩阵和生产未注册边界。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-approval-persistence-migration-validation`：只验证文件范围和 No-Go。
+
+## Round 408 更新
+
+- `refund-state-mutation-approval-persistence-migration-validation` 已完成，见 `docs/refund-state-mutation-approval-persistence-migration-validation.md`。
+- PR #454 已合并，merge commit `9ef9dbbf2694f71a0b868d4d450232f0208f4bdf`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-approval-persistence-migration-skeleton`：新增未注册 migration skeleton 和 local disposable DB dry-run 脚本。

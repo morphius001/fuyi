@@ -1472,3 +1472,11 @@
 - `targetState` 只是审计标签，不得映射为平台真实 refund state。
 - 下一步建议进入 `refund-state-mutation-shadow-command-contract`，只能新增纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 359 更新
+
+- `refund-state-mutation-shadow-command-contract`: done，见 `docs/refund-state-mutation-shadow-command-contract.md`。
+- 新增 `mapRefundReadinessToStateMutationShadowCommand()` 纯函数和 focused tests，输出始终 `executable=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 state shadow command / audit event，不执行 workflow、不写退款成功状态；`targetState` 只作为审计标签。
+- 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 49 suites / 364 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体指出 audit metadata safety flag denylist 不足后已补充并重跑验证，二次复核 No Findings。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

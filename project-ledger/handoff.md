@@ -2715,3 +2715,10 @@
 - PR #436 已合并，merge commit `772466c7533b217a06dd228e53a584b3af616b85`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-terminal-conflict-plan`：只规划 terminal conflict lock / evidence digest / operator review 边界。
+
+## Round 391 更新
+
+- `refund-state-mutation-terminal-conflict-plan` 已完成，见 `docs/refund-state-mutation-terminal-conflict-plan.md`。
+- 本轮只规划 terminal conflict lock、evidence digest、duplicate no-op / replay result、terminal digest conflict、operator review 和 runtime boundaries。
+- 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
+- 下一步进入 `refund-state-mutation-terminal-conflict-validation`：只验证文件范围和 No-Go。

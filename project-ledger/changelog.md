@@ -448,3 +448,4 @@
 - 完成 `refund-state-mutation-audit-persistence-contract-validation`，记录 PR #434 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 audit persistence contract 仍 disabled / non-executable。
 - 完成 `refund-state-mutation-runtime-idempotency-plan`，docs-only 规划真实退款状态写入前 workflow idempotency、provider evidence replay、attempt record、duplicate no-op、terminal conflict lock 和 retry-safe state machine；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-runtime-idempotency-validation`，记录 PR #436 合并后文件范围、diff check 和无 runtime diff；确认 runtime idempotency plan 仍 docs-only。
+- 完成 `refund-state-mutation-terminal-conflict-plan`，docs-only 规划真实退款状态写入前 terminal conflict lock、evidence digest、operator review 和 replay/no-op 边界；仍不执行 workflow、不写 production refund success state。

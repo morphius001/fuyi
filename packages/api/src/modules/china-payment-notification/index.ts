@@ -57,3 +57,4 @@ export * from "./refund-state-mutation-workflow-adapter";
 export * from "./refund-state-mutation-preprod-dry-run";
 export * from "./refund-state-mutation-approval-persistence";
 export * from "./refund-state-mutation-audit-persistence";
+export * from "./refund-state-mutation-terminal-conflict";

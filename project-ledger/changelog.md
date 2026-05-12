@@ -429,3 +429,4 @@
 - 完成 `refund-state-mutation-audit-write-contract`，新增 disabled / non-executable audit write intent 纯函数合同和 focused tests；合同不写 DB、不执行 workflow、不写 refund success state；子智能体指出的 metadata secret / DB alias 与审计字段覆盖风险已修复。
 - 完成 `refund-state-mutation-audit-write-validation`，记录 PR #416 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 audit write contract 仍 disabled / non-executable，不写 DB、不执行 workflow、不写 refund success state。
 - 完成 `refund-state-mutation-workflow-adapter-plan`，docs-only 规划 audit write intent 到 refund workflow command adapter 的边界；第一版 workflow adapter contract 必须不可执行，不执行 workflow、不写 refund success state。
+- 完成 `refund-state-mutation-workflow-adapter-contract`，新增 disabled / non-executable workflow adapter command candidate 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep；合同不执行 workflow、不写 refund success state。

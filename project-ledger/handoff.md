@@ -2744,3 +2744,10 @@
 - PR #440 已合并，merge commit `780e5039c992f101016976da605978f8f4fe562d`。
 - 合并后 focused terminal conflict test 1 suite / 5 tests、API typecheck、payment harness 57 suites / 399 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 下一步进入 `refund-state-mutation-runtime-attempt-plan`：只能规划 workflow attempt persistence schema，不实现生产写入。
+
+## Round 395 更新
+
+- `refund-state-mutation-runtime-attempt-plan` 已完成，见 `docs/refund-state-mutation-runtime-attempt-plan.md`。
+- 本轮只规划 workflow attempt persistence schema、attempt status model、idempotency / replay rules、schema planning notes 和 runtime boundaries。
+- 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
+- 下一步进入 `refund-state-mutation-runtime-attempt-validation`：只验证文件范围和 No-Go。

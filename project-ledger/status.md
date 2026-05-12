@@ -1795,3 +1795,12 @@
 - 当前 terminal conflict contract 仍 disabled / non-executable，不连接生产 DB、不写 terminal lock。
 - 下一步建议进入 `refund-state-mutation-runtime-attempt-plan`，只能规划 workflow attempt persistence schema。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 395 更新
+
+- `refund-state-mutation-runtime-attempt-plan`: done，见 `docs/refund-state-mutation-runtime-attempt-plan.md`。
+- 本轮只规划 workflow attempt persistence schema、attempt status model、idempotency / replay rules、schema planning notes 和 runtime boundaries。
+- 未修改 `apps/**` 或 `packages/**` runtime；未新增 route、job、subscriber、migration；未连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-runtime-attempt-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -2686,3 +2686,11 @@
 - PR #432 已合并，merge commit `ac3cda1d0acb792cce828e30190d1144c1e5cedc`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-audit-persistence-contract`：只能新增不可执行纯函数合同和 focused tests。
+
+## Round 387 更新
+
+- `refund-state-mutation-audit-persistence-contract` 已完成，见 `docs/refund-state-mutation-audit-persistence-contract.md`。
+- 新增纯函数合同 `mapApprovalPersistenceToAuditPersistenceIntent()`，覆盖 disabled persistence intent、production writer blocked、approval persistence intent missing 和 unsafe approval persistence decision blocked。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 56 suites / 394 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行生产 workflow、不写生产 refund success state。
+- 下一步建议进入 `refund-state-mutation-audit-persistence-contract-validation`。

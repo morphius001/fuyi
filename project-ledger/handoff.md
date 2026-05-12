@@ -2708,3 +2708,10 @@
 - 本轮只规划 workflow execution idempotency key、provider evidence replay key、execution attempt record、duplicate no-op、terminal conflict lock 和 retry-safe state machine。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-runtime-idempotency-validation`：只验证文件范围和 No-Go。
+
+## Round 390 更新
+
+- `refund-state-mutation-runtime-idempotency-validation` 已完成，见 `docs/refund-state-mutation-runtime-idempotency-validation.md`。
+- PR #436 已合并，merge commit `772466c7533b217a06dd228e53a584b3af616b85`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-terminal-conflict-plan`：只规划 terminal conflict lock / evidence digest / operator review 边界。

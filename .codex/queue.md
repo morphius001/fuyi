@@ -3602,3 +3602,20 @@
 第三百八十九轮完成后建议继续：
 
 1. `refund-state-mutation-runtime-idempotency-validation`: pending
+
+## 第三百九十轮 Refund State Mutation Runtime Idempotency Validation
+
+1. `refund-state-mutation-runtime-idempotency-validation`: done
+
+第三百九十轮原则：
+
+- 本轮只记录 PR #436 合并后验证。
+- 当前 runtime idempotency plan 仍 docs-only。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百九十轮完成后建议继续：
+
+1. `refund-state-mutation-terminal-conflict-plan`: pending

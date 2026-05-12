@@ -2666,3 +2666,10 @@
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、DB dry-run `2|9` 和 runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行生产 workflow、不写生产 refund success state。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-contract-validation`。
+
+## Round 384 更新
+
+- `refund-state-mutation-approval-persistence-contract-validation` 已完成，见 `docs/refund-state-mutation-approval-persistence-contract-validation.md`。
+- PR #430 已合并，merge commit `3ce14e780fd4b03550b9e8483c5fbce3262653ea`。
+- 合并后 focused approval persistence test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 下一步进入 `refund-state-mutation-audit-persistence-plan`：只能规划 audit write persistence，不实现生产写入。

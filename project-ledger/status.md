@@ -1733,3 +1733,12 @@
 - 合同只准备 disabled audit persistence intent / audit event，不连接生产 DB、不写 audit log。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 56 suites / 394 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 388 更新
+
+- `refund-state-mutation-audit-persistence-contract-validation`: done，见 `docs/refund-state-mutation-audit-persistence-contract-validation.md`。
+- PR #434 已合并，merge commit `d74b40ca3e32a93ea95e03897ea312749dc40723`。
+- 合并后 focused audit persistence test 1 suite / 4 tests、API typecheck、payment harness 56 suites / 394 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 audit persistence contract 仍 disabled / non-executable，不连接生产 DB、不写 audit log。
+- 下一步建议进入 `refund-state-mutation-runtime-idempotency-plan`，只能规划 runtime idempotency / replay / terminal conflict evidence。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -1928,3 +1928,12 @@
 - 当前仍不修改 `packages/api/medusa-config.ts`，不注册 migration，不新增 repository / route / workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-approval-persistence-migration-skeleton-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 410 更新
+
+- `refund-state-mutation-approval-persistence-migration-skeleton-validation`: done，见 `docs/refund-state-mutation-approval-persistence-migration-skeleton-validation.md`。
+- PR #456 已合并，merge commit `41cdfe54be7f9b51980d5de2be24625f77c7e07c`。
+- 合并后 dry-run、API typecheck、`git diff --check` 和未注册 grep 全部通过。
+- 当前 approval persistence migration skeleton 仍未注册，未新增 repository / route / workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-approval-persistence-repository-contract`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

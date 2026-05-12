@@ -3370,3 +3370,20 @@
 第三百七十五轮完成后建议继续：
 
 1. `refund-state-mutation-preprod-dry-run-validation`: pending
+
+## 第三百七十六轮 Refund State Mutation Preprod Dry-Run Validation
+
+1. `refund-state-mutation-preprod-dry-run-validation`: done
+
+第三百七十六轮原则：
+
+- 本轮只记录 PR #422 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 preprod dry-run contract 仍 disabled / non-executable。
+- 仍不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百七十六轮完成后建议继续：
+
+1. `refund-state-mutation-final-go-no-go-plan`: pending

@@ -4133,4 +4133,21 @@
 
 第四百二十一轮完成后建议继续：
 
-1. `refund-state-mutation-terminal-conflict-persistence-repository-validation`: pending
+1. `refund-state-mutation-terminal-conflict-persistence-repository-contract-validation`: pending
+
+## 第四百二十二轮 Refund State Mutation Terminal Conflict Persistence Repository Contract Validation
+
+1. `refund-state-mutation-terminal-conflict-persistence-repository-contract-validation`: done
+
+第四百二十二轮原则：
+
+- 本轮只记录 PR #468 合并后验证。
+- 当前 terminal conflict persistence repository contract 仍 disabled / non-executable。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百二十二轮完成后建议继续：
+
+1. `refund-state-mutation-preprod-dry-run-plan`: pending

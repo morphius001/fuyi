@@ -2823,3 +2823,10 @@
 - 本轮只规划 approval persistence schema、event log、unique key、reviewer separation、permission / ownership evidence 和 replay read model。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-approval-persistence-schema-validation`：只验证文件范围和 No-Go。
+
+## Round 406 更新
+
+- `refund-state-mutation-approval-persistence-schema-validation` 已完成，见 `docs/refund-state-mutation-approval-persistence-schema-validation.md`。
+- PR #452 已合并，merge commit `25b18cd37d5eaa09680339caca561323695096e7`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-approval-persistence-migration-plan`：只规划 migration skeleton / local disposable DB rehearsal。

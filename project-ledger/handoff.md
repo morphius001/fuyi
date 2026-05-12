@@ -1,38 +1,32 @@
 # Handoff
 
-更新时间：2026-05-07 22:00 Asia/Shanghai
+更新时间：2026-05-12 23:58 Asia/Shanghai
 
 ## 当前上下文
 
-- Worktree: `/home/codex/code/fuyi-integration-cn`
-- Branch: `china/integration-localization`
-- 本地服务已恢复：API 9000、Admin 7000、Vendor 7001、Storefront 3101。
-- Admin 登录问题已定位并处理：Windows 浏览器访问 `127.0.0.1:9000` 会触发 `Failed to fetch`，本地启动脚本已改用 `http://localhost:9000` 注入 Admin/Vendor。
-- 本地测试账号 `admin@fuyi.local` 可登录；不要把本地测试密码写进仓库文件或提交说明。
+- Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
+- Branch: `china/pr-qw-refund-state-mutation-terminal-conflict-persistence-repository-plan`
+- 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
+- `origin/main` 最新已合并到 `#465`，merge commit `9e3dfee`。
+- 最近已合并 PR：`#455` 到 `#465`，内容覆盖 approval / audit / runtime attempt persistence 的 migration、repository contract 和 validation 收口。
 
 ## 本轮验证
 
-- API health: `http://localhost:9000/health` 返回 200。
-- Admin login page: `http://localhost:7000/dashboard/login` 返回 200。
-- Admin emailpass login POST 返回 200。
-- Admin 登录态页面：`http://localhost:7000/dashboard/cn/operations/market-capabilities` 可访问。
-- 截图产物：本地 `docs/visual-qa-artifacts/admin-market-capabilities-authenticated.png`，不纳入 PR A。
-- 检查结果：本地 `docs/visual-qa-artifacts/admin-market-capabilities-authenticated.json`，不纳入 PR A；核心断言均为 true，且 `hasFetchError=false`。
+- PR `#465` 合并后验证已通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check`。
+- 当前分支继续执行 docs-only 任务 `refund-state-mutation-terminal-conflict-persistence-repository-plan`。
+- 本轮 docs-only 验证要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
 
-- Codex in-app Browser Use 当前仍报系统级 `拒绝访问`，登录态视觉 QA 暂时使用 `/tmp/fuyi-browser-qa` 下的本地 Playwright 兜底。
-- WSL 已补齐 `libnspr4`、`libnss3`、`libasound2t64` 和 `fonts-noto-cjk`，后续 Playwright 截图可正确显示中文。
-- 当前 integration worktree 仍有大量未跟踪任务文件和视觉 QA 产物；后续 staging 必须按 PR 范围精确选择，不要一次性全加。
-- 当前 integration worktree 没有 main 最新的 `/admin/china/markets` 路由；本轮验证的是 integration 现有的 `/dashboard/cn/operations/market-capabilities` 页面。
-- 最新 main 工作树已补测 `admin-market-membership-browser-qa`：需要从 `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn` 启动服务，且 `.codex/scripts/start-dev.sh` 需要注入本地 CORS env。
-- Admin 市场详情截图产物为本地 `docs/visual-qa-artifacts/admin-market-membership-browser-qa.png`，不纳入 PR；JSON 检查结果同目录，不纳入 PR。
+- 顶部上下文必须以当前 worktree `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn` 和当前 queue 为准，不再沿用旧 integration worktree。
+- `project-ledger/status.md`、`project-ledger/handoff.md`、`.codex/queue.md` 之前把下一步错误写成不存在的 `refund-state-mutation-feature-flag-persistence-repository-plan`；本轮已改回真实存在的 terminal conflict persistence 链。
+- 当前阶段仍禁止真实 provider refund request / query、production workflow execution、refund success state mutation，以及 settlement、commission、payout、permission、fulfillment、logistics mutation。
 
 ## 下一步建议
 
-1. 将本地 CORS 启动脚本修复和 `admin-market-membership-browser-qa` 结果作为小 PR 提交。
-2. 继续跳过 `preprod-disposable-db-dry-run-execution`，除非用户明确提供可丢弃预发库和回滚确认。
-3. 下一批只能做 docs-only 或本地 disposable DB 验证；真实 migration 注册、Admin 写接口、runtime switch、支付/退款/结算/权限仍需单独串行。
+1. 完成 `refund-state-mutation-terminal-conflict-persistence-repository-plan` 的 docs-only 收口并提交。
+2. 继续进入 `refund-state-mutation-terminal-conflict-persistence-repository-validation`，只做合并后验证和 No-Go 收口。
+3. 在 terminal conflict persistence 链完成前，不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
 
@@ -2926,4 +2920,12 @@
 - PR #464 已合并，merge commit `5d61c264f42e3667b56214fbe89e067d48ad996b`。
 - 合并后验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 均通过。
 - 当前 runtime attempt persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、job、subscriber，未执行 workflow，未写 production refund success state。
-- 下一步进入 `refund-state-mutation-feature-flag-persistence-repository-plan`：继续 docs-only 拆分下一段 persistence gap。
+- 下一步进入 `refund-state-mutation-terminal-conflict-persistence-repository-plan`：继续 docs-only 拆分终态冲突 persistence gap。
+
+## Round 419 更新
+
+- `refund-state-mutation-terminal-conflict-persistence-repository-plan` 已完成，见 `docs/refund-state-mutation-terminal-conflict-persistence-repository-plan.md`。
+- 本轮只规划 terminal conflict evidence / lock snapshot 的 repository 输入、snapshot / event log 记录、唯一性 / replay 规则、operator review 查询和 fail-closed 行为。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-terminal-conflict-persistence-repository-validation`：只做合并后验证和 No-Go 收口。

@@ -4084,4 +4084,20 @@
 
 第四百一十八轮完成后建议继续：
 
-1. `refund-state-mutation-feature-flag-persistence-repository-plan`: pending
+1. `refund-state-mutation-terminal-conflict-persistence-repository-plan`: pending
+
+## 第四百一十九轮 Refund State Mutation Terminal Conflict Persistence Repository Plan
+
+1. `refund-state-mutation-terminal-conflict-persistence-repository-plan`: done
+
+第四百一十九轮原则：
+
+- 本轮只规划 terminal conflict evidence / lock snapshot 的 repository contract、schema 和 replay-safe read model。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百一十九轮完成后建议继续：
+
+1. `refund-state-mutation-terminal-conflict-persistence-repository-validation`: pending

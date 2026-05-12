@@ -1751,3 +1751,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-runtime-idempotency-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 390 更新
+
+- `refund-state-mutation-runtime-idempotency-validation`: done，见 `docs/refund-state-mutation-runtime-idempotency-validation.md`。
+- PR #436 已合并，merge commit `772466c7533b217a06dd228e53a584b3af616b85`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 runtime idempotency plan 仍 docs-only，不能视作生产 workflow execution 或 refund success state mutation 许可。
+- 下一步建议进入 `refund-state-mutation-terminal-conflict-plan`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

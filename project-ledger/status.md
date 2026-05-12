@@ -1643,3 +1643,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-final-go-no-go-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 378 更新
+
+- `refund-state-mutation-final-go-no-go-validation`: done，见 `docs/refund-state-mutation-final-go-no-go-validation.md`。
+- PR #424 已合并，merge commit `c2e46500f78514d077616c3e1606d4b5bcc8c86c`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前最终清单结论仍 No-Go：现有链路均为 disabled / non-executable 合同链，不能视作上线可执行许可。
+- 下一步建议进入 `refund-state-mutation-persistence-gap-plan`，只能规划生产持久化差距。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

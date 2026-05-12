@@ -2624,3 +2624,11 @@
 - 本轮只整理真实退款状态写入前最终 Go / No-Go 清单，不修改 runtime。
 - 结论仍 No-Go：现有链路均为 disabled / non-executable 合同链，不能视作上线可执行许可。
 - 下一步进入 `refund-state-mutation-final-go-no-go-validation`：只验证文件范围和 No-Go。
+
+## Round 378 更新
+
+- `refund-state-mutation-final-go-no-go-validation` 已完成，见 `docs/refund-state-mutation-final-go-no-go-validation.md`。
+- PR #424 已合并，merge commit `c2e46500f78514d077616c3e1606d4b5bcc8c86c`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前最终清单结论仍 No-Go，不能视作上线可执行许可。
+- 下一步进入 `refund-state-mutation-persistence-gap-plan`：只能规划生产持久化差距，不实现生产写入。

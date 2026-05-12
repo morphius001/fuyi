@@ -1706,3 +1706,13 @@
 - 当前 approval persistence contract 仍 disabled / non-executable，不连接生产 DB、不写 approval record。
 - 下一步建议进入 `refund-state-mutation-audit-persistence-plan`，只能规划 audit write persistence。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 385 更新
+
+- `refund-state-mutation-audit-persistence-plan`: done，见 `docs/refund-state-mutation-audit-persistence-plan.md`。
+- 本轮只规划 audit write persistence，不修改 `apps/**` 或 `packages/**` runtime。
+- 第一版 audit persistence contract 仍必须不可执行：`auditWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`refundSuccessState=false`。
+- 明确 audit write failure 必须 fail closed，audit metadata 不能覆盖 safety flags，provider route / query job 不能绕过 audit write 直接执行 workflow。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-audit-persistence-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

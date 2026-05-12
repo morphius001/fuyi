@@ -2673,3 +2673,9 @@
 - PR #430 已合并，merge commit `3ce14e780fd4b03550b9e8483c5fbce3262653ea`。
 - 合并后 focused approval persistence test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 下一步进入 `refund-state-mutation-audit-persistence-plan`：只能规划 audit write persistence，不实现生产写入。
+
+## Round 385 更新
+
+- `refund-state-mutation-audit-persistence-plan` 已完成，见 `docs/refund-state-mutation-audit-persistence-plan.md`。
+- 本轮只规划 audit write persistence，不修改 runtime。
+- 真实生产退款状态写入仍 No-Go；下一步进入 `refund-state-mutation-audit-persistence-validation`。

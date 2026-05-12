@@ -3131,4 +3131,20 @@
 
 第三百六十轮完成后建议继续：
 
-1. `refund-state-mutation-operator-approval-plan`: pending
+1. `refund-state-mutation-operator-approval-plan`: done
+
+## 第三百六十一轮 Refund State Mutation Operator Approval Plan
+
+1. `refund-state-mutation-operator-approval-plan`: done
+
+第三百六十一轮原则：
+
+- 本轮只规划退款状态写入前 operator approval / permission / audit gate。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百六十一轮完成后建议继续：
+
+1. `refund-state-mutation-operator-approval-contract`: pending

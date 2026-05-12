@@ -1489,3 +1489,13 @@
 - 当前 shadow command contract 仍只输出不可执行 state shadow command / audit event，不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-operator-approval-plan`，只能规划 operator approval / permission / audit gate。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 361 更新
+
+- `refund-state-mutation-operator-approval-plan`: done，见 `docs/refund-state-mutation-operator-approval-plan.md`。
+- 本轮只规划退款状态写入前 operator approval / permission / audit gate，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划要求 operator approval 第一版仍输出 `executable=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 明确 system job 只能生成 candidate，vendor 不能批准平台退款状态写入，reviewer 不能与发起 actor 相同。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
+- 下一步建议进入 `refund-state-mutation-operator-approval-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

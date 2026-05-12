@@ -418,3 +418,4 @@
 - 完成 `refund-state-mutation-shadow-command-plan`，docs-only 规划 readiness decision 到 shadow-only state mutation command 的映射；shadow target state 仅为审计标签，不写平台退款成功状态。
 - 完成 `refund-state-mutation-shadow-command-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 state shadow command / audit event，保持 `stateMutationAllowed=false` 且不写退款成功状态；子智能体指出的 audit metadata safety flag denylist 缺口已补齐。
 - 完成 `refund-state-mutation-shadow-command-validation`，记录 PR #406 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run、runtime grep 和 diff check；确认 shadow command contract 仍不可执行。
+- 完成 `refund-state-mutation-operator-approval-plan`，docs-only 规划退款状态写入前 operator approval / permission / audit gate；第一版 approval 仍必须不可执行且不写 refund success state。

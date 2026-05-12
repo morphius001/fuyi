@@ -1395,3 +1395,12 @@
 - 当前 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-reconciliation-plan`，先 docs-only 规划 query snapshot 到 reconciliation / manual review 的边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 350 更新
+
+- `refund-provider-query-reconciliation-plan`: done，见 `docs/refund-provider-query-reconciliation-plan.md`。
+- 本轮只做 docs-only provider query snapshot reconciliation 规划，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划新增 future owner `RefundProviderQueryReconciliationOwner`，第一版只输出不可执行 reconciliation decision / manual review handoff。
+- 明确 query snapshot 不能直接写 refund success state、执行 workflow、触发财务/权限/履约/物流 mutation。
+- 下一步建议进入 `refund-provider-query-reconciliation-contract`，只能新增纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

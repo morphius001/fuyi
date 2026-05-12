@@ -2404,3 +2404,11 @@
 - 合并后 focused query follow-up test 1 suite / 6 tests 通过；合并文件范围确认符合预期。
 - 当前 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API、不写 refund success state。
 - 下一步进入 `refund-provider-query-reconciliation-plan`：只能规划 query snapshot 如何进入 reconciliation / manual review，不得直接写退款成功或触发财务、权限、履约、物流变更。
+
+## Round 350 更新
+
+- `refund-provider-query-reconciliation-plan` 已完成，见 `docs/refund-provider-query-reconciliation-plan.md`。
+- 本轮只规划 provider query snapshot 到 reconciliation / manual review 的边界，不修改 runtime、不调用 provider query API。
+- 计划要求后续 contract 第一版仍保持不可执行：`workflowExecutionAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- Query snapshot 即使显示 provider succeeded，也只能生成人工复核输入，不能直接写平台退款成功或触发财务、权限、履约、物流变更。
+- 下一步进入 `refund-provider-query-reconciliation-contract`，只能做纯函数合同和 focused tests。

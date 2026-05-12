@@ -1446,3 +1446,11 @@
 - 结论仍是 No-Go to real refund state mutation；已有 inbox / handoff / shadow command / query / reconciliation / fixtures 都仍是不可执行输入。
 - 下一步建议进入 `refund-state-mutation-readiness-contract`，只能新增纯函数合同和 focused tests，输出仍保持 `stateMutationAllowed=false`。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 356 更新
+
+- `refund-state-mutation-readiness-contract`: done，见 `docs/refund-state-mutation-readiness-contract.md`。
+- 新增 `evaluateRefundStateMutationReadiness()` 纯函数和 focused tests，输出始终 `executable=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 readiness decision / shadow DTO，不执行 workflow、不写退款成功状态。
+- 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 48 suites / 357 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

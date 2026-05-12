@@ -1,0 +1,33 @@
+# refund-state-mutation-approval-persistence-repository-validation
+
+## 目标
+
+验证 PR #458 合并后的 approval persistence repository contract 仍保持 disabled / non-executable，且没有接入 runtime、workflow 或 production DB。
+
+## 范围
+
+- `.codex/tasks/refund-state-mutation-approval-persistence-repository-validation.md`
+- `docs/refund-state-mutation-approval-persistence-repository-validation.md`
+- `.codex/queue.md`
+- `project-ledger/changelog.md`
+- `project-ledger/handoff.md`
+- `project-ledger/status.md`
+
+## 禁止
+
+- 不修改 `packages/api/medusa-config.ts`
+- 不修改 `packages/api/src/api/**`
+- 不修改 `packages/api/src/workflows/**`
+- 不修改 `apps/**`
+- 不改 repository contract 内容，不新增 DB adapter、route、job、subscriber、workflow execution
+
+## 验证
+
+1. `bun test packages/api/src/modules/china-payment-notification/__tests__/refund-state-mutation-approval-persistence-repository.unit.spec.ts`
+2. `bunx tsc --noEmit -p packages/api/tsconfig.json`
+3. `bash .codex/scripts/payment-notification-idempotency-harness.sh`
+4. `bash .codex/scripts/payment-notification-inbox-local-dry-run.sh`
+5. `git diff --check`
+6. `grep -R -n "mapApprovalPersistenceToRepositoryIntent" packages/api/src/api packages/api/src/workflows packages/api/medusa-config.ts || true`
+7. `grep -R -n "refund_state_mutation_approval_persistence_repository" packages/api/src/api packages/api/src/workflows packages/api/medusa-config.ts || true`
+8. `grep -R -n "RefundStateMutationApprovalPersistenceRepositoryContract" packages/api/src/api packages/api/src/workflows packages/api/medusa-config.ts || true`

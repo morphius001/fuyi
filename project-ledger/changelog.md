@@ -439,3 +439,4 @@
 - 完成 `refund-state-mutation-persistence-gap-plan`，docs-only 规划 operator approval、audit write、runtime idempotency / replay / terminal conflict evidence 的生产持久化差距；仍不实现生产写入。
 - 完成 `refund-state-mutation-persistence-gap-validation`，记录 PR #426 合并后文件范围、diff check 和无 runtime diff；确认 persistence gap plan 仍 docs-only。
 - 完成 `refund-state-mutation-approval-persistence-plan`，docs-only 规划 operator approval persistence；仍不新增 migration、不连接生产 DB、不写生产 refund success state。
+- 完成 `refund-state-mutation-approval-persistence-validation`，记录 PR #428 合并后文件范围、diff check 和无 runtime diff；确认 approval persistence plan 仍 docs-only。

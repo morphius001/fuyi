@@ -1680,3 +1680,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 382 更新
+
+- `refund-state-mutation-approval-persistence-validation`: done，见 `docs/refund-state-mutation-approval-persistence-validation.md`。
+- PR #428 已合并，merge commit `ea0f489e867a9d9f114e3aa96b52084802510303`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 approval persistence plan 仍 docs-only，不能视作上线可执行许可。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -2651,3 +2651,10 @@
 - `refund-state-mutation-approval-persistence-plan` 已完成，见 `docs/refund-state-mutation-approval-persistence-plan.md`。
 - 本轮只规划 operator approval persistence，不修改 runtime。
 - 真实生产退款状态写入仍 No-Go；下一步进入 `refund-state-mutation-approval-persistence-validation`。
+
+## Round 382 更新
+
+- `refund-state-mutation-approval-persistence-validation` 已完成，见 `docs/refund-state-mutation-approval-persistence-validation.md`。
+- PR #428 已合并，merge commit `ea0f489e867a9d9f114e3aa96b52084802510303`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-approval-persistence-contract`：只能新增不可执行纯函数合同和 focused tests。

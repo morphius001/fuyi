@@ -1964,3 +1964,12 @@
 - 当前仍未连接 production / preprod DB，未新增 route / workflow execution，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-audit-persistence-repository-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 414 更新
+
+- `refund-state-mutation-audit-persistence-repository-validation`: done，见 `docs/refund-state-mutation-audit-persistence-repository-validation.md`。
+- PR #460 已合并，merge commit `37d1bcaa5aa5008d62c05d91eeeaca27f4c78af4`。
+- 合并后 focused test 5/5、API typecheck、payment harness 59/409、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 全部通过。
+- 当前 audit persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-runtime-attempt-persistence-repository-plan`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

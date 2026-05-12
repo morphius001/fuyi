@@ -1839,3 +1839,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-production-execution-go-no-go-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 400 更新
+
+- `refund-state-mutation-production-execution-go-no-go-validation`: done，见 `docs/refund-state-mutation-production-execution-go-no-go-validation.md`。
+- PR #446 已合并，merge commit `39c34647cfd36d7975a5a1221f7b648c6fd73c0e`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 production execution 结论仍 No-Go。
+- 下一步建议进入 `refund-state-mutation-production-feature-flag-plan`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

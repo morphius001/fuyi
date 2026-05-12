@@ -1,20 +1,20 @@
 # Handoff
 
-更新时间：2026-05-13 00:22 Asia/Shanghai
+更新时间：2026-05-13 00:34 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-qz-refund-state-mutation-terminal-conflict-persistence-repository-validation`
+- Branch: `china/pr-ra-refund-state-mutation-preprod-rehearsal-refresh-plan`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#468`，merge commit `30e0354`。
-- 最近已合并 PR：`#455` 到 `#468`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract 和 validation 收口。
+- `origin/main` 最新已合并到 `#469`，merge commit `8b6552b`。
+- 最近已合并 PR：`#455` 到 `#469`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口。
 
 ## 本轮验证
 
-- PR `#468` 合并后验证进行中：当前只验证 terminal conflict persistence repository contract 的文件范围和 No-Go。
-- 当前分支继续执行 `refund-state-mutation-terminal-conflict-persistence-repository-contract-validation`。
-- 本轮验证要求：focused test、API typecheck、payment harness、payment inbox dry-run、runtime grep、`git diff --check`。
+- PR `#469` 合并后验证已通过：当前进入 preprod rehearsal refresh 计划刷新，范围仅限 docs / task / queue / ledger。
+- 当前分支继续执行 `refund-state-mutation-preprod-rehearsal-refresh-plan`。
+- 本轮验证要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
 
@@ -24,8 +24,8 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-terminal-conflict-persistence-repository-contract-validation` 并提交。
-2. 继续进入 `refund-state-mutation-preprod-dry-run-plan` 或同级 docs-only 演练规划。
+1. 完成 `refund-state-mutation-preprod-rehearsal-refresh-plan` 并提交。
+2. 继续进入 `refund-state-mutation-preprod-rehearsal-refresh-validation`，只做合并后验证和 No-Go 收口。
 3. 在 terminal conflict persistence 链完成前，不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
@@ -2953,4 +2953,12 @@
 - PR #468 已合并，merge commit `30e0354`。
 - 合并后验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 均通过。
 - 当前 terminal conflict persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、job、subscriber，未执行 workflow，未写 production refund success state。
-- 下一步进入 `refund-state-mutation-preprod-dry-run-plan`：继续 docs-only 收束后续 rehearsal 链。
+- 下一步进入 `refund-state-mutation-preprod-rehearsal-refresh-plan`：刷新一次性预发 rehearsal gate 和 operator checklist。
+
+## Round 423 更新
+
+- `refund-state-mutation-preprod-rehearsal-refresh-plan` 已完成，见 `docs/refund-state-mutation-preprod-rehearsal-refresh-plan.md`。
+- 本轮只刷新一次性预发 rehearsal gate、operator checklist、环境门禁和 approval / audit / runtime attempt / terminal conflict persistence 交叉证据链。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-preprod-rehearsal-refresh-validation`：只做合并后验证和 No-Go 收口。

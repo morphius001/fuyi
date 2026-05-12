@@ -2553,3 +2553,11 @@
 - 第一版 audit write contract 必须不可执行，保持 `auditWriteAllowed=false`、`dbWriteAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
 - 下一步进入 `refund-state-mutation-audit-write-contract`：只能新增不可执行 audit write intent 纯函数和 focused tests。
+
+## Round 369 更新
+
+- `refund-state-mutation-audit-write-contract` 已完成，见 `docs/refund-state-mutation-audit-write-contract.md`。
+- 新增纯函数合同 `mapRuntimeAdapterToAuditWriteIntent()`，覆盖 disabled audit intent、writerMode=db ignored、runtime record missing 和 unsafe runtime decision blocked。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 52 suites / 378 tests、DB dry-run `2|9` 和 runtime grep；子智能体指出 metadata secret / DB alias denylist 与 generated audit field override 风险后已修复并重跑验证，二次复核 No Findings。
+- 当前仍不新增 route、不新增 migration、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-audit-write-validation`。

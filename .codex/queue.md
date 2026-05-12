@@ -3258,4 +3258,19 @@
 
 第三百六十八轮完成后建议继续：
 
-1. `refund-state-mutation-audit-write-contract`: pending
+1. `refund-state-mutation-audit-write-contract`: done
+
+## 第三百六十九轮 Refund State Mutation Audit Write Contract
+
+1. `refund-state-mutation-audit-write-contract`: done
+
+第三百六十九轮原则：
+
+- 本轮只新增 refund state mutation audit write disabled / non-executable 纯函数合同。
+- 合同输出 audit write intent / audit event，不写 DB、不执行 workflow、不写 refund success state。
+- 不新增 route、不新增 migration、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百六十九轮完成后建议继续：
+
+1. `refund-state-mutation-audit-write-validation`: pending

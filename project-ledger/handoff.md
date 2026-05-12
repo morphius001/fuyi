@@ -2609,3 +2609,11 @@
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、DB dry-run `2|9` 和 runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行生产 workflow、不写生产 refund success state。
 - 下一步建议进入 `refund-state-mutation-preprod-dry-run-validation`。
+
+## Round 376 更新
+
+- `refund-state-mutation-preprod-dry-run-validation` 已完成，见 `docs/refund-state-mutation-preprod-dry-run-validation.md`。
+- PR #422 已合并，merge commit `df60ff0c83f5273861532bbc1d230d47a9b0016b`。
+- 合并后 focused preprod dry-run test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 preprod dry-run contract 仍 disabled / non-executable，不执行生产 workflow、不写生产 refund success state。
+- 下一步进入 `refund-state-mutation-final-go-no-go-plan`：只能做真实状态写入前最终 Go / No-Go 清单。

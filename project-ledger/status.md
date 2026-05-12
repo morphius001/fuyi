@@ -1624,3 +1624,12 @@
 - 合同只准备 disabled preprod dry-run request / audit event，不执行生产 workflow、不写生产退款成功状态。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、payment DB dry-run `2|9`、runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。`git diff --check` 在 PR 收口前运行。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 376 更新
+
+- `refund-state-mutation-preprod-dry-run-validation`: done，见 `docs/refund-state-mutation-preprod-dry-run-validation.md`。
+- PR #422 已合并，merge commit `df60ff0c83f5273861532bbc1d230d47a9b0016b`。
+- 合并后 focused preprod dry-run test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 preprod dry-run contract 仍 disabled / non-executable，不执行生产 workflow、不写生产 refund success state。
+- 下一步建议进入 `refund-state-mutation-final-go-no-go-plan`，只能做真实状态写入前最终 Go / No-Go 清单。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

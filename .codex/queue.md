@@ -3486,3 +3486,19 @@
 第三百八十二轮完成后建议继续：
 
 1. `refund-state-mutation-approval-persistence-contract`: pending
+
+## 第三百八十三轮 Refund State Mutation Approval Persistence Contract
+
+1. `refund-state-mutation-approval-persistence-contract`: done
+
+第三百八十三轮原则：
+
+- 本轮只新增 operator approval candidate 到 approval persistence intent 的 disabled / non-executable 纯函数合同。
+- 合同输出 approval persistence intent / audit event，不连接生产 DB、不写 approval record。
+- 不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十三轮完成后建议继续：
+
+1. `refund-state-mutation-approval-persistence-contract-validation`: pending

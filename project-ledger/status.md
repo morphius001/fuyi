@@ -1689,3 +1689,11 @@
 - 当前 approval persistence plan 仍 docs-only，不能视作上线可执行许可。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-contract`，只能新增不可执行纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 383 更新
+
+- `refund-state-mutation-approval-persistence-contract`: done，见 `docs/refund-state-mutation-approval-persistence-contract.md`。
+- 新增 `mapOperatorApprovalToPersistenceIntent()` 纯函数和 focused tests，输出始终 `approvalWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 disabled approval persistence intent / audit event，不连接生产 DB、不写 approval record。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、payment DB dry-run `2|9`、runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。`git diff --check` 在 PR 收口前运行。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

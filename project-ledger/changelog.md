@@ -406,3 +406,4 @@
 - 完成 `refund-workflow-shadow-command-validation`，记录 PR #392 合并后文件范围和 focused test 1 suite / 5 tests；确认 shadow command contract 仍只输出不可执行 DTO / audit event，不执行 workflow、不写 refund success state。
 - 完成 `refund-provider-query-follow-up-plan`，docs-only 规划 provider refund query follow-up owner、触发条件、输入输出、审计限流和 PR 顺序；明确 route / handoff / shadow command 不能直接调用 provider query API。
 - 完成 `refund-provider-query-follow-up-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 provider refund query shadow DTO 与 audit event，保持 `providerQueryAllowed=false` 且不写退款成功状态。
+- 完成 `refund-provider-query-follow-up-validation`，记录 PR #395 合并后文件范围和 focused test 1 suite / 6 tests；确认 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API。

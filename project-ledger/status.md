@@ -1378,3 +1378,11 @@
 - 明确 provider inbox route、state owner handoff 和 workflow shadow command 不得直接调用 provider query API。
 - 下一步建议进入 `refund-provider-query-follow-up-contract`，只能新增纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 348 更新
+
+- `refund-provider-query-follow-up-contract`: done，见 `docs/refund-provider-query-follow-up-contract.md`。
+- 新增 `planRefundProviderQueryFollowUp()` 纯函数和 focused tests，输出始终 `executable=false`、`providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 `provider_refund_query_shadow` DTO 和 audit event，不调用微信支付 / 支付宝 query API。
+- 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 45 suites / 342 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
+- 仍 No-Go：provider refund request/query runtime、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

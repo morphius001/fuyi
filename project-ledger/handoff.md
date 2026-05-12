@@ -2389,3 +2389,10 @@
 - 计划要求后续 contract 第一版仍保持不可执行：`providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
 - Route / handoff / shadow command 仍不得直接 query provider；query snapshot 后续也只能进入 manual review / reconciliation planning，不能直接写 refund success state。
 - 下一步进入 `refund-provider-query-follow-up-contract`，只能做纯函数合同、redacted shadow command DTO 和 focused tests。
+
+## Round 348 更新
+
+- `refund-provider-query-follow-up-contract` 已完成，见 `docs/refund-provider-query-follow-up-contract.md`。
+- 新增纯函数合同 `planRefundProviderQueryFollowUp()`，覆盖 WeChat / Alipay shadow query DTO、验签阻断、终态人工复核、runtime mutation 阻断和缺 query key 人工复核。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-follow-up-validation`。

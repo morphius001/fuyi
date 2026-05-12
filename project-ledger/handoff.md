@@ -2569,3 +2569,11 @@
 - 合并后 focused audit write test 1 suite / 4 tests、API typecheck、payment harness 52 suites / 378 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前 audit write contract 仍 disabled / non-executable，不写 DB、不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-state-mutation-workflow-adapter-plan`：只能规划 workflow adapter 边界，第一版仍不可执行。
+
+## Round 371 更新
+
+- `refund-state-mutation-workflow-adapter-plan` 已完成，见 `docs/refund-state-mutation-workflow-adapter-plan.md`。
+- 本轮只规划 audit write intent 到 refund workflow command adapter 的边界，不修改 runtime。
+- 第一版 workflow adapter contract 必须不可执行，保持 `workflowDryRunOnly=true`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
+- workflow adapter 只能接收 audit write intent，不能让 provider inbox / query / route 直接输入。
+- 下一步进入 `refund-state-mutation-workflow-adapter-contract`：只能新增不可执行纯函数合同和 focused tests，不执行 workflow。

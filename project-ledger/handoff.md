@@ -2852,3 +2852,11 @@
 - 新增 `.codex/scripts/refund-state-mutation-approval-persistence-local-dry-run.sh`，使用本地 disposable DB 验证 up/down SQL、approval/event fixtures、unique idempotency、amount/currency/status/reviewer role/reviewer separation、event action constraint 和自动清库。
 - 当前仍未修改 `packages/api/medusa-config.ts`，未注册 migration，未新增 repository / route / job / subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-approval-persistence-migration-skeleton-validation`：只验证 skeleton、dry-run、typecheck、runtime grep 和 No-Go 边界。
+
+## Round 410 更新
+
+- `refund-state-mutation-approval-persistence-migration-skeleton-validation` 已完成，见 `docs/refund-state-mutation-approval-persistence-migration-skeleton-validation.md`。
+- PR #456 已合并，merge commit `41cdfe54be7f9b51980d5de2be24625f77c7e07c`。
+- 合并后验证通过：approval persistence local dry-run、API typecheck、`git diff --check` 和未注册 grep 均通过。
+- 当前 migration skeleton 仍未注册，未新增 repository / route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-approval-persistence-repository-contract`：只新增 disabled / non-executable repository contract，不连接 production DB。

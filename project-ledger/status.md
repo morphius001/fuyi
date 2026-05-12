@@ -1769,3 +1769,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-terminal-conflict-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 392 更新
+
+- `refund-state-mutation-terminal-conflict-validation`: done，见 `docs/refund-state-mutation-terminal-conflict-validation.md`。
+- PR #438 已合并，merge commit `06639b976e8ab75dc0508fe07abcc5798aa59604`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 terminal conflict plan 仍 docs-only，不能视作 terminal conflict lock 或 refund success state mutation 许可。
+- 下一步建议进入 `refund-state-mutation-terminal-conflict-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

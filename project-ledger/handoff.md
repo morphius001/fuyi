@@ -2722,3 +2722,10 @@
 - 本轮只规划 terminal conflict lock、evidence digest、duplicate no-op / replay result、terminal digest conflict、operator review 和 runtime boundaries。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-terminal-conflict-validation`：只验证文件范围和 No-Go。
+
+## Round 392 更新
+
+- `refund-state-mutation-terminal-conflict-validation` 已完成，见 `docs/refund-state-mutation-terminal-conflict-validation.md`。
+- PR #438 已合并，merge commit `06639b976e8ab75dc0508fe07abcc5798aa59604`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-terminal-conflict-contract`：只能新增不可执行纯函数合同和 focused tests。

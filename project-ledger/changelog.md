@@ -462,3 +462,4 @@
 - 完成 `refund-state-mutation-production-feature-flag-validation`，记录 PR #448 合并后文件范围、diff check 和无 runtime diff；确认 production feature flag plan 仍 docs-only。
 - 完成 `refund-state-mutation-production-feature-flag-contract`，新增 disabled / non-executable production feature flag 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 59 suites / 409 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；合同不实现生产开关、不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-production-feature-flag-contract-validation`，记录 PR #450 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 production feature flag contract 仍 disabled / non-executable。
+- 完成 `refund-state-mutation-approval-persistence-schema-plan`，docs-only 规划真实 approval persistence schema、reviewer separation、permission / ownership evidence、append-only event log 和 replay read model；仍不新增 migration、不写生产 DB。

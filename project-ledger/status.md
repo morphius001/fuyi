@@ -1883,3 +1883,12 @@
 - 当前 production feature flag contract 仍 disabled / non-executable，不实现生产开关。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-schema-plan`，只能规划真实 approval persistence schema。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 405 更新
+
+- `refund-state-mutation-approval-persistence-schema-plan`: done，见 `docs/refund-state-mutation-approval-persistence-schema-plan.md`。
+- 本轮只规划 approval persistence schema、event log、unique key、reviewer separation、permission / ownership evidence 和 replay read model。
+- 未修改 `apps/**` 或 `packages/**` runtime；未新增 route、job、subscriber、migration；未连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-schema-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

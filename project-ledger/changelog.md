@@ -422,3 +422,4 @@
 - 完成 `refund-state-mutation-operator-approval-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 operator approval candidate / audit event，不执行 workflow、不写 refund success state；子智能体指出的 generic provider / finance metadata alias denylist 缺口已补齐。
 - 完成 `refund-state-mutation-operator-approval-validation`，记录 PR #409 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 operator approval contract 仍不可执行。
 - 完成 `refund-state-mutation-runtime-readiness-validation`，docs-only 做真实退款状态写入前 Go / No-Go；结论仍 No-Go to real refund success state mutation，只允许进入 runtime adapter 规划。
+- 完成 `refund-state-mutation-runtime-adapter-plan`，docs-only 规划 future runtime adapter 边界；第一版 adapter contract 必须 disabled / non-executable，不能写 refund success state。

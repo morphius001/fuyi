@@ -2427,3 +2427,10 @@
 - 合并后 focused reconciliation test 1 suite / 6 tests 通过；合并文件范围确认符合预期。
 - 当前 reconciliation contract 仍只输出不可执行 decision / manual review handoff，不调用 provider query API、不写 refund success state。
 - 下一步进入 `refund-provider-query-local-fixture-contract`：只能新增 redacted fake query snapshot vectors，不接 SDK、不发网络请求、不连接 DB、不把 fixture 结果当作平台退款成功。
+
+## Round 353 更新
+
+- `refund-provider-query-local-fixture-contract` 已完成，见 `docs/refund-provider-query-local-fixture-contract.md`。
+- 新增 redacted fake provider query snapshot fixtures：WeChat succeeded、Alipay processing、Alipay mismatch。
+- Fixtures 只服务 reconciliation / manual review tests；不发网络请求、不接 SDK、不调用真实 provider query API、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-local-fixture-validation`。

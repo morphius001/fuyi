@@ -1697,3 +1697,12 @@
 - 合同只准备 disabled approval persistence intent / audit event，不连接生产 DB、不写 approval record。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、payment DB dry-run `2|9`、runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。`git diff --check` 在 PR 收口前运行。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 384 更新
+
+- `refund-state-mutation-approval-persistence-contract-validation`: done，见 `docs/refund-state-mutation-approval-persistence-contract-validation.md`。
+- PR #430 已合并，merge commit `3ce14e780fd4b03550b9e8483c5fbce3262653ea`。
+- 合并后 focused approval persistence test 1 suite / 4 tests、API typecheck、payment harness 55 suites / 390 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 approval persistence contract 仍 disabled / non-executable，不连接生产 DB、不写 approval record。
+- 下一步建议进入 `refund-state-mutation-audit-persistence-plan`，只能规划 audit write persistence。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

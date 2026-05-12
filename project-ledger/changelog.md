@@ -464,3 +464,4 @@
 - 完成 `refund-state-mutation-production-feature-flag-contract-validation`，记录 PR #450 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 production feature flag contract 仍 disabled / non-executable。
 - 完成 `refund-state-mutation-approval-persistence-schema-plan`，docs-only 规划真实 approval persistence schema、reviewer separation、permission / ownership evidence、append-only event log 和 replay read model；仍不新增 migration、不写生产 DB。
 - 完成 `refund-state-mutation-approval-persistence-schema-validation`，记录 PR #452 合并后文件范围、diff check 和无 runtime diff；确认 approval persistence schema plan 仍 docs-only。
+- 完成 `refund-state-mutation-approval-persistence-migration-plan`，docs-only 规划未注册 approval persistence migration skeleton、local disposable DB rehearsal、up/down SQL 验证矩阵和生产未注册边界。

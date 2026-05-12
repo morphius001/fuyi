@@ -1901,3 +1901,12 @@
 - 当前 approval persistence schema plan 仍 docs-only，不能视作 migration 或 production DB write 许可。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-migration-plan`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 407 更新
+
+- `refund-state-mutation-approval-persistence-migration-plan`: done，见 `docs/refund-state-mutation-approval-persistence-migration-plan.md`。
+- 本轮只规划未注册 approval persistence migration skeleton、local disposable DB dry-run、up/down SQL 验证矩阵和生产未注册边界。
+- 未修改 `apps/**` 或 `packages/**` runtime；未新增 route、job、subscriber、migration；未连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-migration-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

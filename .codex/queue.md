@@ -3887,3 +3887,19 @@
 第四百零六轮完成后建议继续：
 
 1. `refund-state-mutation-approval-persistence-migration-plan`: pending
+
+## 第四百零七轮 Refund State Mutation Approval Persistence Migration Plan
+
+1. `refund-state-mutation-approval-persistence-migration-plan`: done
+
+第四百零七轮原则：
+
+- 本轮只规划 approval persistence migration skeleton / local disposable DB rehearsal。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、不新增真实注册 migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百零七轮完成后建议继续：
+
+1. `refund-state-mutation-approval-persistence-migration-validation`: pending

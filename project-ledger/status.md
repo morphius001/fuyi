@@ -1597,3 +1597,12 @@
 - 合同只准备 disabled workflow adapter command candidate / audit event，不执行 workflow、不写退款成功状态。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、payment DB dry-run `2|9`、runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。`git diff --check` 在 PR 收口前运行。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 373 更新
+
+- `refund-state-mutation-workflow-adapter-validation`: done，见 `docs/refund-state-mutation-workflow-adapter-validation.md`。
+- PR #419 已合并，merge commit `0806a098f7aafa6188e83d610a817762f8fcf35f`。
+- 合并后 focused workflow adapter test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 workflow adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-preprod-dry-run-plan`，只能规划一次性预发 dry-run gate。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

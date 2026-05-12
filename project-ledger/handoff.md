@@ -2585,3 +2585,11 @@
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前仍不新增 route、job、subscriber、migration，不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-workflow-adapter-validation`。
+
+## Round 373 更新
+
+- `refund-state-mutation-workflow-adapter-validation` 已完成，见 `docs/refund-state-mutation-workflow-adapter-validation.md`。
+- PR #419 已合并，merge commit `0806a098f7aafa6188e83d610a817762f8fcf35f`。
+- 合并后 focused workflow adapter test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 workflow adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-state-mutation-preprod-dry-run-plan`：只能规划一次性预发 dry-run gate，不写生产 refund success state。

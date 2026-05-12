@@ -4,35 +4,45 @@
 
 ## 结论
 
-PR #462 合并后验证通过。runtime attempt persistence repository plan 仍保持 docs-only，当前仍不新增 migration、repository、workflow execution 或 production DB 变更，不写 production refund success state。
+PR #464 合并后验证通过。runtime attempt persistence repository contract 仍保持 disabled / non-executable，当前仍不连接 production DB、不接入 runtime、不执行 workflow、不写 production refund success state。
 
 ## Verified PR
 
-- PR: `#462`
-- Merge commit: `c227c727a1b07f25156622176d45073e2a8c1748`
+- PR: `#464`
+- Merge commit: `5d61c264f42e3667b56214fbe89e067d48ad996b`
 
 ## Verification
 
 已运行：
 
 ```bash
+bun test packages/api/src/modules/china-payment-notification/__tests__/refund-state-mutation-runtime-attempt-persistence-repository.unit.spec.ts
+bunx tsc --noEmit -p packages/api/tsconfig.json
+bash .codex/scripts/payment-notification-idempotency-harness.sh
+bash .codex/scripts/payment-notification-inbox-local-dry-run.sh
 git diff --check
-git status --short --branch
+grep -R -n "mapRuntimeAttemptToRepositoryIntent" packages/api/src/api packages/api/src/workflows packages/api/medusa-config.ts || true
+grep -R -n "refund_state_mutation_runtime_attempt_persistence_repository" packages/api/src/api packages/api/src/workflows packages/api/medusa-config.ts || true
 ```
 
 结果：
 
+- focused test 5/5 通过。
+- API typecheck 通过。
+- payment harness 59 suites / 409 tests 通过。
+- payment inbox local dry-run `2|9` 通过。
 - `git diff --check` 通过。
-- 工作区仅包含本轮 validation task/doc、queue 和 ledger 更新。
+- runtime grep 无命中，说明 contract 仍未接入 `medusa-config.ts`、API routes 或 workflows。
 
 ## Scope Check
 
 - 本轮只新增 validation task/doc、queue 和 ledger 更新。
 - 未修改 `packages/api/**` 或 `apps/**` runtime。
-- 未新增 migration、repository、route、job、subscriber、workflow execution。
+- 未新增 DB adapter、route、job、subscriber。
+- 未执行 workflow。
 - 未写 production refund success state。
 - 未触发 settlement、commission、payout、permission、fulfillment 或 logistics。
 
 ## Next Step
 
-建议进入 `refund-state-mutation-runtime-attempt-persistence-repository-contract`，继续新增 disabled / non-executable repository contract 和 focused tests。
+建议进入 `refund-state-mutation-feature-flag-persistence-repository-plan` 或同级 persistence gap docs-only 规划，继续拆分下一段 disabled persistence 链。

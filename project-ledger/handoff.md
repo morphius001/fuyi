@@ -2860,3 +2860,12 @@
 - 合并后验证通过：approval persistence local dry-run、API typecheck、`git diff --check` 和未注册 grep 均通过。
 - 当前 migration skeleton 仍未注册，未新增 repository / route / job / subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-approval-persistence-repository-contract`：只新增 disabled / non-executable repository contract，不连接 production DB。
+
+## Round 411 更新
+
+- `refund-state-mutation-approval-persistence-repository-contract` 已完成，见 `docs/refund-state-mutation-approval-persistence-repository-contract.md`。
+- 新增 `refund-state-mutation-approval-persistence-repository.ts`，定义 approval persistence record/event 类型、repository interface 和 `mapApprovalPersistenceToRepositoryIntent()` disabled 纯函数合同。
+- 新增 focused test `refund-state-mutation-approval-persistence-repository.unit.spec.ts`，覆盖 disabled intent、production blocked、missing persistence intent、unsafe approval persistence blocked 和 repository readiness block codes。
+- 验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check`。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-approval-persistence-repository-validation`：只做合并后验证和 No-Go 收口。

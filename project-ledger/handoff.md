@@ -2787,3 +2787,10 @@
 - PR #446 已合并，merge commit `39c34647cfd36d7975a5a1221f7b648c6fd73c0e`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-production-feature-flag-plan`：只规划 production feature flag / kill switch / rollback owner。
+
+## Round 401 更新
+
+- `refund-state-mutation-production-feature-flag-plan` 已完成，见 `docs/refund-state-mutation-production-feature-flag-plan.md`。
+- 本轮只规划 global kill switch、environment gate、provider / market scope gate、operation mode gate、ownership、runtime behavior 和 verification。
+- 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
+- 下一步进入 `refund-state-mutation-production-feature-flag-validation`：只验证文件范围和 No-Go。

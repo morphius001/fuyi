@@ -3986,3 +3986,19 @@
 第四百一十二轮完成后建议继续：
 
 1. `refund-state-mutation-audit-persistence-repository-contract`: pending
+
+## 第四百一十三轮 Refund State Mutation Audit Persistence Repository Contract
+
+1. `refund-state-mutation-audit-persistence-repository-contract`: done
+
+第四百一十三轮原则：
+
+- 本轮只新增 disabled / non-executable audit persistence repository contract、record/event 类型和 focused tests。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百一十三轮完成后建议继续：
+
+1. `refund-state-mutation-audit-persistence-repository-validation`: pending

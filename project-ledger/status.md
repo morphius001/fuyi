@@ -1955,3 +1955,12 @@
 - 当前 approval persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-audit-persistence-repository-contract`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 413 更新
+
+- `refund-state-mutation-audit-persistence-repository-contract`: done，见 `docs/refund-state-mutation-audit-persistence-repository-contract.md`。
+- 新增 audit persistence repository contract、record/event 类型和 `mapAuditPersistenceToRepositoryIntent()` disabled 纯函数；输出始终 `repositoryWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`。
+- focused test 5/5、API typecheck、payment harness 59/409、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 全部通过。
+- 当前仍未连接 production / preprod DB，未新增 route / workflow execution，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-audit-persistence-repository-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

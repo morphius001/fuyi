@@ -2877,3 +2877,12 @@
 - 合并后验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 均通过。
 - 当前 approval persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、job、subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-audit-persistence-repository-contract`：继续新增 disabled / non-executable audit persistence repository contract。
+
+## Round 413 更新
+
+- `refund-state-mutation-audit-persistence-repository-contract` 已完成，见 `docs/refund-state-mutation-audit-persistence-repository-contract.md`。
+- 新增 `refund-state-mutation-audit-persistence-repository.ts`，定义 audit persistence record/event 类型、repository interface 和 `mapAuditPersistenceToRepositoryIntent()` disabled 纯函数合同。
+- 新增 focused test `refund-state-mutation-audit-persistence-repository.unit.spec.ts`，覆盖 disabled intent、production blocked、missing intent、unsafe audit persistence blocked 和 repository readiness block codes。
+- 验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check`。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-audit-persistence-repository-validation`：只做合并后验证和 No-Go 收口。

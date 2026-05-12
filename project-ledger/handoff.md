@@ -2504,3 +2504,11 @@
 - 子智能体只读复核指出 generic provider / finance metadata alias denylist 不足；已补充 provider request/query payload 与 financial/settlement/commission/payout mutation aliases，并重跑 focused test、API typecheck、payment harness 50 suites / 370 tests、DB dry-run `2|9` 和 runtime grep；二次复核 No Findings。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-operator-approval-validation`。
+
+## Round 363 更新
+
+- `refund-state-mutation-operator-approval-validation` 已完成，见 `docs/refund-state-mutation-operator-approval-validation.md`。
+- PR #409 已合并，merge commit `4b5bcdc367396b202ec590c884cb52fd5a9ede7a`。
+- 合并后 focused operator approval test 1 suite / 6 tests、API typecheck、payment harness 50 suites / 370 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
+- 当前 operator approval contract 仍只输出不可执行 approval candidate / audit event，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-state-mutation-runtime-readiness-validation`：真实 runtime 前再次 Go / No-Go，未明确 Go 前不实现真实退款状态写入。

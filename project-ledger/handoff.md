@@ -2773,3 +2773,10 @@
 - PR #444 已合并，merge commit `48c5b8a0623632563d8965a59445ea96c3478aa2`。
 - 合并后 focused runtime attempt test 1 suite / 5 tests、API typecheck、payment harness 58 suites / 404 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 下一步进入 `refund-state-mutation-production-execution-go-no-go`：重新评估生产执行前置条件。
+
+## Round 399 更新
+
+- `refund-state-mutation-production-execution-go-no-go` 已完成，见 `docs/refund-state-mutation-production-execution-go-no-go.md`。
+- 结论仍 No-Go：仍缺真实 production feature flag / kill switch、approval persistence、audit persistence、runtime attempt persistence、terminal conflict lock、workflow dry-run 和 rollback rehearsal。
+- 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
+- 下一步进入 `refund-state-mutation-production-execution-go-no-go-validation`：只验证文件范围和 No-Go。

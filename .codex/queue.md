@@ -3585,3 +3585,20 @@
 第三百八十八轮完成后建议继续：
 
 1. `refund-state-mutation-runtime-idempotency-plan`: pending
+
+## 第三百八十九轮 Refund State Mutation Runtime Idempotency Plan
+
+1. `refund-state-mutation-runtime-idempotency-plan`: done
+
+第三百八十九轮原则：
+
+- 本轮只规划真实退款状态写入前的 runtime idempotency / replay / terminal conflict evidence。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不调用真实 provider refund request / query API。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十九轮完成后建议继续：
+
+1. `refund-state-mutation-runtime-idempotency-validation`: pending

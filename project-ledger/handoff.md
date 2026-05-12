@@ -2701,3 +2701,10 @@
 - PR #434 已合并，merge commit `d74b40ca3e32a93ea95e03897ea312749dc40723`。
 - 合并后 focused audit persistence test 1 suite / 4 tests、API typecheck、payment harness 56 suites / 394 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 下一步进入 `refund-state-mutation-runtime-idempotency-plan`：只能规划 runtime idempotency / replay / terminal conflict evidence，不实现生产写入。
+
+## Round 389 更新
+
+- `refund-state-mutation-runtime-idempotency-plan` 已完成，见 `docs/refund-state-mutation-runtime-idempotency-plan.md`。
+- 本轮只规划 workflow execution idempotency key、provider evidence replay key、execution attempt record、duplicate no-op、terminal conflict lock 和 retry-safe state machine。
+- 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
+- 下一步进入 `refund-state-mutation-runtime-idempotency-validation`：只验证文件范围和 No-Go。

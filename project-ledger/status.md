@@ -1421,3 +1421,11 @@
 - 当前 reconciliation contract 仍只输出不可执行 decision / manual review handoff，不调用 provider query API、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-local-fixture-contract`，如需 fixtures 只能使用 redacted fake vectors。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 353 更新
+
+- `refund-provider-query-local-fixture-contract`: done，见 `docs/refund-provider-query-local-fixture-contract.md`。
+- 新增 redacted fake provider query snapshot vectors，覆盖 WeChat succeeded、Alipay processing 和 Alipay mismatch。
+- Fixtures 固定 `fixtureOnly=true`、`executable=false`、`networkRequestAllowed=false`、`providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 验证通过：focused test 1 suite / 3 tests、API typecheck、payment harness 47 suites / 351 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

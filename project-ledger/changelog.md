@@ -466,3 +466,4 @@
 - 完成 `refund-state-mutation-approval-persistence-schema-validation`，记录 PR #452 合并后文件范围、diff check 和无 runtime diff；确认 approval persistence schema plan 仍 docs-only。
 - 完成 `refund-state-mutation-approval-persistence-migration-plan`，docs-only 规划未注册 approval persistence migration skeleton、local disposable DB rehearsal、up/down SQL 验证矩阵和生产未注册边界。
 - 完成 `refund-state-mutation-approval-persistence-migration-validation`，记录 PR #454 合并后文件范围、diff check 和无 runtime diff；确认 approval persistence migration plan 仍 docs-only。
+- 完成 `refund-state-mutation-approval-persistence-migration-skeleton`，新增未注册 `Migration20260512000300.ts` 和本地 disposable DB dry-run 脚本；验证 approval / event 表、unique idempotency、amount/currency/status/reviewer role/reviewer separation、event action 约束和 down rollback，仍不注册 migration、不接 runtime、不写 production refund success state。

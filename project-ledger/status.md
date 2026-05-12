@@ -1919,3 +1919,12 @@
 - 当前 approval persistence migration plan 仍 docs-only，不能视作 migration 或 production DB write 许可。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-migration-skeleton`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 409 更新
+
+- `refund-state-mutation-approval-persistence-migration-skeleton`: done，见 `docs/refund-state-mutation-approval-persistence-migration-skeleton.md`。
+- 新增未注册 approval persistence migration skeleton `Migration20260512000300.ts`，创建 `china_refund_state_mutation_approval` / `china_refund_state_mutation_approval_event`、CNY / reviewer separation / reviewer role / status / event action 等约束和 metadata blocked-key helper。
+- 新增 `refund-state-mutation-approval-persistence-local-dry-run.sh`，从 migration skeleton 提取 up/down SQL，验证合法 fixture、唯一键、金额、币种、状态、reviewer role、reviewer separation、event action 和 rollback 删除表。
+- 当前仍不修改 `packages/api/medusa-config.ts`，不注册 migration，不新增 repository / route / workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-approval-persistence-migration-skeleton-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

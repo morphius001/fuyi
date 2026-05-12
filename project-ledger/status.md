@@ -1874,3 +1874,12 @@
 - 合同只准备 disabled feature flag decision / audit event，不实现生产开关。
 - 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 59 suites / 409 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 404 更新
+
+- `refund-state-mutation-production-feature-flag-contract-validation`: done，见 `docs/refund-state-mutation-production-feature-flag-contract-validation.md`。
+- PR #450 已合并，merge commit `31216e2e525a72838bac0f1b9c9b11970d2dcc77`。
+- 合并后 focused production feature flag test 1 suite / 5 tests、API typecheck、payment harness 59 suites / 409 tests、payment DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前 production feature flag contract 仍 disabled / non-executable，不实现生产开关。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-schema-plan`，只能规划真实 approval persistence schema。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

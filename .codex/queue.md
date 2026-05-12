@@ -3837,3 +3837,20 @@
 第四百零三轮完成后建议继续：
 
 1. `refund-state-mutation-production-feature-flag-contract-validation`: pending
+
+## 第四百零四轮 Refund State Mutation Production Feature Flag Contract Validation
+
+1. `refund-state-mutation-production-feature-flag-contract-validation`: done
+
+第四百零四轮原则：
+
+- 本轮只记录 PR #450 合并后验证。
+- 当前 production feature flag contract 仍 disabled / non-executable。
+- 仍不实现生产开关。
+- 仍不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百零四轮完成后建议继续：
+
+1. `refund-state-mutation-approval-persistence-schema-plan`: pending

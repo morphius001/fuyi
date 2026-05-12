@@ -3552,3 +3552,19 @@
 第三百八十六轮完成后建议继续：
 
 1. `refund-state-mutation-audit-persistence-contract`: pending
+
+## 第三百八十七轮 Refund State Mutation Audit Persistence Contract
+
+1. `refund-state-mutation-audit-persistence-contract`: done
+
+第三百八十七轮原则：
+
+- 本轮只新增 approval persistence intent 到 audit persistence intent 的 disabled / non-executable 纯函数合同。
+- 合同输出 audit persistence intent / audit event，不连接生产 DB、不写 audit log。
+- 不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十七轮完成后建议继续：
+
+1. `refund-state-mutation-audit-persistence-contract-validation`: pending

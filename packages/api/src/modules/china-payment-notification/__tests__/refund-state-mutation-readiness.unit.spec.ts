@@ -188,13 +188,9 @@ describe("evaluateRefundStateMutationReadiness", () => {
     expectSafe(result);
   });
 
-  it("blocks missing rollback runbook and side-effect isolation", () => {
+  it("blocks financial side-effect coupling before readiness", () => {
     const result = evaluateRefundStateMutationReadiness(
       input({
-        evidence: {
-          ...input().evidence,
-          rollbackRunbookReady: false,
-        },
         safetyChecks: {
           ...input().safetyChecks,
           financialSideEffectsIsolated: false,
@@ -205,6 +201,42 @@ describe("evaluateRefundStateMutationReadiness", () => {
     expect(result).toMatchObject({
       decision: "blocked",
       blockCodes: ["FINANCIAL_SIDE_EFFECT_NOT_ISOLATED"],
+    });
+    expect(result.shadowCommand).toBeUndefined();
+    expectSafe(result);
+  });
+
+  it("blocks fulfillment side-effect coupling before readiness", () => {
+    const result = evaluateRefundStateMutationReadiness(
+      input({
+        safetyChecks: {
+          ...input().safetyChecks,
+          fulfillmentSideEffectsIsolated: false,
+        },
+      }),
+    );
+
+    expect(result).toMatchObject({
+      decision: "blocked",
+      blockCodes: ["FULFILLMENT_SIDE_EFFECT_NOT_ISOLATED"],
+    });
+    expect(result.shadowCommand).toBeUndefined();
+    expectSafe(result);
+  });
+
+  it("blocks missing rollback runbook after side effects are isolated", () => {
+    const result = evaluateRefundStateMutationReadiness(
+      input({
+        evidence: {
+          ...input().evidence,
+          rollbackRunbookReady: false,
+        },
+      }),
+    );
+
+    expect(result).toMatchObject({
+      decision: "blocked",
+      blockCodes: ["ROLLBACK_RUNBOOK_MISSING"],
     });
     expect(result.shadowCommand).toBeUndefined();
     expectSafe(result);

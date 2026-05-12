@@ -1404,3 +1404,11 @@
 - 明确 query snapshot 不能直接写 refund success state、执行 workflow、触发财务/权限/履约/物流 mutation。
 - 下一步建议进入 `refund-provider-query-reconciliation-contract`，只能新增纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 351 更新
+
+- `refund-provider-query-reconciliation-contract`: done，见 `docs/refund-provider-query-reconciliation-contract.md`。
+- 新增 `planRefundProviderQueryReconciliation()` 纯函数和 focused tests，输出始终 `executable=false`、`workflowExecutionAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 reconciliation decision / manual review handoff，不调用 provider query API、不写退款成功状态。
+- 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 46 suites / 348 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

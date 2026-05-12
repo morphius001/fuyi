@@ -2412,3 +2412,10 @@
 - 计划要求后续 contract 第一版仍保持不可执行：`workflowExecutionAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
 - Query snapshot 即使显示 provider succeeded，也只能生成人工复核输入，不能直接写平台退款成功或触发财务、权限、履约、物流变更。
 - 下一步进入 `refund-provider-query-reconciliation-contract`，只能做纯函数合同和 focused tests。
+
+## Round 351 更新
+
+- `refund-provider-query-reconciliation-contract` 已完成，见 `docs/refund-provider-query-reconciliation-contract.md`。
+- 新增纯函数合同 `planRefundProviderQueryReconciliation()`，覆盖 consistent provider success、mismatch review、processing requery、unredacted snapshot、unsafe snapshot 和 runtime mutation 阻断。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-reconciliation-validation`。

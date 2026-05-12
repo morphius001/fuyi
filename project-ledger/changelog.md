@@ -408,3 +408,4 @@
 - 完成 `refund-provider-query-follow-up-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 provider refund query shadow DTO 与 audit event，保持 `providerQueryAllowed=false` 且不写退款成功状态。
 - 完成 `refund-provider-query-follow-up-validation`，记录 PR #395 合并后文件范围和 focused test 1 suite / 6 tests；确认 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API。
 - 完成 `refund-provider-query-reconciliation-plan`，docs-only 规划 provider query snapshot 到 reconciliation / manual review 的边界；明确 snapshot 不能直接写退款成功、执行 workflow 或触发财务/权限/履约/物流变更。
+- 完成 `refund-provider-query-reconciliation-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 reconciliation decision / manual review handoff，保持 `workflowExecutionAllowed=false` 且不写退款成功状态。

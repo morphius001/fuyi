@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-13 00:37 Asia/Shanghai
+更新时间：2026-05-13 00:42 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rb-refund-state-mutation-preprod-rehearsal-refresh-validation`
+- Branch: `china/pr-rc-refund-state-mutation-preprod-rehearsal-operator-pack`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#470`，merge commit `e89b629`。
-- 最近已合并 PR：`#455` 到 `#470`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh plan。
+- `origin/main` 最新已合并到 `#471`，merge commit `0b48efa`。
+- 最近已合并 PR：`#455` 到 `#471`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh plan / validation。
 
 ## 本轮验证
 
-- PR `#470` 合并后验证进行中：当前只验证 preprod rehearsal refresh plan 的文件范围和 No-Go。
-- 当前分支继续执行 `refund-state-mutation-preprod-rehearsal-refresh-validation`。
+- PR `#471` 合并后验证已通过：当前进入 preprod rehearsal operator pack 整理，范围仅限 docs / task / queue / ledger。
+- 当前分支继续执行 `refund-state-mutation-preprod-rehearsal-operator-pack`。
 - 本轮验证要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,8 +24,8 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-preprod-rehearsal-refresh-validation` 并提交。
-2. 继续进入 `refund-state-mutation-preprod-rehearsal-operator-pack`，整理 rehearsal 输入模板、回滚确认项和 evidence capture 清单。
+1. 完成 `refund-state-mutation-preprod-rehearsal-operator-pack` 并提交。
+2. 继续进入 `refund-state-mutation-preprod-rehearsal-operator-pack-validation`，只做合并后验证和 No-Go 收口。
 3. 在 terminal conflict persistence 链完成前，不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
@@ -2970,3 +2970,11 @@
 - 合并后验证通过：`git diff --check` 和文件范围检查均通过。
 - 当前 preprod rehearsal refresh plan 仍 docs-only，未新增 migration、route、job、subscriber、workflow execution，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-preprod-rehearsal-operator-pack`：继续整理 rehearsal 输入模板、回滚确认项和 evidence capture 清单。
+
+## Round 425 更新
+
+- `refund-state-mutation-preprod-rehearsal-operator-pack` 已完成，见 `docs/refund-state-mutation-preprod-rehearsal-operator-pack.md`。
+- 本轮只整理 rehearsal 输入模板、evidence capture 清单、回滚确认项和 operator sign-off。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-preprod-rehearsal-operator-pack-validation`：只做合并后验证和 No-Go 收口。

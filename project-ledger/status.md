@@ -1579,3 +1579,13 @@
 - 当前 audit write contract 仍 disabled / non-executable，不写 DB、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-workflow-adapter-plan`，只能规划 workflow adapter 边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 371 更新
+
+- `refund-state-mutation-workflow-adapter-plan`: done，见 `docs/refund-state-mutation-workflow-adapter-plan.md`。
+- 本轮只规划 audit write intent 到 refund workflow command adapter 的边界，不修改 `apps/**` 或 `packages/**` runtime。
+- 第一版 workflow adapter contract 必须固定不可执行：`adapterEnabled=false`、`workflowDryRunOnly=true`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 明确 workflow adapter 只能接收 audit write intent，不能让 provider inbox / query / route 直接输入。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。子智能体复核在 PR 收口前运行。
+- 下一步建议进入 `refund-state-mutation-workflow-adapter-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

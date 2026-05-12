@@ -45,4 +45,4 @@ grep -R -n "refund_state_mutation_runtime_attempt_persistence_repository" packag
 
 ## Next Step
 
-建议进入 `refund-state-mutation-feature-flag-persistence-repository-plan` 或同级 persistence gap docs-only 规划，继续拆分下一段 disabled persistence 链。
+建议进入 `refund-state-mutation-terminal-conflict-persistence-repository-plan`，继续补齐终态冲突证据链的 disabled persistence 规划。

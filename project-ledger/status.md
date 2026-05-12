@@ -1,6 +1,15 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-09 05:45 Asia/Shanghai
+更新时间：2026-05-12 23:58 Asia/Shanghai
+
+## 当前活跃上下文
+
+- 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
+- 当前活跃分支：`china/pr-qw-refund-state-mutation-terminal-conflict-persistence-repository-plan`
+- 当前 `origin/main` 最新合并提交：`9e3dfee` `Merge pull request #465 from morphius001/china/pr-qv-refund-state-mutation-runtime-attempt-persistence-repository-validation`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`
+- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-repository-plan`
+- 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 主线合并状态
 
@@ -2006,5 +2015,15 @@
 - PR #464 已合并，merge commit `5d61c264f42e3667b56214fbe89e067d48ad996b`。
 - 合并后 focused test 5/5、API typecheck、payment harness 59/409、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 全部通过。
 - 当前 runtime attempt persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
-- 下一步建议：`refund-state-mutation-feature-flag-persistence-repository-plan`。
+- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-plan`。
+- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-plan`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 419 更新
+
+- `refund-state-mutation-terminal-conflict-persistence-repository-plan`: done，见 `docs/refund-state-mutation-terminal-conflict-persistence-repository-plan.md`。
+- 本轮只规划 terminal conflict evidence / lock snapshot 的 repository 输入、snapshot / event log 记录、唯一性 / replay 规则、operator review 查询和 fail-closed 行为。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 当前仍不新增 route、job、subscriber、migration，不连接 production / preprod DB，不执行 workflow，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

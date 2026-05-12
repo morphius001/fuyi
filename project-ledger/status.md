@@ -1429,3 +1429,12 @@
 - Fixtures 固定 `fixtureOnly=true`、`executable=false`、`networkRequestAllowed=false`、`providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
 - 验证通过：focused test 1 suite / 3 tests、API typecheck、payment harness 47 suites / 351 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核工具等待超时，下一轮 validation 继续记录文件范围和安全边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 354 更新
+
+- `refund-provider-query-local-fixture-validation`: done，见 `docs/refund-provider-query-local-fixture-validation.md`。
+- PR #400 已合并，merge commit `36b950c0aea958739998296d2d9bc894910be09d`。
+- 合并后 focused local fixture test 1 suite / 3 tests 通过；文件范围符合预期；子智能体只读复核 No Findings。
+- 当前 fixtures 仍只是 redacted fake vectors，不发网络请求、不调用 provider query API、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-readiness-plan`，只能先规划状态写入 readiness，不直接实现。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

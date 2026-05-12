@@ -2496,3 +2496,11 @@
 - system job 只能生成 candidate，vendor 不能批准平台退款状态写入，reviewer 不能与发起 actor 相同。
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
 - 下一步进入 `refund-state-mutation-operator-approval-contract`：只能新增纯函数合同和 focused tests，仍不写真实退款成功状态。
+
+## Round 362 更新
+
+- `refund-state-mutation-operator-approval-contract` 已完成，见 `docs/refund-state-mutation-operator-approval-contract.md`。
+- 新增纯函数合同 `mapRefundShadowCommandToOperatorApproval()`，覆盖 approval candidate、system job / vendor 阻断、同人审批 / 权限证据缺失、reviewer rejection、unsafe shadow decision 和 runtime / side-effect mutation request。
+- 子智能体只读复核指出 generic provider / finance metadata alias denylist 不足；已补充 provider request/query payload 与 financial/settlement/commission/payout mutation aliases，并重跑 focused test、API typecheck、payment harness 50 suites / 370 tests、DB dry-run `2|9` 和 runtime grep；二次复核 No Findings。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-operator-approval-validation`。

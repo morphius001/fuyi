@@ -2645,3 +2645,9 @@
 - PR #426 已合并，merge commit `1b3306979f64b8c8dc3c5879187b367f7b3bb06a`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-approval-persistence-plan`：只能规划 operator approval persistence，不实现生产写入。
+
+## Round 381 更新
+
+- `refund-state-mutation-approval-persistence-plan` 已完成，见 `docs/refund-state-mutation-approval-persistence-plan.md`。
+- 本轮只规划 operator approval persistence，不修改 runtime。
+- 真实生产退款状态写入仍 No-Go；下一步进入 `refund-state-mutation-approval-persistence-validation`。

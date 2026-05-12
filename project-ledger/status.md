@@ -1670,3 +1670,13 @@
 - 当前 persistence gap plan 仍 docs-only，不能视作上线可执行许可。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-plan`，只能规划 operator approval persistence。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 381 更新
+
+- `refund-state-mutation-approval-persistence-plan`: done，见 `docs/refund-state-mutation-approval-persistence-plan.md`。
+- 本轮只规划 operator approval persistence，不修改 `apps/**` 或 `packages/**` runtime。
+- 第一版 persistence contract 仍必须不可执行：`approvalWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`refundSuccessState=false`。
+- 明确 vendor actor 不能批准平台退款状态写入，reviewer 与发起 actor 不能相同，permission evidence 必须来自服务端可信来源。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

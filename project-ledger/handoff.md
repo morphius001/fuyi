@@ -2537,3 +2537,11 @@
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、DB dry-run `2|9`、runtime grep；子智能体复核 No Findings。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-runtime-adapter-validation`。
+
+## Round 367 更新
+
+- `refund-state-mutation-runtime-adapter-validation` 已完成，见 `docs/refund-state-mutation-runtime-adapter-validation.md`。
+- PR #413 已合并，merge commit `7852b6c6d16b8db96c6b61fecdf868060ca36e69`。
+- 合并后 focused runtime adapter test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
+- 当前 runtime adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-state-mutation-audit-write-plan`：只能规划 approval candidate 到 audit write 的 local-only / disabled 边界。

@@ -1543,3 +1543,12 @@
 - 合同只准备 disabled adapter decision / audit event，不执行 workflow、不写退款成功状态。
 - 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、payment DB dry-run `2|9`、runtime grep；子智能体复核 No Findings。`git diff --check` 在 PR 收口前运行。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 367 更新
+
+- `refund-state-mutation-runtime-adapter-validation`: done，见 `docs/refund-state-mutation-runtime-adapter-validation.md`。
+- PR #413 已合并，merge commit `7852b6c6d16b8db96c6b61fecdf868060ca36e69`。
+- 合并后 focused runtime adapter test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
+- 当前 runtime adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-audit-write-plan`，只能规划 audit write local-only / disabled 边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

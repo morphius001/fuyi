@@ -3053,4 +3053,19 @@
 
 第三百五十五轮完成后建议继续：
 
-1. `refund-state-mutation-readiness-contract`: pending
+1. `refund-state-mutation-readiness-contract`: done
+
+## 第三百五十六轮 Refund State Mutation Readiness Contract
+
+1. `refund-state-mutation-readiness-contract`: done
+
+第三百五十六轮原则：
+
+- 本轮只新增 refund state mutation readiness 纯函数合同。
+- 合同输出不可执行 readiness decision / shadow DTO，不执行 workflow、不写 refund success state。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百五十六轮完成后建议继续：
+
+1. `refund-state-mutation-readiness-validation`: pending

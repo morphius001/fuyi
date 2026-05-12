@@ -2449,3 +2449,10 @@
 - 本轮只规划真实退款状态写入前 readiness / Go-No-Go，结论仍是 No-Go to real refund state mutation。
 - 后续 readiness contract 第一版必须继续不可执行：`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
 - 仍不得把 provider inbox、manual review、query snapshot、reconciliation 或 fixtures 直接接到退款成功、财务、权限、履约或物流 runtime。
+
+## Round 356 更新
+
+- `refund-state-mutation-readiness-contract` 已完成，见 `docs/refund-state-mutation-readiness-contract.md`。
+- 新增纯函数合同 `evaluateRefundStateMutationReadiness()`，覆盖 all gates passed、runtime mutation request、manual review missing、mismatch reconciliation、terminal conflict 和 rollback / side-effect isolation 阻断。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-readiness-validation`。

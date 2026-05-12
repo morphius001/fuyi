@@ -3420,3 +3420,19 @@
 第三百七十八轮完成后建议继续：
 
 1. `refund-state-mutation-persistence-gap-plan`: pending
+
+## 第三百七十九轮 Refund State Mutation Persistence Gap Plan
+
+1. `refund-state-mutation-persistence-gap-plan`: done
+
+第三百七十九轮原则：
+
+- 本轮只规划 operator approval、audit write、runtime idempotency 的生产持久化差距。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百七十九轮完成后建议继续：
+
+1. `refund-state-mutation-persistence-gap-validation`: pending

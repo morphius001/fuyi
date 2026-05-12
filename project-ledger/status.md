@@ -1652,3 +1652,12 @@
 - 当前最终清单结论仍 No-Go：现有链路均为 disabled / non-executable 合同链，不能视作上线可执行许可。
 - 下一步建议进入 `refund-state-mutation-persistence-gap-plan`，只能规划生产持久化差距。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 379 更新
+
+- `refund-state-mutation-persistence-gap-plan`: done，见 `docs/refund-state-mutation-persistence-gap-plan.md`。
+- 本轮只规划 operator approval、audit write、runtime idempotency / replay / terminal conflict evidence 的生产持久化差距，不修改 `apps/**` 或 `packages/**` runtime。
+- 明确生产前必须补齐 approval record、append-only audit log、workflow execution idempotency、retry state machine、duplicate no-op 和 terminal conflict lock。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- 下一步建议进入 `refund-state-mutation-persistence-gap-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -3469,3 +3469,20 @@
 第三百八十一轮完成后建议继续：
 
 1. `refund-state-mutation-approval-persistence-validation`: pending
+
+## 第三百八十二轮 Refund State Mutation Approval Persistence Validation
+
+1. `refund-state-mutation-approval-persistence-validation`: done
+
+第三百八十二轮原则：
+
+- 本轮只记录 PR #428 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 approval persistence plan 仍 docs-only。
+- 仍不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百八十二轮完成后建议继续：
+
+1. `refund-state-mutation-approval-persistence-contract`: pending

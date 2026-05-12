@@ -3653,3 +3653,19 @@
 第三百九十二轮完成后建议继续：
 
 1. `refund-state-mutation-terminal-conflict-contract`: pending
+
+## 第三百九十三轮 Refund State Mutation Terminal Conflict Contract
+
+1. `refund-state-mutation-terminal-conflict-contract`: done
+
+第三百九十三轮原则：
+
+- 本轮只新增 terminal conflict lock / evidence digest 的 disabled / non-executable 纯函数合同。
+- 合同输出 terminal conflict intent / audit event，不连接生产 DB、不写 terminal lock。
+- 不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百九十三轮完成后建议继续：
+
+1. `refund-state-mutation-terminal-conflict-contract-validation`: pending

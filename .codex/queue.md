@@ -3387,3 +3387,19 @@
 第三百七十六轮完成后建议继续：
 
 1. `refund-state-mutation-final-go-no-go-plan`: pending
+
+## 第三百七十七轮 Refund State Mutation Final Go No-Go Plan
+
+1. `refund-state-mutation-final-go-no-go-plan`: done
+
+第三百七十七轮原则：
+
+- 本轮只整理真实退款状态写入前最终 Go / No-Go 清单。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写生产 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百七十七轮完成后建议继续：
+
+1. `refund-state-mutation-final-go-no-go-validation`: pending

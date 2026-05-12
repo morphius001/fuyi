@@ -2617,3 +2617,10 @@
 - 合并后 focused preprod dry-run test 1 suite / 4 tests、API typecheck、payment harness 54 suites / 386 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前 preprod dry-run contract 仍 disabled / non-executable，不执行生产 workflow、不写生产 refund success state。
 - 下一步进入 `refund-state-mutation-final-go-no-go-plan`：只能做真实状态写入前最终 Go / No-Go 清单。
+
+## Round 377 更新
+
+- `refund-state-mutation-final-go-no-go-plan` 已完成，见 `docs/refund-state-mutation-final-go-no-go-plan.md`。
+- 本轮只整理真实退款状态写入前最终 Go / No-Go 清单，不修改 runtime。
+- 结论仍 No-Go：现有链路均为 disabled / non-executable 合同链，不能视作上线可执行许可。
+- 下一步进入 `refund-state-mutation-final-go-no-go-validation`：只验证文件范围和 No-Go。

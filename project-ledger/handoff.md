@@ -2737,3 +2737,10 @@
 - 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 57 suites / 399 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
 - 当前仍不新增 route、job、subscriber、migration，不连生产 DB、不注册 module、不接 SDK、不执行生产 workflow、不写 production refund success state。
 - 下一步建议进入 `refund-state-mutation-terminal-conflict-contract-validation`。
+
+## Round 394 更新
+
+- `refund-state-mutation-terminal-conflict-contract-validation` 已完成，见 `docs/refund-state-mutation-terminal-conflict-contract-validation.md`。
+- PR #440 已合并，merge commit `780e5039c992f101016976da605978f8f4fe562d`。
+- 合并后 focused terminal conflict test 1 suite / 5 tests、API typecheck、payment harness 57 suites / 399 tests、DB dry-run `2|9` 和 runtime grep 通过；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 下一步进入 `refund-state-mutation-runtime-attempt-plan`：只能规划 workflow attempt persistence schema，不实现生产写入。

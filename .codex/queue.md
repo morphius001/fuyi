@@ -3669,3 +3669,20 @@
 第三百九十三轮完成后建议继续：
 
 1. `refund-state-mutation-terminal-conflict-contract-validation`: pending
+
+## 第三百九十四轮 Refund State Mutation Terminal Conflict Contract Validation
+
+1. `refund-state-mutation-terminal-conflict-contract-validation`: done
+
+第三百九十四轮原则：
+
+- 本轮只记录 PR #440 合并后验证。
+- 当前 terminal conflict contract 仍 disabled / non-executable。
+- 仍不连接生产 DB、不写 terminal lock。
+- 仍不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 仍不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百九十四轮完成后建议继续：
+
+1. `refund-state-mutation-runtime-attempt-plan`: pending

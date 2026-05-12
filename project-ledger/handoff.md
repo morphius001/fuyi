@@ -2359,3 +2359,10 @@
 - PR #389 已合并，merge commit `7f9fa473c4e0c29943f1638869e46d1cf1101e59`。
 - 合并后 focused state owner handoff test 1 suite / 8 tests 通过。
 - 下一步建议进入 `refund-workflow-shadow-command-plan`，仍只能规划 shadow command DTO，不得执行 workflow 或写 refund success state。
+
+## Round 344 更新
+
+- `refund-workflow-shadow-command-plan` 已完成，见 `docs/refund-workflow-shadow-command-plan.md`。
+- 本轮只规划 shadow workflow command DTO / audit event，不修改 runtime。
+- 下一步建议进入 `refund-workflow-shadow-command-contract`，只能新增纯函数和 tests，输出必须保持 `workflowExecutionAllowed=false`、`refundSuccessState=false`。
+- 仍不得接 provider refund request/query、执行 workflow、写退款成功、调整财务/权限/履约/物流。

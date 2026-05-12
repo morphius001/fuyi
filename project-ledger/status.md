@@ -1344,3 +1344,11 @@
 - 当前 handoff contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-workflow-shadow-command-plan`。
 - 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 344 更新
+
+- `refund-workflow-shadow-command-plan`: done，见 `docs/refund-workflow-shadow-command-plan.md`。
+- 本轮只做 docs-only planning，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划明确 `refund-workflow-shadow-command-contract` 只能把 handoff decision 映射为不可执行 shadow command DTO / audit event。
+- 下一步建议进入 `refund-workflow-shadow-command-contract`，仍不得执行 workflow 或写退款成功状态。
+- 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

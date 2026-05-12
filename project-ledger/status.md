@@ -1369,3 +1369,12 @@
 - 当前 shadow command contract 仍只输出不可执行 DTO / audit event，不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-follow-up-plan`，先 docs-only 规划 query follow-up owner 和边界。
 - 仍 No-Go：provider refund request、refund query API runtime、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 347 更新
+
+- `refund-provider-query-follow-up-plan`: done，见 `docs/refund-provider-query-follow-up-plan.md`。
+- 本轮只做 docs-only provider query follow-up 规划，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划新增 future owner `RefundProviderQueryFollowUpOwner`，第一版仍输出 `providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 明确 provider inbox route、state owner handoff 和 workflow shadow command 不得直接调用 provider query API。
+- 下一步建议进入 `refund-provider-query-follow-up-contract`，只能新增纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

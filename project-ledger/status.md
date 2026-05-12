@@ -1866,3 +1866,11 @@
 - 当前 production feature flag plan 仍 docs-only，不能视作生产开关或 production workflow execution 许可。
 - 下一步建议进入 `refund-state-mutation-production-feature-flag-contract`，只能新增不可执行纯函数合同和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 403 更新
+
+- `refund-state-mutation-production-feature-flag-contract`: done，见 `docs/refund-state-mutation-production-feature-flag-contract.md`。
+- 新增 `evaluateRefundStateMutationProductionFeatureFlag()` 纯函数和 focused tests，输出始终 `featureFlagExecutionAllowed=false`、`productionExecutionAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 disabled feature flag decision / audit event，不实现生产开关。
+- 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 59 suites / 409 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -3821,3 +3821,19 @@
 第四百零二轮完成后建议继续：
 
 1. `refund-state-mutation-production-feature-flag-contract`: pending
+
+## 第四百零三轮 Refund State Mutation Production Feature Flag Contract
+
+1. `refund-state-mutation-production-feature-flag-contract`: done
+
+第四百零三轮原则：
+
+- 本轮只新增 production feature flag / kill switch 的 disabled / non-executable 纯函数合同。
+- 合同输出 feature flag decision / audit event，不实现生产开关。
+- 不新增 route、job、subscriber、migration、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百零三轮完成后建议继续：
+
+1. `refund-state-mutation-production-feature-flag-contract-validation`: pending

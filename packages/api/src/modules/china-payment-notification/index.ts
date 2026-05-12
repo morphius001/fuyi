@@ -61,4 +61,5 @@ export * from "./refund-state-mutation-audit-persistence";
 export * from "./refund-state-mutation-audit-persistence-repository";
 export * from "./refund-state-mutation-terminal-conflict";
 export * from "./refund-state-mutation-runtime-attempt";
+export * from "./refund-state-mutation-runtime-attempt-persistence-repository";
 export * from "./refund-state-mutation-production-feature-flag";

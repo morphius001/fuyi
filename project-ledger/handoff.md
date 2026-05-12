@@ -2919,3 +2919,11 @@
 - 验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check`。
 - 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-runtime-attempt-persistence-repository-validation`：只做合并后验证和 No-Go 收口。
+
+## Round 418 更新
+
+- `refund-state-mutation-runtime-attempt-persistence-repository-validation` 已完成，见 `docs/refund-state-mutation-runtime-attempt-persistence-repository-validation.md`。
+- PR #464 已合并，merge commit `5d61c264f42e3667b56214fbe89e067d48ad996b`。
+- 合并后验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 均通过。
+- 当前 runtime attempt persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、job、subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-feature-flag-persistence-repository-plan`：继续 docs-only 拆分下一段 persistence gap。

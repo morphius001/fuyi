@@ -2381,3 +2381,11 @@
 - 合并后 focused shadow command test 1 suite / 5 tests 通过；合并文件范围确认符合预期。
 - 当前 shadow command contract 仍只输出不可执行 DTO / audit event，不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-provider-query-follow-up-plan`：只能先规划 provider query follow-up owner、触发条件、manual review / reconciliation 边界、限流和审计，不能在 route / handoff / shadow command 中直接调用 provider query API。
+
+## Round 347 更新
+
+- `refund-provider-query-follow-up-plan` 已完成，见 `docs/refund-provider-query-follow-up-plan.md`。
+- 本轮只规划 provider refund query follow-up owner，不修改 runtime、不发 provider query 请求。
+- 计划要求后续 contract 第一版仍保持不可执行：`providerQueryAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- Route / handoff / shadow command 仍不得直接 query provider；query snapshot 后续也只能进入 manual review / reconciliation planning，不能直接写 refund success state。
+- 下一步进入 `refund-provider-query-follow-up-contract`，只能做纯函数合同、redacted shadow command DTO 和 focused tests。

@@ -2910,4 +2910,20 @@
 
 第三百四十六轮完成后建议继续：
 
-1. `refund-provider-query-follow-up-plan`: pending
+1. `refund-provider-query-follow-up-plan`: done
+
+## 第三百四十七轮 Refund Provider Query Follow-up Plan
+
+1. `refund-provider-query-follow-up-plan`: done
+
+第三百四十七轮原则：
+
+- 本轮只规划 provider refund query follow-up owner。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 query route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不在 provider inbox route、handoff contract 或 shadow command contract 内调用 provider query API。
+- 仍不执行 workflow、不写 refund success state、不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十七轮完成后建议继续：
+
+1. `refund-provider-query-follow-up-contract`: pending

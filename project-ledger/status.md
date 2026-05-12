@@ -1463,3 +1463,12 @@
 - 当前 readiness contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-shadow-command-plan`，只能规划 shadow-only command。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 358 更新
+
+- `refund-state-mutation-shadow-command-plan`: done，见 `docs/refund-state-mutation-shadow-command-plan.md`。
+- 本轮只做 docs-only shadow command 规划，不修改 `apps/**` 或 `packages/**` runtime。
+- 计划要求 shadow command 继续固定 `workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- `targetState` 只是审计标签，不得映射为平台真实 refund state。
+- 下一步建议进入 `refund-state-mutation-shadow-command-contract`，只能新增纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

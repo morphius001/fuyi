@@ -2464,3 +2464,10 @@
 - 合并后 focused readiness test 1 suite / 6 tests 通过；子智能体指出 rollback gate 覆盖不足后，本轮补充 financial / fulfillment / rollback 三个独立用例，focused readiness test 1 suite / 8 tests 通过。
 - 当前 readiness contract 仍只输出不可执行 decision / shadow DTO，不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-state-mutation-shadow-command-plan`：只能规划 shadow-only state mutation command，不直接实现真实状态写入或接财务、权限、履约、物流变更。
+
+## Round 358 更新
+
+- `refund-state-mutation-shadow-command-plan` 已完成，见 `docs/refund-state-mutation-shadow-command-plan.md`。
+- 本轮只规划 readiness decision 到 shadow-only state command / audit event 的映射，不修改 runtime。
+- 后续 contract 第一版仍必须不可执行：`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- `targetState` 仅允许作为审计标签，不能映射为平台真实退款成功。

@@ -3084,4 +3084,20 @@
 
 第三百五十七轮完成后建议继续：
 
-1. `refund-state-mutation-shadow-command-plan`: pending
+1. `refund-state-mutation-shadow-command-plan`: done
+
+## 第三百五十八轮 Refund State Mutation Shadow Command Plan
+
+1. `refund-state-mutation-shadow-command-plan`: done
+
+第三百五十八轮原则：
+
+- 本轮只规划 refund state mutation shadow command。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- Shadow command 仍不可执行，不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百五十八轮完成后建议继续：
+
+1. `refund-state-mutation-shadow-command-contract`: pending

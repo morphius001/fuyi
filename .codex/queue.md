@@ -2926,4 +2926,20 @@
 
 第三百四十七轮完成后建议继续：
 
-1. `refund-provider-query-follow-up-contract`: pending
+1. `refund-provider-query-follow-up-contract`: done
+
+## 第三百四十八轮 Refund Provider Query Follow-up Contract
+
+1. `refund-provider-query-follow-up-contract`: done
+
+第三百四十八轮原则：
+
+- 本轮只新增 provider query follow-up 纯函数合同。
+- 合同输出不可执行 shadow query DTO 和 audit event，不调用 provider query API。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十八轮完成后建议继续：
+
+1. `refund-provider-query-follow-up-validation`: pending

@@ -45,3 +45,4 @@ export * from "./refund-provider-inbox-local-repository";
 export * from "./refund-provider-inbox-route-normalizer";
 export * from "./refund-state-owner-handoff";
 export * from "./refund-workflow-shadow-command";
+export * from "./refund-provider-query-follow-up";

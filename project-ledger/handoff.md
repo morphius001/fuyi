@@ -2419,3 +2419,11 @@
 - 新增纯函数合同 `planRefundProviderQueryReconciliation()`，覆盖 consistent provider success、mismatch review、processing requery、unredacted snapshot、unsafe snapshot 和 runtime mutation 阻断。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-reconciliation-validation`。
+
+## Round 352 更新
+
+- `refund-provider-query-reconciliation-validation` 已完成，见 `docs/refund-provider-query-reconciliation-validation.md`。
+- PR #398 已合并，merge commit `20f02e9221dc4f4492366c0aa696ed0e1a9726b3`。
+- 合并后 focused reconciliation test 1 suite / 6 tests 通过；合并文件范围确认符合预期。
+- 当前 reconciliation contract 仍只输出不可执行 decision / manual review handoff，不调用 provider query API、不写 refund success state。
+- 下一步进入 `refund-provider-query-local-fixture-contract`：只能新增 redacted fake query snapshot vectors，不接 SDK、不发网络请求、不连接 DB、不把 fixture 结果当作平台退款成功。

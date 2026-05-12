@@ -1525,3 +1525,13 @@
 - No-Go 原因：没有 executable runtime owner、未接 workflow、未定义生产/预发 DB approval write path、未批准 settlement / commission / payout / fulfillment / logistics side-effect contract。
 - 下一步建议进入 `refund-state-mutation-runtime-adapter-plan`，只能规划 runtime adapter 边界。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 365 更新
+
+- `refund-state-mutation-runtime-adapter-plan`: done，见 `docs/refund-state-mutation-runtime-adapter-plan.md`。
+- 本轮只规划 future runtime adapter 边界，不修改 `apps/**` 或 `packages/**` runtime。
+- 第一版 adapter contract 必须固定 disabled / non-executable：`enabled=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 明确 adapter 只能接收 operator approval candidate，不能让 provider inbox / query 直接输入。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
+- 下一步建议进入 `refund-state-mutation-runtime-adapter-contract`，只能新增 disabled / non-executable adapter contract 和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

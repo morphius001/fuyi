@@ -2520,3 +2520,12 @@
 - 合同层验证通过：readiness / shadow command / operator approval focused tests 3 suites / 19 tests、API typecheck、payment harness 50 suites / 370 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体复核 No Findings。
 - No-Go 原因：没有 executable runtime owner、未接 workflow、未定义生产/预发 DB approval write path、未批准 settlement / commission / payout / fulfillment / logistics side-effect contract。
 - 下一步进入 `refund-state-mutation-runtime-adapter-plan`：只能规划 runtime adapter 边界，不实现真实状态写入。
+
+## Round 365 更新
+
+- `refund-state-mutation-runtime-adapter-plan` 已完成，见 `docs/refund-state-mutation-runtime-adapter-plan.md`。
+- 本轮只规划 future runtime adapter 边界，不修改 runtime。
+- 第一版 adapter contract 必须 disabled / non-executable，仍保持 `stateMutationAllowed=false` 和 `refundSuccessState=false`。
+- adapter 只能接收 operator approval candidate，不能让 provider inbox / query 直接输入。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
+- 下一步进入 `refund-state-mutation-runtime-adapter-contract`：只能新增 disabled / non-executable adapter contract 和 focused tests。

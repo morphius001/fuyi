@@ -2844,3 +2844,11 @@
 - PR #454 已合并，merge commit `9ef9dbbf2694f71a0b868d4d450232f0208f4bdf`。
 - 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
 - 下一步进入 `refund-state-mutation-approval-persistence-migration-skeleton`：新增未注册 migration skeleton 和 local disposable DB dry-run 脚本。
+
+## Round 409 更新
+
+- `refund-state-mutation-approval-persistence-migration-skeleton` 已完成，见 `docs/refund-state-mutation-approval-persistence-migration-skeleton.md`。
+- 新增未注册 `packages/api/src/modules/china-payment-notification/migrations/Migration20260512000300.ts`，创建 `china_refund_state_mutation_approval` 和 `china_refund_state_mutation_approval_event` 两张表，并包含 unique idempotency、CNY、reviewer separation、role/status allowlist 和 event metadata redaction check。
+- 新增 `.codex/scripts/refund-state-mutation-approval-persistence-local-dry-run.sh`，使用本地 disposable DB 验证 up/down SQL、approval/event fixtures、unique idempotency、amount/currency/status/reviewer role/reviewer separation、event action constraint 和自动清库。
+- 当前仍未修改 `packages/api/medusa-config.ts`，未注册 migration，未新增 repository / route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-approval-persistence-migration-skeleton-validation`：只验证 skeleton、dry-run、typecheck、runtime grep 和 No-Go 边界。

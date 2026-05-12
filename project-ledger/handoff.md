@@ -2902,3 +2902,11 @@
 - 明确 repository 仍必须排在 approval persistence、audit persistence、terminal conflict 和 feature flag gate 之后，且仍早于 workflow execution / refund success state mutation / 财务 / 权限 / 履约副作用。
 - 当前仍未新增 migration、repository、route、job、subscriber、workflow execution，未连接 production DB，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-runtime-attempt-persistence-repository-validation`：只验证本计划文件范围和 No-Go。
+
+## Round 416 更新
+
+- `refund-state-mutation-runtime-attempt-persistence-repository-validation` 已完成，见 `docs/refund-state-mutation-runtime-attempt-persistence-repository-validation.md`。
+- PR #462 已合并，merge commit `c227c727a1b07f25156622176d45073e2a8c1748`。
+- 合并后验证通过：`git diff --check` 和文件范围检查均通过。
+- 当前 runtime attempt persistence repository plan 仍 docs-only，未新增 migration、repository、route、job、subscriber、workflow execution，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-runtime-attempt-persistence-repository-contract`：继续新增 disabled / non-executable contract。

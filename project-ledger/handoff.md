@@ -2373,3 +2373,11 @@
 - 新增纯函数合同 `mapRefundHandoffToWorkflowShadowCommand()`，覆盖 shadow command、manual review、query required、reconciliation required 和 blocked mapping。
 - 当前仍不新增 route、不连 DB、不注册 module、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-workflow-shadow-command-validation`。
+
+## Round 346 更新
+
+- `refund-workflow-shadow-command-validation` 已完成，见 `docs/refund-workflow-shadow-command-validation.md`。
+- PR #392 已合并，merge commit `e77c8c50a515b56250af1a8eb2973b9fce595fe7`。
+- 合并后 focused shadow command test 1 suite / 5 tests 通过；合并文件范围确认符合预期。
+- 当前 shadow command contract 仍只输出不可执行 DTO / audit event，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-provider-query-follow-up-plan`：只能先规划 provider query follow-up owner、触发条件、manual review / reconciliation 边界、限流和审计，不能在 route / handoff / shadow command 中直接调用 provider query API。

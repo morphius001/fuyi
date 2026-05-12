@@ -1857,3 +1857,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-production-feature-flag-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 402 更新
+
+- `refund-state-mutation-production-feature-flag-validation`: done，见 `docs/refund-state-mutation-production-feature-flag-validation.md`。
+- PR #448 已合并，merge commit `63c063ecad4ad993ce13db02cc24df229376a2a0`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 production feature flag plan 仍 docs-only，不能视作生产开关或 production workflow execution 许可。
+- 下一步建议进入 `refund-state-mutation-production-feature-flag-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

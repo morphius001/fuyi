@@ -2794,3 +2794,10 @@
 - 本轮只规划 global kill switch、environment gate、provider / market scope gate、operation mode gate、ownership、runtime behavior 和 verification。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-production-feature-flag-validation`：只验证文件范围和 No-Go。
+
+## Round 402 更新
+
+- `refund-state-mutation-production-feature-flag-validation` 已完成，见 `docs/refund-state-mutation-production-feature-flag-validation.md`。
+- PR #448 已合并，merge commit `63c063ecad4ad993ce13db02cc24df229376a2a0`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-production-feature-flag-contract`：只能新增不可执行纯函数合同和 focused tests。

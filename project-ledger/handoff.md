@@ -2487,3 +2487,12 @@
 - 合并后 focused shadow command test 1 suite / 5 tests、API typecheck、payment harness 49 suites / 364 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
 - 当前 shadow command contract 仍只输出不可执行 state shadow command / audit event，不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-state-mutation-operator-approval-plan`：只能规划 operator approval / permission / audit gate，不直接实现真实退款状态写入。
+
+## Round 361 更新
+
+- `refund-state-mutation-operator-approval-plan` 已完成，见 `docs/refund-state-mutation-operator-approval-plan.md`。
+- 本轮只规划退款状态写入前 operator approval / permission / audit gate，不修改 runtime。
+- Approval 第一版仍必须不可执行：`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- system job 只能生成 candidate，vendor 不能批准平台退款状态写入，reviewer 不能与发起 actor 相同。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
+- 下一步进入 `refund-state-mutation-operator-approval-contract`：只能新增纯函数合同和 focused tests，仍不写真实退款成功状态。

@@ -440,3 +440,4 @@
 - 完成 `refund-state-mutation-persistence-gap-validation`，记录 PR #426 合并后文件范围、diff check 和无 runtime diff；确认 persistence gap plan 仍 docs-only。
 - 完成 `refund-state-mutation-approval-persistence-plan`，docs-only 规划 operator approval persistence；仍不新增 migration、不连接生产 DB、不写生产 refund success state。
 - 完成 `refund-state-mutation-approval-persistence-validation`，记录 PR #428 合并后文件范围、diff check 和无 runtime diff；确认 approval persistence plan 仍 docs-only。
+- 完成 `refund-state-mutation-approval-persistence-contract`，新增 disabled / non-executable approval persistence intent 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 55 suites / 390 tests、DB dry-run `2|9` 和 runtime grep；合同不连接生产 DB、不写 approval record、不写 production refund success state。

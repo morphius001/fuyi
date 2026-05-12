@@ -2894,3 +2894,11 @@
 - 合并后验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 均通过。
 - 当前 audit persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、job、subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-runtime-attempt-persistence-repository-plan`：继续 docs-only 拆分下一段 persistence gap。
+
+## Round 415 更新
+
+- `refund-state-mutation-runtime-attempt-persistence-repository-plan` 已完成，见 `docs/refund-state-mutation-runtime-attempt-persistence-repository-plan.md`。
+- 本轮只规划 runtime attempt persistence repository 的 contract / schema / replay / retry / append-only event log 边界。
+- 明确 repository 仍必须排在 approval persistence、audit persistence、terminal conflict 和 feature flag gate 之后，且仍早于 workflow execution / refund success state mutation / 财务 / 权限 / 履约副作用。
+- 当前仍未新增 migration、repository、route、job、subscriber、workflow execution，未连接 production DB，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-runtime-attempt-persistence-repository-validation`：只验证本计划文件范围和 No-Go。

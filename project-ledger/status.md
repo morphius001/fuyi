@@ -1973,3 +1973,11 @@
 - 当前 audit persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-runtime-attempt-persistence-repository-plan`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 415 更新
+
+- `refund-state-mutation-runtime-attempt-persistence-repository-plan`: done，见 `docs/refund-state-mutation-runtime-attempt-persistence-repository-plan.md`。
+- docs-only 规划 runtime attempt persistence repository 的 record、append-only event log、replay / retry、ordering constraints 和后续 PR 顺序。
+- 当前仍未新增 migration、repository、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-runtime-attempt-persistence-repository-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

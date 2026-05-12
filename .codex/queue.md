@@ -4019,3 +4019,19 @@
 第四百一十四轮完成后建议继续：
 
 1. `refund-state-mutation-runtime-attempt-persistence-repository-plan`: pending
+
+## 第四百一十五轮 Refund State Mutation Runtime Attempt Persistence Repository Plan
+
+1. `refund-state-mutation-runtime-attempt-persistence-repository-plan`: done
+
+第四百一十五轮原则：
+
+- 本轮只规划 runtime attempt persistence repository 的 contract / schema / replay / retry / append-only event log 边界。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百一十五轮完成后建议继续：
+
+1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: pending

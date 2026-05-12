@@ -2942,4 +2942,20 @@
 
 第三百四十八轮完成后建议继续：
 
-1. `refund-provider-query-follow-up-validation`: pending
+1. `refund-provider-query-follow-up-validation`: done
+
+## 第三百四十九轮 Refund Provider Query Follow-up Validation
+
+1. `refund-provider-query-follow-up-validation`: done
+
+第三百四十九轮原则：
+
+- 本轮只记录 PR #395 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 query follow-up contract 仍只输出不可执行 shadow query DTO 和 audit event。
+- 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider query API、不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十九轮完成后建议继续：
+
+1. `refund-provider-query-reconciliation-plan`: pending

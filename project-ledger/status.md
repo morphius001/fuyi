@@ -1386,3 +1386,12 @@
 - 合同只准备 `provider_refund_query_shadow` DTO 和 audit event，不调用微信支付 / 支付宝 query API。
 - 验证通过：focused test 1 suite / 6 tests、API typecheck、payment harness 45 suites / 342 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
 - 仍 No-Go：provider refund request/query runtime、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 349 更新
+
+- `refund-provider-query-follow-up-validation`: done，见 `docs/refund-provider-query-follow-up-validation.md`。
+- PR #395 已合并，merge commit `0e30a593c29cb33144e0f96b88e4b6f61b373235`。
+- 合并后 focused query follow-up test 1 suite / 6 tests 通过；文件范围符合预期。
+- 当前 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API、不写 refund success state。
+- 下一步建议进入 `refund-provider-query-reconciliation-plan`，先 docs-only 规划 query snapshot 到 reconciliation / manual review 的边界。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

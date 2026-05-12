@@ -2396,3 +2396,11 @@
 - 新增纯函数合同 `planRefundProviderQueryFollowUp()`，覆盖 WeChat / Alipay shadow query DTO、验签阻断、终态人工复核、runtime mutation 阻断和缺 query key 人工复核。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-provider-query-follow-up-validation`。
+
+## Round 349 更新
+
+- `refund-provider-query-follow-up-validation` 已完成，见 `docs/refund-provider-query-follow-up-validation.md`。
+- PR #395 已合并，merge commit `0e30a593c29cb33144e0f96b88e4b6f61b373235`。
+- 合并后 focused query follow-up test 1 suite / 6 tests 通过；合并文件范围确认符合预期。
+- 当前 query follow-up contract 仍只输出不可执行 shadow DTO / audit event，不调用 provider query API、不写 refund success state。
+- 下一步进入 `refund-provider-query-reconciliation-plan`：只能规划 query snapshot 如何进入 reconciliation / manual review，不得直接写退款成功或触发财务、权限、履约、物流变更。

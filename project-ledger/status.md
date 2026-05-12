@@ -1352,3 +1352,11 @@
 - 计划明确 `refund-workflow-shadow-command-contract` 只能把 handoff decision 映射为不可执行 shadow command DTO / audit event。
 - 下一步建议进入 `refund-workflow-shadow-command-contract`，仍不得执行 workflow 或写退款成功状态。
 - 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 345 更新
+
+- `refund-workflow-shadow-command-contract`: done，见 `docs/refund-workflow-shadow-command-contract.md`。
+- 新增 `mapRefundHandoffToWorkflowShadowCommand()` 纯函数和 focused tests，输出始终 `executable: false`、`workflowExecutionAllowed: false`、`runtimeMutationBlocked: true`、`refundSuccessState: false`。
+- 合同只准备 `refund_workflow_shadow` DTO 和 audit event，不执行 workflow、不写平台退款成功状态。
+- 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 44 suites / 336 tests、payment DB dry-run `2|9`、runtime grep、`git diff --check` 和子智能体只读复核 No Findings。
+- 仍 No-Go：provider refund request、refund query API、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

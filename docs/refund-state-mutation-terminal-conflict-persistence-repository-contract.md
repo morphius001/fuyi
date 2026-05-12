@@ -86,4 +86,4 @@ grep -R -n "refund_state_mutation_terminal_conflict_persistence_repository" pack
 
 ## Next Step
 
-建议进入 `refund-state-mutation-terminal-conflict-persistence-repository-validation`，只做合并后验证和 No-Go 收口。
+建议进入 `refund-state-mutation-terminal-conflict-persistence-repository-contract-validation`，只做合并后验证和 No-Go 收口。

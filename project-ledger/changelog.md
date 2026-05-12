@@ -401,3 +401,4 @@
 - 完成 `refund-state-owner-handoff-plan`，docs-only 规划 provider refund inbox、manual review、platform refund state owner、workflow command adapter 和 reconciliation 的 handoff 分层；下一步只能做不可执行纯函数合同，不得让 route 直接写退款成功状态。
 - 完成 `refund-state-owner-handoff-contract`，新增不可执行纯函数合同和 focused tests；合同只准备 `refund_state_shadow` DTO，阻断签名、金额、币种、归属、权限、终态冲突和人工复核风险，不执行 workflow、不写退款成功状态。
 - 完成 `refund-state-owner-handoff-validation`，记录 PR #389 合并后文件范围和 focused test 1 suite / 8 tests；确认 handoff contract 仍只输出不可执行 decision / shadow DTO。
+- 完成 `refund-workflow-shadow-command-plan`，docs-only 规划 handoff decision 到 refund workflow shadow command DTO / audit event 的映射；下一步仍只能做不可执行纯函数合同，不得执行 workflow 或写退款成功状态。

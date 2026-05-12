@@ -2862,4 +2862,20 @@
 
 第三百四十三轮完成后建议继续：
 
-1. `refund-workflow-shadow-command-plan`: pending
+1. `refund-workflow-shadow-command-plan`: done
+
+## 第三百四十四轮 Refund Workflow Shadow Command Plan
+
+1. `refund-workflow-shadow-command-plan`: done
+
+第三百四十四轮原则：
+
+- 本轮只规划 handoff decision 到 workflow shadow command DTO 的映射。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 workflow、不写 refund success state。
+- 仍不接 provider refund API、refund query API、settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百四十四轮完成后建议继续：
+
+1. `refund-workflow-shadow-command-contract`: pending

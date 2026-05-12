@@ -485,3 +485,4 @@
 - 完成 `refund-state-mutation-preprod-rehearsal-operator-pack`，docs-only 整理 rehearsal 输入模板、evidence capture 清单、回滚确认项和 operator sign-off；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-preprod-rehearsal-operator-pack-validation`，记录 PR #472 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal operator pack 仍 docs-only。
 - 完成 `refund-state-mutation-preprod-rehearsal-readiness-review`，docs-only 汇总 feature flag、approval / audit / runtime attempt / terminal conflict persistence、refresh plan 和 operator pack，结论仍 No-Go；当前仍无可执行 preprod rehearsal。
+- 完成 `refund-state-mutation-preprod-rehearsal-readiness-validation`，记录 PR #474 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal readiness review 仍 docs-only。

@@ -2471,3 +2471,11 @@
 - 本轮只规划 readiness decision 到 shadow-only state command / audit event 的映射，不修改 runtime。
 - 后续 contract 第一版仍必须不可执行：`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
 - `targetState` 仅允许作为审计标签，不能映射为平台真实退款成功。
+
+## Round 359 更新
+
+- `refund-state-mutation-shadow-command-contract` 已完成，见 `docs/refund-state-mutation-shadow-command-contract.md`。
+- 新增纯函数合同 `mapRefundReadinessToStateMutationShadowCommand()`，覆盖 ready、manual review、reconciliation、blocked 和 unsafe readiness output。
+- 子智能体只读复核指出 audit metadata safety flag denylist 不足；已补充 executable / workflow / state / refund success / financial / permission / fulfillment / logistics / provider query / network allowed 旗标剔除，并重跑 focused test、API typecheck、payment harness 49 suites / 364 tests、DB dry-run `2|9` 和 runtime grep；二次复核 No Findings。
+- 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-shadow-command-validation`。

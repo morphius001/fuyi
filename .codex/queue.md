@@ -3100,4 +3100,19 @@
 
 第三百五十八轮完成后建议继续：
 
-1. `refund-state-mutation-shadow-command-contract`: pending
+1. `refund-state-mutation-shadow-command-contract`: done
+
+## 第三百五十九轮 Refund State Mutation Shadow Command Contract
+
+1. `refund-state-mutation-shadow-command-contract`: done
+
+第三百五十九轮原则：
+
+- 本轮只新增 refund state mutation shadow command 纯函数合同。
+- 合同输出不可执行 state shadow command / audit event，不执行 workflow、不写 refund success state。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百五十九轮完成后建议继续：
+
+1. `refund-state-mutation-shadow-command-validation`: pending

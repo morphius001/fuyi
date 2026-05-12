@@ -1535,3 +1535,11 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
 - 下一步建议进入 `refund-state-mutation-runtime-adapter-contract`，只能新增 disabled / non-executable adapter contract 和 focused tests。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 366 更新
+
+- `refund-state-mutation-runtime-adapter-contract`: done，见 `docs/refund-state-mutation-runtime-adapter-contract.md`。
+- 新增 `mapOperatorApprovalToRuntimeAdapterDecision()` 纯函数和 focused tests，输出始终 `enabled=false`、`environmentAllowed=false`、`executable=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`runtimeMutationBlocked=true`、`refundSuccessState=false`。
+- 合同只准备 disabled adapter decision / audit event，不执行 workflow、不写退款成功状态。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、payment DB dry-run `2|9`、runtime grep；子智能体复核 No Findings。`git diff --check` 在 PR 收口前运行。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

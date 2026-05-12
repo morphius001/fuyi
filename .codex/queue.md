@@ -3211,4 +3211,19 @@
 
 第三百六十五轮完成后建议继续：
 
-1. `refund-state-mutation-runtime-adapter-contract`: pending
+1. `refund-state-mutation-runtime-adapter-contract`: done
+
+## 第三百六十六轮 Refund State Mutation Runtime Adapter Contract
+
+1. `refund-state-mutation-runtime-adapter-contract`: done
+
+第三百六十六轮原则：
+
+- 本轮只新增 refund state mutation runtime adapter disabled / non-executable 纯函数合同。
+- 合同输出 disabled adapter decision / audit event，不执行 workflow、不写 refund success state。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百六十六轮完成后建议继续：
+
+1. `refund-state-mutation-runtime-adapter-validation`: pending

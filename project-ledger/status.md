@@ -1892,3 +1892,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-approval-persistence-schema-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 406 更新
+
+- `refund-state-mutation-approval-persistence-schema-validation`: done，见 `docs/refund-state-mutation-approval-persistence-schema-validation.md`。
+- PR #452 已合并，merge commit `25b18cd37d5eaa09680339caca561323695096e7`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 approval persistence schema plan 仍 docs-only，不能视作 migration 或 production DB write 许可。
+- 下一步建议进入 `refund-state-mutation-approval-persistence-migration-plan`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

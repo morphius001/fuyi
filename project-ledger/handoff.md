@@ -2751,3 +2751,10 @@
 - 本轮只规划 workflow attempt persistence schema、attempt status model、idempotency / replay rules、schema planning notes 和 runtime boundaries。
 - 未修改 `apps/**` 或 `packages/**` runtime，未新增 route、job、subscriber、migration、DB、SDK、provider request / query、workflow execution 或 refund success state mutation。
 - 下一步进入 `refund-state-mutation-runtime-attempt-validation`：只验证文件范围和 No-Go。
+
+## Round 396 更新
+
+- `refund-state-mutation-runtime-attempt-validation` 已完成，见 `docs/refund-state-mutation-runtime-attempt-validation.md`。
+- PR #442 已合并，merge commit `de3c950a6a4fac86feb47f7801bb23cc9459a3cc`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 下一步进入 `refund-state-mutation-runtime-attempt-contract`：只能新增不可执行纯函数合同和 focused tests。

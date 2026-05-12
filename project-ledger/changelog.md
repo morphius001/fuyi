@@ -453,3 +453,4 @@
 - 完成 `refund-state-mutation-terminal-conflict-contract`，新增 disabled / non-executable terminal conflict intent 纯函数合同和 focused tests；验证通过 focused test、API typecheck、payment harness 57 suites / 399 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check`；合同不连接生产 DB、不写 terminal lock、不写 production refund success state。
 - 完成 `refund-state-mutation-terminal-conflict-contract-validation`，记录 PR #440 合并后文件范围、focused test、API typecheck、payment harness、DB dry-run 和 runtime grep；确认 terminal conflict contract 仍 disabled / non-executable。
 - 完成 `refund-state-mutation-runtime-attempt-plan`，docs-only 规划真实退款状态写入前 workflow attempt persistence schema、status model、retry/replay 和 runtime boundaries；仍不执行 workflow、不写 production refund success state。
+- 完成 `refund-state-mutation-runtime-attempt-validation`，记录 PR #442 合并后文件范围、diff check 和无 runtime diff；确认 runtime attempt plan 仍 docs-only。

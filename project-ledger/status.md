@@ -1,14 +1,14 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 00:03 Asia/Shanghai
+更新时间：2026-05-13 00:17 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-qx-refund-state-mutation-terminal-conflict-persistence-repository-validation`
-- 当前 `origin/main` 最新合并提交：`f86e75b` `Merge pull request #466 from morphius001/china/pr-qw-refund-state-mutation-terminal-conflict-persistence-repository-plan`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`
-- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-repository-validation`
+- 当前活跃分支：`china/pr-qy-refund-state-mutation-terminal-conflict-persistence-repository-contract`
+- 当前 `origin/main` 最新合并提交：`aa5c335` `Merge pull request #467 from morphius001/china/pr-qx-refund-state-mutation-terminal-conflict-persistence-repository-validation`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`
+- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-repository-contract`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 历史阶段快照（归档，非当前自动队列）
@@ -2034,4 +2034,13 @@
 - 合并后 `git diff --check` 和文件范围检查通过。
 - 当前 terminal conflict persistence repository plan 仍 docs-only，未新增 migration、repository contract、workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-contract`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 421 更新
+
+- `refund-state-mutation-terminal-conflict-persistence-repository-contract`: done，见 `docs/refund-state-mutation-terminal-conflict-persistence-repository-contract.md`。
+- 新增 terminal conflict persistence repository contract、snapshot/event 类型和 `mapTerminalConflictToRepositoryIntent()` disabled 纯函数；输出始终 `repositoryWriteAllowed=false`、`dbWriteAllowed=false`、`productionWriteAllowed=false`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false`、`refundSuccessState=false`。
+- focused test 5/5、API typecheck、payment harness 59/409、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 全部通过。
+- 当前仍未连接 production / preprod DB，未新增 route / workflow execution，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

@@ -1,20 +1,20 @@
 # Handoff
 
-更新时间：2026-05-13 00:03 Asia/Shanghai
+更新时间：2026-05-13 00:17 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-qx-refund-state-mutation-terminal-conflict-persistence-repository-validation`
+- Branch: `china/pr-qy-refund-state-mutation-terminal-conflict-persistence-repository-contract`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#466`，merge commit `f86e75b`。
-- 最近已合并 PR：`#455` 到 `#466`，内容覆盖 approval / audit / runtime attempt persistence 和 terminal conflict persistence plan 的收口。
+- `origin/main` 最新已合并到 `#467`，merge commit `aa5c335`。
+- 最近已合并 PR：`#455` 到 `#467`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan 和 validation 收口。
 
 ## 本轮验证
 
-- PR `#466` 合并后验证进行中：当前只验证 terminal conflict persistence repository plan 的文件范围和 No-Go。
-- 当前分支继续执行 docs-only 任务 `refund-state-mutation-terminal-conflict-persistence-repository-validation`。
-- 本轮 docs-only 验证要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
+- PR `#467` 合并后验证已通过：当前进入 terminal conflict persistence repository contract 落地，范围仅限 disabled / non-executable contract 和 focused tests。
+- 当前分支继续执行 `refund-state-mutation-terminal-conflict-persistence-repository-contract`。
+- 本轮验证要求：focused test、API typecheck、payment harness、payment inbox dry-run、runtime grep、`git diff --check`。
 
 ## 注意事项
 
@@ -24,8 +24,8 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-terminal-conflict-persistence-repository-validation` 的 docs-only 收口并提交。
-2. 继续进入 `refund-state-mutation-terminal-conflict-persistence-repository-contract`，只能新增 disabled / non-executable contract 和 focused tests。
+1. 完成 `refund-state-mutation-terminal-conflict-persistence-repository-contract` 并提交。
+2. 继续进入 `refund-state-mutation-terminal-conflict-persistence-repository-validation`，只做合并后验证和 No-Go 收口。
 3. 在 terminal conflict persistence 链完成前，不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
@@ -2937,3 +2937,12 @@
 - 合并后验证通过：`git diff --check` 和文件范围检查均通过。
 - 当前 terminal conflict persistence repository plan 仍 docs-only，未新增 migration、repository contract、route、job、subscriber、workflow execution，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-terminal-conflict-persistence-repository-contract`：继续新增 disabled / non-executable repository contract。
+
+## Round 421 更新
+
+- `refund-state-mutation-terminal-conflict-persistence-repository-contract` 已完成，见 `docs/refund-state-mutation-terminal-conflict-persistence-repository-contract.md`。
+- 新增 `refund-state-mutation-terminal-conflict-persistence-repository.ts`，定义 terminal conflict persistence snapshot / event 类型、repository interface 和 `mapTerminalConflictToRepositoryIntent()` disabled 纯函数合同。
+- 新增 focused test `refund-state-mutation-terminal-conflict-persistence-repository.unit.spec.ts`，覆盖 disabled intent、production blocked、missing intent、unsafe terminal conflict blocked 和 repository readiness block codes。
+- 验证通过：focused test 5/5、API typecheck、payment harness 59 suites / 409 tests、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check`。
+- 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-terminal-conflict-persistence-repository-validation`：只做合并后验证和 No-Go 收口。

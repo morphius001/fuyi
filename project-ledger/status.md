@@ -1716,3 +1716,12 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 下一步建议进入 `refund-state-mutation-audit-persistence-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 386 更新
+
+- `refund-state-mutation-audit-persistence-validation`: done，见 `docs/refund-state-mutation-audit-persistence-validation.md`。
+- PR #432 已合并，merge commit `ac3cda1d0acb792cce828e30190d1144c1e5cedc`。
+- 合并后文件范围验证通过，且无 `apps/**` 或 `packages/**` runtime diff；`git diff --check` 通过。
+- 当前 audit persistence plan 仍 docs-only，不能视作上线可执行许可。
+- 下一步建议进入 `refund-state-mutation-audit-persistence-contract`，只能新增不可执行纯函数合同和 focused tests。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

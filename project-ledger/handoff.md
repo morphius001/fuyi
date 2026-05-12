@@ -2545,3 +2545,11 @@
 - 合并后 focused runtime adapter test 1 suite / 4 tests、API typecheck、payment harness 51 suites / 374 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
 - 当前 runtime adapter contract 仍 disabled / non-executable，不执行 workflow、不写 refund success state。
 - 下一步进入 `refund-state-mutation-audit-write-plan`：只能规划 approval candidate 到 audit write 的 local-only / disabled 边界。
+
+## Round 368 更新
+
+- `refund-state-mutation-audit-write-plan` 已完成，见 `docs/refund-state-mutation-audit-write-plan.md`。
+- 本轮只规划 operator approval candidate 到 audit write 的 local-only / disabled 边界，不修改 runtime。
+- 第一版 audit write contract 必须不可执行，保持 `auditWriteAllowed=false`、`dbWriteAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
+- 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff；子智能体复核 No Findings。
+- 下一步进入 `refund-state-mutation-audit-write-contract`：只能新增不可执行 audit write intent 纯函数和 focused tests。

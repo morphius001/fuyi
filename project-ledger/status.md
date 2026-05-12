@@ -1480,3 +1480,12 @@
 - 合同只准备 state shadow command / audit event，不执行 workflow、不写退款成功状态；`targetState` 只作为审计标签。
 - 验证通过：focused test 1 suite / 5 tests、API typecheck、payment harness 49 suites / 364 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check`；子智能体指出 audit metadata safety flag denylist 不足后已补充并重跑验证，二次复核 No Findings。
 - 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 360 更新
+
+- `refund-state-mutation-shadow-command-validation`: done，见 `docs/refund-state-mutation-shadow-command-validation.md`。
+- PR #406 已合并，merge commit `e57ba75879ca4405953ea8ebec1ed9ad889e3bc6`。
+- 合并后 focused shadow command test 1 suite / 5 tests、API typecheck、payment harness 49 suites / 364 tests、payment DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
+- 当前 shadow command contract 仍只输出不可执行 state shadow command / audit event，不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-operator-approval-plan`，只能规划 operator approval / permission / audit gate。
+- 仍 No-Go：真实 provider refund request/query、workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

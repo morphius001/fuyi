@@ -3115,4 +3115,20 @@
 
 第三百五十九轮完成后建议继续：
 
-1. `refund-state-mutation-shadow-command-validation`: pending
+1. `refund-state-mutation-shadow-command-validation`: done
+
+## 第三百六十轮 Refund State Mutation Shadow Command Validation
+
+1. `refund-state-mutation-shadow-command-validation`: done
+
+第三百六十轮原则：
+
+- 本轮只记录 PR #406 合并后验证。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 当前 shadow command contract 仍只输出不可执行 state shadow command / audit event。
+- 仍不连接 DB、不注册 module、不接 SDK、不写真实密钥、不执行 workflow、不写 refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百六十轮完成后建议继续：
+
+1. `refund-state-mutation-operator-approval-plan`: pending

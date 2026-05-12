@@ -2479,3 +2479,11 @@
 - 子智能体只读复核指出 audit metadata safety flag denylist 不足；已补充 executable / workflow / state / refund success / financial / permission / fulfillment / logistics / provider query / network allowed 旗标剔除，并重跑 focused test、API typecheck、payment harness 49 suites / 364 tests、DB dry-run `2|9` 和 runtime grep；二次复核 No Findings。
 - 当前仍不新增 route、不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
 - 下一步建议进入 `refund-state-mutation-shadow-command-validation`。
+
+## Round 360 更新
+
+- `refund-state-mutation-shadow-command-validation` 已完成，见 `docs/refund-state-mutation-shadow-command-validation.md`。
+- PR #406 已合并，merge commit `e57ba75879ca4405953ea8ebec1ed9ad889e3bc6`。
+- 合并后 focused shadow command test 1 suite / 5 tests、API typecheck、payment harness 49 suites / 364 tests、DB dry-run `2|9`、runtime grep 和 `git diff --check` 通过；子智能体复核 No Findings。
+- 当前 shadow command contract 仍只输出不可执行 state shadow command / audit event，不执行 workflow、不写 refund success state。
+- 下一步进入 `refund-state-mutation-operator-approval-plan`：只能规划 operator approval / permission / audit gate，不直接实现真实退款状态写入。

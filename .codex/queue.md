@@ -4250,3 +4250,19 @@
 第四百二十八轮完成后建议继续：
 
 1. `refund-state-mutation-approval-persistence-adapter-plan`: pending
+
+## 第四百二十九轮 Refund State Mutation Approval Persistence Adapter Plan
+
+1. `refund-state-mutation-approval-persistence-adapter-plan`: done
+
+第四百二十九轮原则：
+
+- 本轮只规划 approval persistence repository adapter 在 isolated preprod 中的读写边界、fail-closed 规则和回滚门槛。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 production workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百二十九轮完成后建议继续：
+
+1. `refund-state-mutation-approval-persistence-adapter-validation`: pending

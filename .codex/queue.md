@@ -2958,4 +2958,19 @@
 
 第三百四十九轮完成后建议继续：
 
-1. `refund-provider-query-reconciliation-plan`: pending
+1. `refund-provider-query-reconciliation-plan`: done
+
+## 第三百五十轮 Refund Provider Query Reconciliation Plan
+
+1. `refund-provider-query-reconciliation-plan`: done
+
+第三百五十轮原则：
+
+- 本轮只规划 provider query snapshot 到 reconciliation / manual review 的边界。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、不连接 DB、不注册 module、不接 SDK、不写真实密钥、不调用 provider query API。
+- Query snapshot 不得直接写 refund success state、执行 workflow 或触发财务 / 权限 / 履约 / 物流 mutation。
+
+第三百五十轮完成后建议继续：
+
+1. `refund-provider-query-reconciliation-contract`: pending

@@ -80,6 +80,7 @@ echo "RUN payment notification unit tests"
     src/modules/china-payment-notification/__tests__/refund-state-mutation-approval-persistence.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/refund-state-mutation-audit-persistence.unit.spec.ts \
     src/modules/china-payment-notification/__tests__/refund-state-mutation-terminal-conflict.unit.spec.ts \
+    src/modules/china-payment-notification/__tests__/refund-state-mutation-runtime-attempt.unit.spec.ts \
     src/api/admin/china/mock-payment-webhooks/__tests__/route.unit.spec.ts \
     src/api/china/payment-webhooks/mock/__tests__/route.unit.spec.ts \
     src/api/china/payment-providers/mock/__tests__/route.unit.spec.ts \

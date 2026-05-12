@@ -1,17 +1,17 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-12 23:58 Asia/Shanghai
+更新时间：2026-05-13 00:03 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-qw-refund-state-mutation-terminal-conflict-persistence-repository-plan`
-- 当前 `origin/main` 最新合并提交：`9e3dfee` `Merge pull request #465 from morphius001/china/pr-qv-refund-state-mutation-runtime-attempt-persistence-repository-validation`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`
-- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-repository-plan`
+- 当前活跃分支：`china/pr-qx-refund-state-mutation-terminal-conflict-persistence-repository-validation`
+- 当前 `origin/main` 最新合并提交：`f86e75b` `Merge pull request #466 from morphius001/china/pr-qw-refund-state-mutation-terminal-conflict-persistence-repository-plan`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`
+- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-repository-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
-## 主线合并状态
+## 历史阶段快照（归档，非当前自动队列）
 
 - PR A-H 已经合并到 `main`。
 - 当前 `origin/main` 最新合并提交：`a945ceb` `[china] PR H Integration runbooks and env template notes`。
@@ -25,14 +25,14 @@
 - `origin/main..china/integration-localization` diff 为空，说明拆分 PR 合并后的主线内容与 integration 基线一致。
 - 主工作目录 `/home/codex/code/fuyi` 可能仍有本地未提交改动；本轮未在主目录执行 pull、reset 或覆盖操作。
 
-## 当前分支
+### 旧阶段分支上下文
 
 - 主线基线：`origin/main`
 - 最近验证 worktree: `/home/codex/code/fuyi-pr-h-runbooks-cn`
 - 账本更新 worktree: `/home/codex/code/fuyi-pr-i-postmerge-cn`
 - 目标：MercurJS 中国大陆多商户生鲜/海鲜本地化基础版进入下一阶段数据落地准备
 
-## 下一阶段任务文件
+### 旧阶段任务文件
 
 - `.codex/tasks/market-data-model-implementation-plan.md`
 - `.codex/tasks/admin-module-config-read-model.md`
@@ -2016,7 +2016,6 @@
 - 合并后 focused test 5/5、API typecheck、payment harness 59/409、payment inbox dry-run `2|9`、runtime grep 和 `git diff --check` 全部通过。
 - 当前 runtime attempt persistence repository contract 仍 disabled / non-executable，未新增 DB adapter、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-plan`。
-- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-plan`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
 
 ## Round 419 更新
@@ -2026,4 +2025,13 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 当前仍不新增 route、job、subscriber、migration，不连接 production / preprod DB，不执行 workflow，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-validation`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 420 更新
+
+- `refund-state-mutation-terminal-conflict-persistence-repository-validation`: done，见 `docs/refund-state-mutation-terminal-conflict-persistence-repository-validation.md`。
+- PR #466 已合并，merge commit `f86e75b`。
+- 合并后 `git diff --check` 和文件范围检查通过。
+- 当前 terminal conflict persistence repository plan 仍 docs-only，未新增 migration、repository contract、workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-terminal-conflict-persistence-repository-contract`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

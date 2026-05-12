@@ -4036,9 +4036,9 @@
 
 1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: pending
 
-## 第四百一十六轮 Refund State Mutation Runtime Attempt Persistence Repository Validation
+## 第四百一十六轮 Refund State Mutation Runtime Attempt Persistence Repository Validation (PR #462 Plan)
 
-1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: done
+1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: done（plan validation for PR #462）
 
 第四百一十六轮原则：
 
@@ -4069,9 +4069,9 @@
 
 1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: pending
 
-## 第四百一十八轮 Refund State Mutation Runtime Attempt Persistence Repository Validation
+## 第四百一十八轮 Refund State Mutation Runtime Attempt Persistence Repository Validation (PR #464 Contract)
 
-1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: done
+1. `refund-state-mutation-runtime-attempt-persistence-repository-validation`: done（contract validation for PR #464）
 
 第四百一十八轮原则：
 
@@ -4101,3 +4101,20 @@
 第四百一十九轮完成后建议继续：
 
 1. `refund-state-mutation-terminal-conflict-persistence-repository-validation`: pending
+
+## 第四百二十轮 Refund State Mutation Terminal Conflict Persistence Repository Validation
+
+1. `refund-state-mutation-terminal-conflict-persistence-repository-validation`: done
+
+第四百二十轮原则：
+
+- 本轮只记录 PR #466 合并后验证。
+- 当前 terminal conflict persistence repository plan 仍 docs-only。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行生产 workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百二十轮完成后建议继续：
+
+1. `refund-state-mutation-terminal-conflict-persistence-repository-contract`: pending

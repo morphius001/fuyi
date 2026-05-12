@@ -3307,3 +3307,18 @@
 第三百七十一轮完成后建议继续：
 
 1. `refund-state-mutation-workflow-adapter-contract`: pending
+
+## 第三百七十二轮 Refund State Mutation Workflow Adapter Contract
+
+1. `refund-state-mutation-workflow-adapter-contract`: done
+
+第三百七十二轮原则：
+
+- 本轮只新增 audit write intent 到 refund workflow command adapter 的 disabled / non-executable 纯函数合同。
+- 合同输出 workflow adapter command candidate / audit event，不执行 workflow、不写 refund success state。
+- 不新增 route、job、subscriber、migration、不连接 DB、不注册 module、不接 SDK、不写真实密钥。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第三百七十二轮完成后建议继续：
+
+1. `refund-state-mutation-workflow-adapter-validation`: pending

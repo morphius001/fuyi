@@ -2577,3 +2577,11 @@
 - 第一版 workflow adapter contract 必须不可执行，保持 `workflowDryRunOnly=true`、`workflowExecutionAllowed=false`、`stateMutationAllowed=false` 和 `refundSuccessState=false`。
 - workflow adapter 只能接收 audit write intent，不能让 provider inbox / query / route 直接输入。
 - 下一步进入 `refund-state-mutation-workflow-adapter-contract`：只能新增不可执行纯函数合同和 focused tests，不执行 workflow。
+
+## Round 372 更新
+
+- `refund-state-mutation-workflow-adapter-contract` 已完成，见 `docs/refund-state-mutation-workflow-adapter-contract.md`。
+- 新增纯函数合同 `mapAuditWriteIntentToWorkflowAdapterCommand()`，覆盖 disabled command candidate、feature flag / adapter registration ignored、audit write intent missing 和 unsafe audit write decision blocked。
+- 验证通过：focused test 1 suite / 4 tests、API typecheck、payment harness 53 suites / 382 tests、DB dry-run `2|9` 和 runtime grep；runtime grep 唯一命中为 sanitizer denylist 字符串 `"executeWorkflow"`，不是调用点。
+- 当前仍不新增 route、job、subscriber、migration，不连 DB、不注册 module、不接 SDK、不调用真实 provider query API、不执行 workflow、不写 refund success state。
+- 下一步建议进入 `refund-state-mutation-workflow-adapter-validation`。

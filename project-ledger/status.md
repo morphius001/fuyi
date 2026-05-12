@@ -1981,3 +1981,12 @@
 - 当前仍未新增 migration、repository、route、workflow execution，不连接 production / preprod DB，不写 production refund success state。
 - 下一步建议：`refund-state-mutation-runtime-attempt-persistence-repository-validation`。
 - 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。
+
+## Round 416 更新
+
+- `refund-state-mutation-runtime-attempt-persistence-repository-validation`: done，见 `docs/refund-state-mutation-runtime-attempt-persistence-repository-validation.md`。
+- PR #462 已合并，merge commit `c227c727a1b07f25156622176d45073e2a8c1748`。
+- 合并后 `git diff --check` 和文件范围检查通过。
+- 当前 runtime attempt persistence repository plan 仍 docs-only，未新增 migration、repository、workflow execution，不连接 production / preprod DB，不写 production refund success state。
+- 下一步建议：`refund-state-mutation-runtime-attempt-persistence-repository-contract`。
+- 仍 No-Go：真实 provider refund request/query、production workflow execution、refund success state mutation、settlement、commission、payout、permission weakening、fulfillment 或 logistics mutation。

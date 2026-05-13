@@ -4744,3 +4744,20 @@
 第四百五十八轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-plan`: pending
+
+## 第四百五十九轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry API Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-plan`: done
+
+第四百五十九轮原则：
+
+- 本轮只规划 fixture registry API、selector、lookup contract 和 local-only gate。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百五十九轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-validation`: pending

@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 07:24 Asia/Shanghai
+更新时间：2026-05-14 07:38 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-tl-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`
-- 当前 `origin/main` 最新合并提交：`620c518` `[china] Refund state mutation isolated preprod query surface fixture registry operator hint contract plan (#524)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`、`#505`、`#506`、`#507`、`#508`、`#509`、`#510`、`#511`、`#512`、`#513`、`#514`、`#515`、`#516`、`#517`、`#518`、`#519`、`#520`、`#521`、`#522`、`#523`、`#524`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`
+- 当前活跃分支：`china/pr-tm-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`
+- 当前 `origin/main` 最新合并提交：`bad63d9` `[china] Refund state mutation isolated preprod query surface fixture registry operator hint contract validation (#525)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`、`#505`、`#506`、`#507`、`#508`、`#509`、`#510`、`#511`、`#512`、`#513`、`#514`、`#515`、`#516`、`#517`、`#518`、`#519`、`#520`、`#521`、`#522`、`#523`、`#524`、`#525`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan`: done，PR #524 已合并，当前主线已固定 `operatorHints` 的 recommended action、manual review、rollback hint 和 note 合同。
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`: in-progress，当前正在做 docs-only validation 与 ledger 收口。
-- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`: done，PR #525 已合并，当前主线已确认 `operatorHints` contract plan 仍然只是 docs-only 规划。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`: in-progress，当前正在规划 `summary` 的 reviewCaseId、scenarioType、caseStatus、refundReference、marketContext 和 sellerContext 合同。
+- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-validation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

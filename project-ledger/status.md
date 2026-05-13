@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 00:34 Asia/Shanghai
+更新时间：2026-05-14 00:47 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rw-refund-state-mutation-implementation-chain-plan`
-- 当前 `origin/main` 最新合并提交：`2541b59` `[china] Refund state mutation launch readiness validation (#493)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`
-- 当前自动队列任务：`refund-state-mutation-implementation-chain-plan`
+- 当前活跃分支：`china/pr-rx-payment-notification-db-runtime-preflight-implementation`
+- 当前 `origin/main` 最新合并提交：`e8ee7b9` `[china] Refund state mutation implementation chain plan (#494)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`
+- 当前自动队列任务：`payment-notification-db-runtime-preflight-implementation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-launch-readiness-validation`: done，已完成 PR #493，确认 queue / ledger / handoff 对 No-Go 结论已经一致。
-- `refund-state-mutation-implementation-chain-plan`: in-progress，当前正在新建 implementation 级高风险串行任务链，并明确第一波真实代码任务顺序。
-- 下一步建议：完成 `refund-state-mutation-implementation-chain-plan` 后，进入 `payment-notification-db-runtime-preflight-implementation`。
+- `refund-state-mutation-implementation-chain-plan`: done，已完成 PR #494，明确新的 implementation 级高风险串行任务链。
+- `payment-notification-db-runtime-preflight-implementation`: in-progress，当前已落下纯 `payment-runtime-preflight` 评估器，并通过 focused tests / typecheck / diff check。
+- 下一步建议：完成本轮收口后，进入 `mock-webhook-db-backed-route-runtime`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

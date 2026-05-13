@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 00:34 Asia/Shanghai
+更新时间：2026-05-14 00:47 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rw-refund-state-mutation-implementation-chain-plan`
+- Branch: `china/pr-rx-payment-notification-db-runtime-preflight-implementation`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#493`，merge commit `2541b59`。
-- 最近已合并 PR：`#455` 到 `#493`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation。
+- `origin/main` 最新已合并到 `#494`，merge commit `e8ee7b9`。
+- 最近已合并 PR：`#455` 到 `#494`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan。
 
 ## 本轮验证
 
-- PR `#493` 已合并：launch readiness validation 已完成，docs-only 链正式停在 No-Go 收口。
-- 当前分支继续执行 `refund-state-mutation-implementation-chain-plan`，作为新的 implementation 级高风险串行任务链入口。
+- PR `#494` 已合并：implementation chain plan 已完成，新的高风险串行任务链已经建立。
+- 当前分支继续执行 `payment-notification-db-runtime-preflight-implementation`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. `refund-state-mutation-launch-readiness-validation` 已完成，当前结论仍是 No-Go。
-2. 由于用户继续要求加速推进，当前已新开 `refund-state-mutation-implementation-chain-plan` 作为新的 implementation 级高风险串行任务链入口。
-3. 下一步默认进入 `payment-notification-db-runtime-preflight-implementation`，然后再接 `mock-webhook-db-backed-route-runtime`。
+1. `refund-state-mutation-implementation-chain-plan` 已完成，当前已进入第一条真实代码任务 `payment-notification-db-runtime-preflight-implementation`。
+2. 本轮只新增纯 preflight helper、local DB assessment helper 和 focused tests；仍未进入 workflow / state mutation。
+3. 下一步默认进入 `mock-webhook-db-backed-route-runtime`，继续保持 inbox-only、默认关闭、仅限 local / disposable DB。
 4. 即便进入实现链，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

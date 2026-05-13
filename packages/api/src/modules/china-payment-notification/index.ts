@@ -9,6 +9,7 @@ export * from "./workflow-command-audit-mapper";
 export * from "./inbox-repository-contract";
 export * from "./runtime-config";
 export * from "./runtime-gate";
+export * from "./payment-runtime-preflight";
 export * from "./db-inbox-repository";
 export * from "./local-postgres-db-client";
 export * from "./mock-webhook-response";

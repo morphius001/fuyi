@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 13:38 Asia/Shanghai
+更新时间：2026-05-13 13:45 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-ro-refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`
-- 当前 `origin/main` 最新合并提交：`c83fbfe` `[china] Refund state mutation persistence adapter readiness validation (#485)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`
+- 当前活跃分支：`china/pr-rp-refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`
+- 当前 `origin/main` 最新合并提交：`0959401` `[china] Refund state mutation isolated preprod adapter implementation gate plan (#486)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-persistence-adapter-readiness-validation`: done，已完成 PR #485 合并后验证，并补齐 implementation gate / query surface task 注册。
-- `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`: in-progress，当前正在规划统一 environment gate、operator gate、rollback gate、kill switch 和 fail-closed 前置条件。
-- 下一步建议：完成 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan` 后，继续 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`。
+- `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`: done，已完成 PR #486，明确统一 environment gate、operator gate、rollback gate、kill switch 和 fail-closed 前置条件。
+- `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`: in-progress，当前正在验证 PR #486 合并后文件范围、No-Go 边界和 query surface task 注册一致性。
+- 下一步建议：完成 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation` 后，继续 `refund-state-mutation-isolated-preprod-query-surface-plan`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

@@ -10,3 +10,4 @@
 - PowerShell 调 WSL 时避免复杂 `$()` 和 here-string；必要时用简单命令或先重启服务脚本。
 - Windows 浏览器访问 WSL 服务时，Admin/Vendor 的本地 API 地址优先用 `http://localhost:9000`；如果用 `http://127.0.0.1:9000` 出现 `Failed to fetch`，先检查 WSL NAT/localhost 转发，不要改登录业务代码。
 - WSL 无头浏览器截图中文变方块时，先检查并安装 CJK 字体，例如 `fonts-noto-cjk`，不要误判为前端乱码。
+- payment notification 的 local DB route 必须先做 preflight / disposable DB 白名单校验，再读取 raw body 或解析 payload。

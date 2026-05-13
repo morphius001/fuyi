@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 13:10 Asia/Shanghai
+更新时间：2026-05-13 13:19 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rl-refund-state-mutation-terminal-conflict-persistence-adapter-validation`
-- 当前 `origin/main` 最新合并提交：`7a70d86` `[china] Refund state mutation terminal conflict persistence adapter plan (#482)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`
-- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-adapter-validation`
+- 当前活跃分支：`china/pr-rm-refund-state-mutation-persistence-adapter-readiness-review`
+- 当前 `origin/main` 最新合并提交：`d11b81b` `[china] Refund state mutation terminal conflict persistence adapter validation (#483)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`
+- 当前自动队列任务：`refund-state-mutation-persistence-adapter-readiness-review`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-terminal-conflict-persistence-adapter-plan`: done，已完成 PR #482，明确 isolated preprod 中 terminal conflict persistence adapter 的写入/查询边界、rehearsal-only marker 约束、fail-closed 行为和 rollback gate。
-- `refund-state-mutation-terminal-conflict-persistence-adapter-validation`: in-progress，当前正在验证 PR #482 合并后文件范围、No-Go 边界和 readiness review task 注册一致性。
-- 下一步建议：完成 `refund-state-mutation-terminal-conflict-persistence-adapter-validation` 后，继续 `refund-state-mutation-persistence-adapter-readiness-review`。
+- `refund-state-mutation-terminal-conflict-persistence-adapter-validation`: done，已完成 PR #483 合并后验证，并确认 readiness review task 注册可执行。
+- `refund-state-mutation-persistence-adapter-readiness-review`: in-progress，当前正在汇总四段 adapter plan 的耦合点、缺口和 No-Go 结论。
+- 下一步建议：完成 `refund-state-mutation-persistence-adapter-readiness-review` 后，继续 `refund-state-mutation-persistence-adapter-readiness-validation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

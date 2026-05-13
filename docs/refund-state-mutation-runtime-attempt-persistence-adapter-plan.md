@@ -119,7 +119,7 @@ runtime attempt persistence adapter 的 isolated preprod 演练前必须准备�
 1. `refund-state-mutation-runtime-attempt-persistence-adapter-validation`：验证本计划文件范围和 No-Go。
 2. `refund-state-mutation-terminal-conflict-persistence-adapter-plan`：规划 terminal conflict persistence adapter 的 isolated preprod 边界。
 3. `refund-state-mutation-terminal-conflict-persistence-adapter-validation`：验证 terminal conflict adapter plan 的文件范围和 No-Go。
-4. `refund-state-mutation-runtime-attempt-persistence-adapter-review`：汇总 runtime attempt adapter 与 approval / audit / terminal conflict adapter 的耦合点，再决定是否允许进入任何实现型 PR。
+4. terminal conflict adapter plan 收口后，如需进入任何实现型 PR，再单独整理一次 runtime attempt 与 approval / audit / terminal conflict 的耦合复核。
 
 ## Verification Plan
 

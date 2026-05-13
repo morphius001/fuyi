@@ -515,3 +515,4 @@
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`，固定 query surface future resolver 的 `disabled` / `local_fixture` / `isolated_preprod_repository` 三种模式、环境门禁、fixture 边界和 fail-closed 规则；验证通过 `git diff --check`。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-validation`，确认 resolver plan 仍然只是 docs-only 边界收口，没有新增 route、repository implementation 或 DB wiring；验证通过 `git diff --check` 和 `git status --short --branch`。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-plan`，固定 local fixture bundle、scenario type、fixture source key、local-only 标记和 registry 边界；验证通过 `git diff --check` 和 `git status --short --branch`。
+- 完成 `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-validation`，确认 fixture shape plan 仍然只是 docs-only 规划，没有引入 fixture loader、registry implementation 或 runtime wiring；验证通过 `git diff --check` 和 `git status --short --branch`。

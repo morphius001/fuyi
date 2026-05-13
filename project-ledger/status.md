@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 03:10 Asia/Shanghai
+更新时间：2026-05-14 03:16 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-sg-refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-plan`
-- 当前 `origin/main` 最新合并提交：`ebf458c` `[china] Refund state mutation isolated preprod query surface repository resolver validation (#503)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-plan`
+- 当前活跃分支：`china/pr-sh-refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-validation`
+- 当前 `origin/main` 最新合并提交：`5868d00` `[china] Refund state mutation isolated preprod query surface local fixture shape plan (#504)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-validation`: done，已完成 PR #503，当前主线已确认 resolver plan 仍是 docs-only。
-- `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-plan`: in-progress，当前正在固定 fixture bundle / source key / registry 边界。
-- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-validation`。
+- `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-plan`: done，已完成 PR #504，当前主线已固定 fixture bundle / source key / registry contract。
+- `refund-state-mutation-isolated-preprod-query-surface-local-fixture-shape-validation`: in-progress，当前正在做 docs-only validation 与 ledger 收口。
+- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-plan`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

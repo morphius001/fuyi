@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 03:29 Asia/Shanghai
+更新时间：2026-05-14 03:36 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-sj-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-validation`
-- 当前链路位于 refund state mutation 的 fixture registry API validation 阶段。
-- `origin/main` 最新已合并到 `#506`，merge commit `5b8072f`。
-- 最近已合并 PR：`#455` 到 `#506`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement、isolated preprod query surface implementation、isolated preprod query surface validation、isolated preprod query surface repository resolver plan、isolated preprod query surface repository resolver validation、isolated preprod query surface local fixture shape plan、isolated preprod query surface local fixture shape validation、isolated preprod query surface fixture registry api plan。
+- Branch: `china/pr-sk-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-plan`
+- 当前链路位于 refund state mutation 的 fixture registry implementation plan 阶段。
+- `origin/main` 最新已合并到 `#507`，merge commit `f1500c0`。
+- 最近已合并 PR：`#455` 到 `#507`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement、isolated preprod query surface implementation、isolated preprod query surface validation、isolated preprod query surface repository resolver plan、isolated preprod query surface repository resolver validation、isolated preprod query surface local fixture shape plan、isolated preprod query surface local fixture shape validation、isolated preprod query surface fixture registry api plan、isolated preprod query surface fixture registry api validation。
 
 ## 本轮验证
 
-- PR `#506` 已合并：isolated preprod query surface fixture registry api plan 已完成，主线已固定 registry API / selector / lookup contract。
-- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-validation`。
+- PR `#507` 已合并：isolated preprod query surface fixture registry api validation 已完成，主线已确认 registry API / selector / lookup contract 仍然 docs-only。
+- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-plan`。
 - 本轮要求：`git diff --check`、`git status --short --branch`。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-plan` 已完成，registry API / selector / lookup contract 已经写清。
-2. 本轮主要确认 plan 仍然 docs-only，没有混入 registry implementation 或 route。
-3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-plan`，先规划 future implementation module / loader / adapter 边界。
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-api-validation` 已完成，registry API / selector / lookup contract docs-only 边界已经收口。
+2. 本轮主要规划 future fixture registry implementation module / loader / typed selector / adapter 边界，仍然不进入 runtime code。
+3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-validation`，确认 implementation plan 仍然只是 docs-only 规划。
 4. 即便继续推进，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

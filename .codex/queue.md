@@ -4778,3 +4778,20 @@
 第四百六十轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-plan`: pending
+
+## 第四百六十一轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Implementation Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-plan`: done
+
+第四百六十一轮原则：
+
+- 本轮只规划 fixture registry implementation 的模块边界、loader 位置、typed selector 和 fail-closed adapter。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百六十一轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-validation`: pending

@@ -12,3 +12,4 @@
 - WSL 无头浏览器截图中文变方块时，先检查并安装 CJK 字体，例如 `fonts-noto-cjk`，不要误判为前端乱码。
 - payment notification 的 local DB route 必须先做 preflight / disposable DB 白名单校验，再读取 raw body 或解析 payload。
 - payment notification 的 `mock_prepare_command` 路径必须先经过 disabled runtime adapter，不能把 command DTO 直接视为可执行 workflow。
+- payment session 与 order 的 seller / market ownership 必须在 payment state guard 层先对齐，不能等到更后面的 workflow 或 refund 阶段再补救。

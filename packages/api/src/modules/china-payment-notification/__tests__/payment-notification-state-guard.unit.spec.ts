@@ -40,6 +40,8 @@ const createGuardInput = (
     paymentSession: {
       id: "payses_mock_001",
       provider: "mock_china_pay",
+      sellerId: "seller_mock_001",
+      marketId: "market_mock_001",
       amount: {
         value: 128560,
         currency: "CNY" as const,
@@ -50,6 +52,8 @@ const createGuardInput = (
     },
     order: {
       id: "order_mock_001",
+      sellerId: "seller_mock_001",
+      marketId: "market_mock_001",
       status: "pending" as const,
       fetchedAt: "2026-05-07T00:01:01.000Z",
       ...orderOverrides,
@@ -163,6 +167,82 @@ describe("guardPaymentNotificationState", () => {
       allowed: false,
       blockType: "state_conflict",
       retryable: false,
+    });
+  });
+
+  it("blocks seller and market ownership mismatches", () => {
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, { sellerId: "seller_other" }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "seller_ownership_mismatch",
+      retryable: false,
+    });
+
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, {}, { marketId: "market_other" }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "market_ownership_mismatch",
+      retryable: false,
+    });
+  });
+
+  it("blocks incomplete seller and market ownership context", () => {
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, { sellerId: undefined }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "seller_ownership_mismatch",
+      retryable: false,
+      auditMetadata: {
+        ownershipContextComplete: false,
+      },
+    });
+
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, {}, { sellerId: undefined }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "seller_ownership_mismatch",
+      retryable: false,
+      auditMetadata: {
+        ownershipContextComplete: false,
+      },
+    });
+
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, { marketId: undefined }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "market_ownership_mismatch",
+      retryable: false,
+      auditMetadata: {
+        ownershipContextComplete: false,
+      },
+    });
+
+    expect(
+      guardPaymentNotificationState(
+        createGuardInput({}, {}, { marketId: undefined }),
+      ),
+    ).toMatchObject({
+      allowed: false,
+      blockType: "market_ownership_mismatch",
+      retryable: false,
+      auditMetadata: {
+        ownershipContextComplete: false,
+      },
     });
   });
 });

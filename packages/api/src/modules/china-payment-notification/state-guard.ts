@@ -6,6 +6,9 @@ import {
 const isTerminalOrderStatus = (status: string): boolean =>
   ["canceled", "refund_pending", "refunded"].includes(status);
 
+const hasStrictOwnershipMatch = (left?: string, right?: string): boolean =>
+  Boolean(left) && Boolean(right) && left === right;
+
 export const guardPaymentNotificationState = ({
   envelope,
   inboxRecord,
@@ -84,6 +87,38 @@ export const guardPaymentNotificationState = ({
       auditMetadata: {
         envelopeAmount: envelope.amount.value,
         paymentSessionAmount: paymentSession.amount.value,
+      },
+    };
+  }
+
+  if (!hasStrictOwnershipMatch(paymentSession.sellerId, order.sellerId)) {
+    return {
+      allowed: false,
+      blockType: "seller_ownership_mismatch",
+      retryable: false,
+      reason: "Payment session seller ownership does not match order seller ownership.",
+      auditMetadata: {
+        paymentSessionSellerId: paymentSession.sellerId,
+        orderSellerId: order.sellerId,
+        ownershipContextComplete: Boolean(
+          paymentSession.sellerId && order.sellerId,
+        ),
+      },
+    };
+  }
+
+  if (!hasStrictOwnershipMatch(paymentSession.marketId, order.marketId)) {
+    return {
+      allowed: false,
+      blockType: "market_ownership_mismatch",
+      retryable: false,
+      reason: "Payment session market ownership does not match order market ownership.",
+      auditMetadata: {
+        paymentSessionMarketId: paymentSession.marketId,
+        orderMarketId: order.marketId,
+        ownershipContextComplete: Boolean(
+          paymentSession.marketId && order.marketId,
+        ),
       },
     };
   }

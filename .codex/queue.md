@@ -4365,3 +4365,20 @@
 第四百三十五轮完成后建议继续：
 
 1. `refund-state-mutation-terminal-conflict-persistence-adapter-validation`: pending
+
+## 第四百三十六轮 Refund State Mutation Terminal Conflict Persistence Adapter Validation
+
+1. `refund-state-mutation-terminal-conflict-persistence-adapter-validation`: done
+
+第四百三十六轮原则：
+
+- 本轮只记录 PR #482 合并后验证，并确认 readiness review 的 task 注册已可执行。
+- 当前 terminal conflict persistence adapter plan 仍 docs-only。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 production workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百三十六轮完成后建议继续：
+
+1. `refund-state-mutation-persistence-adapter-readiness-review`: pending

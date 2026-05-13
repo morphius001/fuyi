@@ -493,3 +493,4 @@
 - 完成 `refund-state-mutation-runtime-attempt-persistence-adapter-plan`，docs-only 规划 runtime attempt persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-runtime-attempt-persistence-adapter-validation`，记录 PR #480 合并后 `git status --short --branch`、`git diff --check` 和任务注册修正通过；确认 runtime attempt persistence adapter plan 仍 docs-only，且下一步 task file 已补齐。
 - 完成 `refund-state-mutation-terminal-conflict-persistence-adapter-plan`，docs-only 规划 terminal conflict persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
+- 完成 `refund-state-mutation-terminal-conflict-persistence-adapter-validation`，记录 PR #482 合并后 `git status --short --branch`、`git diff --check` 和 readiness review task 注册验证通过；确认 terminal conflict persistence adapter plan 仍 docs-only。

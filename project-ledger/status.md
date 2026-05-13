@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 14:18 Asia/Shanghai
+更新时间：2026-05-13 14:26 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rs-refund-state-mutation-isolated-preprod-rollback-drill-plan`
-- 当前 `origin/main` 最新合并提交：`fa6f982` `[china] Refund state mutation isolated preprod query surface validation (#489)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-rollback-drill-plan`
+- 当前活跃分支：`china/pr-rt-refund-state-mutation-isolated-preprod-rollback-drill-validation`
+- 当前 `origin/main` 最新合并提交：`50af3cb` `[china] Refund state mutation isolated preprod rollback drill plan (#490)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-rollback-drill-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-validation`: done，已完成 PR #489 合并后验证，并补齐 rollback drill task 注册。
-- `refund-state-mutation-isolated-preprod-rollback-drill-plan`: in-progress，当前正在规划 rollback owner、kill-switch 回退、evidence capture、operator checklist 和失败升级路径。
-- 下一步建议：完成 `refund-state-mutation-isolated-preprod-rollback-drill-plan` 后，继续 `refund-state-mutation-isolated-preprod-rollback-drill-validation`。
+- `refund-state-mutation-isolated-preprod-rollback-drill-plan`: done，已完成 PR #490，明确 rollback owner、kill-switch 回退、evidence capture、operator checklist 和失败升级路径。
+- `refund-state-mutation-isolated-preprod-rollback-drill-validation`: in-progress，当前正在验证 PR #490 合并后文件范围、No-Go 边界和 launch readiness task 注册一致性。
+- 下一步建议：完成 `refund-state-mutation-isolated-preprod-rollback-drill-validation` 后，继续 `refund-state-mutation-launch-readiness-review`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

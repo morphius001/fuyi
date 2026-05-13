@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-13 13:19 Asia/Shanghai
+更新时间：2026-05-13 13:31 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rm-refund-state-mutation-persistence-adapter-readiness-review`
+- Branch: `china/pr-rn-refund-state-mutation-persistence-adapter-readiness-validation`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#483`，merge commit `d11b81b`。
-- 最近已合并 PR：`#455` 到 `#483`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation。
+- `origin/main` 最新已合并到 `#484`，merge commit `bb1912d`。
+- 最近已合并 PR：`#455` 到 `#484`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation。
 
 ## 本轮验证
 
-- PR `#483` 已合并：terminal conflict persistence adapter validation 已完成，确认范围仍 docs-only、No-Go 不变。
-- 当前分支继续执行 `refund-state-mutation-persistence-adapter-readiness-review`。
+- PR `#484` 已合并：persistence adapter readiness review 已完成，确认范围仍 docs-only、No-Go 不变。
+- 当前分支继续执行 `refund-state-mutation-persistence-adapter-readiness-validation`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,10 +24,10 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-persistence-adapter-readiness-review` 并提交。
-2. 继续进入 `refund-state-mutation-persistence-adapter-readiness-validation`，确认 review 仍 docs-only。
-3. 然后进入 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`，只规划统一 implementation gate，不写 runtime。
-4. 在 readiness review 和 gate plan 明确放行前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
+1. 完成 `refund-state-mutation-persistence-adapter-readiness-validation` 并提交。
+2. 继续进入 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`，只规划统一 implementation gate，不写 runtime。
+3. `refund-state-mutation-isolated-preprod-query-surface-plan` 的 task file 也已补齐，可作为再下一步继续执行。
+4. 在 readiness review、implementation gate plan 和 query surface plan 明确放行前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
 

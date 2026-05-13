@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 13:19 Asia/Shanghai
+更新时间：2026-05-13 13:31 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rm-refund-state-mutation-persistence-adapter-readiness-review`
-- 当前 `origin/main` 最新合并提交：`d11b81b` `[china] Refund state mutation terminal conflict persistence adapter validation (#483)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`
-- 当前自动队列任务：`refund-state-mutation-persistence-adapter-readiness-review`
+- 当前活跃分支：`china/pr-rn-refund-state-mutation-persistence-adapter-readiness-validation`
+- 当前 `origin/main` 最新合并提交：`bb1912d` `[china] Refund state mutation persistence adapter readiness review (#484)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`
+- 当前自动队列任务：`refund-state-mutation-persistence-adapter-readiness-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-terminal-conflict-persistence-adapter-validation`: done，已完成 PR #483 合并后验证，并确认 readiness review task 注册可执行。
-- `refund-state-mutation-persistence-adapter-readiness-review`: in-progress，当前正在汇总四段 adapter plan 的耦合点、缺口和 No-Go 结论。
-- 下一步建议：完成 `refund-state-mutation-persistence-adapter-readiness-review` 后，继续 `refund-state-mutation-persistence-adapter-readiness-validation`。
+- `refund-state-mutation-persistence-adapter-readiness-review`: done，已完成 PR #484，确认四段 adapter plan 已齐但整体结论仍为 No-Go。
+- `refund-state-mutation-persistence-adapter-readiness-validation`: in-progress，当前正在验证 PR #484 合并后文件范围、No-Go 结论和 implementation gate / query surface task 注册一致性。
+- 下一步建议：完成 `refund-state-mutation-persistence-adapter-readiness-validation` 后，继续 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

@@ -496,3 +496,4 @@
 - 完成 `refund-state-mutation-terminal-conflict-persistence-adapter-validation`，记录 PR #482 合并后 `git status --short --branch`、`git diff --check` 和 readiness review task 注册验证通过；确认 terminal conflict persistence adapter plan 仍 docs-only。
 - 完成 `refund-state-mutation-persistence-adapter-readiness-review`，docs-only 汇总 approval / audit / runtime attempt / terminal conflict 四段 adapter plan 的耦合点和缺口，结论仍为 No-Go；当前仍无 isolated preprod implementation runtime。
 - 完成 `refund-state-mutation-persistence-adapter-readiness-validation`，记录 PR #484 合并后 `git status --short --branch`、`git diff --check` 和 implementation gate / query surface task 注册验证通过；确认 readiness review 仍 docs-only。
+- 完成 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-plan`，docs-only 规划四段 persistence adapter 进入任何 isolated preprod implementation PR 前必须满足的统一 environment gate、operator gate、rollback gate、kill switch 和 fail-closed 前置条件；仍不执行 workflow、不写 production refund success state。

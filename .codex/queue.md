@@ -4982,3 +4982,20 @@
 第四百七十二轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-timeline-event-contract-plan`: pending
+
+## 第四百七十三轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Timeline Event Contract Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-timeline-event-contract-plan`: done
+
+第四百七十三轮原则：
+
+- 本轮只规划 timeline event 的字段结构、排序键、timestamp redaction 和 event reference handle contract。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 timeline、reference、evidence、bundle、manifest、loader 或 registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百七十三轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-timeline-event-contract-validation`: pending

@@ -36,7 +36,7 @@ export type LocalPaymentNotificationPostgresClientInput = {
   driver: LocalPostgresDriver;
 };
 
-type LocalDbRefusalReason =
+export type LocalDbRefusalReason =
   | "database_url_missing"
   | "production_disabled"
   | "preproduction_disabled"
@@ -115,21 +115,55 @@ const hostFromUrl = (databaseUrl: string): string => {
   }
 };
 
-const assertLocalDbInput = (
+export type LocalDbAssessment =
+  | {
+      allowed: true;
+      safeDatabaseUrl: string;
+      databaseName: string;
+      host: string;
+      reason: null;
+    }
+  | {
+      allowed: false;
+      safeDatabaseUrl: null;
+      databaseName: string | null;
+      host: string | null;
+      reason: LocalDbRefusalReason;
+    };
+
+export const assessLocalPaymentNotificationDbInput = (
   input: LocalPaymentNotificationPostgresClientInput,
-): string => {
+): LocalDbAssessment => {
   if (input.nodeEnv === "production") {
-    refuse("production_disabled");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "production_disabled",
+    };
   }
 
   if (!input.localDbEnabled) {
-    refuse("local_db_not_enabled");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "local_db_not_enabled",
+    };
   }
 
   const databaseUrl = input.databaseUrl;
 
   if (!databaseUrl) {
-    refuse("database_url_missing");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "database_url_missing",
+    };
   }
 
   const safeDatabaseUrl = databaseUrl as string;
@@ -138,16 +172,34 @@ const assertLocalDbInput = (
   if (
     !dryRunDatabasePrefixes.some((prefix) => databaseName.startsWith(prefix))
   ) {
-    refuse("unsafe_database_name");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName,
+      host: hostFromUrl(safeDatabaseUrl),
+      reason: "unsafe_database_name",
+    };
   }
 
   const host = hostFromUrl(safeDatabaseUrl);
 
   if (!localHosts.has(host)) {
-    refuse("remote_host_refused");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName,
+      host,
+      reason: "remote_host_refused",
+    };
   }
 
-  return safeDatabaseUrl;
+  return {
+    allowed: true,
+    safeDatabaseUrl,
+    databaseName,
+    host,
+    reason: null,
+  };
 };
 
 export type LocalRefundInboxPostgresClientInput = {
@@ -158,27 +210,51 @@ export type LocalRefundInboxPostgresClientInput = {
   driver: LocalPostgresDriver;
 };
 
-const assertLocalRefundDbInput = (
+export const assessLocalRefundDbInput = (
   input: LocalRefundInboxPostgresClientInput,
-): string => {
+): LocalDbAssessment => {
   const nodeEnv = String(input.nodeEnv ?? "").toLowerCase();
 
   if (nodeEnv === "production" || nodeEnv === "prod") {
-    refuse("production_disabled");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "production_disabled",
+    };
   }
 
   if (nodeEnv === "preprod" || nodeEnv === "staging") {
-    refuse("preproduction_disabled");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "preproduction_disabled",
+    };
   }
 
   if (!input.localDbEnabled) {
-    refuse("local_db_not_enabled");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "local_db_not_enabled",
+    };
   }
 
   const databaseUrl = input.databaseUrl;
 
   if (!databaseUrl) {
-    refuse("database_url_missing");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName: null,
+      host: null,
+      reason: "database_url_missing",
+    };
   }
 
   const safeDatabaseUrl = databaseUrl as string;
@@ -189,16 +265,58 @@ const assertLocalRefundDbInput = (
       databaseName.startsWith(prefix),
     )
   ) {
-    refuse("unsafe_database_name");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName,
+      host: hostFromUrl(safeDatabaseUrl),
+      reason: "unsafe_database_name",
+    };
   }
 
   const host = hostFromUrl(safeDatabaseUrl);
 
   if (!localHosts.has(host)) {
-    refuse("remote_host_refused");
+    return {
+      allowed: false,
+      safeDatabaseUrl: null,
+      databaseName,
+      host,
+      reason: "remote_host_refused",
+    };
   }
 
-  return safeDatabaseUrl;
+  return {
+    allowed: true,
+    safeDatabaseUrl,
+    databaseName,
+    host,
+    reason: null,
+  };
+};
+
+const assertLocalDbInput = (
+  input: LocalPaymentNotificationPostgresClientInput,
+): string => {
+  const assessment = assessLocalPaymentNotificationDbInput(input);
+
+  if (!assessment.allowed) {
+    refuse(assessment.reason);
+  }
+
+  return assessment.safeDatabaseUrl as string;
+};
+
+const assertLocalRefundDbInput = (
+  input: LocalRefundInboxPostgresClientInput,
+): string => {
+  const assessment = assessLocalRefundDbInput(input);
+
+  if (!assessment.allowed) {
+    refuse(assessment.reason);
+  }
+
+  return assessment.safeDatabaseUrl as string;
 };
 
 const mapInboxRowFromDb = (

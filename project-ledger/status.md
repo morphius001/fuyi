@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 01:12 Asia/Shanghai
+更新时间：2026-05-14 01:36 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-ry-mock-webhook-db-backed-route-runtime`
-- 当前 `origin/main` 最新合并提交：`2b2774c` `[china] Payment notification DB runtime preflight implementation (#495)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`
-- 当前自动队列任务：`mock-webhook-db-backed-route-runtime`
+- 当前活跃分支：`china/pr-rz-payment-runtime-inbox-only-route-disposable-db-rehearsal`
+- 当前 `origin/main` 最新合并提交：`0ab6674` `[china] Mock webhook DB backed route runtime (#496)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`
+- 当前自动队列任务：`payment-runtime-inbox-only-route-disposable-db-rehearsal`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `payment-notification-db-runtime-preflight-implementation`: done，已完成 PR #495，当前主线已有纯 `payment-runtime-preflight` 评估器和 local DB assessment helper。
-- `mock-webhook-db-backed-route-runtime`: in-progress，当前已把 preflight 接入 mock webhook local DB route，并补上 fail-closed route test。
-- 下一步建议：完成本轮收口后，进入 `payment-runtime-inbox-only-route-disposable-db-rehearsal`。
+- `mock-webhook-db-backed-route-runtime`: done，已完成 PR #496，当前主线已把 preflight 接入 mock webhook local DB route。
+- `payment-runtime-inbox-only-route-disposable-db-rehearsal`: in-progress，当前已完成 `rehearsal` mode disposable DB rehearsal、redacted artifact 导出，并补齐当前任务和下一步 task 文件。
+- 下一步建议：完成本轮收口后，进入 `payment-workflow-command-adapter-disabled-runtime`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

@@ -504,3 +504,4 @@
 - 完成 `refund-state-mutation-isolated-preprod-rollback-drill-validation`，记录 PR #490 合并后 `git status --short --branch`、`git diff --check` 和 launch readiness validation task 注册验证通过；确认 rollback drill plan 仍 docs-only。
 - 完成 `refund-state-mutation-launch-readiness-review`，docs-only 汇总当前 refund state mutation 链路距离上线仍缺少 implementation、isolated preprod execution、query surface execution、rollback drill execution 和 production-safe isolation proof，结论明确为 No-Go。
 - 完成 `refund-state-mutation-launch-readiness-validation`，记录 PR #492 合并后 `git status --short --branch`、`git diff --check` 和 queue / ledger / handoff 收口通过；确认当前不能把 refund state mutation 视为 8 小时内可安全上线能力。
+- 完成 `refund-state-mutation-implementation-chain-plan`，在 docs-only 收口之后新建 implementation 级高风险串行任务链，明确第一波先从 `payment-notification-db-runtime-preflight-implementation` 和 `mock-webhook-db-backed-route-runtime` 开始。

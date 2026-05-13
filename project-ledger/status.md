@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 00:21 Asia/Shanghai
+更新时间：2026-05-14 00:34 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rv-refund-state-mutation-launch-readiness-validation`
-- 当前 `origin/main` 最新合并提交：`ef3d0c0` `[china] Refund state mutation launch readiness review (#492)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`
-- 当前自动队列任务：`refund-state-mutation-launch-readiness-validation`
+- 当前活跃分支：`china/pr-rw-refund-state-mutation-implementation-chain-plan`
+- 当前 `origin/main` 最新合并提交：`2541b59` `[china] Refund state mutation launch readiness validation (#493)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`
+- 当前自动队列任务：`refund-state-mutation-implementation-chain-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-launch-readiness-review`: done，已完成 PR #492，明确当前结论为 No-Go，不能把该链路视为 8 小时内可安全上线能力。
-- `refund-state-mutation-launch-readiness-validation`: done，已完成当前分支收口，确认 queue / ledger / handoff 对 No-Go 结论已经一致，不再把该链路视为当前上线窗口候选。
-- 下一步建议：停止自动顺延当前 docs-only 队列；如果仍要求上线，必须二选一：1) 把该链路排除出本次上线范围；2) 新开 implementation 级高风险串行任务链。
+- `refund-state-mutation-launch-readiness-validation`: done，已完成 PR #493，确认 queue / ledger / handoff 对 No-Go 结论已经一致。
+- `refund-state-mutation-implementation-chain-plan`: in-progress，当前正在新建 implementation 级高风险串行任务链，并明确第一波真实代码任务顺序。
+- 下一步建议：完成 `refund-state-mutation-implementation-chain-plan` 后，进入 `payment-notification-db-runtime-preflight-implementation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

@@ -5050,3 +5050,20 @@
 第四百七十六轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan`: pending
+
+## 第四百七十七轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Operator Hint Contract Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan`: done
+
+第四百七十七轮原则：
+
+- 本轮只规划 `operatorHints` 的 recommended action、manual review、rollback hint 和 note 合同。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 operator hint、decision guard、timeline、reference、evidence、bundle、manifest、loader 或 registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百七十七轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`: pending

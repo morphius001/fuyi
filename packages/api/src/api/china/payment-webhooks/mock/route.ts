@@ -4,6 +4,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
 import {
   createLocalPaymentNotificationPostgresClient,
   DbPaymentNotificationInboxRepository,
+  evaluatePaymentNotificationRuntimePreflight,
   handleMockPaymentWebhookNotification,
   InMemoryPaymentNotificationInboxRepository,
   LocalPostgresConnection,
@@ -134,6 +135,30 @@ const disabledResponse = (runtimeRequested: boolean) => {
       ...response.body,
       route: "mock_payment_webhook_neutral_disabled_only",
       runtimeRequested,
+    },
+  };
+};
+
+const localDbBlockedResponse = (
+  preflight: ReturnType<typeof evaluatePaymentNotificationRuntimePreflight>,
+) => {
+  const response = mapMockPaymentWebhookResponse({
+    status: "disabled",
+    code: "RUNTIME_DISABLED",
+  });
+
+  return {
+    response,
+    body: {
+      ...response.body,
+      route: "mock_payment_webhook_neutral_local_db_blocked",
+      runtimeRequested: preflight.runtimeEnabled,
+      safeDebug: {
+        preflightAllowed: false,
+        localDbReason: preflight.localDbReason,
+        reason: preflight.reason,
+        auditMetadata: preflight.auditMetadata,
+      },
     },
   };
 };
@@ -277,11 +302,42 @@ const resolveLocalDbRepository = async (req: MedusaRequest) => {
   return resolution.status === "available" ? resolution.repository : undefined;
 };
 
+const evaluateLocalDbPreflight = () => {
+  const databaseUrl = process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_URL;
+  const databaseName =
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_NAME ??
+    getLocalDbNameFromUrl(databaseUrl);
+
+  return evaluatePaymentNotificationRuntimePreflight({
+    ...buildRuntimeConfigInput(),
+    nodeEnv: process.env.NODE_ENV,
+    dbRuntimeEnabled: isLocalDbRequested(),
+    migrationRegistered: true,
+    preprodDisposableDbVerified: true,
+    providerAdapterVerified: true,
+    databaseUrl,
+    databaseName,
+    localDbEnabled: isLocalDbRequested(),
+    metadata: {
+      route: "mock_payment_webhook_neutral_local_db",
+      runtimePath: "mock_payment_webhook_local_db",
+    },
+  });
+};
+
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
   const runtimeConfig = parsePaymentNotificationRuntimeConfig(
     buildRuntimeConfigInput(),
   );
   if (isLocalDbRequested()) {
+    const preflight = evaluateLocalDbPreflight();
+
+    if (!preflight.allowed) {
+      const blocked = localDbBlockedResponse(preflight);
+
+      return res.status(blocked.response.httpStatus).json(blocked.body);
+    }
+
     const repository = await resolveLocalDbRepository(req);
 
     if (!repository) {

@@ -506,3 +506,4 @@
 - 完成 `refund-state-mutation-launch-readiness-validation`，记录 PR #492 合并后 `git status --short --branch`、`git diff --check` 和 queue / ledger / handoff 收口通过；确认当前不能把 refund state mutation 视为 8 小时内可安全上线能力。
 - 完成 `refund-state-mutation-implementation-chain-plan`，在 docs-only 收口之后新建 implementation 级高风险串行任务链，明确第一波先从 `payment-notification-db-runtime-preflight-implementation` 和 `mock-webhook-db-backed-route-runtime` 开始。
 - 完成 `payment-notification-db-runtime-preflight-implementation`，新增纯 `payment-runtime-preflight` 评估器，并将 local disposable DB 白名单校验抽成可复用 assessment helper；验证通过 focused tests 36/36、API typecheck 和 `git diff --check`。
+- 完成 `mock-webhook-db-backed-route-runtime`，把 `payment-runtime-preflight` 接入 mock payment webhook 的 local disposable DB route，在读取 body 之前就先做 fail-closed preflight；验证通过 focused route/module tests、API typecheck、accepted/duplicate local smoke 和 `git diff --check`。

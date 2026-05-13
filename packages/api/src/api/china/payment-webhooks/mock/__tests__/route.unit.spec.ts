@@ -184,6 +184,53 @@ describe("neutral china mock payment webhook disabled route", () => {
     expect((req as unknown as { text: jest.Mock }).text).not.toHaveBeenCalled();
   });
 
+  it("fails closed before reading body when local DB preflight refuses a remote host", async () => {
+    process.env.CHINA_PAYMENT_NOTIFICATION_RUNTIME_ENABLED = "true";
+    process.env.CHINA_PAYMENT_NOTIFICATION_WEBHOOK_MODE = "mock_inbox_only";
+    process.env.CHINA_PAYMENT_NOTIFICATION_PROVIDER = "mock_china_pay";
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB = "true";
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_URL =
+      "postgres://codex@db.internal:15432/fuyi_payment_notification_route_dry_run_unit";
+    process.env.CHINA_PAYMENT_NOTIFICATION_LOCAL_DB_NAME =
+      "fuyi_payment_notification_route_dry_run_unit";
+    process.env.CHINA_PAYMENT_NOTIFICATION_MOCK_SECRET = "neutral_route_secret";
+    process.env.NODE_ENV = "development";
+
+    const req = {
+      text: jest.fn(async () => {
+        throw new Error("body should not be read when local DB preflight blocks");
+      }),
+    } as unknown as MedusaRequest;
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(res.json).toHaveBeenCalledWith({
+      status: "disabled",
+      code: "RUNTIME_DISABLED",
+      route: "mock_payment_webhook_neutral_local_db_blocked",
+      runtimeRequested: true,
+      safeDebug: {
+        preflightAllowed: false,
+        localDbReason: "remote_host_refused",
+        reason:
+          "Payment notification local DB preflight refused: remote_host_refused.",
+        auditMetadata: {
+          route: "mock_payment_webhook_neutral_local_db",
+          runtimePath: "mock_payment_webhook_local_db",
+          databaseName: "fuyi_payment_notification_route_dry_run_unit",
+          host: "db.internal",
+        },
+      },
+    });
+    expect((req as unknown as { text: jest.Mock }).text).not.toHaveBeenCalled();
+
+    const responseBody = JSON.stringify(res.json.mock.calls[0][0]);
+    expect(responseBody).not.toContain("postgres://");
+    expect(responseBody).not.toContain("neutral_route_secret");
+  });
+
   it("accepts local DB signed payloads when disposable DB gates pass", async () => {
     const secret = "neutral_local_db_secret";
     const rawBody = JSON.stringify({

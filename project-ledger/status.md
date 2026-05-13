@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 12:48 Asia/Shanghai
+更新时间：2026-05-13 13:01 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rj-refund-state-mutation-runtime-attempt-persistence-adapter-validation`
-- 当前 `origin/main` 最新合并提交：`534dd91` `[china] Refund state mutation runtime attempt persistence adapter plan (#480)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`
-- 当前自动队列任务：`refund-state-mutation-runtime-attempt-persistence-adapter-validation`
+- 当前活跃分支：`china/pr-rk-refund-state-mutation-terminal-conflict-persistence-adapter-plan`
+- 当前 `origin/main` 最新合并提交：`f63dc11` `[china] Refund state mutation runtime attempt persistence adapter validation (#481)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`
+- 当前自动队列任务：`refund-state-mutation-terminal-conflict-persistence-adapter-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-runtime-attempt-persistence-adapter-plan`: done，已完成 PR #480，明确 isolated preprod 中 runtime attempt persistence adapter 的写入/查询边界、fail-closed 行为、redaction 约束和 rollback gate。
-- `refund-state-mutation-runtime-attempt-persistence-adapter-validation`: in-progress，当前正在验证 PR #480 合并后文件范围、No-Go 边界和 task file 注册一致性。
-- 下一步建议：完成 `refund-state-mutation-runtime-attempt-persistence-adapter-validation` 后，继续 `refund-state-mutation-terminal-conflict-persistence-adapter-plan`。
+- `refund-state-mutation-runtime-attempt-persistence-adapter-validation`: done，已完成 PR #481 合并后验证，并补齐 queue / handoff 所需 task file 注册。
+- `refund-state-mutation-terminal-conflict-persistence-adapter-plan`: in-progress，当前正在规划 terminal conflict persistence adapter 的写入/查询边界、rehearsal-only marker 约束、fail-closed 行为和 rollback gate。
+- 下一步建议：完成 `refund-state-mutation-terminal-conflict-persistence-adapter-plan` 后，继续 `refund-state-mutation-terminal-conflict-persistence-adapter-validation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

@@ -5084,3 +5084,20 @@
 第四百七十八轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`: pending
+
+## 第四百七十九轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Summary Block Contract Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`: done
+
+第四百七十九轮原则：
+
+- 本轮只规划 `summary` 的 reviewCaseId、scenarioType、caseStatus、refundReference、marketContext 和 sellerContext 合同。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 summary、operator hint、decision guard、timeline、reference、evidence、bundle、manifest、loader 或 registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百七十九轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-validation`: pending

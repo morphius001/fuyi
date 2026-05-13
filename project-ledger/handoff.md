@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-13 13:45 Asia/Shanghai
+更新时间：2026-05-13 14:02 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rp-refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`
+- Branch: `china/pr-rq-refund-state-mutation-isolated-preprod-query-surface-plan`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#486`，merge commit `0959401`。
-- 最近已合并 PR：`#455` 到 `#486`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate plan。
+- `origin/main` 最新已合并到 `#487`，merge commit `1eab449`。
+- 最近已合并 PR：`#455` 到 `#487`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate plan / validation。
 
 ## 本轮验证
 
-- PR `#486` 已合并：isolated preprod adapter implementation gate plan 已完成，确认范围仍 docs-only、No-Go 不变。
-- 当前分支继续执行 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`。
+- PR `#487` 已合并：isolated preprod adapter implementation gate validation 已完成，确认范围仍 docs-only、No-Go 不变。
+- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-plan`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,10 +24,10 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation` 并提交。
-2. 继续进入 `refund-state-mutation-isolated-preprod-query-surface-plan`，补齐 operator review 查询面的边界。
-3. `refund-state-mutation-isolated-preprod-query-surface-validation` 的 task file 已补齐，可作为再下一步继续执行。
-4. 在 implementation gate plan、query surface plan 和后续 validation 明确放行前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
+1. 完成 `refund-state-mutation-isolated-preprod-query-surface-plan` 并提交。
+2. 继续进入 `refund-state-mutation-isolated-preprod-query-surface-validation`，确认 query surface plan 仍 docs-only。
+3. 如 query surface 仍暴露缺口，再补一张 rollback drill / operator checklist docs-only 计划。
+4. 在 query surface plan、后续 validation 和可能的 rollback drill 计划明确放行前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
 

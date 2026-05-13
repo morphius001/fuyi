@@ -13,3 +13,4 @@
 - payment notification 的 local DB route 必须先做 preflight / disposable DB 白名单校验，再读取 raw body 或解析 payload。
 - payment notification 的 `mock_prepare_command` 路径必须先经过 disabled runtime adapter，不能把 command DTO 直接视为可执行 workflow。
 - payment session 与 order 的 seller / market ownership 必须在 payment state guard 层先对齐，不能等到更后面的 workflow 或 refund 阶段再补救。
+- isolated preprod review query surface 应以 terminal conflict snapshot 为聚合入口；approval / audit / runtime attempt 任一 cross-reference 缺失时必须 fail-closed。

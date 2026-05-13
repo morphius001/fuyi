@@ -2,28 +2,24 @@
 
 ## 任务
 
-验证 `refund-state-mutation-isolated-preprod-query-surface-plan` 合并后的文件范围、No-Go 边界和下一步任务注册状态。
+在 isolated preprod query surface builder 落成后，完成合并前 focused validation 与 ledger 收口。
 
 ## 范围
 
-- 新增 `docs/refund-state-mutation-isolated-preprod-query-surface-validation.md`。
-- 更新 `.codex/queue.md` 和 `project-ledger/**`。
+- 允许修改 docs / queue / ledger / task 文件。
+- 如有必要，只允许对 `packages/api/src/modules/china-payment-notification/refund-state-mutation-isolated-preprod-query-surface.ts` 和对应 focused tests 做小范围修补。
 
 ## 非目标
 
-- 不修改 `apps/**`。
-- 不修改 `packages/**` runtime。
-- 不新增 route、job、subscriber、migration。
-- 不连接生产 DB。
-- 不注册 module。
-- 不接 SDK 或真实密钥。
-- 不调用真实 provider refund request / query API。
-- 不执行 production workflow。
-- 不写 production refund success state。
-- 不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不执行 workflow。
+- 不写 refund success state。
+- 不接真实 provider refund request / query。
 
 ## 验证
 
-- `git status --short --branch`。
-- `git diff --check`。
-- 确认无 `apps/**` 或 `packages/**` runtime diff。
+- focused tests
+- API typecheck
+- runtime grep / registration check
+- `git diff --check`

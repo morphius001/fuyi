@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 02:42 Asia/Shanghai
+更新时间：2026-05-14 02:49 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-sc-refund-state-mutation-isolated-preprod-query-surface-implementation`
-- 当前链路位于 refund state mutation 的 isolated preprod query surface implementation 阶段。
-- `origin/main` 最新已合并到 `#499`，merge commit `e5c77ce`。
-- 最近已合并 PR：`#455` 到 `#499`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement。
+- Branch: `china/pr-sd-refund-state-mutation-isolated-preprod-query-surface-validation`
+- 当前链路位于 refund state mutation 的 isolated preprod query surface validation 阶段。
+- `origin/main` 最新已合并到 `#500`，merge commit `75d93b1`。
+- 最近已合并 PR：`#455` 到 `#500`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement、isolated preprod query surface implementation。
 
 ## 本轮验证
 
-- PR `#499` 已合并：payment refund RBAC ownership enforcement 已完成，payment ownership incomplete context 也已经 fail-closed 阻断。
-- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-implementation`。
+- PR `#500` 已合并：isolated preprod query surface implementation 已完成，主线已具备 review case builder。
+- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-validation`。
 - 本轮要求：focused tests、API typecheck、runtime grep / registration check、`git diff --check`。
 
 ## 注意事项
@@ -24,10 +24,10 @@
 
 ## 下一步建议
 
-1. `payment-refund-rbac-ownership-enforcement` 已完成，payment state guard 对 incomplete ownership context 也已经 fail-closed。
-2. 本轮新增 isolated preprod review case query surface builder，以 terminal conflict snapshot 聚合 approval / audit / runtime attempt / terminal conflict 四段 evidence。
-3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-validation`，先做合并前收口验证。
-4. 即便进入实现链，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
+1. `refund-state-mutation-isolated-preprod-query-surface-implementation` 已完成，主线现在已有 review case builder。
+2. 本轮主要确认 query surface 仍只存在于 module export 和 focused tests，尚未进入 route / repository wiring。
+3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`，先规划 resolver / fixture / environment gate 边界。
+4. 即便继续推进，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
 

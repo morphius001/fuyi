@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-13 14:26 Asia/Shanghai
+更新时间：2026-05-13 14:35 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rt-refund-state-mutation-isolated-preprod-rollback-drill-validation`
+- Branch: `china/pr-ru-refund-state-mutation-launch-readiness-review`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#490`，merge commit `50af3cb`。
-- 最近已合并 PR：`#455` 到 `#490`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation。
+- `origin/main` 最新已合并到 `#491`，merge commit `8c8b360`。
+- 最近已合并 PR：`#455` 到 `#491`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation。
 
 ## 本轮验证
 
-- PR `#490` 已合并：isolated preprod rollback drill plan 已完成，确认范围仍 docs-only、No-Go 不变。
-- 当前分支继续执行 `refund-state-mutation-isolated-preprod-rollback-drill-validation`。
+- PR `#491` 已合并：isolated preprod rollback drill validation 已完成，确认范围仍 docs-only、No-Go 不变。
+- 当前分支继续执行 `refund-state-mutation-launch-readiness-review`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-isolated-preprod-rollback-drill-validation` 并提交。
-2. 继续进入 `refund-state-mutation-launch-readiness-review`，给出上线窗口前的最终 Go / No-Go 结论。
-3. 然后进入 `refund-state-mutation-launch-readiness-validation`，确认结论已经被 ledger / queue / handoff 正确收口。
+1. 完成 `refund-state-mutation-launch-readiness-review` 并提交。
+2. 继续进入 `refund-state-mutation-launch-readiness-validation`，确认结论已经被 ledger / queue / handoff 正确收口。
+3. 在 validation 之后，如结论仍是 No-Go，应停止把当前链路视作“8 小时内可上线”。
 4. 在 launch readiness review / validation 明确放行前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

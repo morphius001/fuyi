@@ -4283,3 +4283,19 @@
 第四百三十轮完成后建议继续：
 
 1. `refund-state-mutation-audit-persistence-adapter-plan`: pending
+
+## 第四百三十一轮 Refund State Mutation Audit Persistence Adapter Plan
+
+1. `refund-state-mutation-audit-persistence-adapter-plan`: done
+
+第四百三十一轮原则：
+
+- 本轮只规划 audit persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB、不注册 module、不接 SDK、不写真实密钥。
+- 不执行 production workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百三十一轮完成后建议继续：
+
+1. `refund-state-mutation-audit-persistence-adapter-validation`: pending

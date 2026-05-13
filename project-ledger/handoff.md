@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 01:36 Asia/Shanghai
+更新时间：2026-05-14 01:52 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rz-payment-runtime-inbox-only-route-disposable-db-rehearsal`
+- Branch: `china/pr-sa-payment-workflow-command-adapter-disabled-runtime`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#496`，merge commit `0ab6674`。
-- 最近已合并 PR：`#455` 到 `#496`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime。
+- `origin/main` 最新已合并到 `#497`，merge commit `664ba72`。
+- 最近已合并 PR：`#455` 到 `#497`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal。
 
 ## 本轮验证
 
-- PR `#496` 已合并：mock webhook DB-backed route runtime 已完成，local DB route preflight 已进入主线。
-- 当前分支继续执行 `payment-runtime-inbox-only-route-disposable-db-rehearsal`。
+- PR `#497` 已合并：payment runtime inbox-only route disposable DB rehearsal 已完成，rehearsal mode 和 redacted artifacts 已进入主线。
+- 当前分支继续执行 `payment-workflow-command-adapter-disabled-runtime`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. `mock-webhook-db-backed-route-runtime` 已完成，当前主线 local DB route 已接入 preflight fail-closed 判断。
-2. 本轮补齐 `rehearsal` mode disposable DB 证据与 redacted artifact capture，并修复 queue 中缺失的当前任务 / 下一步 task 文件断点；仍未进入 workflow / state mutation。
-3. 下一步默认进入 `payment-workflow-command-adapter-disabled-runtime`，继续保持 disabled runtime、默认关闭、不自动推进 workflow。
+1. `payment-runtime-inbox-only-route-disposable-db-rehearsal` 已完成，当前主线已有 accepted / duplicate / rejected disposable DB 证据与 redacted artifacts。
+2. 本轮新增 disabled runtime adapter，并把 `mock_prepare_command` 路径进一步压成 `workflowExecutionAllowed=false` 的 fail-closed 决策；仍未进入 workflow / state mutation。
+3. 下一步默认进入 `payment-refund-rbac-ownership-enforcement`，先补 ownership / RBAC / audit boundary。
 4. 即便进入实现链，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

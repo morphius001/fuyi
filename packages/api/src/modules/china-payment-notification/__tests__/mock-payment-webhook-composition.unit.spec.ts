@@ -276,6 +276,11 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       executable: false,
       blockType: "unknown_reference",
     });
+    expect(result.runtimeAdapterDecision).toMatchObject({
+      decision: "workflow_command_input_rejected",
+      executable: false,
+      workflowExecutionAllowed: false,
+    });
     expect(result.auditEvent).toMatchObject({
       action: "command_blocked",
     });
@@ -313,6 +318,16 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       executable: true,
       command: {
         type: "capture_payment",
+        paymentSessionId: "payses_mock_composition_001",
+        orderId: "order_mock_composition_001",
+      },
+    });
+    expect(result.runtimeAdapterDecision).toMatchObject({
+      decision: "workflow_command_disabled_recorded",
+      workflowCommandPrepared: true,
+      workflowExecutionAllowed: false,
+      commandCandidate: {
+        originalCommandType: "capture_payment",
         paymentSessionId: "payses_mock_composition_001",
         orderId: "order_mock_composition_001",
       },

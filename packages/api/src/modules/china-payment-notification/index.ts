@@ -6,6 +6,7 @@ export * from "./in-memory-inbox-repository";
 export * from "./state-guard";
 export * from "./workflow-command-mapper";
 export * from "./workflow-command-audit-mapper";
+export * from "./payment-workflow-command-adapter-disabled-runtime";
 export * from "./inbox-repository-contract";
 export * from "./runtime-config";
 export * from "./runtime-gate";

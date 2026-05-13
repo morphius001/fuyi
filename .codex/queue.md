@@ -4610,3 +4610,19 @@
 第四百五十轮完成后建议继续：
 
 1. `payment-workflow-command-adapter-disabled-runtime`: pending
+
+## 第四百五十一轮 Payment Workflow Command Adapter Disabled Runtime
+
+1. `payment-workflow-command-adapter-disabled-runtime`: done
+
+第四百五十一轮原则：
+
+- 本轮只把 workflow command DTO 与未来 workflow execution 之间补成 disabled runtime adapter。
+- 不执行 workflow。
+- 不写 payment success 或 order state mutation。
+- 不接真实 provider。
+- 不连接 preprod / production DB。
+
+第四百五十一轮完成后建议继续：
+
+1. `payment-refund-rbac-ownership-enforcement`: pending

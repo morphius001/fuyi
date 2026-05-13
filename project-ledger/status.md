@@ -1,15 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-13 01:19 Asia/Shanghai
+更新时间：2026-05-13 12:37 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-rh-refund-state-mutation-audit-persistence-adapter-validation`
-- 当前 `origin/main` 最新合并提交：`39d13f8` `Merge pull request #478 from morphius001/china/pr-rg-refund-state-mutation-audit-persistence-adapter-plan`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`
-- 当前自动队列任务：`refund-state-mutation-audit-persistence-adapter-validation`
+- 当前活跃分支：`china/pr-ri-refund-state-mutation-runtime-attempt-persistence-adapter-plan`
+- 当前 `origin/main` 最新合并提交：`ff8891a` `[china] Refund state mutation audit persistence adapter validation (#479)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`
+- 当前自动队列任务：`refund-state-mutation-runtime-attempt-persistence-adapter-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
+
+## 最新进展
+
+- `refund-state-mutation-audit-persistence-adapter-validation`: done，已完成 PR #479 合并后 docs-only 验证，确认 audit persistence adapter plan 仍只停留在 isolated preprod 边界规划层。
+- `refund-state-mutation-runtime-attempt-persistence-adapter-plan`: in-progress，当前正在规划 runtime attempt persistence repository adapter 的写入/查询边界、fail-closed 行为、redaction 约束和 rollback gate。
+- 下一步建议：先进入 `refund-state-mutation-runtime-attempt-persistence-adapter-validation`，再继续 `refund-state-mutation-terminal-conflict-persistence-adapter-plan`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

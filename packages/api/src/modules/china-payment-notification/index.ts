@@ -33,6 +33,7 @@ export * from "./wechat-pay-refund-notification-test-vectors";
 export * from "./wechat-pay-refund-notification-verifier";
 export * from "./payment-provider-registry";
 export * from "./refund-amount-guard";
+export * from "./refund-guard-audit-hook";
 export * from "./refund-notification-test-vectors";
 export * from "./refund-notification-verifier";
 export * from "./refund-notification-normalizer";

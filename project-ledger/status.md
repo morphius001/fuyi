@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 01:52 Asia/Shanghai
+更新时间：2026-05-14 02:07 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-sa-payment-workflow-command-adapter-disabled-runtime`
-- 当前 `origin/main` 最新合并提交：`664ba72` `[china] Payment runtime inbox-only route disposable DB rehearsal (#497)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`
-- 当前自动队列任务：`payment-workflow-command-adapter-disabled-runtime`
+- 当前活跃分支：`china/pr-sb-payment-refund-rbac-ownership-enforcement`
+- 当前 `origin/main` 最新合并提交：`3e229f2` `[china] Payment workflow command adapter disabled runtime (#498)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`
+- 当前自动队列任务：`payment-refund-rbac-ownership-enforcement`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `payment-runtime-inbox-only-route-disposable-db-rehearsal`: done，已完成 PR #497，当前主线已有 `rehearsal` mode disposable DB evidence 和 redacted artifacts。
-- `payment-workflow-command-adapter-disabled-runtime`: in-progress，当前已新增 disabled runtime adapter，并接入 mock prepare-command composition。
-- 下一步建议：完成本轮收口后，进入 `payment-refund-rbac-ownership-enforcement`。
+- `payment-workflow-command-adapter-disabled-runtime`: done，已完成 PR #498，当前主线已把 command DTO 进一步压成 disabled runtime adapter 决策。
+- `payment-refund-rbac-ownership-enforcement`: in-progress，当前已新增 payment seller / market ownership guard 和 refund guard audit hook mapper。
+- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-implementation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

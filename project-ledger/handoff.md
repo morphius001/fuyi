@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 01:52 Asia/Shanghai
+更新时间：2026-05-14 02:07 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-sa-payment-workflow-command-adapter-disabled-runtime`
+- Branch: `china/pr-sb-payment-refund-rbac-ownership-enforcement`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#497`，merge commit `664ba72`。
-- 最近已合并 PR：`#455` 到 `#497`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal。
+- `origin/main` 最新已合并到 `#498`，merge commit `3e229f2`。
+- 最近已合并 PR：`#455` 到 `#498`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime。
 
 ## 本轮验证
 
-- PR `#497` 已合并：payment runtime inbox-only route disposable DB rehearsal 已完成，rehearsal mode 和 redacted artifacts 已进入主线。
-- 当前分支继续执行 `payment-workflow-command-adapter-disabled-runtime`。
+- PR `#498` 已合并：payment workflow command adapter disabled runtime 已完成，disabled runtime adapter 已进入主线。
+- 当前分支继续执行 `payment-refund-rbac-ownership-enforcement`。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. `payment-runtime-inbox-only-route-disposable-db-rehearsal` 已完成，当前主线已有 accepted / duplicate / rejected disposable DB 证据与 redacted artifacts。
-2. 本轮新增 disabled runtime adapter，并把 `mock_prepare_command` 路径进一步压成 `workflowExecutionAllowed=false` 的 fail-closed 决策；仍未进入 workflow / state mutation。
-3. 下一步默认进入 `payment-refund-rbac-ownership-enforcement`，先补 ownership / RBAC / audit boundary。
+1. `payment-workflow-command-adapter-disabled-runtime` 已完成，当前主线 `mock_prepare_command` 路径已被压成 disabled runtime adapter 决策。
+2. 本轮新增 payment seller / market ownership guard 和 refund amount guard audit hook mapper；仍未进入 workflow / state mutation。
+3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-implementation`，先落只读聚合查询面。
 4. 即便进入实现链，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

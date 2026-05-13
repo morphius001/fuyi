@@ -138,6 +138,8 @@ export type ReceivePaymentNotificationResult = {
 export type PaymentNotificationPaymentSessionSnapshot = {
   id: string;
   provider: string;
+  sellerId?: string;
+  marketId?: string;
   amount: ChinaPaymentNotificationMoney;
   status: "pending" | "authorized" | "captured" | "failed" | "canceled";
   fetchedAt: string;
@@ -145,6 +147,8 @@ export type PaymentNotificationPaymentSessionSnapshot = {
 
 export type PaymentNotificationOrderSnapshot = {
   id: string;
+  sellerId?: string;
+  marketId?: string;
   status:
     | "pending"
     | "completed"
@@ -174,6 +178,8 @@ export type PaymentNotificationStateGuardBlockType =
   | "amount_mismatch"
   | "currency_mismatch"
   | "provider_mismatch"
+  | "seller_ownership_mismatch"
+  | "market_ownership_mismatch"
   | "state_conflict"
   | "unknown_reference"
   | "out_of_order"

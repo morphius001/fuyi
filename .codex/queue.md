@@ -4546,3 +4546,19 @@
 第四百四十六轮完成后建议继续：
 
 1. 停止把 `refund-state-mutation` 链路视为当前上线窗口候选，除非先启动新的 implementation 级任务并接受高风险串行推进。
+
+## 第四百四十七轮 Refund State Mutation Implementation Chain Plan
+
+1. `refund-state-mutation-implementation-chain-plan`: done
+
+第四百四十七轮原则：
+
+- 本轮只建立新的 implementation 级高风险串行任务链，不直接进入 runtime 代码。
+- 不修改 `apps/**` 或 `packages/**` runtime。
+- 不新增 route、job、subscriber、migration、不连接生产 DB。
+- 不执行 production workflow、不写 production refund success state。
+- 仍不改变 settlement、commission、payout、permission、fulfillment 或 logistics。
+
+第四百四十七轮完成后建议继续：
+
+1. `payment-notification-db-runtime-preflight-implementation`: pending

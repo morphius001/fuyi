@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 00:21 Asia/Shanghai
+更新时间：2026-05-14 00:34 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rv-refund-state-mutation-launch-readiness-validation`
+- Branch: `china/pr-rw-refund-state-mutation-implementation-chain-plan`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#492`，merge commit `ef3d0c0`。
-- 最近已合并 PR：`#455` 到 `#492`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review。
+- `origin/main` 最新已合并到 `#493`，merge commit `2541b59`。
+- 最近已合并 PR：`#455` 到 `#493`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation。
 
 ## 本轮验证
 
-- PR `#492` 已合并：launch readiness review 已完成，结论明确为 No-Go。
-- 当前分支完成 `refund-state-mutation-launch-readiness-validation` 收口。
+- PR `#493` 已合并：launch readiness validation 已完成，docs-only 链正式停在 No-Go 收口。
+- 当前分支继续执行 `refund-state-mutation-implementation-chain-plan`，作为新的 implementation 级高风险串行任务链入口。
 - 本轮要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -25,9 +25,9 @@
 ## 下一步建议
 
 1. `refund-state-mutation-launch-readiness-validation` 已完成，当前结论仍是 No-Go。
-2. 现在不再存在可自动继续执行的普通 docs-only 下一任务；queue 的最终建议是停止把当前链路视作“8 小时内可上线”。
-3. 若用户仍要求上线，必须先重新定义范围：要么把该链路排除在本次上线之外，要么新开 implementation 级高风险串行任务链。
-4. 在新的 implementation 级任务链被明确创建并接受风险前，不进入任何 isolated preprod implementation PR，更不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
+2. 由于用户继续要求加速推进，当前已新开 `refund-state-mutation-implementation-chain-plan` 作为新的 implementation 级高风险串行任务链入口。
+3. 下一步默认进入 `payment-notification-db-runtime-preflight-implementation`，然后再接 `mock-webhook-db-backed-route-runtime`。
+4. 即便进入实现链，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
 

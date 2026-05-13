@@ -4880,3 +4880,20 @@
 第四百六十六轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-bundle-metadata-contract-plan`: pending
+
+## 第四百六十七轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Bundle Metadata Contract Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-bundle-metadata-contract-plan`: done
+
+第四百六十七轮原则：
+
+- 本轮只规划 bundle metadata schema、redaction markers、local-only markers 和 bundle-to-manifest version 协同规则。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 bundle、manifest、loader 或 registry implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百六十七轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-bundle-metadata-contract-validation`: pending

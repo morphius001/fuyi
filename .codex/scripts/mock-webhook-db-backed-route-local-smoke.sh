@@ -17,6 +17,7 @@ migration_file="$root/packages/api/src/modules/china-payment-notification/migrat
 work_dir="${TMPDIR:-/tmp}/fuyi-payment-notification-route-smoke"
 up_sql="$work_dir/up.sql"
 down_sql="$work_dir/down.sql"
+artifact_dir="${MOCK_WEBHOOK_ARTIFACT_DIR:-}"
 server_pid=""
 created_db=0
 tmpdir=""
@@ -43,11 +44,19 @@ fail() {
 }
 
 case "$mode" in
-  disabled | accepted | duplicate | rejected) ;;
+  disabled | accepted | duplicate | rejected | rehearsal) ;;
   *)
-    fail "Usage: $0 [disabled|accepted|duplicate|rejected]"
+    fail "Usage: $0 [disabled|accepted|duplicate|rejected|rehearsal]"
     ;;
 esac
+
+if [ "$mode" = "rehearsal" ] && [ -z "$artifact_dir" ]; then
+  artifact_dir="${work_dir}/artifacts-${db_name}"
+fi
+
+if [ -n "$artifact_dir" ]; then
+  mkdir -p "$artifact_dir"
+fi
 
 stop_server() {
   if [ -n "$server_pid" ] && kill -0 "$server_pid" >/dev/null 2>&1; then
@@ -275,6 +284,28 @@ assert_response_absent() {
   fi
 }
 
+persist_artifact_file() {
+  local source_file="$1"
+  local target_name="$2"
+
+  if [ -z "$artifact_dir" ]; then
+    return 0
+  fi
+
+  cp "$source_file" "$artifact_dir/$target_name"
+}
+
+persist_artifact_text() {
+  local target_name="$1"
+  local content="$2"
+
+  if [ -z "$artifact_dir" ]; then
+    return 0
+  fi
+
+  printf '%s\n' "$content" >"$artifact_dir/$target_name"
+}
+
 build_signature() {
   local file="$1"
 
@@ -308,6 +339,33 @@ assert_db_counts() {
   [ "$leak_count" = "0" ] || fail "Event log metadata leaked secret, signature, or database URL."
 }
 
+persist_db_summary() {
+  local target_name="$1"
+
+  if [ -z "$artifact_dir" ]; then
+    return 0
+  fi
+
+  psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -At <<'SQL' >"$artifact_dir/$target_name"
+select 'inbox_count=' || count(*) from payment_notification_inbox;
+select 'event_actions=' || coalesce(string_agg(action, ',' order by action), '') from payment_notification_event_log;
+select 'processing_statuses=' || coalesce(string_agg(processing_status, ',' order by processing_status), '') from payment_notification_inbox;
+SQL
+}
+
+persist_empty_db_summary() {
+  local target_name="$1"
+
+  if [ -z "$artifact_dir" ]; then
+    return 0
+  fi
+
+  psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -At <<'SQL' >"$artifact_dir/$target_name"
+select 'inbox_count=' || count(*) from payment_notification_inbox;
+select 'event_log_count=' || count(*) from payment_notification_event_log;
+SQL
+}
+
 assert_empty_db() {
   local inbox_count
   local event_log_count
@@ -317,6 +375,24 @@ assert_empty_db() {
 
   event_log_count="$(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -tAc "select count(*) from payment_notification_event_log")"
   [ "$event_log_count" = "0" ] || fail "Expected rejected smoke event log count 0, got $event_log_count"
+}
+
+capture_db_state() {
+  local inbox_count
+  local event_log_count
+
+  inbox_count="$(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -tAc "select count(*) from payment_notification_inbox")"
+  event_log_count="$(psql -h "$pg_host" -p "$pg_port" -U "$pg_user" -d "$db_name" -tAc "select count(*) from payment_notification_event_log")"
+
+  printf '%s|%s\n' "$inbox_count" "$event_log_count"
+}
+
+assert_db_state_unchanged() {
+  local before_state="$1"
+  local after_state
+
+  after_state="$(capture_db_state)"
+  [ "$after_state" = "$before_state" ] || fail "Expected DB state to stay $before_state, got $after_state"
 }
 
 run_local_db_cases() {
@@ -346,9 +422,11 @@ run_local_db_cases() {
   assert_response_absent "$body_file" "$signature" "signature"
   assert_response_absent "$body_file" "$db_url" "database URL"
   assert_db_counts "1" "verified"
+  persist_artifact_file "$body_file" "accepted-response.json"
+  persist_db_summary "accepted-db-summary.txt"
   echo "PASS local DB accepted case"
 
-  if [ "$mode" = "duplicate" ]; then
+  if [ "$mode" = "duplicate" ] || [ "$mode" = "rehearsal" ]; then
     status="$(http_post "$body_file" \
       -H "content-type: application/json" \
       -H "x-mock-payment-signature: $signature" \
@@ -363,6 +441,8 @@ run_local_db_cases() {
     assert_response_absent "$body_file" "$signature" "signature"
     assert_response_absent "$body_file" "$db_url" "database URL"
     assert_db_counts "1" "dedupe_hit"
+    persist_artifact_file "$body_file" "duplicate-response.json"
+    persist_db_summary "duplicate-db-summary.txt"
     echo "PASS local DB duplicate case"
   fi
 
@@ -376,6 +456,7 @@ run_rejected_cases() {
   local body_file
   local signature
   local status
+  local baseline_state
 
   tmpdir="$(mktemp -d)"
   payload_file="$tmpdir/payload.json"
@@ -383,6 +464,7 @@ run_rejected_cases() {
   body_file="$tmpdir/response.json"
 
   printf '%s' '{"event_id":"evt_neutral_db_rejected_001","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_db_rejected_001","payment_session_id":"payses_neutral_db_rejected_001","provider_transaction_id":"mock_txn_neutral_db_rejected_001","amount":128560,"currency":"CNY"}' >"$payload_file"
+  baseline_state="$(capture_db_state)"
 
   status="$(http_post "$body_file" \
     -H "content-type: application/json" \
@@ -395,7 +477,13 @@ run_rejected_cases() {
   assert_response_absent "$body_file" "$(cat "$payload_file")" "raw payload"
   assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
   assert_response_absent "$body_file" "$db_url" "database URL"
-  assert_empty_db
+  if [ "$baseline_state" = "0|0" ]; then
+    assert_empty_db
+  else
+    assert_db_state_unchanged "$baseline_state"
+  fi
+  persist_artifact_file "$body_file" "rejected-missing-signature-response.json"
+  persist_empty_db_summary "rejected-missing-signature-db-summary.txt"
   echo "PASS local DB rejected missing signature case"
 
   status="$(http_post "$body_file" \
@@ -412,8 +500,39 @@ run_rejected_cases() {
   assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
   assert_response_absent "$body_file" "sha256=invalid" "signature"
   assert_response_absent "$body_file" "$db_url" "database URL"
-  assert_empty_db
+  if [ "$baseline_state" = "0|0" ]; then
+    assert_empty_db
+  else
+    assert_db_state_unchanged "$baseline_state"
+  fi
+  persist_artifact_file "$body_file" "rejected-invalid-signature-response.json"
+  persist_empty_db_summary "rejected-invalid-signature-db-summary.txt"
   echo "PASS local DB rejected invalid signature case"
+
+  printf '%s' '{"event_id":"evt_neutral_db_rejected_003","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_db_rejected_003","payment_session_id":"payses_neutral_db_rejected_003","provider_transaction_id":"mock_txn_neutral_db_rejected_003","amount":128560}' >"$tmpdir/missing-currency.json"
+  signature="$(build_signature "$tmpdir/missing-currency.json")"
+  status="$(http_post "$body_file" \
+    -H "content-type: application/json" \
+    -H "x-mock-payment-signature: $signature" \
+    -H "x-mock-payment-event-id: evt_neutral_db_rejected_003" \
+    --data-binary "@$tmpdir/missing-currency.json")"
+
+  [ "$status" = "400" ] || fail "Expected missing currency HTTP 400, got $status with $(cat "$body_file")"
+  assert_json_field "$body_file" "status" "rejected"
+  assert_json_field "$body_file" "code" "PAYLOAD_INVALID"
+  assert_json_field "$body_file" "route" "mock_payment_webhook_neutral_local_db"
+  assert_response_absent "$body_file" '"provider_transaction_id":"mock_txn_neutral_db_rejected_003"' "raw payload"
+  assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
+  assert_response_absent "$body_file" "$signature" "signature"
+  assert_response_absent "$body_file" "$db_url" "database URL"
+  if [ "$baseline_state" = "0|0" ]; then
+    assert_empty_db
+  else
+    assert_db_state_unchanged "$baseline_state"
+  fi
+  persist_artifact_file "$body_file" "rejected-missing-currency-response.json"
+  persist_empty_db_summary "rejected-missing-currency-db-summary.txt"
+  echo "PASS local DB rejected missing currency case"
 
   printf '%s' '{"event_id":"evt_neutral_db_rejected_002","event_type":"payment.succeeded","merchant_order_ref":"pay_neutral_db_rejected_002","payment_session_id":"payses_neutral_db_rejected_002","provider_transaction_id":"mock_txn_neutral_db_rejected_002","amount":128560,"currency":"USD"}' >"$non_cny_payload_file"
   signature="$(build_signature "$non_cny_payload_file")"
@@ -431,7 +550,13 @@ run_rejected_cases() {
   assert_response_absent "$body_file" "local_db_route_smoke_secret_not_real" "mock secret"
   assert_response_absent "$body_file" "$signature" "signature"
   assert_response_absent "$body_file" "$db_url" "database URL"
-  assert_empty_db
+  if [ "$baseline_state" = "0|0" ]; then
+    assert_empty_db
+  else
+    assert_db_state_unchanged "$baseline_state"
+  fi
+  persist_artifact_file "$body_file" "rejected-non-cny-response.json"
+  persist_empty_db_summary "rejected-non-cny-db-summary.txt"
   echo "PASS local DB rejected non-CNY case"
 
   rm -rf "$tmpdir"
@@ -490,6 +615,19 @@ if [ "$mode" = "disabled" ]; then
 else
   if [ "$mode" = "rejected" ]; then
     run_rejected_cases
+  elif [ "$mode" = "rehearsal" ]; then
+    run_local_db_cases
+    run_rejected_cases
+    persist_artifact_text "README.txt" \
+"mock webhook db-backed route rehearsal artifacts
+
+mode: rehearsal
+db_name: $db_name
+base_url: $base_url
+notes:
+- artifacts are redacted snapshots only
+- disposable database is dropped after rehearsal
+- no workflow execution or payment success mutation occurred"
   else
     run_local_db_cases
   fi

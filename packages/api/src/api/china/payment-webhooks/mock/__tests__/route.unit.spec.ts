@@ -150,8 +150,20 @@ describe("neutral china mock payment webhook disabled route", () => {
     expect(res.json).toHaveBeenCalledWith({
       status: "disabled",
       code: "RUNTIME_DISABLED",
-      route: "mock_payment_webhook_neutral_disabled_only",
+      route: "mock_payment_webhook_neutral_local_db_blocked",
       runtimeRequested: true,
+      safeDebug: {
+        preflightAllowed: false,
+        localDbReason: "database_url_missing",
+        reason:
+          "Payment notification local DB preflight refused: database_url_missing.",
+        auditMetadata: {
+          route: "mock_payment_webhook_neutral_local_db",
+          runtimePath: "mock_payment_webhook_local_db",
+          databaseName: undefined,
+          host: undefined,
+        },
+      },
     });
     expect((req as unknown as { text: jest.Mock }).text).not.toHaveBeenCalled();
   });
@@ -178,8 +190,20 @@ describe("neutral china mock payment webhook disabled route", () => {
     expect(res.json).toHaveBeenCalledWith({
       status: "disabled",
       code: "RUNTIME_DISABLED",
-      route: "mock_payment_webhook_neutral_disabled_only",
+      route: "mock_payment_webhook_neutral_local_db_blocked",
       runtimeRequested: true,
+      safeDebug: {
+        preflightAllowed: false,
+        localDbReason: "database_url_missing",
+        reason:
+          "Payment notification local DB preflight refused: database_url_missing.",
+        auditMetadata: {
+          route: "mock_payment_webhook_neutral_local_db",
+          runtimePath: "mock_payment_webhook_local_db",
+          databaseName: undefined,
+          host: undefined,
+        },
+      },
     });
     expect((req as unknown as { text: jest.Mock }).text).not.toHaveBeenCalled();
   });

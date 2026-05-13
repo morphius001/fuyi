@@ -500,3 +500,4 @@
 - 完成 `refund-state-mutation-isolated-preprod-adapter-implementation-gate-validation`，记录 PR #486 合并后 `git status --short --branch`、`git diff --check` 和 query surface task 注册验证通过；确认 implementation gate plan 仍 docs-only。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-plan`，docs-only 规划 isolated preprod operator review 查询面如何安全读取 approval / audit / runtime attempt / terminal conflict 四段 persistence evidence，并保持 redacted / fail-closed；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-validation`，记录 PR #488 合并后 `git status --short --branch`、`git diff --check` 和 rollback drill task 注册验证通过；确认 query surface plan 仍 docs-only。
+- 完成 `refund-state-mutation-isolated-preprod-rollback-drill-plan`，docs-only 规划 isolated preprod rehearsal 的 rollback owner、kill-switch 回退、evidence capture、operator checklist 和失败升级路径；仍不执行 workflow、不写 production refund success state。

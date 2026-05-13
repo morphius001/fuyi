@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-14 07:10 Asia/Shanghai
+更新时间：2026-05-14 07:24 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-tj-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan`
-- 当前链路位于 refund state mutation 的 fixture registry operator hint contract plan 阶段。
-- `origin/main` 最新已合并到 `#523`，merge commit `bded37a`。
-- 最近已合并 PR：`#455` 到 `#523`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement、isolated preprod query surface implementation、isolated preprod query surface validation、isolated preprod query surface repository resolver plan、isolated preprod query surface repository resolver validation、isolated preprod query surface local fixture shape plan、isolated preprod query surface local fixture shape validation、isolated preprod query surface fixture registry api plan、isolated preprod query surface fixture registry api validation、isolated preprod query surface fixture registry implementation plan、isolated preprod query surface fixture registry implementation validation、isolated preprod query surface fixture registry local loader plan、isolated preprod query surface fixture registry local loader validation、isolated preprod query surface fixture registry manifest contract plan、isolated preprod query surface fixture registry manifest contract validation、isolated preprod query surface fixture registry bundle metadata contract plan、isolated preprod query surface fixture registry bundle metadata contract validation、isolated preprod query surface fixture registry evidence shape contract plan、isolated preprod query surface fixture registry evidence shape contract validation、isolated preprod query surface fixture registry reference slot contract plan、isolated preprod query surface fixture registry reference slot contract validation、isolated preprod query surface fixture registry timeline event contract plan、isolated preprod query surface fixture registry timeline event contract validation、isolated preprod query surface fixture registry decision guard contract plan、isolated preprod query surface fixture registry decision guard contract validation。
+- Branch: `china/pr-tl-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`
+- 当前链路位于 refund state mutation 的 fixture registry operator hint contract validation 阶段。
+- `origin/main` 最新已合并到 `#524`，merge commit `620c518`。
+- 最近已合并 PR：`#455` 到 `#524`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval / audit / runtime attempt / terminal conflict adapter plan / validation，以及 unified implementation gate / query surface / rollback drill plan / validation、launch readiness review / validation、implementation chain plan、payment notification DB runtime preflight implementation、mock webhook DB-backed route runtime、payment runtime inbox-only route disposable DB rehearsal、payment workflow command adapter disabled runtime、payment refund RBAC ownership enforcement、isolated preprod query surface implementation、isolated preprod query surface validation、isolated preprod query surface repository resolver plan、isolated preprod query surface repository resolver validation、isolated preprod query surface local fixture shape plan、isolated preprod query surface local fixture shape validation、isolated preprod query surface fixture registry api plan、isolated preprod query surface fixture registry api validation、isolated preprod query surface fixture registry implementation plan、isolated preprod query surface fixture registry implementation validation、isolated preprod query surface fixture registry local loader plan、isolated preprod query surface fixture registry local loader validation、isolated preprod query surface fixture registry manifest contract plan、isolated preprod query surface fixture registry manifest contract validation、isolated preprod query surface fixture registry bundle metadata contract plan、isolated preprod query surface fixture registry bundle metadata contract validation、isolated preprod query surface fixture registry evidence shape contract plan、isolated preprod query surface fixture registry evidence shape contract validation、isolated preprod query surface fixture registry reference slot contract plan、isolated preprod query surface fixture registry reference slot contract validation、isolated preprod query surface fixture registry timeline event contract plan、isolated preprod query surface fixture registry timeline event contract validation、isolated preprod query surface fixture registry decision guard contract plan、isolated preprod query surface fixture registry decision guard contract validation、isolated preprod query surface fixture registry operator hint contract plan。
 
 ## 本轮验证
 
-- PR `#523` 已合并：isolated preprod query surface fixture registry decision guard contract validation 已完成，主线已确认 `decisionGuards` contract plan 仍然只是 docs-only 规划。
-- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan`。
+- PR `#524` 已合并：isolated preprod query surface fixture registry operator hint contract plan 已完成，主线已固定 `operatorHints` 的 recommended action、manual review、rollback hint 和 note 合同。
+- 当前分支继续执行 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`。
 - 本轮要求：`git diff --check`、`git status --short --branch`。
 
 ## 注意事项
@@ -24,9 +24,9 @@
 
 ## 下一步建议
 
-1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-decision-guard-contract-validation` 已完成，`decisionGuards` contract plan 的 docs-only 边界已经收口。
-2. 本轮主要规划 `operatorHints` 区块的 recommended action、manual review、rollback hint 和 note 合同。
-3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-validation`，确认 `operatorHints` 合同仍然只是 docs-only 规划。
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-operator-hint-contract-plan` 已完成，`operatorHints` 的 recommended action、manual review、rollback hint 和 note 合同已经固定。
+2. 本轮主要确认 PR #524 仍然只是 docs-only 规划，没有混入 operator hint implementation、evidence payload implementation、builder wiring、route 或 runtime wiring。
+3. 下一步默认进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-summary-block-contract-plan`，单独规划 `summary` 区块的 reviewCaseId、scenarioType、caseStatus、refundReference、marketContext 和 sellerContext 合同。
 4. 即便继续推进，仍不得直接跳到 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新

@@ -1,19 +1,19 @@
 # Handoff
 
-更新时间：2026-05-13 01:14 Asia/Shanghai
+更新时间：2026-05-13 01:19 Asia/Shanghai
 
 ## 当前上下文
 
 - Worktree: `/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- Branch: `china/pr-rg-refund-state-mutation-audit-persistence-adapter-plan`
+- Branch: `china/pr-rh-refund-state-mutation-audit-persistence-adapter-validation`
 - 当前链路位于 refund state mutation 的 disabled / non-executable persistence 文档收口阶段。
-- `origin/main` 最新已合并到 `#477`，merge commit `f6abaa4`。
-- 最近已合并 PR：`#455` 到 `#477`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review 和 approval adapter plan / validation。
+- `origin/main` 最新已合并到 `#478`，merge commit `39d13f8`。
+- 最近已合并 PR：`#455` 到 `#478`，内容覆盖 approval / audit / runtime attempt persistence、terminal conflict persistence plan / contract / validation 收口，以及 preprod rehearsal refresh、operator pack、readiness review、approval adapter plan / validation 和 audit adapter plan。
 
 ## 本轮验证
 
-- PR `#477` 合并后验证已通过：当前进入 audit persistence adapter plan，范围仅限 docs / task / queue / ledger。
-- 当前分支继续执行 `refund-state-mutation-audit-persistence-adapter-plan`。
+- PR `#478` 合并后验证进行中：当前只验证 audit persistence adapter plan 的文件范围和 No-Go。
+- 当前分支继续执行 `refund-state-mutation-audit-persistence-adapter-validation`。
 - 本轮验证要求：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 
 ## 注意事项
@@ -24,8 +24,8 @@
 
 ## 下一步建议
 
-1. 完成 `refund-state-mutation-audit-persistence-adapter-plan` 并提交。
-2. 继续进入 `refund-state-mutation-audit-persistence-adapter-validation`，只做合并后验证和 No-Go 收口。
+1. 完成 `refund-state-mutation-audit-persistence-adapter-validation` 并提交。
+2. 继续进入 `refund-state-mutation-runtime-attempt-persistence-adapter-plan`，继续规划 runtime attempt persistence repository adapter 的 isolated preprod 边界。
 3. 在 terminal conflict persistence 链完成前，不进入 production workflow execution、refund success state mutation、settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## Round 34 更新
@@ -3026,3 +3026,11 @@
 - 验证通过：`git diff --check`、无 `apps/**` 或 `packages/**` runtime diff。
 - 当前仍未连接生产 DB，未新增 route / job / subscriber，未执行 workflow，未写 production refund success state。
 - 下一步进入 `refund-state-mutation-audit-persistence-adapter-validation`：只做合并后验证和 No-Go 收口。
+
+## Round 432 更新
+
+- `refund-state-mutation-audit-persistence-adapter-validation` 已完成，见 `docs/refund-state-mutation-audit-persistence-adapter-validation.md`。
+- PR #478 已合并，merge commit `39d13f8`。
+- 合并后验证通过：`git diff --check` 和文件范围检查均通过。
+- 当前 audit persistence adapter plan 仍 docs-only，未新增 migration、route、job、subscriber、workflow execution，未写 production refund success state。
+- 下一步进入 `refund-state-mutation-runtime-attempt-persistence-adapter-plan`：继续规划 runtime attempt persistence repository adapter 的 isolated preprod 边界。

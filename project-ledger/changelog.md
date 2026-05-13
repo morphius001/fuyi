@@ -490,3 +490,4 @@
 - 完成 `refund-state-mutation-approval-persistence-adapter-validation`，记录 PR #476 合并后 `git diff --check` 和文件范围验证通过；确认 approval persistence adapter plan 仍 docs-only。
 - 完成 `refund-state-mutation-audit-persistence-adapter-plan`，docs-only 规划 audit persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-audit-persistence-adapter-validation`，记录 PR #478 合并后 `git diff --check` 和文件范围验证通过；确认 audit persistence adapter plan 仍 docs-only。
+- 完成 `refund-state-mutation-runtime-attempt-persistence-adapter-plan`，docs-only 规划 runtime attempt persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。

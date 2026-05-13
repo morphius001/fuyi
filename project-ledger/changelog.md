@@ -487,3 +487,4 @@
 - 完成 `refund-state-mutation-preprod-rehearsal-readiness-review`，docs-only 汇总 feature flag、approval / audit / runtime attempt / terminal conflict persistence、refresh plan 和 operator pack，结论仍 No-Go；当前仍无可执行 preprod rehearsal。
 - 完成 `refund-state-mutation-preprod-rehearsal-readiness-validation`，记录 PR #474 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal readiness review 仍 docs-only。
 - 完成 `refund-state-mutation-approval-persistence-adapter-plan`，docs-only 规划 approval persistence repository adapter 在 isolated preprod 中的读写边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
+- 完成 `refund-state-mutation-approval-persistence-adapter-validation`，记录 PR #476 合并后 `git diff --check` 和文件范围验证通过；确认 approval persistence adapter plan 仍 docs-only。

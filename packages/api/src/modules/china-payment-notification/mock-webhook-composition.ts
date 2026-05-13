@@ -16,8 +16,11 @@ import {
   PaymentNotificationRepositoryErrorCode,
 } from "./inbox-repository-contract";
 import { guardPaymentNotificationState } from "./state-guard";
+import {
+  mapWorkflowCommandToDisabledRuntimeDecision,
+  PaymentWorkflowCommandAdapterDisabledRuntimeDecision,
+} from "./payment-workflow-command-adapter-disabled-runtime";
 import { mapGuardResultToWorkflowCommand } from "./workflow-command-mapper";
-import { mapWorkflowCommandDecisionToAuditEvent } from "./workflow-command-audit-mapper";
 import {
   ChinaPaymentNotificationEnvelope,
   PaymentNotificationOrderSnapshot,
@@ -39,6 +42,7 @@ export type MockPaymentWebhookCompositionResult = {
   envelope?: ChinaPaymentNotificationEnvelope;
   receiveResult?: PaymentNotificationInboxReceiveResult;
   commandDecision?: PaymentWorkflowCommandDecision;
+  runtimeAdapterDecision?: PaymentWorkflowCommandAdapterDisabledRuntimeDecision;
   auditEvent?: PaymentWorkflowCommandAuditEvent;
 };
 
@@ -206,7 +210,22 @@ export const composeMockPaymentWebhookInboxOnly = async (
     guardResult,
     guardInput,
   );
-  const auditEvent = mapWorkflowCommandDecisionToAuditEvent(commandDecision);
+  const runtimeAdapterDecision = mapWorkflowCommandToDisabledRuntimeDecision({
+    commandDecision,
+    requestedAt: envelope.receivedAt,
+    runtimeContext: {
+      environment: "development",
+      adapterMode: "disabled",
+      featureFlagEnabled: false,
+      adapterRegistered: false,
+      rollbackRunbookReady: true,
+      metadata: {
+        routeMode: runtimeConfig.mode,
+        provider: runtimeConfig.provider,
+      },
+    },
+  });
+  const auditEvent = runtimeAdapterDecision.auditEvent;
 
   try {
     await input.repository.appendEvent({
@@ -221,6 +240,7 @@ export const composeMockPaymentWebhookInboxOnly = async (
       envelope,
       receiveResult,
       commandDecision,
+      runtimeAdapterDecision,
       auditEvent,
       response: mapRepositoryErrorToResponse(error),
     };
@@ -230,6 +250,7 @@ export const composeMockPaymentWebhookInboxOnly = async (
     envelope,
     receiveResult,
     commandDecision,
+    runtimeAdapterDecision,
     auditEvent,
     response: mapMockPaymentWebhookResponse({ status: "accepted" }),
   };

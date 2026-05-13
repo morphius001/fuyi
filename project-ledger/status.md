@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 02:49 Asia/Shanghai
+更新时间：2026-05-14 02:56 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-sd-refund-state-mutation-isolated-preprod-query-surface-validation`
-- 当前 `origin/main` 最新合并提交：`75d93b1` `[china] Refund state mutation isolated preprod query surface implementation (#500)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-validation`
+- 当前活跃分支：`china/pr-se-refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`
+- 当前 `origin/main` 最新合并提交：`5bd2287` `[china] Refund state mutation isolated preprod query surface validation (#501)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-implementation`: done，已完成 PR #500，当前主线已具备纯 TypeScript 的 isolated preprod review case query surface builder。
-- `refund-state-mutation-isolated-preprod-query-surface-validation`: in-progress，当前正在做合并后 validation 与 ledger 收口。
-- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`。
+- `refund-state-mutation-isolated-preprod-query-surface-validation`: done，已完成 PR #501，当前主线已确认 query surface 仍只存在于 module export 和 focused tests。
+- `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-plan`: in-progress，当前正在固定 resolver / fixture / environment gate 边界。
+- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-repository-resolver-validation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

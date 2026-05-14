@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 10:21 Asia/Shanghai
+更新时间：2026-05-14 10:34 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
 - 当前活跃分支：`china/pr-ud-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`
-- 当前 `origin/main` 最新合并提交：`a5f80d0` `[china] Refund state mutation isolated preprod query surface fixture registry builder wiring validation (#540)`
-- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`、`#505`、`#506`、`#507`、`#508`、`#509`、`#510`、`#511`、`#512`、`#513`、`#514`、`#515`、`#516`、`#517`、`#518`、`#519`、`#520`、`#521`、`#522`、`#523`、`#524`、`#525`、`#526`、`#527`、`#529`、`#530`、`#531`、`#532`、`#533`、`#534`、`#535`、`#536`、`#537`、`#538`、`#539`、`#540`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`
+- 当前 `origin/main` 最新合并提交：`9de1d1c` `[china] Refund state mutation isolated preprod query surface fixture registry resolver runtime validation (#541)`
+- 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`、`#505`、`#506`、`#507`、`#508`、`#509`、`#510`、`#511`、`#512`、`#513`、`#514`、`#515`、`#516`、`#517`、`#518`、`#519`、`#520`、`#521`、`#522`、`#523`、`#524`、`#525`、`#526`、`#527`、`#529`、`#530`、`#531`、`#532`、`#533`、`#534`、`#535`、`#536`、`#537`、`#538`、`#539`、`#540`、`#541`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-validation`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-builder-wiring-validation`: done，PR #540 已合并，当前主线已确认 builder wiring 仍然只是 docs-only wiring baseline，不代表已有 builder runtime。
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`: in-progress，当前正在收口 resolver runtime plan 的文件范围、No-Go 边界和 post-merge validation 结论，并提前补齐下一跳 route execution plan。
-- 下一步建议：完成本轮 validation 后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-plan`。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`: done，PR #541 已合并，当前主线已确认 resolver runtime 仍然只是 docs-only runtime boundary，不代表已有可运行 resolver。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-validation`: in-progress，当前正在收口 route execution plan 的文件范围、No-Go 边界和 post-merge validation 结论，并提前补齐 implementation readiness review。
+- 下一步建议：完成本轮 validation 后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-readiness-review`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

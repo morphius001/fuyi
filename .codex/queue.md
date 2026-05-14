@@ -5186,3 +5186,20 @@
 第四百八十四轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-payload-compatibility-plan`: pending
+
+## 第四百八十五轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Payload Compatibility Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-payload-compatibility-plan`: done
+
+第四百八十五轮原则：
+
+- 本轮只规划 payload version、mixed bundle、partial upgrade 和 unsupported shape 的兼容与 fail-closed 规则。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 payload、builder、resolver、registry、loader 或 runtime implementation。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百八十五轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-payload-compatibility-validation`: pending

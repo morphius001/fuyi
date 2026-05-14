@@ -5271,3 +5271,20 @@
 第四百八十九轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-validation`: pending
+
+## 第四百九十轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Implementation Gate Validation
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-validation`: done
+
+第四百九十轮原则：
+
+- 本轮只验证 implementation gate plan 的 docs-only 文件范围和 No-Go 边界。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation、builder wiring、resolver runtime 或 route runtime。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百九十轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-builder-wiring-plan`: pending

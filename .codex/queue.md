@@ -5288,3 +5288,20 @@
 第四百九十轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-builder-wiring-plan`: pending
+
+## 第四百九十一轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Builder Wiring Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-builder-wiring-plan`: done
+
+第四百九十一轮原则：
+
+- 本轮只规划 fixture registry 如何 fail-closed 地接入 query surface builder。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation、builder runtime wiring、resolver runtime 或 route runtime。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百九十一轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-builder-wiring-validation`: pending

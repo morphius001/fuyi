@@ -5339,3 +5339,37 @@
 第四百九十三轮完成后建议继续：
 
 1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`: pending
+
+## 第四百九十四轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Resolver Runtime Validation
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-resolver-runtime-validation`: done
+
+第四百九十四轮原则：
+
+- 本轮只验证 resolver runtime plan 的 docs-only 文件范围和 No-Go 边界。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation、builder runtime wiring、resolver runtime 实现或 route runtime。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百九十四轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-plan`: pending
+
+## 第四百九十五轮 Refund State Mutation Isolated Preprod Query Surface Fixture Registry Route Execution Plan
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-plan`: done
+
+第四百九十五轮原则：
+
+- 本轮只规划 query surface route 的 disabled-by-default、operator-only、blocked result、response envelope 和 cache / pagination 边界。
+- 不新增 route。
+- 不连接 production / preprod DB。
+- 不写 fixture registry implementation、builder runtime wiring、resolver runtime 实现或 route runtime。
+- 不执行 workflow。
+- 不写 refund success state。
+
+第四百九十五轮完成后建议继续：
+
+1. `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-route-execution-validation`: pending

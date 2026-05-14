@@ -1,21 +1,21 @@
 # 项目状态 Ledger
 
-更新时间：2026-05-14 08:31 Asia/Shanghai
+更新时间：2026-05-14 09:12 Asia/Shanghai
 
 ## 当前活跃上下文
 
 - 当前开发 worktree：`/home/codex/code/fuyi-pr-bx-workflow-handoff-cn`
-- 当前活跃分支：`china/pr-ty-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-contract-readiness-validation`
-- 当前 `origin/main` 最新合并提交：`f9a894c` `[china] Refund state mutation isolated preprod query surface fixture registry contract readiness review (#535)`
+- 当前活跃分支：`china/pr-tz-refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-plan`
+- 当前 `origin/main` 最新合并提交：`f13147c` `[china] Refund state mutation isolated preprod query surface fixture registry contract readiness validation (#536)`
 - 最近已合并 PR：`#455`、`#456`、`#457`、`#458`、`#459`、`#460`、`#461`、`#462`、`#463`、`#464`、`#465`、`#466`、`#467`、`#468`、`#469`、`#470`、`#471`、`#472`、`#473`、`#474`、`#475`、`#476`、`#477`、`#478`、`#479`、`#480`、`#481`、`#482`、`#483`、`#484`、`#485`、`#486`、`#487`、`#488`、`#489`、`#490`、`#491`、`#492`、`#493`、`#494`、`#495`、`#496`、`#497`、`#498`、`#499`、`#500`、`#501`、`#502`、`#503`、`#504`、`#505`、`#506`、`#507`、`#508`、`#509`、`#510`、`#511`、`#512`、`#513`、`#514`、`#515`、`#516`、`#517`、`#518`、`#519`、`#520`、`#521`、`#522`、`#523`、`#524`、`#525`、`#526`、`#527`、`#529`、`#530`、`#531`、`#532`、`#533`、`#534`、`#535`
-- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-contract-readiness-validation`
+- 当前自动队列任务：`refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-plan`
 - 当前高风险边界保持不变：不连接 production / preprod DB，不执行 production workflow，不写 production refund success state，不触发 settlement、commission、payout、permission、fulfillment 或 logistics mutation。
 
 ## 最新进展
 
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-contract-readiness-review`: done，PR #535 已合并，当前主线已确认 fixture registry contract 链已经形成 docs-only review baseline。
-- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-contract-readiness-validation`: in-progress，当前正在收口 review 的文件范围、No-Go 边界和下一步 implementation gate。
-- 下一步建议：完成本轮收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-plan`。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-contract-readiness-validation`: done，PR #536 已合并，当前主线已确认 contract readiness review 的文件范围、No-Go 边界和 docs-only 收口结论。
+- `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-plan`: in-progress，当前正在补齐真正进入 implementation、builder wiring、resolver runtime、route execution 之前必须满足的统一 gate、block code 和 rollback 前置条件。
+- 下一步建议：完成本轮 gate 文档收口后，进入 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-gate-validation`。
 
 ## 历史阶段快照（归档，非当前自动队列）
 

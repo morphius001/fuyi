@@ -1,22 +1,22 @@
 const links = {
   customerServices: [
-    { label: "常见问题", path: "#" },
-    { label: "订单追踪", path: "#" },
-    { label: "退换售后", path: "#" },
-    { label: "配送说明", path: "#" },
-    { label: "支付说明", path: "#" },
+    { label: "常见问题", path: "/user" },
+    { label: "订单追踪", path: "/user/orders" },
+    { label: "退换售后", path: "/user/returns" },
+    { label: "配送说明", path: "/cart" },
+    { label: "支付说明", path: "/cart" },
   ],
   about: [
-    { label: "关于我们", path: "#" },
-    { label: "商家入驻", path: "#" },
-    { label: "平台规则", path: "#" },
-    { label: "隐私政策", path: "#" },
-    { label: "服务条款", path: "#" },
+    { label: "关于我们", path: "/" },
+    { label: "商家入驻", path: "/categories" },
+    { label: "平台规则", path: "/categories" },
+    { label: "隐私政策", path: "/user" },
+    { label: "服务条款", path: "/user" },
   ],
   connect: [
-    { label: "在线客服占位", path: "#" },
-    { label: "微信公众号占位", path: "#" },
-    { label: "客服邮箱占位", path: "mailto:support@example.com" },
+    { label: "在线客服待接入", path: "/" },
+    { label: "公众号待接入", path: "/" },
+    { label: "客服邮箱待配置", path: "/" },
   ],
 };
 

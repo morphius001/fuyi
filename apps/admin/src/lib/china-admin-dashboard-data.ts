@@ -39,6 +39,7 @@ export const chinaAdminDashboardQuickActionKeys = [
   "configureMarket",
   "reviewMerchant",
   "orderMonitor",
+  "unitPermissions",
   "moduleSwitches",
   "capabilityContracts",
 ] as const

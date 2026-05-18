@@ -180,6 +180,34 @@ describe("Alipay refund provider inbox route disabled skeleton", () => {
     expectSafeBody(res.json.mock.calls[0]?.[0]);
   });
 
+  it("blocks production-like route config before reading body or resolving local DB", async () => {
+    enableLocalAlipayDb();
+    process.env.APP_ENV = "preprod";
+    process.env.CHINA_REFUND_STATE_MUTATION_ENABLED = "true";
+    const query = jest.fn();
+    const req = {
+      ...makeRequest(),
+      scope: makeAlipayLocalDbRequest({ query }).scope,
+    } as unknown as MedusaRequest & { text: jest.Mock; scope: { resolve: jest.Mock } };
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(req.text).not.toHaveBeenCalled();
+    expect(req.scope.resolve).not.toHaveBeenCalled();
+    expect(query).not.toHaveBeenCalled();
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "disabled",
+      provider: "alipay",
+      code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
+      runtimeMutationBlocked: true,
+      stateMutationBlocked: true,
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
   it("accepts verified local fixture into inbox-only response", async () => {
     enableLocalAlipay();
     const req = makeAlipayRequest();
@@ -230,6 +258,77 @@ describe("Alipay refund provider inbox route disabled skeleton", () => {
 
     expect(res.status).toHaveBeenCalledWith(503);
     expect(req.text).not.toHaveBeenCalled();
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "disabled",
+      provider: "alipay",
+      code: "REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("does not read body or open a transaction when local DB name mismatches", async () => {
+    enableLocalAlipayDb();
+    const bodyRead = jest.fn(() => {
+      throw new Error("local DB mismatch must not read body");
+    });
+    const query = jest.fn();
+    const transaction = jest.fn(async () => ({
+      raw: query,
+      commit: jest.fn(async () => undefined),
+      rollback: jest.fn(async () => undefined),
+    }));
+    const raw = jest.fn(async (sql: string) => {
+      if (sql.includes("current_database")) {
+        return { rows: [{ database_name: "unexpected_refund_inbox_db" }] };
+      }
+
+      if (sql.includes("inet_server_addr")) {
+        return {
+          rows: [{ server_host: "127.0.0.1", server_port: 15432 }],
+        };
+      }
+
+      return { rows: [] };
+    });
+    const req = {
+      text: jest.fn(async () => {
+        throw new Error("local DB mismatch must not read raw body");
+      }),
+      headers: {
+        sign: "sign_should_not_leak",
+      },
+      scope: {
+        resolve: jest.fn(() => ({
+          raw,
+          transaction,
+        })),
+      },
+    } as unknown as MedusaRequest & {
+      text: jest.Mock;
+      scope: { resolve: jest.Mock };
+    };
+    Object.defineProperty(req, "body", {
+      get: bodyRead,
+    });
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(bodyRead).not.toHaveBeenCalled();
+    expect(req.text).not.toHaveBeenCalled();
+    expect(req.scope.resolve).toHaveBeenCalledTimes(1);
+    expect(raw).toHaveBeenCalledWith("select current_database() as database_name");
+    expect(JSON.stringify(raw.mock.calls)).toContain("inet_server_addr");
+    expect(transaction).not.toHaveBeenCalled();
+    expect(query).not.toHaveBeenCalled();
+    expect(JSON.stringify(raw.mock.calls)).not.toContain(
+      "insert into payment_notification_inbox",
+    );
+    expect(JSON.stringify(raw.mock.calls)).not.toContain(
+      "update payment_notification_inbox",
+    );
     expect(res.json.mock.calls[0]?.[0]).toMatchObject({
       status: "disabled",
       provider: "alipay",

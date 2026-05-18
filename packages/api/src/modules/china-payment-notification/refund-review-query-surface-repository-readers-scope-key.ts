@@ -1,0 +1,2 @@
+export const REFUND_REVIEW_QUERY_SURFACE_REPOSITORY_READERS_SCOPE_KEY =
+  "refundReviewQuerySurfaceRepositoryReaders";

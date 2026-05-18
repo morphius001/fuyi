@@ -79,9 +79,9 @@ export function Footer() {
 
         <div className="mt-8 border-t border-[#E5E7EB] pt-5" data-testid="footer-copyright">
           <div className="space-y-2 text-center text-sm text-secondary">
-            <p>© 2026 Fuyi 示例公司 版权所有</p>
-            <p>公司名称、统一社会信用代码、营业执照信息占位</p>
-            <p>ICP备案号占位：京ICP备00000000号-1</p>
+            <p>© 2026 Fuyi 版权所有</p>
+            <p>企业资质信息待备案后展示</p>
+            <p>ICP备案信息待运营主体确认后展示</p>
           </div>
         </div>
       </div>

@@ -654,7 +654,7 @@ export default async function Home({
                 href={`/${locale}/search`}
                 className="flex h-11 items-center justify-center rounded-lg bg-[#FEECEC] label-md text-[#EF1F2D] hover:bg-[#FEE2E2]"
               >
-                发布找货需求
+                搜索鲜货档口
               </Link>
             </div>
 

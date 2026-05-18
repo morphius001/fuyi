@@ -1,0 +1,3 @@
+# Keep real local rehearsal env files and generated private evidence out of git.
+*
+!.gitignore

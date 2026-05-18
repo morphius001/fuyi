@@ -47,6 +47,71 @@ describe("refund provider inbox route config", () => {
     });
   });
 
+  it.each(["production", "prod", "preprod", "staging"])(
+    "blocks NODE_ENV=%s as production-like",
+    (nodeEnv) => {
+      const decision = parseRefundProviderInboxRouteConfig(
+        {
+          ...localWechatDbEnv,
+          NODE_ENV: nodeEnv,
+        },
+        "wechat_pay",
+      );
+
+      expect(decision).toMatchObject({
+        enabled: false,
+        code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
+        runtimeMutationBlocked: true,
+        stateMutationBlocked: true,
+        fixtureOnly: true,
+        executable: false,
+      });
+    },
+  );
+
+  it.each(["production", "prod", "preprod", "staging"])(
+    "blocks APP_ENV=%s as production-like",
+    (appEnv) => {
+      const decision = parseRefundProviderInboxRouteConfig(
+        {
+          ...localWechatDbEnv,
+          APP_ENV: appEnv,
+        },
+        "wechat_pay",
+      );
+
+      expect(decision).toMatchObject({
+        enabled: false,
+        code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
+        runtimeMutationBlocked: true,
+        stateMutationBlocked: true,
+        fixtureOnly: true,
+        executable: false,
+      });
+    },
+  );
+
+  it("blocks production-like environments before state mutation and secret checks", () => {
+    const decision = parseRefundProviderInboxRouteConfig(
+      {
+        ...localWechatDbEnv,
+        APP_ENV: "staging",
+        CHINA_REFUND_STATE_MUTATION_ENABLED: "true",
+        CHINA_REFUND_WECHAT_API_V3_KEY: "APIv3-live-looking-key",
+      },
+      "wechat_pay",
+    );
+
+    expect(decision).toMatchObject({
+      enabled: false,
+      code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
+      runtimeMutationBlocked: true,
+      stateMutationBlocked: true,
+      fixtureOnly: true,
+      executable: false,
+    });
+  });
+
   it("blocks state mutation even when notify route flags are enabled", () => {
     const decision = parseRefundProviderInboxRouteConfig(
       {
@@ -151,6 +216,28 @@ describe("refund provider inbox route config", () => {
     expect(decision).toMatchObject({
       enabled: false,
       code: "REFUND_PROVIDER_ROUTE_SECRET_BLOCKED",
+    });
+  });
+
+  it("does not treat unrelated preprod gate env keys as real secrets", () => {
+    const decision = parseRefundProviderInboxRouteConfig(
+      {
+        ...localWechatEnv,
+        PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED: "true",
+      },
+      "wechat_pay",
+    );
+
+    expect(decision).toMatchObject({
+      enabled: true,
+      provider: "wechat_pay",
+      mode: "provider_inbox_only",
+      targetEnv: "local",
+      storage: "local_inmemory",
+      runtimeMutationBlocked: true,
+      stateMutationBlocked: true,
+      fixtureOnly: true,
+      executable: false,
     });
   });
 

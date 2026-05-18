@@ -187,6 +187,7 @@
         "configureMarket": "配置市场",
         "reviewMerchant": "查看商家",
         "orderMonitor": "订单监管",
+        "unitPermissions": "单位权限开关",
         "moduleSwitches": "模块开关",
         "capabilityContracts": "能力合同"
       },
@@ -266,7 +267,11 @@
       },
       "moduleSwitches": {
         "title": "模块开关",
-        "description": "平台全局模块开关占位页，用于规划哪些能力开放、试点、审核或暂停；当前不会真实影响 Vendor 菜单。"
+        "description": "平台总开关用于规划开放、试点、审核或暂停；具体商户、摊位、配送队伍、物料供应商能看到什么，请到单位权限开关里配置。"
+      },
+      "unitPermissions": {
+        "title": "单位权限开关",
+        "description": "按具体经营单位控制 Vendor 中国自定义菜单可见性。例如海鲜摊位只显示海鲜交易、提货卡、履约工具，不显示无关供应商或直播入口。"
       },
       "marketCapabilities": {
         "title": "市场配置",
@@ -970,7 +975,7 @@
     },
     "operations": {
       "actions": {
-        "mockConfigure": "Mock 配置占位"
+        "mockConfigure": "平台配置占位"
       },
       "mockNotice": {
         "title": "Mock 控制台说明",
@@ -978,8 +983,8 @@
       },
       "summary": {
         "mockOnly": {
-          "title": "只读 mock 开关",
-          "description": "全部来自前端占位常量"
+          "title": "平台总开关规划",
+          "description": "平台 / 市场 / 角色仍为展示口径"
         },
         "marketScoped": {
           "title": "市场级能力",
@@ -1046,11 +1051,103 @@
       },
       "moduleSwitches": {
         "title": "平台全局模块开关",
-        "description": "覆盖本地生鲜供应链与多角色经营平台的核心能力状态，表达平台级开放策略；开关均为只读 mock / 配置占位。"
+        "description": "覆盖本地生鲜供应链与多角色经营平台的核心能力状态，表达平台级开放策略；这一组总开关现在保存为后端平台默认草稿，但不改变真实业务执行。",
+        "noticeTitle": "开关控制说明",
+        "noticeMessage": "平台 / 市场 / 角色总开关保存为 Admin 平台默认草稿和审计事件；经营单位权限开关继续单独控制 Vendor effective / authorize / preview 只读菜单判断。这里不等于 RBAC，不改订单、支付、退款、结算、佣金、打款或履约逻辑。",
+        "serverDraftNotice": "这里的开关由运营手动切换，并通过后端接口保存到 PG 平台默认配置和事件表；保存状态：{{status}}。当前只作为平台规划草稿，不会直接打开真实业务 runtime。",
+        "switchAriaLabel": "{{module}} 平台默认开关",
+        "switchOn": "平台默认开",
+        "switchOff": "平台默认关",
+        "actions": {
+          "reset": "恢复平台默认"
+        },
+        "saveStatus": {
+          "ready": "待保存",
+          "saving": "保存中",
+          "saved": "已保存",
+          "error": "保存失败，使用页面当前状态"
+        }
+      },
+      "unitPermissionControls": {
+        "title": "经营单位权限开关",
+        "description": "按具体商户、摊位、配送队伍或物料供应商控制可见能力。例如海鲜摊位只看到海鲜交易、提货卡和快递打印，不看到直播、种苗批发等无关入口。",
+        "noticeTitle": "单位级开关说明",
+        "noticeMessage": "这里是按具体经营单位控制 Vendor 菜单可见性，不是平台全局开关。开关保存后，商户后台会按 seller 绑定读取对应单位配置；真实 RBAC、订单、支付、退款、结算、佣金、打款和履约逻辑不在这里改。",
+        "switchAriaLabel": "{{unit}} 的 {{module}} 可见性开关",
+        "localDraftNotice": "这里的开关现在由运营手动切换，并保存在当前浏览器本地草稿中；后续接真实后台 API 后再落库、审计并同步 Vendor 菜单。",
+        "serverDraftNotice": "这里的开关由运营手动切换，并通过后端接口保存到 PG 配置和事件表；保存状态：{{status}}。Vendor 登录后会优先按 seller 绑定读取，并用于中国自定义菜单、effective、authorize 和 preview 只读判断。",
+        "sellerHandlePlaceholder": "输入 seller handle，例如 a-hai-xian-huo-dang",
+        "sellerSelectPlaceholder": "选择真实商户 seller",
+        "bindingNotice": "绑定只用于解析该商户后台应该读取哪个经营单位菜单配置，不授予真实 RBAC 权限。",
+        "effectivePreview": {
+          "title": "Vendor 菜单 effective 预览",
+          "description": "从后端 effective 接口读取所选经营单位最终可见 / 隐藏模块，保存开关后可直接核对商户后台会出现哪些入口。",
+          "selectUnit": "选择要预览的经营单位",
+          "loading": "正在读取后端 effective view...",
+          "errorMessage": "读取 effective view 失败：{{message}}。",
+          "visibleModules": "Vendor 会显示",
+          "hiddenModules": "Vendor 会隐藏",
+          "vendorEntryCount": "影响 {{count}} 个入口"
+        },
+        "switchOn": "可见",
+        "switchOff": "隐藏",
+        "hiddenByOperator": "运营已关闭，后台入口隐藏",
+        "actions": {
+          "reset": "恢复示例配置",
+          "saveBinding": "保存绑定"
+        },
+        "saveStatus": {
+          "ready": "待保存",
+          "saving": "保存中",
+          "saved": "已保存",
+          "error": "保存失败，使用页面当前状态"
+        },
+        "fields": {
+          "unitType": "单位类型",
+          "market": "所属市场",
+          "visibleCount": "可见能力",
+          "sellerBinding": "绑定商户"
+        },
+        "reasons": {
+          "coreCategory": "主营类目允许展示",
+          "enabledForUnit": "该经营单位已允许",
+          "rolePilot": "角色试点允许",
+          "notInUnitScope": "不属于该单位经营范围",
+          "providerBlocked": "真实 provider 未接入，暂不开放",
+          "categoryBlocked": "类目不匹配，隐藏入口",
+          "marketNotEnabled": "所属市场未开启",
+          "pendingReview": "等待资质或运营审核",
+          "enabledByOperator": "运营已手动开通",
+          "highRiskReadOnly": "财务高风险，仅允许只读入口"
+        }
+      },
+      "unitTypes": {
+        "merchantStall": "商户档口",
+        "merchantStore": "商户店铺",
+        "deliverySupplier": "配送供应商",
+        "materialSupplier": "物料供应商"
+      },
+      "units": {
+        "seafoodStallA12": {
+          "name": "三门海鲜 A12 档口",
+          "description": "海鲜摊位示例：只允许看到海鲜交易、提货卡和履约工具相关入口。"
+        },
+        "frozenMerchantB08": {
+          "name": "沿海冻品 B08 商户",
+          "description": "冻品商户示例：只开放冻品、上游货源和外地批发试点入口。"
+        },
+        "deliverySupplierTeam": {
+          "name": "三门同城配送队",
+          "description": "配送供应商示例：只能看到配送服务相关入口，不进入商品经营能力。"
+        },
+        "materialSupplierNorth": {
+          "name": "城北物料供应商",
+          "description": "物料供应商示例：只开放市场物料入口，不展示消费者交易类能力。"
+        }
       },
       "contract": {
         "title": "后端能力契约",
-        "description": "读取 Admin 登录态只读接口，展示平台、市场、商户和供应方能力边界；本页仍不让开关真实生效。",
+        "description": "读取 Admin 登录态只读接口，展示平台、市场、商户和供应方能力边界；能力契约只读展示，经营单位权限开关单独保存菜单可见性。",
         "loading": "正在读取 /admin/china/capabilities，只用于展示能力边界。",
         "fallbackStatus": "未连接",
         "errorUnknown": "未知错误",
@@ -1330,7 +1427,8 @@
         "aiQuickListing": "AI 快速上架",
         "expressPrint": "快递打印 / 电子面单",
         "pickupCard": "提货卡",
-        "storeDecoration": "店铺装修"
+        "storeDecoration": "店铺装修",
+        "financeReadOnly": "财务结算只读"
       },
       "switchPreview": {
         "readonly": "Mock 只读占位",

@@ -362,6 +362,21 @@ export const buildRefundStateMutationReviewCase = (
   const approval = evidence.approval;
   const audit = evidence.audit;
   const runtimeAttempt = evidence.runtimeAttempt;
+
+  if (!approval || !audit || !runtimeAttempt) {
+    return blockedResult(
+      queryKey,
+      "missing_cross_reference",
+      "Review case evidence is incomplete and has been blocked fail-closed.",
+      [
+        ...(!approval ? ["approval_record"] : []),
+        ...(!audit ? ["audit_record"] : []),
+        ...(!runtimeAttempt ? ["runtime_attempt_record"] : []),
+      ],
+      crossReferences,
+    );
+  }
+
   const providerRefundReference = approval.providerRefundReference;
 
   crossReferences.providerRefundReference = providerRefundReference;

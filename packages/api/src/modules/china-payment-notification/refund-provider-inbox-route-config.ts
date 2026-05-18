@@ -169,7 +169,9 @@ export const parseRefundProviderInboxRouteConfig = (
     );
   }
 
-  const rawConfig = JSON.stringify(env);
+  const rawConfig = Object.values(env)
+    .filter((item): item is string => typeof item === "string")
+    .join("\n");
 
   if (realSecretLikePattern.test(rawConfig)) {
     return disabled(

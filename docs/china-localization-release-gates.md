@@ -1,6 +1,23 @@
 # China Localization Release Gates
 
-更新时间：2026-05-07 Asia/Shanghai
+更新时间：2026-05-17 Asia/Shanghai
+
+## 2026-05-17 当前 close-gate 口径
+
+最新上线 readiness 事实源：
+
+- `/tmp/fuyi-preprod-close-gate-created-local-disposable-go/readiness-suite/summary.json`
+- verdict：`GO-FOR-CHECKED-SCOPE`
+- external blockers：`[]`
+- Admin 登录态视觉 QA：confirmed
+- 高风险 runtime approval gate：confirmed
+- disposable DB rehearsal：confirmed
+- private env status：`READY_TO_VALIDATE`
+- artifact secret scan：PASS
+
+当前结论只代表 checked scope 可进入自用 / 内部联调基线，不代表整个平台生产写路径全部完成。真实支付、退款成功状态写入、对账、结算、佣金、打款、RBAC enforcement、履约、物流和直播 / IM 仍是后续高风险串行任务。
+
+当前自用范围和禁用 runtime 详见 `docs/self-use-launch-scope-and-disabled-runtime.md`。下面的 Gate 0-6 保留为历史门禁结构；如果和上面的 close-gate 事实冲突，以上面的 2026-05-17 summary 为准。
 
 ## 目标
 
@@ -52,14 +69,16 @@
 
 - 用户明确提供可删除、可重建、无生产数据的预发 DB。
 - 先备份或确认无需备份。
-- 执行 up SQL。
-- 验证表、约束、最小 fixture。
-- 执行 down SQL 或清理策略。
+- 按 `docs/preprod-disposable-db-rehearsal-runbook.md` 执行当前脚本化流程。
+- 私有 env 必须先通过 redacted status 和 validate，且不得提交到 git。
+- 执行 guarded preprod DB rehearsal，只允许 migration / schema evidence。
+- 验证 payment / refund query surface / unit permission 相关表。
+- 记录 cleanup / rollback 证据。
 - 输出完整日志和回滚结果。
 
 当前状态：
 
-- not started。
+- blocked：默认私有 env 草稿已生成但仍含占位符；真实 disposable preprod DB 尚未提供。
 
 ## Gate 4：真实 migration 注册
 

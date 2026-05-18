@@ -300,6 +300,8 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       paymentSession: {
         id: "payses_mock_composition_001",
         provider: "mock_china_pay",
+        sellerId: "seller_mock_composition_001",
+        marketId: "market_mock_composition_001",
         amount: {
           value: 128560,
           currency: "CNY",
@@ -309,6 +311,8 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       },
       order: {
         id: "order_mock_composition_001",
+        sellerId: "seller_mock_composition_001",
+        marketId: "market_mock_composition_001",
         status: "pending",
         fetchedAt: receivedAt,
       },
@@ -324,8 +328,13 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
     });
     expect(result.runtimeAdapterDecision).toMatchObject({
       decision: "workflow_command_disabled_recorded",
+      executable: false,
       workflowCommandPrepared: true,
+      workflowDryRunOnly: true,
       workflowExecutionAllowed: false,
+      stateMutationAllowed: false,
+      paymentStateMutationAllowed: false,
+      orderStateMutationAllowed: false,
       commandCandidate: {
         originalCommandType: "capture_payment",
         paymentSessionId: "payses_mock_composition_001",
@@ -355,6 +364,8 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       paymentSession: {
         id: "payses_mock_composition_001",
         provider: "mock_china_pay",
+        sellerId: "seller_mock_composition_001",
+        marketId: "market_mock_composition_001",
         amount: {
           value: 128560,
           currency: "CNY",
@@ -364,6 +375,8 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       },
       order: {
         id: "order_mock_composition_001",
+        sellerId: "seller_mock_composition_001",
+        marketId: "market_mock_composition_001",
         status: "pending",
         fetchedAt: receivedAt,
       },
@@ -380,6 +393,16 @@ describe("composeMockPaymentWebhookInboxOnly", () => {
       executable: true,
       command: {
         type: "capture_payment",
+      },
+    });
+    expect(result.runtimeAdapterDecision).toMatchObject({
+      decision: "workflow_command_disabled_recorded",
+      executable: false,
+      workflowCommandPrepared: true,
+      workflowExecutionAllowed: false,
+      stateMutationAllowed: false,
+      commandCandidate: {
+        originalCommandType: "capture_payment",
       },
     });
     expect(result).not.toHaveProperty("workflowResult");

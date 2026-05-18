@@ -131,6 +131,36 @@ describe("evaluateRefundStateMutationProductionFeatureFlag", () => {
     expectSafe(result);
   });
 
+  it.each(["dry_run", "shadow_only"] as const)(
+    "blocks production %s without explicit production enablement",
+    (mode) => {
+      const result = evaluateRefundStateMutationProductionFeatureFlag(
+        input({
+          environment: "production",
+          mode,
+          gates: {
+            ...input().gates,
+            productionExplicitlyEnabled: false,
+          },
+        }),
+      );
+
+      expect(result).toMatchObject({
+        decision: "production_feature_flag_blocked",
+        auditEvent: {
+          action: "refund_state_production_feature_flag_blocked",
+        },
+      });
+      expect(result.blockCodes).toEqual(
+        expect.arrayContaining([
+          "production_feature_flag_contract_disabled",
+          "production_explicit_enable_missing",
+        ]),
+      );
+      expectSafe(result);
+    },
+  );
+
   it("blocks execute mode even when other gates are ready", () => {
     const result = evaluateRefundStateMutationProductionFeatureFlag(
       input({

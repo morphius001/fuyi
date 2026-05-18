@@ -38,13 +38,13 @@ const ChinaAdminPageShell = ({ page }: ChinaAdminPageShellProps) => {
       page={page}
       actions={
         <>
-          <Button size="small" variant="secondary">
+          <Button size="small" variant="secondary" disabled>
             {t("chinaAdmin.actions.export")}
           </Button>
-          <Button size="small" variant="secondary">
+          <Button size="small" variant="secondary" disabled>
             {t("chinaAdmin.actions.batchPlaceholder")}
           </Button>
-          <Button size="small" variant="primary">
+          <Button size="small" variant="primary" disabled>
             {table.primaryActionKey
               ? t(table.primaryActionKey)
               : t("chinaAdmin.actions.createPlaceholder")}

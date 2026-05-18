@@ -13,15 +13,23 @@ export const TranslatedStatus = ({ status }: { status: OperationStatus }) => {
   )
 }
 
-export const MockNotice = () => {
+type MockNoticeProps = {
+  titleKey?: string
+  messageKey?: string
+}
+
+export const MockNotice = ({
+  titleKey = "chinaAdmin.operations.mockNotice.title",
+  messageKey = "chinaAdmin.operations.mockNotice.message",
+}: MockNoticeProps) => {
   const { t } = useChinaAdminTranslation()
 
   return (
     <Container className="p-0">
       <div className="flex flex-col gap-y-1 px-4 py-3">
-        <Heading level="h2">{t("chinaAdmin.operations.mockNotice.title")}</Heading>
+        <Heading level="h2">{t(titleKey)}</Heading>
         <Text size="small" className="text-ui-fg-subtle">
-          {t("chinaAdmin.operations.mockNotice.message")}
+          {t(messageKey)}
         </Text>
       </div>
     </Container>

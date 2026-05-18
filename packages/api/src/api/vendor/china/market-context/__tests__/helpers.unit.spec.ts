@@ -237,6 +237,16 @@ describe("vendor market context route helpers", () => {
       sellerId: marketMembershipFixtureSellerId,
     });
 
+    const result = await buildVendorMarketContextFromRepositoryRows({
+      sellerId: marketMembershipFixtureSellerId,
+      seller: {
+        id: marketMembershipFixtureSellerId,
+        handle: marketMembershipFixtureSellerHandle,
+        name: "测试鲜活档",
+      },
+      rows: rows ?? {},
+    });
+
     expect(rows).toMatchObject({
       markets: expect.arrayContaining([
         expect.objectContaining({
@@ -256,16 +266,6 @@ describe("vendor market context route helpers", () => {
           booth_no: "B区06号",
         }),
       ]),
-    });
-
-    const result = await buildVendorMarketContextFromRepositoryRows({
-      sellerId: marketMembershipFixtureSellerId,
-      seller: {
-        id: marketMembershipFixtureSellerId,
-        handle: marketMembershipFixtureSellerHandle,
-        name: "测试鲜活档",
-      },
-      rows: rows ?? {},
     });
 
     expect(result).toMatchObject({

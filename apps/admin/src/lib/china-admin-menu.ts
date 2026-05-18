@@ -73,6 +73,7 @@ export const CHINA_ADMIN_MENU: ChinaAdminMenuGroup[] = [
     icon: QueueList,
     items: [
       page("capabilityContracts", "/operations/capability-contracts", "operations"),
+      page("unitPermissions", "/operations/unit-permissions", "operations"),
       page("moduleSwitches", "/operations/module-switches", "operations"),
       page("marketCapabilities", "/operations/market-capabilities", "operations"),
       page("roleEnablement", "/operations/role-enablement", "operations"),

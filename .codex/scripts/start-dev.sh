@@ -112,11 +112,10 @@ case "${1:-start}" in
       env \
         CODEX_DATABASE_URL="postgres://${USER}@127.0.0.1:${pg_port}/mercur" \
         CODEX_DISABLE_SELLER_VISIBILITY_FILTER="${CODEX_DISABLE_SELLER_VISIBILITY_FILTER:-false}" \
-        ADMIN_CORS="${ADMIN_CORS:-http://localhost:7000,http://127.0.0.1:7000}" \
-        AUTH_CORS="${AUTH_CORS:-http://localhost:7000,http://127.0.0.1:7000,http://localhost:7001,http://127.0.0.1:7001,http://localhost:3101,http://127.0.0.1:3101}" \
-        STORE_CORS="${STORE_CORS:-http://localhost:3101,http://127.0.0.1:3101}" \
-        VENDOR_CORS="${VENDOR_CORS:-http://localhost:7001,http://127.0.0.1:7001}" \
-        "$root/packages/api/node_modules/.bin/medusa" develop
+        CHINA_REFUND_REVIEW_QUERY_SURFACE_ENABLED="${CHINA_REFUND_REVIEW_QUERY_SURFACE_ENABLED:-}" \
+        CHINA_REFUND_REVIEW_QUERY_SURFACE_MODE="${CHINA_REFUND_REVIEW_QUERY_SURFACE_MODE:-}" \
+        CHINA_REFUND_REVIEW_QUERY_SURFACE_TARGET_ENV="${CHINA_REFUND_REVIEW_QUERY_SURFACE_TARGET_ENV:-}" \
+        "$root/.codex/scripts/run-api-dev.sh" 9000
 
     start_service "admin-7000" "7000" "$root/apps/admin" \
       env \

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import "./styles.css";
 
@@ -50,6 +50,13 @@ import {
   retrieveChinaVendorMarketContext,
   type VendorMarketContextView,
 } from "./lib/china-vendor-market-context-client";
+import {
+  retrieveChinaVendorModuleSurfacePreview,
+  retrieveChinaVendorUnitModuleAccess,
+  retrieveChinaVendorUnitPermissions,
+  type VendorModuleSurfacePreviewResponse,
+  type VendorUnitPermissionEffectiveView,
+} from "./lib/china-vendor-unit-permissions-client";
 
 const getRowsForStatus = (page: DashboardPage, statusKey: string) => {
   if (statusKey === "all") {
@@ -103,6 +110,20 @@ type MarketContextState =
   | { status: "loading" }
   | { status: "ready"; data: VendorMarketContextView };
 
+type UnitPermissionState =
+  | { status: "loading" }
+  | { status: "ready"; data: VendorUnitPermissionEffectiveView };
+
+type UnitPermissionNotice = {
+  tone: "allowed" | "blocked" | "fallback";
+  message: string;
+};
+
+type ModuleSurfacePreviewState =
+  | { status: "loading" }
+  | { status: "ready"; data: VendorModuleSurfacePreviewResponse }
+  | { status: "error"; message: string };
+
 const capabilityStatusLabels: Record<ChinaCapabilityStatus, string> = {
   enabled_baseline: "已开通基础版",
   read_only_baseline: "只读基础版",
@@ -144,16 +165,196 @@ const formatVendorMarketContextSource = (data: VendorMarketContextView) =>
 const getBackendUrl = () =>
   (import.meta.env.VITE_MEDUSA_BACKEND_URL ?? "http://127.0.0.1:9000").replace(
     /\/$/,
-    ""
+    "",
   );
 
 const vendorPublishableKey = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY;
 
+const alwaysVisibleVendorPages = new Set<PageId>([
+  "home",
+  "capabilityBoundary",
+  "accounts",
+]);
+
+const mobilePriorityActions: Array<{ label: string; pageId: PageId }> = [
+  { label: "手机快速上架", pageId: "mobileListing" },
+  { label: "AI 草稿上架", pageId: "aiListingDraft" },
+  { label: "店铺装修", pageId: "shopDecoration" },
+  { label: "待发货 36", pageId: "orders" },
+  { label: "售后待处理 7", pageId: "afterSales" },
+];
+
+const vendorPagesByUnitModule: Record<string, PageId[]> = {
+  seafoodTrade: [
+    "mobileListing",
+    "products",
+    "orders",
+    "logistics",
+    "afterSales",
+    "service",
+    "marketing",
+  ],
+  storeDecoration: ["market", "merchantTypes", "shopDecoration", "store", "data"],
+  frozenGoods: ["products", "orders", "logistics", "afterSales"],
+  pickupCard: ["pickupCards"],
+  expressPrint: ["waybillPrinting"],
+  financeReadOnly: ["finance"],
+  aiQuickListing: ["aiListingDraft"],
+  livestream: ["liveOps"],
+  marketMaterials: [
+    "materialPurchase",
+    "materialSupplier",
+    "materialOrders",
+    "supplyProducts",
+  ],
+  deliverySuppliers: [
+    "deliveryServices",
+    "deliveryOrders",
+    "deliveryExceptions",
+    "deliveryCoverage",
+  ],
+  upstreamSupply: [
+    "supplierWorkspace",
+    "upstreamSources",
+    "farmSuppliers",
+    "supplyQuotes",
+    "purchaseNeeds",
+    "arrivalPlans",
+  ],
+  seedlingWholesale: [
+    "seedWholesale",
+    "seedSuppliers",
+    "seedNeeds",
+    "seedQuotes",
+    "seedPartners",
+    "seedArrivalPlans",
+  ],
+  remoteWholesalers: [
+    "externalWholesalers",
+    "regionalSources",
+    "regionalQuotes",
+    "regionalArrivalPlans",
+    "coldChainArrivals",
+    "wholesalePartners",
+  ],
+};
+
+const unitModuleByVendorPage = Object.entries(vendorPagesByUnitModule).reduce<
+  Partial<Record<PageId, string>>
+>((map, [moduleKey, pageIds]) => {
+  pageIds.forEach((pageId) => {
+    map[pageId] = moduleKey;
+  });
+
+  return map;
+}, {});
+
 function App() {
   const [activePageId, setActivePageId] = useState<PageId>("home");
-  const [activeStatuses, setActiveStatuses] = useState<Record<string, string>>({});
+  const [activeStatuses, setActiveStatuses] = useState<Record<string, string>>(
+    {},
+  );
+  const [unitPermissionState, setUnitPermissionState] =
+    useState<UnitPermissionState>({ status: "loading" });
+  const [unitPermissionNotice, setUnitPermissionNotice] =
+    useState<UnitPermissionNotice>();
+  const [pendingUnitPermissionPageId, setPendingUnitPermissionPageId] =
+    useState<PageId>();
+
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorUnitPermissions().then((data) => {
+      if (mounted) {
+        setUnitPermissionState({ status: "ready", data });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const visiblePageIds = useMemo(() => {
+    const pageIds = new Set<PageId>(alwaysVisibleVendorPages);
+
+    if (unitPermissionState.status === "ready") {
+      unitPermissionState.data.visibleModuleKeys.forEach((moduleKey) => {
+        vendorPagesByUnitModule[moduleKey]?.forEach((pageId) => {
+          pageIds.add(pageId);
+        });
+      });
+    }
+
+    return pageIds;
+  }, [unitPermissionState]);
+
+  const visibleMenuItems = useMemo(
+    () => menuItems.filter((item) => visiblePageIds.has(item.id)),
+    [visiblePageIds],
+  );
+  const visibleMobilePriorityActions = useMemo(
+    () =>
+      mobilePriorityActions.filter((action) =>
+        visiblePageIds.has(action.pageId),
+      ),
+    [visiblePageIds],
+  );
+
+  const renderedActivePageId = visiblePageIds.has(activePageId)
+    ? activePageId
+    : "home";
   const activePage =
-    activePageId === "home" ? undefined : pageMap.get(activePageId);
+    renderedActivePageId === "home"
+      ? undefined
+      : pageMap.get(renderedActivePageId);
+  const navigateWithUnitPermission = (pageId: PageId) => {
+    const moduleKey = unitModuleByVendorPage[pageId];
+
+    if (!moduleKey) {
+      setUnitPermissionNotice(undefined);
+      setActivePageId(pageId);
+      return;
+    }
+
+    setPendingUnitPermissionPageId(pageId);
+
+    retrieveChinaVendorUnitModuleAccess(moduleKey)
+      .then((access) => {
+        if (!access.allowed) {
+          setUnitPermissionNotice({
+            tone: "blocked",
+            message: `后端已阻断 ${moduleKey}：${access.reason ?? "未开通"}。`,
+          });
+          return;
+        }
+
+        setUnitPermissionNotice({
+          tone: "allowed",
+          message: `后端已确认 ${access.unitKey ?? "当前经营单位"} 可访问 ${moduleKey}。`,
+        });
+        setActivePageId(pageId);
+      })
+      .catch(() => {
+        if (visiblePageIds.has(pageId)) {
+          setUnitPermissionNotice({
+            tone: "fallback",
+            message:
+              "后端授权查询暂不可用，已按当前 effective view 显示；上线前需恢复 authorize API。",
+          });
+          setActivePageId(pageId);
+          return;
+        }
+
+        setUnitPermissionNotice({
+          tone: "blocked",
+          message: `当前经营单位未开通 ${moduleKey}，已保持在首页。`,
+        });
+      })
+      .finally(() => {
+        setPendingUnitPermissionPageId(undefined);
+      });
+  };
 
   return (
     <div className="vendor-shell">
@@ -167,20 +368,29 @@ function App() {
         </div>
 
         <nav className="nav-list">
-          {menuItems.map((item, index) => {
-            const previous = menuItems[index - 1];
+          {visibleMenuItems.map((item, index) => {
+            const previous = visibleMenuItems[index - 1];
             const showGroup = !previous || previous.group !== item.group;
 
             return (
               <div key={item.id}>
                 {showGroup ? <p className="nav-group">{item.group}</p> : null}
                 <button
-                  className={`nav-item ${activePageId === item.id ? "active" : ""}`}
-                  onClick={() => setActivePageId(item.id)}
+                  className={`nav-item ${renderedActivePageId === item.id ? "active" : ""}`}
+                  disabled={pendingUnitPermissionPageId === item.id}
+                  onClick={() => navigateWithUnitPermission(item.id)}
                   type="button"
                 >
                   <span>{item.label}</span>
-                  <small>{item.id === "home" ? "概览" : "占位"}</small>
+                  <small>
+                    {pendingUnitPermissionPageId === item.id
+                      ? "校验中"
+                      : item.id === "home"
+                        ? "概览"
+                        : unitModuleByVendorPage[item.id]
+                          ? "后端校验"
+                          : "占位"}
+                  </small>
                 </button>
               </div>
             );
@@ -188,34 +398,37 @@ function App() {
         </nav>
 
         <div className="sidebar-note">
-          <strong>Mock 模式</strong>
-          <span>当前不连接真实订单、支付、结算、物流或权限接口。</span>
+          <strong>单位菜单过滤</strong>
+          <span>
+            {unitPermissionState.status === "ready"
+              ? `当前单位：${unitPermissionState.data.unit.unitKey}，可见模块 ${unitPermissionState.data.visibleModuleKeys.length} 项。`
+              : "正在读取经营单位可见能力。"}
+          </span>
+          <span>只过滤菜单入口，不授予真实 RBAC 权限。</span>
         </div>
       </aside>
 
       <main className="main-panel">
-        <section className="mobile-priority-actions" aria-label="移动端优先操作">
+        <section
+          className="mobile-priority-actions"
+          aria-label="移动端优先操作"
+        >
           <div>
             <span>今日优先</span>
-            <strong>快速上架 / AI 草稿</strong>
-            <p>手机端先处理鲜货上架、AI 草稿确认和关键待办。</p>
+            <strong>当前单位可见操作</strong>
+            <p>按平台给该经营单位开通的模块展示，不显示未开通功能。</p>
           </div>
           <div className="mobile-action-grid">
-            <button type="button" onClick={() => setActivePageId("mobileListing")}>
-              手机快速上架
-            </button>
-            <button type="button" onClick={() => setActivePageId("aiListingDraft")}>
-              AI 草稿上架
-            </button>
-            <button type="button" onClick={() => setActivePageId("shopDecoration")}>
-              店铺装修
-            </button>
-            <button type="button" onClick={() => setActivePageId("orders")}>
-              待发货 36
-            </button>
-            <button type="button" onClick={() => setActivePageId("afterSales")}>
-              售后待处理 7
-            </button>
+            {visibleMobilePriorityActions.map((action) => (
+              <button
+                key={action.pageId}
+                type="button"
+                disabled={pendingUnitPermissionPageId === action.pageId}
+                onClick={() => navigateWithUnitPermission(action.pageId)}
+              >
+                {action.label}
+              </button>
+            ))}
           </div>
         </section>
 
@@ -234,12 +447,23 @@ function App() {
           </div>
         </header>
 
+        {unitPermissionNotice ? (
+          <section
+            className={`unit-permission-alert ${unitPermissionNotice.tone}`}
+            aria-label="经营单位后端授权状态"
+          >
+            <strong>经营单位后端校验</strong>
+            <span>{unitPermissionNotice.message}</span>
+          </section>
+        ) : null}
+
         {activePage ? (
-          activePageId === "capabilityBoundary" ? (
+          renderedActivePageId === "capabilityBoundary" ? (
             <VendorReadonlyContractsPage />
           ) : (
             <ManagementPage
               activeStatus={activeStatuses[activePage.id] ?? "all"}
+              moduleSurfaceKey={unitModuleByVendorPage[renderedActivePageId]}
               onStatusChange={(status) =>
                 setActiveStatuses((current) => ({
                   ...current,
@@ -250,7 +474,11 @@ function App() {
             />
           )
         ) : (
-          <HomePage onNavigate={setActivePageId} />
+          <HomePage
+            unitPermissionState={unitPermissionState}
+            onNavigate={navigateWithUnitPermission}
+            visiblePageIds={visiblePageIds}
+          />
         )}
       </main>
     </div>
@@ -290,7 +518,9 @@ function VendorReadonlyContractsPage() {
               <h2>{group.title}</h2>
               <p>{group.description}</p>
             </div>
-            <span className="capability-source">readonly · not runtime config</span>
+            <span className="capability-source">
+              readonly · not runtime config
+            </span>
           </div>
 
           <div className="table-wrap">
@@ -330,21 +560,130 @@ function VendorReadonlyContractsPage() {
       <section className="readonly-state">
         <strong>商户端安全边界</strong>
         <p>
-          所有能力状态都只用于商户后台说明。真实开通必须以后端只读 view、平台审核、配置存储和审计日志为准；支付、订单、退款、结算、佣金、打款和权限仍按高风险串行任务推进。
+          所有能力状态都只用于商户后台说明。真实开通必须以后端只读
+          view、平台审核、配置存储和审计日志为准；支付、订单、退款、结算、佣金、打款和权限仍按高风险串行任务推进。
         </p>
       </section>
     </div>
   );
 }
 
-function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
+const vendorModuleLabels: Record<string, string> = {
+  aiQuickListing: "AI 草稿上架",
+  deliverySuppliers: "配送供应商",
+  expressPrint: "快递打印",
+  financeReadOnly: "财务结算只读",
+  frozenGoods: "冻品经营",
+  fruitsVegetables: "果蔬经营",
+  livestream: "直播管理",
+  marketMaterials: "市场物料",
+  pickupCard: "提货卡",
+  remoteWholesalers: "外地批发商",
+  seafoodTrade: "海鲜交易",
+  seedlingWholesale: "种苗批发",
+  storeDecoration: "店铺装修",
+  upstreamSupply: "上游供给",
+};
+
+const primaryPageByVendorModule: Record<string, PageId> = {
+  aiQuickListing: "aiListingDraft",
+  deliverySuppliers: "deliveryServices",
+  expressPrint: "waybillPrinting",
+  financeReadOnly: "finance",
+  frozenGoods: "products",
+  fruitsVegetables: "products",
+  livestream: "liveOps",
+  marketMaterials: "materialPurchase",
+  pickupCard: "pickupCards",
+  remoteWholesalers: "externalWholesalers",
+  seafoodTrade: "products",
+  seedlingWholesale: "seedWholesale",
+  storeDecoration: "shopDecoration",
+  upstreamSupply: "supplierWorkspace",
+};
+
+function UnitPermissionSnapshot({
+  onNavigate,
+  state,
+}: {
+  onNavigate: (page: PageId) => void;
+  state: UnitPermissionState;
+}) {
+  if (state.status === "loading") {
+    return (
+      <section className="unit-permission-snapshot loading">
+        <div>
+          <p className="eyebrow">单位权限开关</p>
+          <h2>正在读取当前经营单位</h2>
+          <p>Vendor 菜单会按平台后台保存的单位配置收敛。</p>
+        </div>
+      </section>
+    );
+  }
+
+  const { unit, visibleModuleKeys, hiddenModuleKeys, source } = state.data;
+
+  return (
+    <section className="unit-permission-snapshot" aria-label="当前单位可见功能">
+      <div className="unit-permission-snapshot-head">
+        <div>
+          <p className="eyebrow">单位权限开关 · 后台控制</p>
+          <h2>{unit.unitKey}</h2>
+          <p>
+            当前商户后台只显示平台给这个经营单位开通的功能；隐藏功能不会出现在左侧菜单和首页快捷入口。
+          </p>
+        </div>
+        <span>{source}</span>
+      </div>
+
+      <div className="unit-permission-columns">
+        <div>
+          <strong>已开通</strong>
+          <div className="unit-permission-chip-list">
+            {visibleModuleKeys.map((moduleKey) => (
+              <button
+                key={moduleKey}
+                type="button"
+                onClick={() =>
+                  onNavigate(primaryPageByVendorModule[moduleKey] ?? "home")
+                }
+              >
+                {vendorModuleLabels[moduleKey] ?? moduleKey}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <strong>已隐藏</strong>
+          <div className="unit-permission-chip-list muted">
+            {hiddenModuleKeys.map((moduleKey) => (
+              <span key={moduleKey}>
+                {vendorModuleLabels[moduleKey] ?? moduleKey}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HomePage({
+  unitPermissionState,
+  onNavigate,
+  visiblePageIds,
+}: {
+  unitPermissionState: UnitPermissionState;
+  onNavigate: (page: PageId) => void;
+  visiblePageIds: Set<PageId>;
+}) {
   const [capabilityState, setCapabilityState] = useState<CapabilityState>(() =>
     vendorPublishableKey
       ? { status: "loading" }
       : {
           status: "error",
           message: "缺少 VITE_MEDUSA_PUBLISHABLE_KEY，暂时显示本地静态矩阵。",
-        }
+        },
   );
   const [marketContextState, setMarketContextState] =
     useState<MarketContextState>({
@@ -414,36 +753,57 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
     };
   }, []);
 
+  const visibleStoreTasks = storeTasks.filter(
+    (item) => !item.target || visiblePageIds.has(item.target),
+  );
+  const visibleRiskItems = riskItems.filter(
+    (item) => !item.target || visiblePageIds.has(item.target),
+  );
+  const visibleQuickEntries = quickEntries.filter((entry) =>
+    visiblePageIds.has(entry.target),
+  );
+
   return (
     <div className="page-stack">
       <section className="mock-notice" aria-label="数据源说明">
         <strong>静态 mock 工作台</strong>
         <span>
-          默认示例为三门海鲜市场；平台支持多市场切换、商户类型和业务模块开通。所有金额为 CNY，均为前端静态占位。
+          默认示例为三门海鲜市场；平台支持多市场切换、商户类型和业务模块开通。所有金额为
+          CNY，均为前端静态占位。
         </span>
       </section>
 
       <VendorMarketContextPanel state={marketContextState} />
 
-      <RoleWorkspaceTemplatePanel onNavigate={onNavigate} />
+      <UnitPermissionSnapshot
+        state={unitPermissionState}
+        onNavigate={onNavigate}
+      />
 
-      <section className="decoration-home-card" aria-label="店铺装修快捷维护">
-        <div className="decoration-home-copy">
-          <p className="eyebrow">店铺装修 · 档口主页预览</p>
-          <h2>{shopDecorationHero.shopName}</h2>
-          <p>
-            维护头图、公告、今日鲜货、商品分组、资质、配送说明和直播状态；当前仅为静态
-            mock 草稿，不保存、不上传、不发布。
-          </p>
-        </div>
-        <div className="decoration-home-actions">
-          <span>{shopDecorationHero.market}</span>
-          <span>{shopDecorationHero.booth}</span>
-          <button type="button" onClick={() => onNavigate("shopDecoration")}>
-            进入装修工作台
-          </button>
-        </div>
-      </section>
+      <RoleWorkspaceTemplatePanel
+        onNavigate={onNavigate}
+        visiblePageIds={visiblePageIds}
+      />
+
+      {visiblePageIds.has("shopDecoration") ? (
+        <section className="decoration-home-card" aria-label="店铺装修快捷维护">
+          <div className="decoration-home-copy">
+            <p className="eyebrow">店铺装修 · 档口主页预览</p>
+            <h2>{shopDecorationHero.shopName}</h2>
+            <p>
+              维护头图、公告、今日鲜货、商品分组、资质、配送说明和直播状态；当前仅为静态
+              mock 草稿，不保存、不上传、不发布。
+            </p>
+          </div>
+          <div className="decoration-home-actions">
+            <span>{shopDecorationHero.market}</span>
+            <span>{shopDecorationHero.booth}</span>
+            <button type="button" onClick={() => onNavigate("shopDecoration")}>
+              进入装修工作台
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       <section className="metric-grid" aria-label="首页经营指标">
         {homeMetrics.map((metric) => (
@@ -489,16 +849,16 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
 
       <section className="home-layout">
         <Panel title="店铺待办" description="按商家日常经营优先级展示">
-          <CompactList items={storeTasks} onNavigate={onNavigate} />
+          <CompactList items={visibleStoreTasks} onNavigate={onNavigate} />
         </Panel>
 
         <Panel title="经营风险" description="仅做风险提示占位，不改变业务状态">
-          <CompactList items={riskItems} onNavigate={onNavigate} />
+          <CompactList items={visibleRiskItems} onNavigate={onNavigate} />
         </Panel>
       </section>
 
       <section className="quick-grid" aria-label="快捷入口">
-        {quickEntries.map((entry) => (
+        {visibleQuickEntries.map((entry) => (
           <button
             className="quick-card"
             key={entry.label}
@@ -512,7 +872,10 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
       </section>
 
       <section className="home-layout wide-left">
-        <Panel title="近期重点模块" description="帮助商家把运营动作拆到责任模块">
+        <Panel
+          title="近期重点模块"
+          description="帮助商家把运营动作拆到责任模块"
+        >
           <div className="focus-list">
             {focusModules.map(([title, module, detail]) => (
               <article className="focus-item" key={title}>
@@ -526,7 +889,10 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
           </div>
         </Panel>
 
-        <Panel title="业务入口与职责说明" description="静态职责表，便于后续接权限和真实 API">
+        <Panel
+          title="业务入口与职责说明"
+          description="静态职责表，便于后续接权限和真实 API"
+        >
           <div className="table-wrap compact">
             <table>
               <thead>
@@ -555,9 +921,15 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
 
 function RoleWorkspaceTemplatePanel({
   onNavigate,
+  visiblePageIds,
 }: {
   onNavigate: (page: PageId) => void;
+  visiblePageIds: Set<PageId>;
 }) {
+  const visibleRoleWorkspaceCards = vendorRoleWorkspaceCards.filter(
+    (card) => !card.target || visiblePageIds.has(card.target as PageId),
+  );
+
   return (
     <section className="role-workspace-panel" aria-label="商户角色工作台模板">
       <div className="role-workspace-header">
@@ -570,8 +942,11 @@ function RoleWorkspaceTemplatePanel({
       </div>
 
       <div className="role-workspace-grid">
-        {vendorRoleWorkspaceCards.map((card) => (
-          <article className={`role-workspace-card tone-${card.tone}`} key={card.role}>
+        {visibleRoleWorkspaceCards.map((card) => (
+          <article
+            className={`role-workspace-card tone-${card.tone}`}
+            key={card.role}
+          >
             <div className="role-workspace-card-head">
               <div>
                 <span>{card.status}</span>
@@ -588,7 +963,10 @@ function RoleWorkspaceTemplatePanel({
               ) : null}
             </div>
             <p>{card.headline}</p>
-            <div className="role-focus-tags" aria-label={`${card.role} 工作重点`}>
+            <div
+              className="role-focus-tags"
+              aria-label={`${card.role} 工作重点`}
+            >
               {card.focus.map((item) => (
                 <span key={item}>{item}</span>
               ))}
@@ -606,7 +984,10 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
     return (
       <section className="readonly-state" aria-label="市场上下文读取中">
         <strong>市场上下文</strong>
-        <p>正在读取 Vendor market context，只用于首页展示，不影响订单、配送、结算或权限。</p>
+        <p>
+          正在读取 Vendor market
+          context，只用于首页展示，不影响订单、配送、结算或权限。
+        </p>
       </section>
     );
   }
@@ -619,7 +1000,7 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
     data.deliveryProfiles.length > 0 ||
     data.moduleHints.length > 0;
   const enabledDeliveryProfiles = data.deliveryProfiles.filter(
-    (profile) => profile.enabled
+    (profile) => profile.enabled,
   );
   const cards = hasApiContext
     ? [
@@ -628,7 +1009,9 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
           primaryMembership?.marketName ?? "暂无市场",
           primaryMembership
             ? `${primaryMembership.city}${
-                primaryMembership.district ? ` / ${primaryMembership.district}` : ""
+                primaryMembership.district
+                  ? ` / ${primaryMembership.district}`
+                  : ""
               } · ${primaryMembership.businessHours ?? "营业时间待配置"}`
             : "Vendor API 未返回主市场，商户后台继续显示只读空状态。",
         ],
@@ -647,7 +1030,9 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
           "配送展示能力",
           `${enabledDeliveryProfiles.length} 项可见`,
           enabledDeliveryProfiles.length > 0
-            ? enabledDeliveryProfiles.map((profile) => profile.displayName).join(" / ")
+            ? enabledDeliveryProfiles
+                .map((profile) => profile.displayName)
+                .join(" / ")
             : "暂无配送 profile；checkout shipping options 不受影响。",
         ],
         [
@@ -678,14 +1063,19 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
           "配送规则",
           enabledDeliveryProfiles.length > 0
             ? enabledDeliveryProfiles
-                .map((profile) => `${profile.displayName}：${profile.serviceAreaNote ?? "范围待配置"}`)
+                .map(
+                  (profile) =>
+                    `${profile.displayName}：${profile.serviceAreaNote ?? "范围待配置"}`,
+                )
                 .join("；")
             : "暂无可展示配送 profile；本页不修改 checkout shipping options。",
         ],
         [
           "市场归属",
           data.memberships
-            .map((membership) => `${membership.marketName} ${membership.boothNo}`)
+            .map(
+              (membership) => `${membership.marketName} ${membership.boothNo}`,
+            )
             .join("；") || "暂无市场归属数据。",
         ],
       ]
@@ -695,10 +1085,13 @@ function VendorMarketContextPanel({ state }: { state: MarketContextState }) {
     <>
       <section className="mock-notice" aria-label="市场上下文只读说明">
         <strong>
-          {hasApiContext ? "Vendor 市场上下文已读取" : "Vendor 市场上下文未连接"}
+          {hasApiContext
+            ? "Vendor 市场上下文已读取"
+            : "Vendor 市场上下文未连接"}
         </strong>
         <span>
-          {formatVendorMarketContextSource(data)}；本区只做首页展示，不影响订单、配送、结算、佣金或权限。
+          {formatVendorMarketContextSource(data)}
+          ；本区只做首页展示，不影响订单、配送、结算、佣金或权限。
         </span>
       </section>
 
@@ -748,7 +1141,7 @@ function CapabilityContractPanel({ state }: { state: CapabilityState }) {
       group.capabilities.map((capability) => ({
         ...capability,
         groupLabel: group.label,
-      }))
+      })),
     )
     .filter((capability) => importantVendorCapabilityKeys.has(capability.key));
 
@@ -758,7 +1151,8 @@ function CapabilityContractPanel({ state }: { state: CapabilityState }) {
         <div>
           <h2>后端能力契约</h2>
           <p>
-            读取 `/store/china/vendor-capabilities`；这里只展示开通边界，不改变权限、接单、履约、库存或结算。
+            读取
+            `/store/china/vendor-capabilities`；这里只展示开通边界，不改变权限、接单、履约、库存或结算。
           </p>
         </div>
         <span className="capability-source">
@@ -788,10 +1182,12 @@ function CapabilityContractPanel({ state }: { state: CapabilityState }) {
 
 function ManagementPage({
   activeStatus,
+  moduleSurfaceKey,
   onStatusChange,
   page,
 }: {
   activeStatus: string;
+  moduleSurfaceKey?: string;
   onStatusChange: (status: string) => void;
   page: DashboardPage;
 }) {
@@ -818,11 +1214,22 @@ function ManagementPage({
       <section className="mock-notice" aria-label={`${page.title}只读说明`}>
         <strong>只读占位</strong>
         <span>
-          当前页面使用 mock 静态数据。筛选和操作按钮不触发发货、退款、结算、库存扣减或权限变更。
+          当前页面使用 mock
+          静态数据。筛选和操作按钮不触发发货、退款、结算、库存扣减或权限变更。
         </span>
       </section>
 
-      <section className="mini-metric-grid" aria-label={`${page.title}关键指标`}>
+      {moduleSurfaceKey ? (
+        <VendorModuleSurfacePreviewPanel
+          key={moduleSurfaceKey}
+          moduleKey={moduleSurfaceKey}
+        />
+      ) : null}
+
+      <section
+        className="mini-metric-grid"
+        aria-label={`${page.title}关键指标`}
+      >
         {page.stats.map((metric) => (
           <MetricCard metric={metric} key={metric.label} />
         ))}
@@ -917,6 +1324,105 @@ function ManagementPage({
   );
 }
 
+function VendorModuleSurfacePreviewPanel({ moduleKey }: { moduleKey: string }) {
+  const [state, setState] = useState<ModuleSurfacePreviewState>({
+    status: "loading",
+  });
+
+  useEffect(() => {
+    let mounted = true;
+
+    retrieveChinaVendorModuleSurfacePreview(moduleKey)
+      .then((data) => {
+        if (mounted) {
+          setState({ status: "ready", data });
+        }
+      })
+      .catch((error: unknown) => {
+        if (!mounted) {
+          return;
+        }
+
+        setState({
+          status: "error",
+          message:
+            error instanceof Error
+              ? error.message
+              : "模块预览 API 暂不可用。",
+        });
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [moduleKey]);
+
+  if (state.status === "loading") {
+    return (
+      <section className="readonly-state" aria-label="模块预览读取中">
+        <strong>后端模块预览</strong>
+        <p>
+          正在读取 `{moduleKey}` 的经营单位 guard 结果；本区只展示只读预览，不执行真实业务动作。
+        </p>
+      </section>
+    );
+  }
+
+  if (state.status === "error") {
+    return (
+      <section className="module-surface-preview blocked">
+        <div className="panel-header">
+          <div>
+            <h2>后端模块预览未开放</h2>
+            <p>
+              `{moduleKey}` 未返回可展示预览，页面保留静态占位；隐藏模块不会泄露后台预览数据。
+            </p>
+          </div>
+          <span className="capability-source">{state.message}</span>
+        </div>
+      </section>
+    );
+  }
+
+  const { moduleSurface, unitPermissionAccess } = state.data;
+
+  if (!moduleSurface) {
+    return null;
+  }
+
+  return (
+    <section className="module-surface-preview" aria-label="后端模块只读预览">
+      <div className="panel-header">
+        <div>
+          <h2>{moduleSurface.title}</h2>
+          <p>
+            后端已按当前经营单位校验 `{moduleSurface.moduleKey}`，这里只读展示模块入口，不改变真实权限或业务状态。
+          </p>
+        </div>
+        <span className="capability-source">
+          {unitPermissionAccess.unitKey ?? "当前单位"} · runtimeEnabled:{" "}
+          {moduleSurface.runtimeEnabled ? "true" : "false"}
+        </span>
+      </div>
+
+      <section className="module-surface-card-grid" aria-label="模块预览卡片">
+        {moduleSurface.cards.map((card) => (
+          <article className="module-surface-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+            <p>{card.note}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="readonly-state">
+        <strong>模块运行边界</strong>
+        <p>{moduleSurface.note}</p>
+      </section>
+    </section>
+  );
+}
+
 function VendorAnnouncementContext() {
   const [marketContextState, setMarketContextState] =
     useState<MarketContextState>({
@@ -956,7 +1462,8 @@ function VendorAnnouncementContext() {
         <div>
           <h2>商户侧市场公告</h2>
           <p>
-            展示市场面向商户的公告，客服可据此解释营业、配送或市场临时安排；本区不发布公告、不发送 IM。
+            展示市场面向商户的公告，客服可据此解释营业、配送或市场临时安排；本区不发布公告、不发送
+            IM。
           </p>
         </div>
         <span className="capability-source">
@@ -993,7 +1500,10 @@ function VendorAnnouncementContext() {
       ) : (
         <section className="mock-notice" aria-label="市场公告未连接">
           <strong>市场公告 API 未连接</strong>
-          <span>当前客服页继续显示下方 mock 会话表；不会发布公告、发送短信、IM 或站内信。</span>
+          <span>
+            当前客服页继续显示下方 mock 会话表；不会发布公告、发送短信、IM
+            或站内信。
+          </span>
         </section>
       )}
 
@@ -1033,13 +1543,18 @@ function VendorFulfillmentContext() {
     return (
       <section className="readonly-state" aria-label="配送能力读取中">
         <strong>配送能力</strong>
-        <p>正在读取市场 delivery profiles，只用于物流页展示，不影响 checkout shipping options。</p>
+        <p>
+          正在读取市场 delivery profiles，只用于物流页展示，不影响 checkout
+          shipping options。
+        </p>
       </section>
     );
   }
 
   const { data } = marketContextState;
-  const enabledProfiles = data.deliveryProfiles.filter((profile) => profile.enabled);
+  const enabledProfiles = data.deliveryProfiles.filter(
+    (profile) => profile.enabled,
+  );
 
   return (
     <section className="panel" aria-label="配送能力只读展示">
@@ -1047,7 +1562,8 @@ function VendorFulfillmentContext() {
         <div>
           <h2>市场配送能力只读</h2>
           <p>
-            展示市场统一配送、商家自配、自提、配送供应商和冷链快递能力；本区不创建运单、不确认发货、不修改 checkout。
+            展示市场统一配送、商家自配、自提、配送供应商和冷链快递能力；本区不创建运单、不确认发货、不修改
+            checkout。
           </p>
         </div>
         <span className="capability-source">
@@ -1059,7 +1575,9 @@ function VendorFulfillmentContext() {
         <article className="boundary-card">
           <span>可见配送 profile</span>
           <strong>{data.deliveryProfiles.length}</strong>
-          <p>{data.source} · {data.mode}</p>
+          <p>
+            {data.source} · {data.mode}
+          </p>
         </article>
         <article className="boundary-card">
           <span>已启用展示项</span>
@@ -1073,8 +1591,14 @@ function VendorFulfillmentContext() {
         </article>
         <article className="boundary-card">
           <span>回退策略</span>
-          <strong>{data.deliveryProfiles.length > 0 ? "API 数据" : "静态物流表"}</strong>
-          <p>{data.deliveryProfiles.length > 0 ? data.note : "API 不可用时保留下方 mock 物流表。"}</p>
+          <strong>
+            {data.deliveryProfiles.length > 0 ? "API 数据" : "静态物流表"}
+          </strong>
+          <p>
+            {data.deliveryProfiles.length > 0
+              ? data.note
+              : "API 不可用时保留下方 mock 物流表。"}
+          </p>
         </article>
       </section>
 
@@ -1106,7 +1630,10 @@ function VendorFulfillmentContext() {
       ) : (
         <section className="mock-notice" aria-label="配送能力未连接">
           <strong>配送 profile API 未连接</strong>
-          <span>当前继续显示下方物流 mock 表，不生成真实运单、不确认发货、不改变配送规则。</span>
+          <span>
+            当前继续显示下方物流 mock
+            表，不生成真实运单、不确认发货、不改变配送规则。
+          </span>
         </section>
       )}
     </section>
@@ -1169,7 +1696,9 @@ function VendorProfileMarketContext() {
           <p>
             {primaryMembership
               ? `${primaryMembership.city}${
-                  primaryMembership.district ? ` / ${primaryMembership.district}` : ""
+                  primaryMembership.district
+                    ? ` / ${primaryMembership.district}`
+                    : ""
                 }`
               : "Vendor API 未返回市场归属，继续显示下方静态资料表。"}
           </p>
@@ -1177,7 +1706,10 @@ function VendorProfileMarketContext() {
         <article className="boundary-card">
           <span>主档口</span>
           <strong>{primaryMembership?.boothNo ?? "暂无档口"}</strong>
-          <p>{primaryMembership?.stallName ?? "档口号只读展示，不允许商户端修改。"}</p>
+          <p>
+            {primaryMembership?.stallName ??
+              "档口号只读展示，不允许商户端修改。"}
+          </p>
         </article>
         <article className="boundary-card">
           <span>关联市场</span>
@@ -1276,7 +1808,10 @@ function ShopDecorationSkeleton() {
           </div>
         </Panel>
 
-        <Panel title="今日鲜货" description="用于店铺主页首屏和直播选品的 mock 商品区">
+        <Panel
+          title="今日鲜货"
+          description="用于店铺主页首屏和直播选品的 mock 商品区"
+        >
           <div className="fresh-grid">
             {todayFreshItems.map(([name, price, stock, note]) => (
               <article className="fresh-card" key={name}>
@@ -1289,7 +1824,10 @@ function ShopDecorationSkeleton() {
           </div>
         </Panel>
 
-        <Panel title="商品分组" description="按本地生鲜市场运营方式组织商品入口">
+        <Panel
+          title="商品分组"
+          description="按本地生鲜市场运营方式组织商品入口"
+        >
           <div className="group-grid">
             {productGroups.map(([title, items, detail]) => (
               <article className="group-card" key={title}>
@@ -1303,7 +1841,10 @@ function ShopDecorationSkeleton() {
       </div>
 
       <aside className="shop-decoration-side" aria-label="装修侧栏信息">
-        <Panel title="消费者预览入口" description="只展示预览路径，不发布真实店铺页面">
+        <Panel
+          title="消费者预览入口"
+          description="只展示预览路径，不发布真实店铺页面"
+        >
           <div className="shop-preview-phone">
             <div className="preview-phone-top">
               <span>店铺主页预览</span>
@@ -1342,7 +1883,10 @@ function ShopDecorationSkeleton() {
           </div>
         </Panel>
 
-        <Panel title="配送 / 自提说明" description="按市场规则展示，当前不改变履约配置">
+        <Panel
+          title="配送 / 自提说明"
+          description="按市场规则展示，当前不改变履约配置"
+        >
           <div className="delivery-note-list">
             {deliveryNotes.map(([title, detail]) => (
               <article className="delivery-note-item" key={title}>
@@ -1353,7 +1897,10 @@ function ShopDecorationSkeleton() {
           </div>
         </Panel>
 
-        <Panel title="直播状态" description="保留店铺/档口直播状态，不接真实直播服务">
+        <Panel
+          title="直播状态"
+          description="保留店铺/档口直播状态，不接真实直播服务"
+        >
           <div className="live-status-list">
             {liveDecorationStatus.map(([title, value, detail]) => (
               <article className="live-status-item" key={title}>
@@ -1498,7 +2045,8 @@ function AiListingDraftSkeleton() {
         <div className="readonly-state">
           <strong>安全边界</strong>
           <p>
-            当前不会调用真实 AI、微信、IM、图片识别、库存、订单或发布接口；生成内容只能作为商家确认前的草稿预览。
+            当前不会调用真实
+            AI、微信、IM、图片识别、库存、订单或发布接口；生成内容只能作为商家确认前的草稿预览。
           </p>
         </div>
       </div>

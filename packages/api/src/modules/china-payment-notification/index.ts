@@ -1,4 +1,15 @@
+import { Module } from "@medusajs/framework/utils"
+import ChinaPaymentNotificationModuleService from "./service"
+export { CHINA_PAYMENT_NOTIFICATION_MODULE } from "./module-key";
+import { CHINA_PAYMENT_NOTIFICATION_MODULE } from "./module-key";
+
+export default Module(CHINA_PAYMENT_NOTIFICATION_MODULE, {
+  service: ChinaPaymentNotificationModuleService,
+})
+
 export * from "./types";
+export * from "./module-service-scope";
+export { default as ChinaPaymentNotificationModuleService } from "./service";
 export * from "./idempotency";
 export * from "./mock-signature-verifier";
 export * from "./mock-payload-normalizer";
@@ -13,6 +24,9 @@ export * from "./runtime-gate";
 export * from "./payment-runtime-preflight";
 export * from "./db-inbox-repository";
 export * from "./local-postgres-db-client";
+export * from "./pg-connection-scope-key";
+export * from "./refund-review-query-surface-repository-readers-scope-key";
+export * from "./refund-review-query-surface-repository-registration";
 export * from "./mock-webhook-response";
 export * from "./mock-webhook-request";
 export * from "./mock-webhook-composition";
@@ -68,3 +82,15 @@ export * from "./refund-state-mutation-runtime-attempt";
 export * from "./refund-state-mutation-runtime-attempt-persistence-repository";
 export * from "./refund-state-mutation-isolated-preprod-query-surface";
 export * from "./refund-state-mutation-production-feature-flag";
+export * from "./refund-state-mutation-review-fixture-registry";
+export * from "./refund-state-mutation-review-fixture-adapter";
+export * from "./refund-state-mutation-review-query-surface-local-resolver";
+export * from "./refund-state-mutation-review-query-surface-repository-resolver";
+export * from "./refund-state-mutation-review-query-surface-repository-readers-scope";
+export * from "./refund-state-mutation-review-query-surface-pg-repositories";
+export * from "./refund-state-mutation-review-query-surface-pg-scope";
+export * from "./refund-state-mutation-review-query-surface-pg-readers";
+export * from "./refund-state-mutation-review-query-surface-config";
+export * from "./refund-state-mutation-review-query-surface-response";
+export * from "./refund-state-mutation-review-query-surface-composition";
+export * from "./refund-state-mutation-review-query-surface-request";

@@ -1,12 +1,20 @@
-export type OperationStatus = "enabled" | "disabled" | "pilot" | "reviewing" | "paused"
+export type OperationStatus =
+  | "enabled"
+  | "disabled"
+  | "pilot"
+  | "reviewing"
+  | "paused";
 
-export const statusColorByStatus: Record<OperationStatus, "green" | "grey" | "blue" | "orange" | "red"> = {
+export const statusColorByStatus: Record<
+  OperationStatus,
+  "green" | "grey" | "blue" | "orange" | "red"
+> = {
   enabled: "green",
   disabled: "grey",
   pilot: "blue",
   reviewing: "orange",
   paused: "red",
-}
+};
 
 export const controlSummaryCards = [
   {
@@ -29,15 +37,15 @@ export const controlSummaryCards = [
     value: "0",
     status: "paused" as OperationStatus,
   },
-]
+];
 
 export const capabilityControlRows: {
-  key: string
-  status: OperationStatus
-  platformDefault: boolean
-  marketDefault: boolean
-  merchantChoice: boolean
-  guardrailKey: string
+  key: string;
+  status: OperationStatus;
+  platformDefault: boolean;
+  marketDefault: boolean;
+  merchantChoice: boolean;
+  guardrailKey: string;
 }[] = [
   {
     key: "unifiedDelivery",
@@ -87,18 +95,18 @@ export const capabilityControlRows: {
     merchantChoice: true,
     guardrailKey: "noRealWaybill",
   },
-]
+];
 
 export const moduleRows: {
-  key: string
-  status: OperationStatus
-  switchOn: boolean
-  layerKey: string
-  scopeKey: string
-  vendorImpactKey: string
-  policyKey: string
-  guardrailKey: string
-  updatedAt: string
+  key: string;
+  status: OperationStatus;
+  switchOn: boolean;
+  layerKey: string;
+  scopeKey: string;
+  vendorImpactKey: string;
+  policyKey: string;
+  guardrailKey: string;
+  updatedAt: string;
 }[] = [
   {
     key: "seafoodTrade",
@@ -222,6 +230,17 @@ export const moduleRows: {
     updatedAt: "2026-05-03 09:30",
   },
   {
+    key: "storeDecoration",
+    status: "enabled",
+    switchOn: true,
+    layerKey: "role",
+    scopeKey: "stallStoreStatus",
+    vendorImpactKey: "visible",
+    policyKey: "open",
+    guardrailKey: "noBusinessMutation",
+    updatedAt: "2026-05-15 22:10",
+  },
+  {
     key: "aiQuickListing",
     status: "pilot",
     switchOn: true,
@@ -243,20 +262,204 @@ export const moduleRows: {
     guardrailKey: "noRealWaybill",
     updatedAt: "2026-05-02 14:05",
   },
-]
+];
+
+export const unitPermissionRows: {
+  key: string;
+  status: OperationStatus;
+  unitTypeKey: string;
+  marketKey: string;
+  guardrailKey: string;
+  updatedAt: string;
+  moduleAccess: {
+    moduleKey: string;
+    visible: boolean;
+    reasonKey: string;
+  }[];
+}[] = [
+  {
+    key: "seafoodStallA12",
+    status: "enabled",
+    unitTypeKey: "merchantStall",
+    marketKey: "sanmenSeafood",
+    guardrailKey: "requiresMarketSettings",
+    updatedAt: "2026-05-15 21:45",
+    moduleAccess: [
+      { moduleKey: "seafoodTrade", visible: true, reasonKey: "coreCategory" },
+      {
+        moduleKey: "storeDecoration",
+        visible: true,
+        reasonKey: "enabledForUnit",
+      },
+      { moduleKey: "pickupCard", visible: true, reasonKey: "enabledForUnit" },
+      { moduleKey: "expressPrint", visible: true, reasonKey: "enabledForUnit" },
+      {
+        moduleKey: "marketMaterials",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      { moduleKey: "livestream", visible: false, reasonKey: "providerBlocked" },
+      {
+        moduleKey: "seedlingWholesale",
+        visible: false,
+        reasonKey: "categoryBlocked",
+      },
+      {
+        moduleKey: "aiQuickListing",
+        visible: false,
+        reasonKey: "pendingReview",
+      },
+      {
+        moduleKey: "deliverySuppliers",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      {
+        moduleKey: "financeReadOnly",
+        visible: false,
+        reasonKey: "highRiskReadOnly",
+      },
+    ],
+  },
+  {
+    key: "frozenMerchantB08",
+    status: "pilot",
+    unitTypeKey: "merchantStore",
+    marketKey: "coastalFrozen",
+    guardrailKey: "requiresMarketSettings",
+    updatedAt: "2026-05-15 21:45",
+    moduleAccess: [
+      { moduleKey: "frozenGoods", visible: true, reasonKey: "coreCategory" },
+      {
+        moduleKey: "storeDecoration",
+        visible: true,
+        reasonKey: "enabledForUnit",
+      },
+      { moduleKey: "upstreamSupply", visible: true, reasonKey: "rolePilot" },
+      { moduleKey: "remoteWholesalers", visible: true, reasonKey: "rolePilot" },
+      {
+        moduleKey: "pickupCard",
+        visible: false,
+        reasonKey: "marketNotEnabled",
+      },
+      { moduleKey: "expressPrint", visible: false, reasonKey: "pendingReview" },
+      { moduleKey: "livestream", visible: false, reasonKey: "providerBlocked" },
+      {
+        moduleKey: "financeReadOnly",
+        visible: false,
+        reasonKey: "highRiskReadOnly",
+      },
+    ],
+  },
+  {
+    key: "deliverySupplierTeam",
+    status: "reviewing",
+    unitTypeKey: "deliverySupplier",
+    marketKey: "sanmenSeafood",
+    guardrailKey: "noRealLogistics",
+    updatedAt: "2026-05-15 21:45",
+    moduleAccess: [
+      {
+        moduleKey: "deliverySuppliers",
+        visible: true,
+        reasonKey: "enabledForUnit",
+      },
+      { moduleKey: "expressPrint", visible: false, reasonKey: "pendingReview" },
+      {
+        moduleKey: "seafoodTrade",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      {
+        moduleKey: "storeDecoration",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      { moduleKey: "pickupCard", visible: false, reasonKey: "notInUnitScope" },
+      {
+        moduleKey: "marketMaterials",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      {
+        moduleKey: "aiQuickListing",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      {
+        moduleKey: "financeReadOnly",
+        visible: false,
+        reasonKey: "highRiskReadOnly",
+      },
+    ],
+  },
+  {
+    key: "materialSupplierNorth",
+    status: "pilot",
+    unitTypeKey: "materialSupplier",
+    marketKey: "northProduce",
+    guardrailKey: "merchantOnly",
+    updatedAt: "2026-05-15 21:45",
+    moduleAccess: [
+      {
+        moduleKey: "marketMaterials",
+        visible: true,
+        reasonKey: "enabledForUnit",
+      },
+      {
+        moduleKey: "storeDecoration",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      {
+        moduleKey: "fruitsVegetables",
+        visible: false,
+        reasonKey: "categoryBlocked",
+      },
+      {
+        moduleKey: "seedlingWholesale",
+        visible: false,
+        reasonKey: "pendingReview",
+      },
+      { moduleKey: "pickupCard", visible: false, reasonKey: "notInUnitScope" },
+      {
+        moduleKey: "expressPrint",
+        visible: false,
+        reasonKey: "notInUnitScope",
+      },
+      { moduleKey: "livestream", visible: false, reasonKey: "providerBlocked" },
+      {
+        moduleKey: "financeReadOnly",
+        visible: false,
+        reasonKey: "highRiskReadOnly",
+      },
+    ],
+  },
+];
 
 export const markets = [
   {
     key: "sanmenSeafood",
     active: true,
     status: "enabled" as OperationStatus,
-    capabilityKeys: ["pickupCard", "deliverySuppliers", "expressPrint", "aiQuickListing", "livestream"],
+    capabilityKeys: [
+      "pickupCard",
+      "deliverySuppliers",
+      "expressPrint",
+      "aiQuickListing",
+      "livestream",
+    ],
   },
   {
     key: "northProduce",
     active: false,
     status: "pilot" as OperationStatus,
-    capabilityKeys: ["fruitsVegetables", "marketMaterials", "deliverySuppliers", "seedlingWholesale"],
+    capabilityKeys: [
+      "fruitsVegetables",
+      "marketMaterials",
+      "deliverySuppliers",
+      "seedlingWholesale",
+    ],
   },
   {
     key: "coastalFrozen",
@@ -264,7 +467,7 @@ export const markets = [
     status: "reviewing" as OperationStatus,
     capabilityKeys: ["remoteWholesalers", "upstreamSupply", "expressPrint"],
   },
-]
+];
 
 export const marketCapabilityRows = [
   {
@@ -347,7 +550,7 @@ export const marketCapabilityRows = [
     policyKey: "rolePilot",
     guardrailKey: "draftOnly",
   },
-]
+];
 
 export const integrationRows = [
   {
@@ -380,16 +583,16 @@ export const integrationRows = [
     sourceKey: "auditLogs",
     status: "reviewing" as OperationStatus,
   },
-]
+];
 
 export const roleRows: {
-  key: string
-  status: OperationStatus
-  typeKey: string
-  qualificationKey: string
-  marketKey: string
-  scopeKey: string
-  moduleKeys: string[]
+  key: string;
+  status: OperationStatus;
+  typeKey: string;
+  qualificationKey: string;
+  marketKey: string;
+  scopeKey: string;
+  moduleKeys: string[];
 }[] = [
   {
     key: "seafoodStall",
@@ -481,4 +684,4 @@ export const roleRows: {
     scopeKey: "crossRegion",
     moduleKeys: ["remoteWholesalers", "upstreamSupply"],
   },
-]
+];

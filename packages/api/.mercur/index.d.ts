@@ -431,6 +431,18 @@ export type Routes = {
         };
         china: {
             capabilities: typeof import("../../src/api/admin/china/capabilities/route");
+            markets: typeof import("../../src/api/admin/china/markets/route") & {
+                $id: typeof import("../../src/api/admin/china/markets/[id]/route");
+            };
+            mockPaymentWebhooks: typeof import("../../src/api/admin/china/mock-payment-webhooks/route");
+            moduleConfigs: typeof import("../../src/api/admin/china/module-configs/route") & {
+                effective: typeof import("../../src/api/admin/china/module-configs/effective/route");
+            };
+            moduleSwitches: typeof import("../../src/api/admin/china/module-switches/route");
+            refundReviewQuerySurface: typeof import("../../src/api/admin/china/refund-review-query-surface/route");
+            unitPermissions: typeof import("../../src/api/admin/china/unit-permissions/route") & {
+                effective: typeof import("../../src/api/admin/china/unit-permissions/effective/route");
+            };
         };
         custom: typeof import("../../src/api/admin/custom/route");
     };
@@ -527,6 +539,11 @@ export type Routes = {
         china: {
             capabilities: typeof import("../../src/api/store/china/capabilities/route");
             discovery: typeof import("../../src/api/store/china/discovery/route");
+            markets: typeof import("../../src/api/store/china/markets/route") & {
+                $slug: typeof import("../../src/api/store/china/markets/[slug]/route") & {
+                    sellers: typeof import("../../src/api/store/china/markets/[slug]/sellers/route");
+                };
+            };
             productDiscovery: typeof import("../../src/api/store/china/product-discovery/route");
             sellers: {
                 $handle: {
@@ -709,5 +726,31 @@ export type Routes = {
             };
         };
         uploads: typeof import("@mercurjs/core/api/vendor/uploads/route");
+        china: {
+            marketContext: typeof import("../../src/api/vendor/china/market-context/route");
+            moduleSurfaces: {
+                preview: typeof import("../../src/api/vendor/china/module-surfaces/preview/route");
+            };
+            unitPermissions: {
+                authorize: typeof import("../../src/api/vendor/china/unit-permissions/authorize/route");
+                effective: typeof import("../../src/api/vendor/china/unit-permissions/effective/route");
+            };
+        };
+    };
+    china: {
+        paymentProviders: {
+            mock: typeof import("../../src/api/china/payment-providers/mock/route");
+        };
+        paymentWebhooks: {
+            mock: typeof import("../../src/api/china/payment-webhooks/mock/route");
+        };
+        refundInbox: {
+            alipay: typeof import("../../src/api/china/refund-inbox/alipay/route");
+            mock: typeof import("../../src/api/china/refund-inbox/mock/route");
+            wechatPay: typeof import("../../src/api/china/refund-inbox/wechat-pay/route");
+        };
+        unitPermissions: {
+            effective: typeof import("../../src/api/china/unit-permissions/effective/route");
+        };
     };
 };

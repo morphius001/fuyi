@@ -1,5 +1,13 @@
 # 后续任务队列
 
+## 当前 close-gate 收口边界
+
+- 最新上线 readiness 事实源是 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go/readiness-suite/summary.json`。
+- 当前结论：`GO-FOR-CHECKED-SCOPE`，`externalBlockers=[]`，`derivedGateConfirmations.adminLoggedInVisualQa=true`、`highRiskRuntimeApproval=true`、`preprodDisposableDbRehearsal=true`。
+- 下一步不是继续扩三端功能，也不是补新的高风险 runtime 写路径；优先做拆 PR / staging 准备、证据包核对、提交范围清理。
+- `.codex/private/`、`project-ledger/private/`、`/tmp/fuyi-*` 证据目录只作为本机私有证据或运行产物，不能把真实连接串或私有 env 纳入 PR。
+- 高风险串行任务仍然不能混入本轮：payment success state、refund success state、settlement、commission、payout、permission enforcement、fulfillment、logistics mutation、真实 workflow execution。
+
 ## 下一批建议
 
 1. Admin 模块开关后端设计

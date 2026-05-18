@@ -14,3 +14,121 @@
 - payment notification 的 `mock_prepare_command` 路径必须先经过 disabled runtime adapter，不能把 command DTO 直接视为可执行 workflow。
 - payment session 与 order 的 seller / market ownership 必须在 payment state guard 层先对齐，不能等到更后面的 workflow 或 refund 阶段再补救。
 - isolated preprod review query surface 应以 terminal conflict snapshot 为聚合入口；approval / audit / runtime attempt 任一 cross-reference 缺失时必须 fail-closed。
+- refund review query surface 的本地 PG rehearsal / module migration smoke 必须验证数据库名符合 disposable 白名单、PostgreSQL host 仅限本地回环地址，并且 `medusa-config.ts` 中的 `china-payment-notification` 注册状态与当前 rehearsal 目标一致。
+- 当前 worktree 没装完整依赖时，可借主 worktree `/home/codex/code/fuyi/packages/api/node_modules/.bin/medusa` 和对应 `node_modules` 做 Medusa CLI rehearsal；优先用 disposable DB smoke 验证 migration/runtime discoverability，不要先为了一次验证重装整套依赖。
+- refund review query surface 真正进入 Medusa dev server HTTP smoke 时，PG request-scope key 必须使用 `__pg_connection__`；误写成 `pgConnection` 会让 repository mode 在真实服务里表现为 `resolver_repository_mode_blocked`，即使 unit smoke 和 direct handler smoke 看起来正常。
+- refund review query surface 的 PG 连接解析最好同时兼容 `__pg_connection__` 与历史 `pgConnection`；这样 shared node_modules、旧 rehearsal helper 或不同运行姿势之间不容易再因为 scope key 漂移出现假阻断。
+- 如果 `china-payment-notification` 已经注册成 Medusa 模块，refund review query surface 的 readers 优先通过模块服务解析，再退回 request-scope PG fallback；这样测试与真实运行时的接线层次更一致，也更容易继续往正式容器注册演进。
+- refund review query surface 的真实 HTTP smoke 至少要在同一 `medusa develop` 进程里连续验证两种 query key；单次请求通过只能证明首条路径可用，不能证明 repository-mode 在常驻服务里稳定。
+- 当 route 已能通过统一 runtime readers 解析 direct readers / 独立 repo / 模块服务 / PG fallback 时，应移除该 route 对专用 middleware 打补丁的依赖；真实 HTTP smoke 通过比保留冗余 middleware 更有价值。
+- refund review query surface 这条链一旦真实 HTTP smoke 已证明 route 不依赖 middleware，就应同步删除该 middleware 和自证型测试，避免后续把兼容支线误当成主链继续维护。
+- 如果 route 最终只需要拿 `chinaPaymentNotification` 模块服务，就把 direct readers / 独立 repo / PG fallback 的顺序解析下沉到 `service.ts`，不要让 route 继续知道 readers 细节。
+- 当真实运行时已经稳定拿到 `chinaPaymentNotification` 模块服务后，要收掉 route 里的本地 `new ...Service()` fallback；缺模块服务时明确 blocked，比静默本地兜底更能暴露真实接线问题。
+- review query surface 的长生命周期 smoke 至少应包含第三次延迟请求；当前用同一 `medusa develop` 进程等待 `15s` 后再打 `provider_refund_reference`，能更早发现只在启动窗口内才正常的假稳定。
+- 如果要验证“外置常驻 server”而不是脚本自起停，最好把流程拆成 3 个脚本：`devserver-start`、`seed-local-db`、`existing-server-smoke`；同时 `devserver-start` 需要 `setsid + disown`，否则 `medusa develop` 可能在 shell 退出后跟着消失。
+- 如果专用验证进程和主开发 API 都要起 Medusa，最好抽一个共用 `run-api-dev.sh` helper；这样 `start-dev.sh` 和专用 `19000` 进程不会在 CORS、数据库 URL 或 query surface 环境变量上慢慢漂移。
+- 如果 runtime worktree 没装完整 `packages/api/node_modules`，`run-api-dev.sh` 不能硬绑本地 `./node_modules/.bin/medusa`；要优先兼容主 worktree `/home/codex/code/fuyi/packages/api/node_modules/.bin` 的 shared toolchain，并把 shared `NODE_PATH` 一起带上，否则主 `9000` API 的长期开发入口 smoke 会起不来。
+- 当 Medusa 模块服务的构造参数来自 awilix cradle/proxy 时，不要假设可以安全读取 `.resolve`；refund review query surface 的 readers 解析器必须同时支持 `resolve(key)` 和“直接读容器属性键”，否则主 `9000` 真实运行时可能报 `Could not resolve 'resolve'` 并把 repository-mode 请求打成 500。
+- PG 连接解析器也要遵守同一条规则：如果模块服务或 request scope 可能是 awilix cradle/proxy，就不能只写 `scope.resolve(pgKey)`；必须同时支持 `resolve(key)` 和容器属性键读取，否则“模块服务容器 PG fallback”这条正式装配路径在主 `9000` 真实运行时会断掉。
+- 当 refund review query surface 开始走“正式容器注册”时，四段 repo 的注册键要集中成常量文件维护；否则 service、scope helper、route tests 和真实容器注册容易各自写一份 magic string，后面一改名就会只坏运行时不坏单测。
+- 当模块服务容器和 request scope 同时都能提供 refund review query surface readers/repo/pg 时，优先级必须固定为“模块服务容器优先”；否则兼容兜底可能掩盖正式注册值是否真正生效，运行时会显得能用，但实际没有走到我们想验证的主路。
+- 模块服务本身的解析也不要只依赖 `scope.resolve(moduleKey)`；如果 readers/pg helper 已经支持 awilix cradle 属性键，而模块服务解析还停在 `.resolve`，route 这一层仍可能在真实运行时出现“模块没拿到，但底层 helper 其实都准备好了”的假阻断。
+- 当 module service / readers / pg 三条容器解析链都开始兼容 awilix cradle 属性键时，最好尽快抽成一个统一 helper；不然三处逻辑很容易再次分叉，后面修一个真实运行时问题时会反复打补丁。
+- 当模块服务容器里未来同时可能出现 readers provider、四段 repo 属性和 PG fallback 三层注册时，优先级必须固定成 `readers provider > repo 属性 > PG fallback`；否则正式 provider 即使已经注册成功，也可能因为兼容层更早命中而看起来“没有生效”。
+- 如果 refund review query surface 已经准备从兼容式 flat key 过渡到正式模块容器注册，最好新增一个规范 registration object 入口，把 `readers`、四段 repo 和 `pgConnection` 收到同一个 key 下；后续正式装配优先命中这条主路，旧 flat key 再退为兼容兜底，会比继续散着堆 key 更稳。
+- 一旦引入了 refund review query surface 的规范 registration object，底层 helper 也不要再偷偷假设必须存在 `scope.resolve`；否则顶层模块服务看起来已经支持 awilix 属性键 / registration object，到了 PG readers 这层却会因为少一个 `.resolve` 又断回旧世界。
+- 当规范 registration object 已经引入后，最好进一步提供一个“归一化 registration helper”，把规范 registration、legacy readers provider、四段 repo flat key 和 legacy pg key 全都折叠到一份对象里；这样 readers-scope 和 pg-scope 不会各自长出一套兼容顺序，后面正式装配收口也更容易。
+- 当归一化 registration helper 已经存在后，模块服务本身也要直接围绕这份 registration 工作，不要再在 `service.ts` 里各自分开调用 readers helper / pg helper；否则顶层看似已经统一，模块服务这一层还是会保留第二套装配顺序。
+- 当 registration 已经成为正式装配主路时，最好再把“从 registration 产出 readers”的逻辑也抽成共享 helper，并给它独立单测；否则 service 容易重新长出一份私有 readers 组装实现，久了又会和 registration helper 漂移。
+- 一旦 registration object 已经成为 refund review query surface 的正式装配主路，后续新增的 service / route / 单测示例也要优先复用共享 builder helper；否则即使底层主路已经统一，示例代码仍会把人带回手写分散 object literal 的旧习惯。
+- 如果 focused tests 里已经开始用 registration builder 表达主路，就要继续把 registration unit、readers scope、pg readers、service、route 这几层一起收齐；只改其中一两层会让后续新增测试又沿着旧示例回到手搓 registration object。
+- 一旦 registration builder 已经足够稳定，归一化 helper 也应直接复用它返回 canonical registration；否则测试示例和 production helper 虽然都在走 registration 主路，仍会各自维护一份 object 形状拼装逻辑。
+- 当 production-side helper 已经稳定走“先归一化 registration，再产出 readers”的顺序时，最好再补一个 container-level shared helper，把这条 async 主路也集中掉；否则 service 或别的模块层 helper 很容易重新手动串一遍，久了又会长出第二套主路。
+- 如果 readers-scope 和 async readers helper 都需要把 canonical repo properties 组装成 readers，就要尽快把这段 direct 组装抽到 registration 层共享 helper；否则 direct repo 路径会同时在 scope helper 和 async helper 里各自维护一份，很容易再次漂移。
+- 一旦 direct readers 主路已经从 registration 层抽出共享 helper，就继续把 `scope -> normalized registration -> direct readers` 这层也收成 container-level helper；否则 readers-scope 仍会保留自己那段中间串联逻辑，薄不下来。
+- 如果 readers 主路已经抽成 registration/container 两层共享 helper，`pgConnection` 也最好按同样的 from-registration / from-container 结构对称收口；否则 `pg-scope` 会继续保留一套和 readers 不同的中间步骤，后续又容易分叉。
+- 当 `pgConnection` 的获取已经被收成 registration/container 两层 helper 后，`hasTable + createRepositories` 这段 PG fallback 也要继续抽回 pg-repositories 单点；否则 registration async helper 和 pg-readers 很容易再次各自维护一份相同的 PG fallback 逻辑。
+- 一旦 PG fallback 已经压回 `pg-repositories` 单点，最好继续把 `registration/container -> pg readers` 这条 async 主路也收成 registration 层共享 helper；这样 `pg-readers` 就能退成薄包装，不再自己拆 `pgConnection` 再调一遍 PG helper。
+- refund review query surface 的正式示例和 service / route 主路应优先使用 canonical registration object；legacy readers provider、四段 repo flat key、request scope 和 PG key 只作为 compatibility fallback，生产 service 类型面不要再为它们单独扩展。
+- refund review query surface 如果需要表达 module container -> request scope 的优先级，优先放到 registration 层多容器 helper；不要让 `service.ts` 自己维护两段查找顺序。
+- refund review query surface 的模块服务应显式暴露 normalized canonical registration，方便上线装配、smoke 和 debug 直接确认注册对象，而不是从 readers 结果反推 wiring。
+- refund review query surface 的 registration 运行时入口不能只靠 TypeScript cast；canonical registration / legacy key 读取到的 readers、repo properties 和 `pgConnection` 都要做 shape guard。repo 必须具备只读 query surface 会调用的读取方法，`pgConnection` 必须是 callable PG/Knex-like function；误注册普通对象时应 fail-closed 并继续多 container fallback，避免延迟到查询时才爆运行时异常。
+- refund review query surface 的 PG fallback table inspection 也必须 fail-closed；`schema.hasTable` 抛错 / reject 时应返回不可用 readers，而不是把只读 Admin 查询面打成 500。该路径只能影响 query surface 是否可读，不能顺手执行 workflow 或写 refund state。
+- refund review query surface 的 repository reader 查询阶段也必须 fail-closed；即使 readers 已经解析成功，底层 DB / reader throw 或 reject 也只能返回通用 blocked code，不应把 Admin route 打成 500，也不能把 SQL、DB URL、异常 message 泄到 operator response。
+- refund review query surface 新增 blocked code 时，不要只在 route 层测最终 HTTP；至少要补 resolver / composition 这种更低层的 focused 覆盖，确保 route 以后重构时 fail-closed 语义不会丢。
+- 后续不要为了“继续”乱写补丁；每次改动前先说明根因链路，优先修真实缺口。若根因只是验证链路漏覆盖，就只改验证入口，不顺手碰业务 runtime。
+- 中国本地化上线前要优先跑 `.codex/scripts/china-launch-readiness-check.sh`；它能区分机器可验 PASS 和人工/外部/高风险条件 NO-GO，避免靠翻 ledger 猜上线状态。
+- Admin / Vendor / Storefront 的占位能力不能做成看起来可点击的生产操作；占位按钮要 disabled，Storefront 源码不能保留 `#`、`support@example.com`、假 ICP 或“示例公司”这类生产占位文案。
+- Provider inbox route 的 production-like 阻断必须在读 body、解析 DB scope、SQL transaction 和真实密钥细节处理之前发生；`production`、`prod`、`preprod`、`staging` 都要按 fail-closed 环境处理。
+- 会杀进程、启动 API、发 HTTP 或 seed/cleanup DB 的 smoke 脚本最好提供 `plan` 模式，让恢复上下文时能先看目标 URL、接口、query 和副作用边界。
+- Provider inbox route 使用 local disposable DB 时，实际 DB host、port、database name 必须和 allowlisted local dry-run 配置一致；不一致时要在读 body 和打开 transaction 前 fail-closed。
+- Refund state mutation production feature flag 不能因为模式是 `dry_run` 或 `shadow_only` 就绕过生产显式批准；`environment=production` 且 `productionExplicitlyEnabled=false` 必须 blocked。
+- 上线 readiness 脚本如果要给 CI 或交接使用，优先提供任意模式可用的 JSON summary / artifact，并在 NO-GO 时保留非 0 退出码；不要只靠人眼扫日志判断 pass/no-go。
+- 平台模块开关被用户要求“按某个单位只看某些功能”时，不能只做 Admin 布局或 local draft；至少要形成 Admin 保存 API、effective view 读取、Vendor 菜单 / 首页入口过滤三段闭环，同时明确这仍不是 RBAC enforcement。
+- 平台模块开关进入可上线形态前，不能停在 server-memory draft；需要 PG-first 配置表、变更事件表、API 重启后仍能读取的持久化 smoke，并继续声明它只管菜单可见性，不等于真实 RBAC / 后端权限 enforcement。
+- Vendor 端读取经营单位菜单可见性时，不能把前端传入的 `unit_key` 当作登录态主来源；应优先从 `seller_context.seller_id` 解析 seller binding，再返回 effective view，公共 query API 只能作为未登录 demo / fallback。
+- 经营单位权限的后端 guard 应先限定在 China 自定义 Vendor API surface：可以阻断模块入口和自定义接口，但不能把菜单可见性冒充为 Mercur / Medusa RBAC，也不能顺手接入订单、支付、退款、结算、佣金、打款、履约或物流写路径。
+- 经营单位权限进入 readiness 门禁时，不能只测 helper；至少要覆盖 Vendor authorize route 的允许、403 阻断和输入缺失 400，避免前端菜单过滤看起来可用但后端路由接线没被验证。
+- Vendor 前端不能只依赖 effective view 做菜单过滤；受经营单位模块控制的入口点击时也要走后端 authorize，authorize 不可用时只能对 effective view 已可见页面 fallback 展示并明确提示，不得静默放行隐藏模块。
+- 经营单位权限 guard 接入具体 Vendor 自定义接口时，应先接只读 module surface / preview 类接口，返回 `runtimeEnabled=false` 并声明不会创建订单、打印真实面单、启动直播、修改履约、结算或授予 RBAC；隐藏模块必须 403 且不能返回模块预览数据。
+- Vendor 具体功能页消费经营单位 module surface preview 时，只能展示后端返回的只读预览和运行边界；接口 403 / 未开放时不能从前端 mock 补出隐藏模块数据，也不能触发打印、发货、订单、履约、结算或权限写操作。
+- Vendor 自定义页的 module surface preview 映射应复用同一份 `unitModuleByVendorPage` / `vendorPagesByUnitModule` 关系；不要给少数页面另起一份手写映射，否则 Admin 开关、菜单过滤、点击 authorize 和页面 preview 会逐渐漂移。
+- 经营单位权限的 effective view、authorize guard 和 module surface preview 必须读取同一份配置来源；本地无 PG fallback 时也要读取当前 server-memory draft，而不是让 effective 吃 draft、guard/preview 吃默认配置。
+- 真实 HTTP smoke 如果需要同时验证 Admin 与 Vendor 登录态，不要把它塞进默认 quick 门禁；应做成显式 smoke 模式并支持 token env，否则缺少本地 Vendor 凭据时会把可验证代码链路误判成业务失败。
+- Mercur Vendor 路由认证实际使用 `member` actor token，并通过 `x-seller-id` / session 选择 seller；本地 smoke 准备账号时要建立 `auth_identity.app_metadata.member_id`、`member` 和 `seller_member` 链接，不要把 `/auth/seller/emailpass` 当成 Vendor 登录主路。
+- Admin 模块开关页如果同时存在平台总开关规划和经营单位权限开关，必须把经营单位级真实保存控件放到页面前部，并用文案明确区分“单位级菜单可见性保存”与“平台 / 市场 / 角色只读规划”；否则用户会合理误判为只做了全局 mock。
+- Codex Browser Use IAB 不可用时，可以用 Windows Edge headless CDP 做 Admin 登录态视觉 QA；当前中国 Admin 入口是 `http://localhost:7000/cn`，模块开关入口是 `http://localhost:7000/cn/operations/module-switches`。
+- readiness 的 preprod disposable DB gate 不能用本地 disposable migration smoke 代替；本地 smoke 只能证明本机迁移和清理可跑，预发 gate 必须等用户提供可删可重建且无生产数据的预发 DB、备份/无需备份确认、执行日志和 rollback/cleanup 证据。
+- 预发 disposable DB rehearsal 一旦从文档推进到脚本，必须默认 `plan` 不连接 DB，真实 `run` 要同时要求 disposable 确认、备份/无需备份确认、operator、cleanup owner、生产名拒绝和本地 WIP ack；脚本范围只能做 migration / schema evidence，不能顺手批准高风险 runtime writes。
+- 预发 disposable DB rehearsal 的真实 `run` 不能默认接受 localhost；本地端到端只能走单独的 local script test 模式并明确声明不满足预发 launch gate。如果真实预发库通过 localhost tunnel 暴露，必须有独立 tunnel 确认 token。
+- 本地 disposable DB 自检如果已经需要多步手动创建/迁移/验表/drop，应固化成独立脚本并接入 readiness 的独立模式；但该模式必须继续 NO-GO 真实预发 gate，不能因为本地自检 PASS 就放行上线。
+- readiness 证据一旦分散到多个 mode，就要提供 suite 脚本一次性生成 JSON artifacts 和 summary；summary 可以汇总本机 PASS，但仍必须保留外部/高风险 NO-GO，避免用户误以为本机证据等于可上线。
+- readiness suite 不应把 frontend build / smoke 的长日志直接刷到终端；每个 mode 应写单独 `.log`，终端和 summary 只给 verdict、counts、artifact path、log path，方便快速判断和追溯。
+- readiness suite 最好同时生成机器读 `summary.json`、人读 `summary.md` 和稳定 latest link；否则每次输出目录带时间戳，用户和后续 agent 很容易找错上一轮证据。
+- readiness suite 里应区分本机可验证证据和上线外部门槛：summary 可以 overall `NO-GO`，但要单独列 `localEvidence` / derived gate confirmations，避免 Admin 视觉 QA、HTTP smoke、build 等已通过项被外部 preprod / 高风险审批 blocker 淹没。
+- readiness suite 的 external blockers 不能写死高风险 approval 状态；如果用户已明确批准并用 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true` 跑出 pass item，summary 应动态推导 `derivedGateConfirmations.highRiskRuntimeApproval=true` 并移除该 blocker，但这仍不代表执行了 payment / refund / settlement / permission 等写路径。
+- 当用户说 preprod DB env “批准、自己填”时，不能把 localhost、本地 disposable DB 或模板 placeholder 当真实 preprod；应先做 redacted discovery，确认当前 process/private env/repo templates 是否已有候选 key，并只输出 key 名和文件路径，不输出连接串。
+- preprod env discovery 不能停留在临时命令；应接入 readiness mode 和 artifact suite，让 summary 同时展示 `preprodEnvDiscovery` 与 `preprodEnvStatus`，这样后续能区分“有候选但没复制”与“当前环境根本没有 endpoint 候选”。
+- 当真实 disposable preprod DB endpoint 只能通过当前 shell 提供时，应使用 apply-current-env 类脚本写入 gitignored private env：脚本必须要求 `CODEX_PREPROD_DISPOSABLE_DATABASE_URL` 显式存在、目标限制在 private 目录、mode 600、不打印值、不连接 DB，并避免把模板 placeholder 当默认值。
+- 真实 disposable preprod DB URL 到来后，不要让操作者手工跳着跑命令；应优先使用 close-gate 脚本把 `discovery -> env-status -> READY_TO_VALIDATE -> from-env validate -> from-env run -> artifact suite` 串成固定顺序，env 不 ready 时必须在连接数据库前 fail-closed。
+- close-gate 脚本在真实 disposable preprod DB validate/run 前还应要求高风险 approval env；否则真实 DB rehearsal 可能跑完了，最终 suite 又因为 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED` 缺失重新 NO-GO，浪费一次真实 gate。
+- close-gate 不应让 private DB env 污染普通 readiness quick tests；`from-env run` 只负责 guarded DB rehearsal，artifact suite 应在 close-gate 后置、用明确 gate env 表达确认状态。
+- refund provider inbox route 的 real-secret scan 不能扫 env key 名；像 `PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED` 这种无害 gate key 会命中 `prod_` 误报。扫描应限于 env value，并保留真实 private key / live key value 的阻断测试。
+- artifact suite 的 external blocker 不能硬编码真实 preprod DB rehearsal 未满足；一旦 `PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED=true` 已被 pass item 证明，summary 应派生 `preprodDisposableDbRehearsal=true` 并移除该 blocker。
+- 后续 final 或 ledger 写“风险点”时，必须同时写对应验证项；风险不能只是描述，必须能落到具体命令、suite mode 或 artifact，例如 `preprod-env-discovery`、`preprod-env-status`、`from-env validate`、`artifact-secret-scan` 或真实 `from-env run`。
+- 如果用户要求复用“昨天建过的数据库”，先查本地 `fuyi_preprod_disposable%` 残留；若脚本 cleanup 已 drop，就直接新建一次 local disposable DB 跑 script-test 并确认 cleanup count 为 0，同时继续声明这不等于真实 preprod gate。
+- preprod disposable DB close-gate 一旦已经产出 `GO-FOR-CHECKED-SCOPE` 且 `derivedGateConfirmations.preprodDisposableDbRehearsal=true`，后续恢复必须以最新 close-gate `summary.json` 为准；旧 ledger 里的 `placeholder`、`NOT_READY`、`NO-GO`、`currentEnvCandidateCount=0` 只能作为历史修复证据，不能再被当成当前 blocker。
+- 预发 disposable DB rehearsal 如果提供 env wrapper，必须先把传入 env 文件解析为绝对路径再做 repo 内私有目录判断；否则相对路径可能绕过 `.codex/private/` / `project-ledger/private/` 策略并误触发 readiness。
+- 预发 disposable DB rehearsal 的 env wrapper 不能依赖 shell 继承变量，也不能接受模板占位值；核心变量必须由私有 env 文件显式声明，`replace-with`、`placeholder`、`YYYYMMDD`、`preprod-host.example` 等值要在调用 readiness 前 fail-closed。
+- 预发 disposable DB rehearsal 的 env wrapper 最好提供 `validate` / `run` 两段式入口；`validate` 只验私有 env 文件并明确不连接 DB、不满足 preprod gate，`run` 才进入 guarded rehearsal。
+- 预发 disposable DB rehearsal 如果需要用户填私有 env，最好提供 init 脚本从模板生成 `600` 权限草稿，并强制目标位于 `.codex/private/` 或 `project-ledger/private/`、拒绝覆盖；init 脚本本身不能填真实 DB 或连接数据库。
+- 预发 disposable DB rehearsal 的私有 env 状态检查应 redacted：不 source env、不打印 DB URL、不连接数据库，只报告文件存在性、权限、git ignore、必填变量声明和占位符状态。
+- 预发 disposable DB rehearsal 的 `env-status` / `from-env validate` 应提前做非连接 target safety preflight：确认 token、备份确认、DB URL 形状、DB 名白名单、production-like 名称、localhost tunnel 确认和自定义 allow regex 确认要在 `run` 前 fail-closed，同时仍不能打印 DB URL 或连接数据库。
+- 预发 disposable DB rehearsal 的 from-env wrapper 在读取私有 env 前必须强制文件权限为 `600`；repo 内私有 env 还必须被 git ignore，否则应 fail-closed。
+- 预发 disposable DB rehearsal 的私有 env 状态检查如果提供 JSON 输出，也必须保持 redacted，不依赖额外 runtime，不包含 DB URL，并继续不 source env、不连接数据库。
+- 预发 disposable DB rehearsal 的 from-env wrapper 不能 `source` 私有 env 文件；应只解析白名单 `KEY=value` / `export KEY=value`，未知 env name、非 assignment 行或 shell 命令必须 fail-closed，避免把私有配置当作可执行脚本。
+- 预发 disposable DB rehearsal 的 env-status 也不能只做“宽松读取”；它应该和 from-env validate 共享同一类白名单 assignment 规则，未知 env name、非 assignment 行或 shell 命令必须保持 `NOT_READY`，否则用户会在 status 阶段误以为坏 env 已经可 validate。
+- 当 preprod disposable DB rehearsal 同时存在 `env-status` 和 `from-env validate/run` 两个入口时，私有 env 白名单解析应抽成共享 helper；两个脚本各写一份 allowed names / assignment parsing 很容易漂移，导致 status 和 validate 对同一个 env 给出不同结论。
+- readiness suite 如果已经跑 `preprod-env-status`，summary 里应直接带 redacted env status 字段，例如 `placeholdersPresent`、`syntaxOk`、`preflightOk`、`preflightReason` 和 `verdict`；否则用户还要翻单独 artifact 才知道是语法、占位符还是 preflight 卡住。
+- 单独的 `.codex/scripts/china-launch-readiness-check.sh preprod-env-status --json` 也应输出和 suite 一致的 redacted `preprodEnvStatus`；直接 readiness artifact 与 suite summary 不能出现一边有细节、一边只能看 no-go item 的漂移。
+- artifact suite 生成 `preprod-env-status.redacted.json` 时应复用 `preprod-env-status.json` 里的 `preprodEnvStatus`，不要再二次调用 env-status 脚本；否则单独 readiness 与 suite 可能在同一轮里读到不同状态。
+- preprod disposable DB rehearsal 的日志即使是 local script-test 也不要打印 `postgres://` URL；用 `host=... port=... database=... user=...` 这类 redacted target identity 保留排查信息即可。
+- readiness artifact suite 应把连接串扫描变成机器项；生成完 artifacts/logs 后扫描当前输出目录里的 `postgres://` / `postgresql://`，命中直接 `NO-GO`，避免证据包泄露靠人工回头发现。
+- 如果 suite 里出现可复用的 artifact secret scan 逻辑，应抽成独立脚本并同时测试 clean / leak 两条路径；只在完整 suite 里内联检查，后续复扫既有证据目录会很麻烦。
+- preprod disposable DB env status 不能只输出 `placeholdersPresent=true`；应 redacted 列出 `placeholderKeys`，只给 key 名不给值，避免操作者填一次撞一次，仍不能打印 DB URL、operator 或 cleanup owner 真实内容。
+- preprod disposable DB `from-env validate` 也应和 env-status 一样聚合 placeholder key；不能只报第一个 key，否则用户会按顺序反复填补。聚合报错仍只能输出 key 名，不能输出 DB URL 或真实 operator / cleanup owner。
+- 如果用户指出“平台开关还是全局、某个单位只能看指定功能没有做好”，下一步应直接补 Admin 独立单位权限入口、Vendor 菜单过滤和首页 effective view 快照，不要继续扩展上线门禁脚手架。
+- 商户后台的非交易入口也要纳入单位级可见性模型；例如店铺装修 / 店铺资料 / 数据中心可以通过 `storeDecoration` 这类单位模块控制，不能只过滤商品、订单、直播、供应商入口。
+- refund review query surface 的“真实数据库 + 模拟数据”验证不能默认打共享 `mercur`；应默认创建唯一 disposable DB、跑迁移、seed 四段关系数据、走 authenticated HTTP query、最后 terminate 连接并 drop，残留库必须检查为 0。
+- refund review query surface 的本地 disposable DB HTTP 验证应纳入 readiness mode / suite，而不是停留在单独脚本；必须同时覆盖 resolved 查询、blocked miss、运行时写路径全 false、连接串不泄露和 cleanup 残留 count 为 0。
+- 单位权限 smoke 不能只测一个代表模块；测试环境要能把各经营单位配置内的模块全部打开，逐个验证 effective / authorize / read-only preview，并在结束后 reset 到默认可见性。
+- payment notification 的 command preparation 测试必须补齐 payment session 与 order 的 seller / market ownership；否则 state guard 应正确返回 `seller_ownership_mismatch` 或 `market_ownership_mismatch`，不能为了测 command DTO 绕过 ownership guard。
+- 当用户要求“代码先弄好、全部功能都要、用真实关系链路测”时，应优先提供一个聚合 readiness mode，把 mock / dry-run / shadow / read-only tests、真实本地 disposable DB script-test、HTTP smoke 和权限矩阵 smoke 一次跑完；但该 mode 仍必须保留真实 preprod / 高风险 runtime NO-GO。
+- 后续实现功能不能按“坏一段修一段”推进；必须先按关节链梳理完整路径，再动代码：客户端入口 / 前端状态 / API route / 鉴权与身份解析 / 服务层规则 / runtime gate / 数据库关系 / seed-cleanup / 端到端验证。做一个功能时要一次性想清楚整条链路，尤其是 Admin 配置、Vendor/Storefront 展示、服务端阻断、数据库持久化和 smoke 验证之间的联动。
+- 平台模块开关如果从只读规划进入可保存状态，必须明确它只是 `platform-default draft`：可以落 PG 配置表和事件表、可以给 Admin 展示 source/save status、可以做 HTTP smoke，但不能直接改变 Vendor RBAC、经营单位菜单、订单、支付、退款、结算、佣金、打款、履约、物流或 workflow runtime；Vendor 可见性仍应走经营单位权限链路。
+- Admin 单位权限页不能只展示保存开关本身；需要提供后端 effective 预览，让运营在同一后台核对某个单位保存后 Vendor 会显示 / 隐藏哪些模块，避免用户误以为只是全局 mock。
+- Admin 登录态页面里的 effective 预览不能调用公共 `/china/...` route 来冒充 Admin 预览；真实浏览器会受 CORS / cookie 边界影响，应提供 `/admin/china/...` 登录态 route，并让 smoke 覆盖同一条 Admin route。
+- Admin 登录态视觉 QA 不能长期停留在一次性 `/tmp` Playwright 脚本或人工口头确认；应固化成仓库脚本和 readiness mode，截图、DOM 断言、summary.json、artifact suite 入口都要可复跑。suite 可以先跑视觉 QA，再用其 JSON passItem 自动确认后续 mode 的 `ADMIN_LOGIN_VISUAL_QA_CONFIRMED`。
+- Admin 经营单位商户绑定不能长期停留在自由输入 seller handle；应由后端返回真实 seller 候选，Admin 用选择器保存，PG seller 表可用时必须校验 seller 存在，PG 不可用时才明确退回 seed/server-memory binding。
+- Vendor 财务 / 结算入口不能游离在单位权限模型外；如果要进入菜单可见性链路，应使用类似 `financeReadOnly` 的只读模块，默认隐藏，preview 必须 `runtimeEnabled=false`，不得生成结算单、修改佣金、发起打款、对账写入或授予 RBAC。
+- Vendor effective view 对未绑定 seller 应 fail-closed 为空可见模块；不能在菜单层默认展示某个示例经营单位，再等 authorize route 去阻断，否则用户会看到不该看的功能入口。

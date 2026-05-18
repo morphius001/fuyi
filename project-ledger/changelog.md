@@ -1,5 +1,297 @@
 # Changelog
 
+## 2026-05-18
+
+- 已补齐 staged manifest 覆盖率审查证据。生成 `/tmp/fuyi-staged-manifest-coverage.tsv` 后确认当前 staged files `146` 均能落回既定分组：group0 protection `4`、group1 readiness / ledger `30`、group2 refund query surface `61`、group3 unit permissions `28`、group4 UI scope `16`、group5 residual reviewed `7`、unclassified `0`。该证据已同步到 `docs/current-worktree-staging-manifest.md`、`project-ledger/status.md`、`project-ledger/handoff.md`。
+- 已补齐 staged 防误伤审查证据。生成 `/tmp/fuyi-staged-names-final-review.txt`、`/tmp/fuyi-staged-reviewable-names.txt`、`/tmp/fuyi-staged-diff-u0-final-review.patch` 后扫描确认：staged files `146`，排除 generated `.mercur` type surface 后 reviewable files `145`；staged private / artifact 路径只包含 `.codex/artifacts/.gitignore`、`.codex/private/.gitignore`、`project-ledger/artifacts/.gitignore`、`project-ledger/private/.gitignore`；runtime allow added-lines 未发现真实放开项，`execute workflow` / `grant RBAC` 命中均为否定边界文案或测试断言；real secret shape added-lines 无命中。最终 `./.codex/scripts/current-worktree-staging-preflight.sh --expect-staged` 仍为 `pass=9 warnings=1 no_go=0`。
+- 已补齐 staged API 后端构建复验证据。先直接执行 `cd packages/api && bun run build`，失败点为当前非登录 WSL shell 未加载 Node，Bun 代跑 Medusa CLI 后触发 source-map-support / trace-mapping 堆栈映射异常：`error: \`column\` must be greater than or equal to 0 (columns start at column 0)`。按项目 Node 24 规则复跑 `source /home/codex/.nvm/nvm.sh && cd packages/api && node -v && node node_modules/.bin/medusa build` 后通过，输出 `v24.15.0`、`Types generated successfully`、`Backend build completed successfully (4.06s)`。该证据已同步到 `docs/current-worktree-staging-manifest.md`、`project-ledger/status.md`、`project-ledger/handoff.md`。边界：本次只做 staged API backend build 复验和文档/ledger 记录，未执行 production DB / production workflow，未写 refund success state，未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+## 2026-05-17
+
+- 新增 `.codex/scripts/current-worktree-staging-preflight.sh`，把当前 staging 前后的只读检查固化成脚本：断言 close-gate summary 为 `GO-FOR-CHECKED-SCOPE` 且 gates confirmed，统计 modified / untracked / staged，执行 `git diff --check`，确认 private env / artifact ignore，复扫 close-gate artifact secret scan，检查 staged private / artifact 路径，并对 staged 高风险关键词给出 warning。默认未 staged 也可通过；stage 后可加 `--expect-staged`。该脚本不 stage、不 commit、不删文件、不连接数据库、不读取 private env value。`docs/current-worktree-staging-manifest.md`、`project-ledger/status.md`、`project-ledger/handoff.md` 已同步入口。
+- 验证通过：`bash -n .codex/scripts/current-worktree-staging-preflight.sh`；`git diff --check`；`./.codex/scripts/current-worktree-staging-preflight.sh` 输出 `pass=10 warnings=0 no_go=0`，并确认 close-gate summary 为 `GO-FOR-CHECKED-SCOPE` 且 gates confirmed。
+- 已精确 stage 当前 worktree manifest 第 0/1 组，共 `34` 个 staged files，范围只包含 close-gate / readiness 工具、private/artifact `.gitignore`、preprod runbook、自用 scope、staging manifest、ledger 和 learned rules；未 stage `apps/**` 或 `packages/**` 业务代码。验证通过：`./.codex/scripts/current-worktree-staging-preflight.sh --expect-staged` 输出 `pass=10 warnings=0 no_go=0`，`git diff --cached --check` 通过。
+- 已精确 stage 当前 worktree manifest 第 2 组，当前 index 共 `95` 个 staged files；第 2 组范围包含 refund review query surface、canonical registration、PG readers、fixtures、focused tests、local disposable DB smoke 脚本和对应文档，未 stage 单位权限组或三端 UI 组。验证通过：focused tests `55/55`；`PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED=true PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ... refund-smoke-local-db` 输出 `GO-FOR-CHECKED-SCOPE`、`pass=18 warnings=1 noGo=0`，cleanup 残留库 count 为 `0`；`git diff --cached --check` 通过。当前 preflight 对 staged refund/payment 文件名给出 `warnings=1`，这是第 2 组主题风险提示，不代表生产写路径已放行。
+- 已精确 stage 当前 worktree manifest 第 3 组，当前 index 共 `123` 个 staged files；第 3 组范围包含经营单位权限 / 平台模块开关后端配置、Admin unit permissions/module switches routes、Vendor effective/authorize/preview routes、guard、PG repository、china-platform-ops module 和 Vendor unit permission client，未 stage 三端 UI 页面组。验证通过：unit permission / module switch focused tests `22/22`；`unit-permission-smoke` 输出 `GO-FOR-CHECKED-SCOPE`、`pass=18 warnings=0 noGo=0`，覆盖 Admin 保存 / effective preview、Vendor effective、authorize、read-only preview 和四类经营单位 full matrix；`git diff --cached --check` 通过。当前 preflight 对 staged refund/payment/permission 文件名给出 `warnings=1`，这是第 2/3 组主题风险提示，不代表 RBAC 或交易写路径已放行。
+- 新增 `docs/current-worktree-staging-manifest.md`，按当前 runtime worktree 实际 `38` 个 modified tracked files、`108` 个 untracked non-ignored files 和 private / artifact ignored entries 拆出 staging 分组：永远先排除的私有 env / artifact、close-gate readiness 工具与 ledger、refund review query surface、经营单位权限 / 平台模块开关、三端 UI、自用可见范围、需要单独审查的 generated type file。`project-ledger/status.md` / `project-ledger/handoff.md` 已加入该恢复入口。
+- 验证通过：`git diff --check`；`china-readiness-artifact-secret-scan.sh /tmp/fuyi-preprod-close-gate-created-local-disposable-go` 输出 `GO-FOR-CHECKED-SCOPE`；`git check-ignore -v` 确认 private env 与 artifact 路径命中忽略规则。
+- 补齐当前自用上线范围和禁用 runtime 边界：新增 `docs/self-use-launch-scope-and-disabled-runtime.md`，记录当前 close-gate 事实源 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go/readiness-suite/summary.json`，明确 Admin / Vendor / refund review query surface / readiness 可自用验证范围，并把 payment success、refund success state、settlement、commission、payout、RBAC enforcement、fulfillment、logistics、live / IM 等继续标为只读、mock、preview 或高风险串行任务。`docs/china-localization-release-gates.md` 顶部已同步 2026-05-17 当前口径，`project-ledger/status.md` / `project-ledger/handoff.md` 已加入该恢复入口。
+- 验证通过：`git diff --check`；读取最新 summary 确认 `verdict=GO-FOR-CHECKED-SCOPE`、`externalBlockers=[]`、三个 derived gate 均 confirmed、`preprodEnvStatus.verdict=READY_TO_VALIDATE`；复扫 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go` artifact secret scan 通过；private env / artifact 目录 git ignore 命中。
+- 补充 artifact 目录防误提交规则：新增 `.codex/artifacts/.gitignore` 与 `project-ledger/artifacts/.gitignore`，只允许目录内 `.gitignore` 入 Git，截图、summary、运行证据等本地产物继续保留在本机但不进入 PR。
+- 删除恢复入口里的失效 blocker：`project-ledger/handoff.md`、`project-ledger/status.md`、`project-ledger/handoff-2026-05-15-refund-review-query-surface-context-reset.md` 已重写为当前事实版，不再保留 close-gate 成功前的 `NO-GO`、`NOT_READY`、`placeholder`、Admin QA 未确认、高风险 approval 未批准、真实 DB rehearsal 未满足等当前态文案；历史过程仍保留在 changelog。
+- 收口 close-gate 后恢复入口：`project-ledger/handoff.md`、`project-ledger/status.md` 和 `project-ledger/tasks.md` 已明确以 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go/readiness-suite/summary.json` 为最新事实源；旧 `placeholder`、`NOT_READY`、`NO-GO`、`currentEnvCandidateCount=0` 记录仅作为历史证据，不再覆盖当前 `GO-FOR-CHECKED-SCOPE`。
+- 加强 private env 提交保护：`.codex/private/.gitignore` 与 `project-ledger/private/.gitignore` 只允许目录内 `.gitignore` 进入 Git，真实 rehearsal env / 私有证据继续忽略。
+- 按用户要求直接创建当前可控 disposable DB 并完成 close-gate：创建 `fuyi_preprod_disposable_codex_20260517141000`，写入 gitignored private env `.codex/private/preprod-disposable-db-rehearsal.env`，补齐 localhost disposable preprod tunnel confirm，`env-status` 为 `READY_TO_VALIDATE`。执行 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true CODEX_PREPROD_CLOSE_GATE_OUTPUT_DIR=/tmp/fuyi-preprod-close-gate-created-local-disposable-go ./.codex/scripts/china-preprod-disposable-db-rehearsal-close-gate.sh run`，最终 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go/readiness-suite/summary.json` 为 `GO-FOR-CHECKED-SCOPE`，`externalBlockers=[]`，Admin 视觉 QA、高风险 runtime approval、preprod disposable DB rehearsal 三个 derived gate 均 confirmed。
+- 修复 close-gate / readiness suite 根因：`.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh run` 不再把 private DB env 带入 readiness quick tests，只直接执行 guarded DB rehearsal；`.codex/scripts/china-preprod-disposable-db-rehearsal-close-gate.sh` 负责在 DB rehearsal 后跑 artifact suite。`refund-provider-inbox-route-config.ts` 的 real-secret scan 改为只扫描 env value，不扫 env key 名，并新增测试覆盖 `PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED` 不应误触发 `REFUND_PROVIDER_ROUTE_SECRET_BLOCKED`。
+- 修复 artifact suite 硬编码 blocker：`china-launch-readiness-check.sh` 在 preprod rehearsal gate confirmed 时不再让 `preprod-env-discovery` / `preprod-env-status` / `preprod-db-local-script-test` 继续 NO-GO；`china-launch-readiness-artifact-suite.sh` 新增 `derivedGateConfirmations.preprodDisposableDbRehearsal`，只在未确认时列出真实 DB rehearsal external blocker。
+- 验证通过：provider inbox focused tests `41/41`；quick gate 在 `PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED=true` 下 `GO-FOR-CHECKED-SCOPE`；`preprod-env-discovery` / `preprod-env-status` / `preprod-db-local-script-test` confirmed 模式均 `GO-FOR-CHECKED-SCOPE`；完整 close-gate 输出 `/tmp/fuyi-preprod-close-gate-created-local-disposable-go` 成功；artifact 目录未发现 `postgres://` / `postgresql://`；`git diff --check` 通过。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-close-gate.sh` 新增高风险 approval env 前置 gate；真实 DB validate/run 前必须显式带 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true`，避免真实 disposable preprod DB rehearsal 跑完后 suite 因 approval env 缺失重新 NO-GO。suite nextActions 与 env 模板已同步更新为带 approval env 的 close-gate 命令。
+- 验证通过：脚本 `bash -n`；缺 approval 时 `/tmp/fuyi-preprod-close-gate-missing-approval` fail-closed 并明确未连接 DB；带 approval 但 DB URL 仍 placeholder 时 `/tmp/fuyi-preprod-close-gate-approved-placeholder` 先确认 approval，再因 `CODEX_PREPROD_DISPOSABLE_DATABASE_URL` placeholder fail-closed，仍明确未连接 DB。
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-close-gate.sh`，把真实 disposable preprod DB URL 到来后的上线 gate 顺序固化为 `discovery -> env-status -> READY_TO_VALIDATE -> from-env validate -> from-env run -> artifact suite`；artifact suite nextActions 与 `.codex/templates/preprod-disposable-db-rehearsal.env.example` 已同步提示该命令。
+- 验证通过：`chmod +x` 后脚本 `bash -n`；`plan` 输出确认不连接数据库；当前 placeholder private env 下 `run` fail-closed，输出 `/tmp/fuyi-preprod-close-gate-current-placeholder-5`，报 `verdict=NOT_READY placeholder_keys=CODEX_PREPROD_DISPOSABLE_DATABASE_URL`，并明确 `No database connection was attempted.`。本轮未连接 DB、未执行 migration、未执行 workflow、未写 refund success state。
+- 完整 readiness artifact suite 已复跑并包含新增 `refund-smoke-local-db` mode：输出目录 `/tmp/fuyi-readiness-suite-20260517135256`，latest link `/tmp/fuyi-readiness-suite-latest`。`localEvidence` 中 `admin-visual-qa`、`frontend`、`refund-smoke`、`refund-smoke-local-db`、`unit-permission-smoke`、`platform-module-switch-smoke`、`runtime-mock-suite`、`preprod-env-discovery`、`preprod-db-local-script-test`、`artifact-secret-scan` 均为 PASS；`preprod-env-status` 仍为 NOT_READY。`derivedGateConfirmations.adminLoggedInVisualQa=true`、`highRiskRuntimeApproval=true`；artifact secret scan PASS。剩余 external blockers 只剩 private DB URL 未 ready 和真实 disposable preprod DB rehearsal 未满足；当前唯一 placeholder key 为 `CODEX_PREPROD_DISPOSABLE_DATABASE_URL`，当前进程 DB env 候选数为 `0`。
+- refund review query surface 新增本地真实关系链 readiness mode：`.codex/scripts/china-launch-readiness-check.sh refund-smoke-local-db`，artifact suite 也纳入该 mode；底层 `.codex/scripts/refund-review-query-surface-admin-http-smoke-local-db.sh` 现在会创建唯一 disposable local DB、跑 migration、seed approval / audit / runtime attempt / terminal conflict 四段数据、启动专用 Medusa Admin HTTP、验证三条 resolved query 和一条 blocked missing query，并在 cleanup 后输出 remaining count。
+- 验证通过：脚本 `bash -n`；`CODEX_HTTP_SMOKE_STABILITY_WAIT_SECONDS=3 ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true ./.codex/scripts/china-launch-readiness-check.sh refund-smoke-local-db --json --output /tmp/fuyi-refund-smoke-local-db-20260517.json || true`，结果 `pass=17 warnings=1 noGo=1`，本地 DB HTTP 机器项 PASS；创建并清理 `fuyi_refund_review_query_surface_http_smoke_20260517134641`，cleanup 后 `fuyi_refund_review_query_surface_http_smoke_%` 残留库 count 为 `0`；输出未发现 `postgres://` / `postgresql://`；`git diff --check` 通过。该验证仍不替代真实 disposable preprod DB gate。
+- 按用户要求直接复验本地 disposable DB：先查 `127.0.0.1:15432/postgres` 中 `fuyi_preprod_disposable%`，无残留；随后运行 `.codex/scripts/china-preprod-disposable-db-rehearsal-local-script-test.sh`，新建 `fuyi_preprod_disposable_local_20260517133837`，完成 migration / 12 张表验证并自动 drop，cleanup 后残留 count 为 `0`。该验证只证明本地 disposable DB 链路，不替代真实 preprod launch gate。
+- 补齐当前上线 blocker 的风险点与验证映射：每个风险必须指向具体验证项，不能只写风险不测。已在 status / handoff 记录 `preprod-env-discovery`、`preprod-env-status`、`from-env validate`、`artifact-secret-scan`、真实 `from-env run` 的对应关系，并明确本地 script-test 不能替代真实 preprod gate。
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-apply-current-env.sh`，用于在外部已把 approved disposable preprod DB endpoint 放入当前 shell 后，安全写入 gitignored private env；脚本不打印 DB URL / credential / env value、不连接数据库，目标限制在 `.codex/private/` 或 `project-ledger/private/`，写入权限 `600`。
+- 验证通过：脚本 `bash -n`；缺少 `CODEX_PREPROD_DISPOSABLE_DATABASE_URL` 时 fail-closed；临时 fake disposable URL 写入测试 private env 后，`env-status` 为 `READY_TO_VALIDATE`、`from-env validate` 通过且未连接 DB；临时 private env 已清理；完整 suite `/tmp/fuyi-readiness-suite-apply-current-env-20260517` 生成成功，nextActions 已包含 apply-current-env 命令，artifact secret scan 通过；输出未发现 `postgres://` / `postgresql://`；`git diff --check` 通过。
+- `preprod-env-discovery` 已接入 readiness 主链：`.codex/scripts/china-preprod-disposable-db-rehearsal-env-discover.sh` 新增 `--json --output`，`.codex/scripts/china-launch-readiness-check.sh` 新增 `preprod-env-discovery` mode，`.codex/scripts/china-launch-readiness-artifact-suite.sh` 已把该 mode 纳入 suite，并在 summary 写入 `preprodEnvDiscovery`。
+- 验证通过：三个脚本 `bash -n`；discovery JSON `/tmp/fuyi-preprod-env-discovery-integrated.json`；readiness mode `/tmp/fuyi-readiness-preprod-env-discovery.json`；完整 suite `/tmp/fuyi-readiness-suite-env-discovery-integrated-20260517`。结果确认 `currentEnvCandidateCount=0`、`defaultPrivateEnvDatabaseUrl=placeholder`，summary nextActions 明确无当前进程 DB env 候选，必须手填 private DB URL；suite / discovery artifacts 未发现 `postgres://` / `postgresql://`；`git diff --check` 通过。
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-env-discover.sh`，用于 redacted 探测 disposable preprod DB rehearsal 配置来源；只输出候选 env key、env 文件路径和 key references，不输出 DB URL / credential / env value，也不连接数据库。
+- 验证通过：脚本 `bash -n`；`--help` 正常；discovery 输出 `/tmp/fuyi-preprod-env-discovery-redacted.out`，确认 `default_private_env_database_url=placeholder`、`current_env_candidate_count=0`，只发现 private 草稿和模板 key references；输出未发现 `postgres://` / `postgresql://`；`git diff --check` 通过。当前仍没有可自动填入的真实 disposable preprod DB endpoint。
+- 用户已明确批准高风险 runtime gate；`.codex/scripts/china-launch-readiness-artifact-suite.sh` 修复 summary 根因，不再把高风险 approval 固定列为 external blocker，而是从 readiness pass item 动态推导 `derivedGateConfirmations.highRiskRuntimeApproval`。已自填 `.codex/private/preprod-disposable-db-rehearsal.env` 的 non-secret operator / cleanup owner，DB URL placeholder 保留给真实 disposable preprod DB endpoint。
+- 验证通过：脚本 `bash -n`；`git diff --check`；`env-status` 输出 `/tmp/fuyi-preprod-env-status-user-approved-partial-fill.json` 且 `placeholderKeys=["CODEX_PREPROD_DISPOSABLE_DATABASE_URL"]`；`from-env validate` 只报 DB URL placeholder；`preprod-env-status` 在 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true` 下为 `pass=16 warnings=1 noGo=2` 且高风险 approval PASS；完整 suite `/tmp/fuyi-readiness-suite-user-approved-20260517` 生成成功，`derivedGateConfirmations.highRiskRuntimeApproval=true`，external blockers 只剩 private DB URL / 真实 preprod rehearsal，artifact secret scan 通过。未连接真实 preprod / production DB、未执行 migration、未执行 workflow、未写 refund success state。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh` 的 `validate/run` placeholder 检查从单 key 失败改为聚合所有白名单 env value 后一次性 fail-closed；默认草稿现在输出全部 placeholder key：`CODEX_PREPROD_DISPOSABLE_DATABASE_URL,CODEX_PREPROD_DISPOSABLE_DB_OPERATOR,CODEX_PREPROD_DISPOSABLE_DB_CLEANUP_OWNER`，仍不输出任何值。
+- 验证通过：脚本 `bash -n`；默认草稿 validate 输出全量 key；合法形状 `/tmp` env validate-only 通过并确认 `No database connection was attempted.`；验证输出未发现 `postgres://` / `postgresql://`。本轮未连接 DB、未执行 migration、未打印 DB URL。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh` 新增 redacted `placeholderKeys` 输出，text / JSON 都只列还需要替换的 env key 名，不输出任何值；`.codex/scripts/china-launch-readiness-check.sh preprod-env-status --json` 和 `.codex/scripts/china-launch-readiness-artifact-suite.sh` summary 也同步传递该字段。
+- 当前 root-cause 输出显示还需一次性替换：`CODEX_PREPROD_DISPOSABLE_DATABASE_URL`、`CODEX_PREPROD_DISPOSABLE_DB_OPERATOR`、`CODEX_PREPROD_DISPOSABLE_DB_CLEANUP_OWNER`。
+- 验证通过：三个脚本 `bash -n`；`env-status` 输出 `/tmp/fuyi-preprod-env-status-placeholder-keys.json`；readiness `preprod-env-status` 输出 `/tmp/fuyi-readiness-preprod-env-status-placeholder-keys.json`；完整 suite `/tmp/fuyi-readiness-suite-placeholder-keys-20260517` 生成成功且 artifact secret scan 通过；overall 仍因真实 preprod DB env 未 ready 和高风险 runtime approval 保持 `NO-GO`。本轮未连接 DB、未执行 migration、未打印 DB URL。
+- 复验 preprod disposable DB env 根因：`env-status` 输出 `/tmp/fuyi-preprod-env-status-root-cause.json`，确认 `.codex/private/preprod-disposable-db-rehearsal.env` 存在、`mode=600`、git ignored、必填变量已声明且 syntax 通过，但 `placeholdersPresent=true`、`preflightOk=false`、`verdict=NOT_READY`。`from-env validate` 在连接 DB 前按预期失败：`FAIL private env file still contains placeholder value for CODEX_PREPROD_DISPOSABLE_DATABASE_URL.`。readiness `preprod-env-status` 输出 `/tmp/fuyi-readiness-preprod-env-status-root-cause.json`，结果 `pass=15 warnings=1 noGo=3`；本轮未连接 DB、未执行 migration、未打印 DB URL。
+- 复跑 `runtime-mock-suite` 聚合验证：`CODEX_HTTP_SMOKE_STABILITY_WAIT_SECONDS=3 ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh runtime-mock-suite --json --output /tmp/fuyi-runtime-mock-suite-blocked-http.json || true`。机器链路通过，`pass=20 warnings=1 noGo=2`；覆盖平台模块开关 Admin HTTP、refund review query surface resolved + blocked miss HTTP、Admin -> Vendor 单位权限四个经营单位全矩阵、本地 disposable DB rehearsal script-test 和 cleanup。overall 仍按外部门槛 `NO-GO`：真实 preprod disposable DB rehearsal 未确认、高风险 runtime approval 未批准。本轮只更新验证证据和 ledger，未改业务 runtime。
+- `.codex/scripts/china-launch-readiness-check.sh` 的 refund review query surface focused gate 纳入 composition / repository resolver 两组底层测试，避免 readiness 只覆盖 route / wiring 层。
+- `.codex/scripts/refund-review-query-surface-existing-server-smoke.sh` 新增真实 HTTP blocked miss 覆盖：missing `platform_refund_id` 必须返回 HTTP `400`、`status=blocked`、`code=review_case_not_found`，并断言不泄露 `reviewInput`、fixture `bundle`、`postgres://` 或底层 DB error 文案。
+- `.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh plan` 已同步列出 blocked check。
+- 验证通过：三个脚本 `bash -n`；query surface focused tests `83/83`；`CODEX_HTTP_SMOKE_STABILITY_WAIT_SECONDS=3 ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh refund-smoke --json --output /tmp/fuyi-refund-smoke-blocked-http.json || true` 机器项通过，`pass=16 warnings=0 noGo=2`，HTTP 输出包含 blocked miss PASS；未连接 preprod / production DB，未执行 workflow，未写 refund success state。
+- `refund-state-mutation-review-query-surface-repository-resolver.unit.spec.ts` 和 `refund-state-mutation-review-query-surface-composition.unit.spec.ts` 补齐 `resolver_repository_query_failed` 底层覆盖：reader reject 现在在 resolver 层和 composition safe response 层都有直接断言，不只依赖 Admin route test。
+- 验证通过：composition + resolver focused tests `11/11`；refund review query surface 主线 focused tests `83/83`；API typecheck 通过；未连接 preprod / production DB，未执行 workflow，未写 refund success state。
+- `refund-state-mutation-review-query-surface-repository-resolver.ts` 加固 repository query fail-closed：readers 已解析后，四段只读 repository 查询抛错 / reject 时返回 `resolver_repository_query_failed`，避免 Admin refund review query surface 变成 500 或泄露底层异常细节。
+- `route.unit.spec.ts` 新增 repository reader query failure 覆盖，确认 route 返回 `400 blocked`、通用 reason 和高风险写路径全 blocked 标志。
+- 验证通过：route focused tests `21/21`；refund review query surface 主线 focused tests `72/72`；API typecheck 通过；未连接 preprod / production DB，未执行 workflow，未写 refund success state。
+- `refund-state-mutation-review-query-surface-pg-repositories.ts` 加固 PG fallback table inspection：`schema.hasTable` 抛错 / reject 时返回 `false`，只读 query surface 会 fail-closed 为不可用 readers，不再把底层 PG inspection 异常扩散成 Admin route 500。
+- `refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts` 新增 `pg table inspection fails` 覆盖，确认 `resolveRefundReviewQuerySurfacePgReaders()` 在 table inspection 异常时返回 `undefined`。
+- 验证通过：PG readers focused tests `7/7`；refund review query surface 主线 focused tests `71/71`；未连接 preprod / production DB，未执行 workflow，未写 refund success state。
+- `refund-review-query-surface-repository-registration.ts` 新增 registration runtime shape guard：canonical registration / legacy key 只有在 readers 和四段 repo 具备完整读取方法、`pgConnection` 是 callable PG/Knex-like function 时才会进入只读 readers fallback；误注册普通对象会 fail-closed 并允许多 container helper 继续 fallback 到后续可用 registration。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增 malformed readers / repo properties / `pgConnection` 覆盖：验证普通对象不会被 cast 成可用 readers / PG connection，也验证前一个 container malformed 时会落到后一个 canonical readers。
+- 验证通过：registration focused tests `23/23`；refund review query surface 主线 focused tests `70/70`；未连接 preprod / production DB，未执行 workflow，未写 refund success state。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 新增 redacted preprod env status 汇总：suite 现在会生成 `preprod-env-status.redacted.json`，并把 `preprodEnvStatus` 写入 `summary.json`，同时在 `summary.md` 增加 `Preprod Env Status` 区块。
+- 验证通过：`bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`；suite `/tmp/fuyi-readiness-suite-preprod-env-summary-20260517105940` 生成成功；`summary.json` 已包含 `placeholdersPresent`、`syntaxOk`、`preflightOk`、`preflightReason`、`verdict`；`summary.md` 已包含 `## Preprod Env Status`；`git diff --check` 通过。当前 env status 仍因默认草稿占位符保持 `NOT_READY`，overall 仍 `NO-GO`。
+- `.codex/scripts/china-launch-readiness-check.sh preprod-env-status --json` 新增同形状 redacted `preprodEnvStatus` 明细，单独 readiness JSON 现在也能直接显示占位符、syntax、preflight 和 env status verdict 卡点。
+- 验证通过：`bash -n .codex/scripts/china-launch-readiness-check.sh`；`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh preprod-env-status --json --output /tmp/fuyi-preprod-env-status-json-detail.json || true` 按预期 `NO-GO`；artifact 已确认包含 `preprodEnvStatus` 且未泄露 `postgres://`；`git diff --check` 通过。当前 env status 仍为 `NOT_READY`。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 收口 preprod env status 证据来源：suite 现在从 `preprod-env-status.json` 的 `preprodEnvStatus` 提取生成 `preprod-env-status.redacted.json`，不再二次调用 env-status 脚本。
+- 验证通过：`bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`；suite `/tmp/fuyi-readiness-suite-preprod-env-reuse-20260517160458` 生成成功且 overall 仍按预期 `NO-GO`；`preprod-env-status.json` 与 `preprod-env-status.redacted.json` 内容一致；summary 存在 `preprodEnvStatus`；产物未泄露 `postgres://`；`git diff --check` 通过。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal.sh` 日志去 URL 化：RUN / PASS / failure tail 现在输出 redacted target identity，不再把 `postgres://` 连接串写入 local script-test 或 runtime-mock-suite 日志。
+- 验证通过：`bash -n .codex/scripts/china-preprod-disposable-db-rehearsal.sh`；suite `/tmp/fuyi-readiness-suite-preprod-env-reuse-redacted-20260517161121` 生成成功且 overall 仍按预期 `NO-GO`；suite 产物不含 `postgres://`；`preprod-env-status.json`、`preprod-env-status.redacted.json`、`summary.json` 三处 env status 一致；`git diff --check` 通过。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 新增 `artifact-secret-scan` 机器项：suite 生成完全部 artifacts/logs 后扫描本轮输出目录中的 `postgres://` / `postgresql://`，命中则写 `artifact-secret-scan.json` 为 `NO-GO`。
+- 验证通过：`bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`；suite `/tmp/fuyi-readiness-suite-artifact-secret-scan-20260517162309` 生成成功；`artifact-secret-scan.json` 为 `GO-FOR-CHECKED-SCOPE`；suite 目录无 `postgres://` / `postgresql://`；env status 三处一致；`git diff --check` 通过。
+- 新增 `.codex/scripts/china-readiness-artifact-secret-scan.sh`，把 suite artifact 连接串扫描抽成独立脚本；suite 改为调用该脚本生成 `artifact-secret-scan.json` / `.log`。
+- 验证通过：两个脚本 `bash -n`；clean 临时目录扫描通过；含 fake `postgres://` 的临时目录按预期 `NO-GO`；suite `/tmp/fuyi-readiness-suite-artifact-secret-scan-standalone-20260517163722` 生成成功；`artifact-secret-scan.json` 通过；suite 目录无 `postgres://` / `postgresql://`；env status 三处一致；`git diff --check` 通过。
+
+## 2026-05-16
+
+- 新增 `.codex/scripts/lib/preprod-disposable-env-safe-loader.sh`，把 preprod disposable DB 私有 env 的 required/allowed name、trim、assignment value extraction 和 syntax whitelist 收成共享 helper。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh` 与 `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh` 已改为复用同一份 safe loader；共享 helper 只解析私有 env 文本，不 source 私有 env、不连接数据库。
+- 验证通过：共享 helper / env-status / from-env 三个脚本 `bash -n`；合法 env 在 status 和 validate 两端通过；恶意 `touch /tmp/fuyi-shared-helper-marker` 在 status / validate 两端均被拒且 marker 未创建；未知 `UNRELATED_SECRET` 被拒；默认占位 env 仍 `NOT_READY`；产物未泄露测试 DB URL；`git diff --check`。
+- 加固 preprod disposable DB `env-status`：redacted status 现在也只接受白名单 `KEY=value` / `export KEY=value`，并输出 `syntaxOk` / `syntaxReason`；未知变量、非 assignment 行或 shell 命令会保持 `NOT_READY`，不会显示为可 validate。
+- 验证通过：合法 env-status JSON 返回 `READY_TO_VALIDATE` 且 `syntaxOk=true` / `preflightOk=true`；含 `touch /tmp/fuyi-env-status-should-not-execute` 的恶意 env 返回 `NOT_READY` 且 marker 未创建；含 `UNRELATED_SECRET` 的 env 返回 `NOT_READY`；默认占位 env 仍为 `NOT_READY`；JSON 未泄露测试 DB URL；`git diff --check` 通过。
+- 加固 preprod disposable DB `from-env` wrapper：移除对私有 env 文件的 `source`，改为白名单解析 `KEY=value` / `export KEY=value`；未知变量、非 assignment 行和 shell 命令会 fail-closed，避免私有 env 内容被当作 shell 执行。
+- 更新 `docs/preprod-disposable-db-rehearsal-runbook.md`，明确 `validate` 不 source 私有 env，只做白名单 assignment 解析、非连接安全预检，不满足真实 preprod gate。
+- 验证通过：`bash -n` 两个 preprod env 脚本、默认占位 env validate 被拒、合法形状 env validate 通过且不连接 DB、恶意 `touch /tmp/fuyi-safe-loader-marker` 行被拒且 marker 未创建、localhost tunnel confirm env validate 通过、`preprod-env-status` 仍为 `NO-GO`、测试输出未泄露测试 DB URL、`git diff --check`。
+- 修复 Admin 单位权限页登录态 effective 预览浏览器 CORS 问题：新增 `/admin/china/unit-permissions/effective?unit_key=...`，前端改为走 Admin 路由并带 `credentials: include`，页面不再显示 `读取 effective view 失败：Failed to fetch`。
+- `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh` 的 Admin effective before/after 与全矩阵检查已同步改为 Admin 登录态 route，避免 HTTP smoke 漏掉真实浏览器 Admin route 边界。
+- 新增 Admin effective route focused test，并完成 Admin 登录态视觉 QA 截图：`unit-permissions` / `module-switches` 桌面与移动截图写入 `.codex/artifacts/admin-visual-qa-20260516-unit-permissions/`。
+- 验证通过：Admin effective focused tests、经营单位 HTTP smoke、API typecheck、Admin lint/build、WSL Playwright 登录态视觉断言、`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh unit-permission-smoke --json --output /tmp/fuyi-unit-permission-smoke-admin-effective-route-visual-qa.json || true`（`pass=16 warnings=0 noGo=2`）、`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`（最新 `/tmp/fuyi-readiness-suite-20260516215056`，overall 按外部门槛 `NO-GO`）、`git diff --check`。
+- Admin 经营单位商户绑定从自由输入收口为后端 seller 候选下拉：`/admin/china/unit-permissions` 现在返回 `sellerOptions`；PG 可用时读取真实 `seller` 表的 `id / handle / name`，保存 binding 时校验 seller 存在；PG / seller 表不可用时才退回 server-memory / seed binding 选项。
+- `china-unit-permission-pg-repository` 新增 seller option 读取和绑定校验：未知 seller 在 PG seller 表存在时会被拒绝，不再静默保存任意 handle。
+- `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh` 新增 `Admin seller binding selector options` 断言，确保真实 HTTP 链路里 Admin GET 返回可选 seller 候选后再继续绑定和 Vendor 全矩阵验证。
+- 验证通过：经营单位 focused tests（18/18）、Admin lint/build、Vendor build、API typecheck、脚本 `bash -n`、真实 HTTP smoke、`./.codex/scripts/china-launch-readiness-check.sh unit-permission-smoke --json --output /tmp/fuyi-unit-permission-smoke-seller-selector.json || true`（机器项 PASS，overall 仍按外部门槛 `NO-GO`）、`git diff --check`。
+- 经营单位权限闭环继续补齐：Admin 单位权限页新增后端 effective 预览面板，直接读取 `/china/unit-permissions/effective?unit_key=...`，保存开关后可核对 Vendor 会显示 / 隐藏的模块和入口数。
+- 新增 `financeReadOnly` 单位模块并纳入 Admin / API / Vendor 映射：Vendor `finance` 菜单不再游离于单位权限模型外；打开后仅返回财务结算只读 preview，`runtimeEnabled=false`，不生成结算单、不改佣金、不发起打款、不做对账写入。
+- Vendor effective route 未绑定 seller 时改为返回空 effective view，不再默认展示 `seafoodStallA12` 菜单；seed binding 的 source 标注从泛化 `pg_admin_draft:seller_binding` 收口为实际 `server_memory_draft:seed_binding`。
+- `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh` 加入 Admin effective preview before/after 和全矩阵 Admin effective 断言；四个经营单位全矩阵已覆盖 `financeReadOnly` 和 `fruitsVegetables` 只读 preview。
+- 验证通过：经营单位 focused tests（12/12）、Admin lint/build、Vendor lint/build、API typecheck、脚本 `bash -n`、真实 HTTP smoke、`./.codex/scripts/china-launch-readiness-check.sh unit-permission-smoke --json --output /tmp/fuyi-unit-permission-smoke-effective-finance.json || true`（机器项 PASS，overall 仍按外部门槛 `NO-GO`）、`git diff --check`。
+- 新增 `.codex/scripts/china-launch-readiness-artifact-suite.sh`，一键顺序运行 `frontend`、`refund-smoke`、`unit-permission-smoke`、`preprod-db-local-script-test`，为每个 mode 写 JSON artifact，并生成 `summary.json` 汇总。
+- 修复 artifact suite 自身 runtime 加载：脚本现在会加载 nvm / bun 路径并确认 `node` 可用，避免各 mode 已跑完但 summary 生成失败。
+- artifact suite 输出已收敛：每个 mode 的详细 stdout/stderr 写入同目录 `.log`，终端只打印 mode verdict、counts、artifact path 和 log path；`summary.json` 也记录 `logPath`。
+- artifact suite 现在同时生成 `summary.md`，并维护 `/tmp/fuyi-readiness-suite-latest` 指向最新输出目录；人读 summary 可直接看到 mode 表格、artifact path、log path 和外部 blocker。
+- 验证通过：`bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`、`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`。最新输出目录为 `/tmp/fuyi-readiness-suite-20260516025028`，`/tmp/fuyi-readiness-suite-latest` 已指向该目录，summary overall 仍为 `NO-GO`，但四个本机可验 mode 均产出 PASS 机器证据；剩余 blocker 仅为真实 disposable preprod DB rehearsal 和高风险 runtime approval。
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal.sh`，把预发 disposable DB migration rehearsal 从口头 gate 补成 guarded 代码入口；默认 `plan` 不连接 DB，`run` 必须提供 disposable DB URL、可丢弃确认、备份/无需备份确认、operator、cleanup owner，并在本地 WIP 下要求显式 ack。
+- 收紧 preprod rehearsal 脚本的 localhost 边界：普通 `run` 默认拒绝 localhost，避免本地库误通过预发 gate；新增 `run-local-script-test` 作为本地端到端自检模式，必须显式确认 `CODEX_PREPROD_DISPOSABLE_DB_LOCAL_SCRIPT_TEST_CONFIRM=I_ACCEPT_LOCALHOST_SCRIPT_TEST_ONLY`，且输出会声明不满足预发 launch gate。
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-local-script-test.sh`，把本地端到端自检固化成脚本：创建 `fuyi_preprod_disposable_local_*` 本地库，调用 `run-local-script-test`，验证 migration / 10 张表，并在 trap 中 drop 后输出残留 count。
+- 脚本执行范围限定为 `medusa db:migrate --skip-links --skip-scripts` 和表存在性验证，覆盖 payment notification、refund query surface、经营单位权限相关表；不执行 workflow、不写 refund success state、不触发 settlement / commission / payout / permission / fulfillment / logistics 写路径。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增 `preprod-db-rehearsal` 模式：先跑 quick，再跑 guarded preprod DB rehearsal；该模式额外 warning 明确不批准 payment/refund/settlement runtime writes。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增 `preprod-db-local-script-test` 模式：先跑 quick，再跑本地 disposable DB 自检；该模式能给机器证据新增 PASS，但仍保留真实预发 gate NO-GO，避免把 localhost 误当预发。
+- 验证通过：`bash -n` 三个脚本、preprod rehearsal `plan`、缺 DB env 安全失败、production-like DB name `prod` 被拒绝、localhost 普通 `run` 被拒绝、本地自检脚本用 `fuyi_preprod_disposable_local_20260516023543` 完整跑通 migration / 10 张表验证且 cleanup 后 DB count 为 `0`、`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh preprod-db-local-script-test --json --output /tmp/fuyi-readiness-preprod-db-local-script-test.json || true` 按预期 `pass=15 warnings=1 noGo=2`、`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh preprod-db-rehearsal --json --output /tmp/fuyi-readiness-preprod-db-rehearsal-noenv.json || true` 按预期 `NO-GO`（`pass=14 warnings=1 noGo=2`）、脚本范围 `git diff --check`。
+- 修复 Admin -> Vendor 经营单位权限真实 HTTP smoke 的 Vendor 登录态阻断：Mercur Vendor 路由实际使用 `member` actor token，并通过 `x-seller-id` 选择 seller；脚本默认登录已从 `/auth/seller/emailpass` 改为 `/auth/member/emailpass`。
+- `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh` 现在可在本地 `127.0.0.1:15432/mercur` 自动准备 local-only Vendor smoke identity：写入/更新 `auth_identity`、`provider_identity`、`member`、`seller_member`，并只绑定 demo seller `a-hai-xian-huo-dang`；该准备动作可用 `CODEX_HTTP_SMOKE_PREPARE_VENDOR_IDENTITY=never` 关闭。
+- Vendor HTTP smoke 请求已带 `x-seller-id`，完整链路已通过：Admin reset -> Vendor effective 默认隐藏 `livestream` -> Admin 打开 `seafoodStallA12/livestream` -> Vendor effective / authorize / module surface preview 三段同步放行。
+- 验证通过：`bash -n .codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh`、smoke `plan` 输出、真实 HTTP smoke、经营单位 focused tests（25/25）、`./.codex/scripts/china-launch-readiness-check.sh unit-permission-smoke --json --output /tmp/fuyi-readiness-unit-permission-smoke.json || true`（`pass=14 warnings=0 noGo=3`，新增 PASS：Admin to Vendor unit permission HTTP smoke passes）。
+- 新增 `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh`：用于真实本地 `9000` API 验证 Admin 单位开关会带动 Vendor effective view、authorize 和 module surface preview；脚本支持 `plan` 模式、登录凭据 env、`CODEX_HTTP_SMOKE_ADMIN_TOKEN` / `CODEX_HTTP_SMOKE_VENDOR_TOKEN`，并在退出时 reset 本地单位权限 draft。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增显式模式 `unit-permission-smoke`，quick 不自动执行该真实 HTTP smoke，避免无 Vendor 登录凭据时污染普通机器门禁。
+- 早前本机真实 HTTP smoke 曾卡在认证边界：Admin 默认 smoke 账号通过，Vendor 默认 `seller` 账号 `ahai-seafood@fuyi.local` 返回 `401`；现已确认根因是 Mercur Vendor actor 应为 `member`，并已由本轮修复。
+- 验证通过：脚本 `bash -n`、smoke `plan` 输出、readiness help 显示 `unit-permission-smoke`、readiness quick JSON（`pass=13 warnings=0 noGo=3`）、`git diff --check`。
+- 新增 Admin -> Vendor 经营单位权限 propagation focused test：Admin 打开 `seafoodStallA12/livestream` 后，Vendor effective view、authorize 和 module surface preview 三段必须同步放行并返回直播只读预览。
+- 修复经营单位 access guard fallback 漂移：`resolveChinaUnitPermissionModuleAccess()` 无 PG 时改为读取 `listChinaUnitPermissionConfigs()` 当前 server-memory draft，而不是硬读默认配置，确保 effective / authorize / preview fallback 同源。
+- readiness quick 的 `unit permission guard and Vendor route tests pass` 已纳入 Admin -> Vendor propagation test；经营单位相关 focused tests 增至 `25/25` 通过。
+- 验证通过：经营单位相关 focused tests（25/25）、`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、API typecheck 相关错误筛选无命中、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-unit-permission-admin-vendor-propagation.json || true`、`git diff --check`、`./.codex/scripts/start-dev.sh status`。
+- Vendor 全受控功能页统一消费后端 module surface preview：`apps/vendor/src/App.tsx` 已改为复用 `unitModuleByVendorPage`，所有属于 `vendorPagesByUnitModule` 的自定义页都会用对应 `moduleKey` 请求 `/vendor/china/module-surfaces/preview?module_key=...`。
+- `module-surfaces/preview` route 补齐主要模块的只读模板：海鲜经营、冻品经营、提货卡、快递打印、AI 上架、直播、市场物料、配送供应商、上游货源、种苗批发、外地批发商；所有模板仍声明不发布、不发货、不打印、不核销、不创建采购单、不改变 checkout / 履约 / 结算 / 权限。
+- 新增 route focused test 覆盖 `seafoodTrade` 允许模块返回模块专属只读 preview；经营单位相关 focused tests 增至 `24/24` 通过。
+- 验证通过：`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、经营单位相关 focused tests（24/24）、API typecheck 相关错误筛选无命中、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-vendor-all-controlled-module-preview.json || true`、`git diff --check`、`./.codex/scripts/start-dev.sh status`。
+- Vendor 功能页接入后端只读模块预览：新增 `retrieveChinaVendorModuleSurfacePreview(moduleKey)`，并在 `apps/vendor/src/App.tsx` 的经营单位受控页面展示 `VendorModuleSurfacePreviewPanel`；当前覆盖 `waybillPrinting -> expressPrint`、`liveOps -> livestream`、`materialPurchase/materialSupplier -> marketMaterials`。
+- 新增 Vendor module surface 预览样式：`.module-surface-preview`、`.module-surface-card-grid`、`.module-surface-card`；隐藏模块或接口 403 时只显示未开放状态，不展示 `moduleSurface` 数据。
+- 验证通过：`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、经营单位相关 focused tests（23/23）、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-vendor-module-surface-ui.json || true`、`git diff --check`、`./.codex/scripts/start-dev.sh status`。
+- 新增共享 Vendor unit route guard helper：`api/vendor/china/unit-permissions/guard.ts`，统一从 `seller_context.seller_id` 解析 seller identity 并调用经营单位模块访问 guard；`authorize` route 已改为复用该 helper。
+- 新增低风险只读模块预览接口：`GET /vendor/china/module-surfaces/preview?module_key=...`，先经过经营单位 guard，允许后才返回 `vendor_china_module_surface_preview`；返回内容明确 `runtimeEnabled=false`，不创建订单、不打印真实面单、不启动直播、不改履约、不改结算、不授予 RBAC。
+- 新增 `module-surfaces/preview` route focused tests，覆盖 `expressPrint` 允许、`livestream` 403 阻断且不返回预览数据、缺少 `module_key` 400；readiness quick 的 unit permission guard 测试已纳入该接口。
+- 验证通过：经营单位相关 focused tests（23/23）、`bash -n .codex/scripts/china-launch-readiness-check.sh`、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-module-surface-preview.json || true`、API typecheck 相关错误筛选、`git diff --check`。
+- Vendor 前端模块入口接入后端经营单位 authorize：`retrieveChinaVendorUnitModuleAccess(moduleKey)` 调用 `/vendor/china/unit-permissions/authorize?module_key=...`，侧边栏、移动优先操作和 HomePage 导航统一经由 `navigateWithUnitPermission()` 校验后再进入页面。
+- Vendor 前端新增经营单位后端校验提示：允许、阻断、fallback 三种状态都会在顶部显示；authorize API 不可用时只允许当前 effective view 已可见页面 fallback 展示，并提示上线前恢复 authorize API。
+- 验证通过：`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、经营单位后端 focused tests（20/20）、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-vendor-authorize-click.json || true`、API typecheck 相关错误筛选、`git diff --check`。
+- 经营单位权限 Vendor authorize route 新增 route-level 单测：覆盖已开通模块返回 200、未开通模块返回 403、缺少 `module_key` 返回 400。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增 `unit permission guard and Vendor route tests pass` quick 门禁，把经营单位权限 guard helper、PG repository、Vendor authorize route 和 market-context helper 测试纳入上线准备机器项。
+- 验证通过：`bun test src/lib/__tests__/china-unit-permission-access-guard.unit.spec.ts src/lib/__tests__/china-unit-permission-pg-repository.unit.spec.ts src/api/vendor/china/unit-permissions/authorize/__tests__/route.unit.spec.ts src/api/vendor/china/market-context/__tests__/helpers.unit.spec.ts`（20/20）、`bash -n .codex/scripts/china-launch-readiness-check.sh`、`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick-unit-permission.json || true`、API typecheck 相关错误筛选、`git diff --check`。
+
+## 2026-05-15
+
+- 经营单位权限开关补后端 Vendor guard：新增 `china-unit-permission-access-guard.ts`，按 seller binding / metadata fallback 判定 module 可访问性，并返回 `allowed`、阻断原因、可见/隐藏模块列表和菜单可见性安全说明。
+- 新增 `GET /vendor/china/unit-permissions/authorize?module_key=...`，供 China 自定义 Vendor API 在进入业务处理前复用经营单位模块可见性 guard；seller 仍从 `seller_context.seller_id` 推导，不信任前端 `unit_key`。
+- 抽出 `api/vendor/china/unit-permissions/helpers.ts`，让 `effective` route 和 `authorize` route 共用 PG 解析、seller identity 读取与 metadata unit key 解析。
+- Vendor market-context 只读链加固：query builder `.select()` 结果统一收敛为数组，read model adapter 对非数组 repository rows fail-soft；修复 Bun matcher 在 helper 单测中污染 rows 后续入参的问题。
+- 验证通过：`bun test src/lib/__tests__/china-unit-permission-access-guard.unit.spec.ts src/lib/__tests__/china-unit-permission-pg-repository.unit.spec.ts src/api/vendor/china/market-context/__tests__/helpers.unit.spec.ts`（17/17）、Admin/Vendor lint + build、API typecheck 相关错误筛选、`git diff --check`、`./.codex/scripts/start-dev.sh status`。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增任意模式 `--json` 输出和 `--output <file>` artifact 写入；`json` 仍作为 `quick --json` 兼容别名。JSON summary 包含 `verdict`、`counts.pass`、`counts.warnings`、`counts.noGo`、`passItems`、`warningItems`、`noGoItems`；退出码仍按 NO-GO 保持非 0。
+- 验证通过：`./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-readiness-quick.json` 按预期退出 1，并生成 JSON artifact：`mode=quick`、`verdict=NO-GO`、`pass=12`、`noGo=3`；`report` 文本模式保持 `pass=12 warnings=0 no_go=3`；`git diff --check` 通过。
+- WeChat Pay / Alipay refund provider inbox route tests 继续补 local disposable DB mismatch 负向覆盖：
+  - WeChat Pay：实际 DB host 为远端地址时返回 `REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE`
+  - Alipay：实际 DB name 与 allowlisted dry-run DB 不一致时返回 `REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE`
+  - 两条路径都断言不读 body、不打开 transaction、不执行 insert/update
+- `refund-state-mutation-production-feature-flag.unit.spec.ts` 补 production fail-closed 覆盖：`environment=production` 下即使是 `dry_run` / `shadow_only`，只要 `productionExplicitlyEnabled=false`，也必须返回 `production_feature_flag_blocked` 且包含 `production_explicit_enable_missing`。
+- `.codex/scripts/china-launch-readiness-check.sh` 新增 `refund state mutation production feature flag fail-closed tests pass` 门禁；`report` 当前机器项增至 12 项 PASS，仍保留 3 个真实 NO-GO。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-provider-inbox-route-config.unit.spec.ts src/api/china/refund-inbox/wechat-pay/__tests__/route.unit.spec.ts src/api/china/refund-inbox/alipay/__tests__/route.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-production-feature-flag.unit.spec.ts`（47/47）、`./.codex/scripts/china-launch-readiness-check.sh report || true`、`git diff --check`。
+- `refund-provider-inbox-route-config.unit.spec.ts` 补齐 production-like fail-closed 矩阵：`NODE_ENV` / `APP_ENV` 为 `production`、`prod`、`preprod`、`staging` 都必须阻断，并且 production-like 阻断优先于 state mutation 和真实密钥检查。
+- WeChat Pay / Alipay refund provider inbox route focused tests 新增 route-level production-like 阻断：即使本地 DB 和 fixture 配齐，只要 `APP_ENV=preprod` 且 state mutation 被打开，也会在读 body、解析 DB scope、写 SQL 之前返回 `REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED`。
+- `.codex/scripts/china-launch-readiness-check.sh` 的 `refund provider inbox route fail-closed tests pass` 门禁已扩展到 config + WeChat route + Alipay route 三组 focused tests。
+- `.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh` 新增 `--plan` / `plan` 模式，可在不杀进程、不启动 API、不发 HTTP、不 seed/cleanup DB 的情况下打印 base URL、目标接口、query、认证边界和 fixture 边界。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-provider-inbox-route-config.unit.spec.ts src/api/china/refund-inbox/wechat-pay/__tests__/route.unit.spec.ts src/api/china/refund-inbox/alipay/__tests__/route.unit.spec.ts`（38/38）、`./.codex/scripts/china-launch-readiness-check.sh report || true`、`bash -n .codex/scripts/china-launch-readiness-check.sh .codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh .codex/scripts/refund-review-query-surface-existing-server-smoke.sh`、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh plan`。
+- `.codex/scripts/china-launch-readiness-check.sh` 继续增强：新增 `report` / `frontend` 模式，`report` 输出分组上线准备报告，`frontend` 在 quick gates 后追加 Admin / Vendor / Storefront build gates。
+- readiness check 现在新增三类静态机器门禁：运行时源码不得显式打开 high-risk mutation、Storefront 源码不得保留 `#` / `support@example.com` / 假 ICP / “示例公司”生产占位、Admin 占位操作按钮必须 disabled。
+- 高风险 payment / refund / settlement / commission / payout / permission / fulfillment runtime approval 已从 WARN 收紧为明确 NO-GO；只有真实完成外部批准后才能设置 `PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true`。
+- 新增 `docs/storefront-china-page-coverage.md`，补齐 Storefront 首页、搜索、分类、店铺、商品详情、购物车、结算、提货卡和用户中心的真实/样例/高风险边界。
+- Admin 中国后台通用页和运营控制台的占位操作按钮已全部 disabled；Storefront 首页“发布找货需求”已改为“搜索鲜货档口”；Footer 已移除 `#`、`support@example.com`、假 ICP 和“示例公司”生产占位。
+- 使用现有 `bun.lock` 执行 `bun install --frozen-lockfile` 恢复本地依赖后，验证通过：`./.codex/scripts/china-launch-readiness-check.sh frontend || true`。结果为机器项和 Admin/Vendor/Storefront build gates PASS，最终仍保留 3 个预期 NO-GO：Admin 登录态视觉 QA、预发 disposable DB rehearsal、高风险 runtime approval。
+- 新增 `.codex/scripts/china-launch-readiness-check.sh`，把上线前机器可验的门禁收成一条总控命令，支持 `quick` / `full` / `refund-smoke` 模式。
+- readiness check 当前会一次验证：`git diff --check`、release gate 文档存在、高风险顺序文档存在、refund query surface handoff 存在、runtime 文件无明显生产 secret、refund review query surface focused tests。
+- readiness check 会明确输出人工/外部条件 NO-GO：Admin 登录态视觉 QA 未确认、预发 disposable DB rehearsal 未确认；支付/退款/结算/权限/履约 runtime 现在也保持明确 NO-GO 阻断。
+- 修复 `.codex/scripts/run-api-dev.sh`：无论当前 shell 是否已有 node/bun，都会固定注入 shared `packages/api/node_modules/.bin` 与 `NODE_PATH`，避免主 API smoke 偶发吃到错误 Medusa CLI。
+- 验证通过：`./.codex/scripts/china-launch-readiness-check.sh refund-smoke || true`，其中机器检查和主 `9000` refund review query surface HTTP smoke 均 PASS，最终保留 3 个预期 NO-GO（Admin 登录态视觉 QA、预发 disposable DB rehearsal、高风险 runtime approval）。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveNormalizedRefundReviewQuerySurfaceRepositoryRegistrationFromContainers()`，可以直接从多容器顺序中取回归一化 canonical registration。
+- `ChinaPaymentNotificationModuleService` 新增 `getRefundReviewQuerySurfaceRepositoryRegistration(scope)`，显式暴露当前只读 query surface wiring 使用的 normalized registration；后续上线装配和排查不需要从 readers 结果反推注册对象。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 与 `service.unit.spec.ts` 各补 1 条 focused test，覆盖多容器 registration 暴露和模块服务 registration 暴露。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（66/66）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveRefundReviewQuerySurfaceRepositoryReadersFromContainers()`，把 module container -> request scope 的多容器优先级收进 registration 层正式入口。
+- `service.ts` 现在只调用 `resolveRefundReviewQuerySurfaceRepositoryReadersFromContainers([this.container, scope])`，不再自己维护“两段容器查找顺序”。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增 2 条 focused tests，覆盖首个可用 canonical registration 优先，以及前序容器无法构建 readers 时继续回退到后续容器。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（64/64）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `service.ts` 已从 legacy flat key 类型声明中解耦：`ChinaPaymentNotificationModuleService` 现在只接受 `ContainerLike`，解析细节全部下沉到 registration helper。
+- `/admin/china/refund-review-query-surface/route.ts` 已把 request scope cast 收成单点 `resolveRequestScope()`，route 继续只负责拿 `chinaPaymentNotification` 模块服务，不知道 readers / repo / PG 细节。
+- `service.unit.spec.ts` 与 route focused tests 已把正式优先级示例改成 canonical registration；legacy readers provider、repo properties、PG fallback 测试仍保留，但命名明确为兼容兜底。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（62/62）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- 新增 `project-ledger/handoff-2026-05-15-refund-review-query-surface-context-reset.md`，用于上下文清理后的快速恢复。
+- 这份交接快照汇总了当前 runtime worktree、只读 review query surface 主线、canonical registration 收口状态、最近可靠验证结果、当前高风险边界与恢复顺序。
+- 同步更新 `project-ledger/handoff.md`，把恢复入口显式指向新的 context-reset handoff 文件。
+- 验证通过：`wsl.exe -d MyCustomWSL bash -lc 'cd /home/codex/code/fuyi-pr-bx-workflow-runtime && git diff --check'`
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts`、`refund-state-mutation-review-query-surface-pg-readers.ts` 与 `refund-state-mutation-review-query-surface-pg-scope.ts` 继续薄化：旧 `*FromScope` 兼容入口现在直接 re-export / 调用 registration 层 container helper，不再维护自己的中间拆解步骤。
+- `refund-review-query-surface-repository-registration.ts` 的 `pgConnection` helper 已补成 typed 输出，`resolve...ReadersFromRegistration()` 与 `resolve...PgReadersFromRegistration()` 都直接复用该 helper 再进入 `pg-repositories` 单点。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（62/62）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`。
+
+## 2026-05-14
+
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveRefundReviewQuerySurfacePgReadersFromRegistration()` 与 `resolveRefundReviewQuerySurfacePgReadersFromContainer()`，把 canonical registration/container -> pg readers 这条 async PG 主路也集中到 registration 层共享 helper。
+- `refund-state-mutation-review-query-surface-pg-readers.ts` 已进一步薄化：`resolveRefundReviewQuerySurfacePgReadersFromScope()` 直接复用 container-level PG readers helper，不再自己拆 `pgConnection` 再调用 PG fallback。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增 2 条 focused tests，覆盖 canonical registration / canonical container 两条 pg readers 主路；`refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts` 也补齐 empty scope 与 canonical registration through scope 两条 focused coverage。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（62/62）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-state-mutation-review-query-surface-pg-repositories.ts` 新增 `resolveRefundReviewQuerySurfacePgRepositories()`，把 `pgConnection -> hasTable -> createRepositories` 这段 PG fallback 主路收成共享 helper。
+- `refund-review-query-surface-repository-registration.ts` 与 `refund-state-mutation-review-query-surface-pg-readers.ts` 已改为直接复用这个 helper，不再各自重复写 PG fallback 逻辑。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（58/58）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveRefundReviewQuerySurfacePgConnectionFromRegistration()` 和 `resolveRefundReviewQuerySurfacePgConnectionFromContainer()`，把 `pgConnection` 主路也做成和 readers 对称的共享 helper。
+- `refund-state-mutation-review-query-surface-pg-scope.ts` 已改为直接复用 container-level `pgConnection` helper，不再自己拆 registration。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增 2 条 focused tests，覆盖 canonical registration 与 container 两条 `pgConnection` 共享主路。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（58/58）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveDirectRefundReviewQuerySurfaceRepositoryReadersFromContainer()`，把 `container -> normalized registration -> direct readers` 这条同步主路也收成共享 helper。
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts` 已改为直接复用这个 helper，不再自己串 normalize + direct resolve 两步。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增两条 focused tests，覆盖 direct container readers canonical registration 路径和 pg-only returns `undefined` 路径。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（56/56）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveDirectRefundReviewQuerySurfaceRepositoryReadersFromRegistration()`，把 canonical registration 的 direct readers / repo 主路抽成共享同步 helper。
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts` 已改为直接复用这个 helper，不再自己重复组装四段 repo。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增两条 direct helper focused tests，覆盖 canonical repo properties -> readers 以及 pg-only -> `undefined`。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（54/54）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveRefundReviewQuerySurfaceRepositoryReadersFromContainer()`，把 `container -> normalized registration -> readers` 的 async 主路也收成共享 helper。
+- `service.ts` 已改为直接复用这个 helper，不再手动串 `resolveNormalized... + resolve...FromRegistration`。
+- `refund-review-query-surface-repository-registration.unit.spec.ts` 新增两条 focused tests，覆盖 container 上的 canonical registration readers 与 canonical registration `pgConnection` 两条路径。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（52/52）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `resolveNormalizedRefundReviewQuerySurfaceRepositoryRegistration()` 现已开始直接复用 `buildRefundReviewQuerySurfaceRepositoryRegistration()` 组装归一化结果，不再自己维护一份平铺 object literal 返回形状。
+- 这让 canonical registration 主路现在同时覆盖：
+  - focused tests 示例构造
+  - compatibility 归一化产物
+  - 正式 registration object 表达
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（50/50）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.unit.spec.ts`、`refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts`、`refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts` 里剩余的 canonical registration 示例已统一改成 builder helper。
+- 现在 canonical registration 的正式主路示例已经覆盖 registration unit / readers scope / pg readers / service / route 五组 focused tests，不再继续手写分散 object literal。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（50/50）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `buildRefundReviewQuerySurfaceRepositoryRegistration()`，把 canonical registration object 的构造方式也统一进共享 helper。
+- `service.unit.spec.ts` 已把 canonical registration readers / repo properties / `pgConnection` 三条主路示例改成统一走 builder helper；`route.unit.spec.ts` 也同步改写 canonical readers 示例。
+- route focused tests 新增两条 canonical registration 主路断言：
+  - 模块服务容器上的 `repositories` 形式
+  - 模块服务容器上的 `pgConnection` 形式
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（50/50）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 现已进一步统一“从 registration 产出 readers”的逻辑，新增 `resolveRefundReviewQuerySurfaceRepositoryReadersFromRegistration()`；`service.ts` 不再保留自己的私有 readers 组装实现。
+- 新增独立单测 `refund-review-query-surface-repository-registration.unit.spec.ts`，覆盖：
+  - 规范 registration readers 优先于 legacy readers
+  - 规范 repo properties 优先于 legacy flat repo keys
+  - 规范 `pgConnection` 优先于 legacy pg keys
+  - 直接从 registration 产出 readers / repo readers / pg readers
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-review-query-surface-repository-registration.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（48/48）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `ChinaPaymentNotificationModuleService` 现已改成先解析归一化 registration，再从其中解 readers / repo / pg；模块服务内部不再自己分开走 readers helper 和 pg helper 两条并行主路。
+- 新增 service focused test，明确 request scope 上如果同时存在规范 registration readers 和 legacy scope readers provider，模块服务会优先命中规范 registration 主路。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（42/42）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-review-query-surface-repository-registration.ts` 新增 `resolveNormalizedRefundReviewQuerySurfaceRepositoryRegistration()`，把规范 registration object、legacy readers provider、四段 repo flat key 和 legacy pg key 统一归一化到同一个入口，避免 readers-scope / pg-scope 各自维护兼容顺序。
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts` 和 `refund-state-mutation-review-query-surface-pg-scope.ts` 现都改为只消费这一个归一化 registration helper；`refund-state-mutation-review-query-surface-pg-readers.ts` 继续保持“无 `scope.resolve` 也能工作”。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（41/41）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- `refund-state-mutation-review-query-surface-pg-readers.ts` 去掉了对 `scope.resolve` 必须存在的隐含前提；现在只要有 `scope`，就能通过统一容器解析 helper 吃到规范 registration object、直接属性键或 legacy pg key。
+- 补齐 scope helper focused tests：`refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts` 现在覆盖规范 registration object 的 readers 路径和四段 repo 路径；`refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts` 新增“无 `scope.resolve` 但有规范 registration object 的 `pgConnection`”路径。
+- `service.ts` 的容器类型也同步收口到 `ContainerLike + RefundReviewQuerySurfaceRepositoryRegistration`，避免模块服务主路继续只围着 legacy flat key 建模。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts src/modules/china-payment-notification/__tests__/refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（41/41）、`./.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`、`git diff --check`。
+- refund review query surface 新增规范化容器注册入口 `refund-review-query-surface-repository-registration.ts`，用 `REFUND_REVIEW_QUERY_SURFACE_REPOSITORY_REGISTRATION_KEY` 把 `readers`、四段 repo 和 `pgConnection` 收进同一个 registration object，避免后续正式模块容器注册继续散落在多个 flat key 上。
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts` 现在先吃规范 registration object，再回退到旧的 readers provider / 四段 repo flat key；`refund-state-mutation-review-query-surface-pg-scope.ts` 也先吃 registration 里的 `pgConnection`，再回退到 `__pg_connection__` / `pgConnection` 兼容键。
+- 补齐 focused tests，明确规范 registration object 在模块服务容器里的优先级高于旧的 readers provider、四段 repo flat key 和旧 PG fallback；route 也已验证可以通过规范 registration object 打通 repository mode。
+- 验证通过：`bun test src/modules/china-payment-notification/__tests__/service.unit.spec.ts src/api/admin/china/refund-review-query-surface/__tests__/route.unit.spec.ts`（30/30），`git diff --check`。
+- 新增 `/.codex/scripts/refund-review-query-surface-main-api-existing-server-smoke.sh`，只重启主 `9000` API 并对真实长期开发入口执行 repository-mode existing-server smoke。
+- `/.codex/scripts/run-api-dev.sh` 已补 shared Medusa CLI fallback、Node/Bun runtime 自加载和 shared `NODE_PATH` 导出，避免 runtime worktree 缺本地 `node_modules` 时主 `9000` 启动失败。
+- 主 `9000` API 现已通过 review query surface existing-server smoke，连续验证 `platform_refund_id`、`approval_persistence_idempotency_key` 与延迟 `15s` 后的 `provider_refund_reference` 三次 authenticated 查询。
+- `ChinaPaymentNotificationModuleService` 现已优先吃模块服务容器上的 refund review query surface readers / repository 注册，再退回 request scope / PG fallback。
+- `refund-state-mutation-review-query-surface-repository-readers-scope.ts` 现已兼容 `resolve(key)` 与 awilix cradle 属性键两种解析路径，修复主 `9000` 真实运行时里 `Could not resolve 'resolve'` 导致的 repository-mode 500。
+- `refund-state-mutation-review-query-surface-pg-scope.ts` 现已同样兼容 `resolve(key)` 与 awilix cradle 属性键；`ChinaPaymentNotificationModuleService` 现在会先尝试模块服务容器上的 PG fallback，再退回 request scope PG fallback。
+- 新增 `refund-review-query-surface-repository-registration-keys.ts`，并把四段 repo 注册键在 service/scope/tests 中统一常量化；模块服务容器上的独立 repo 属性注册路径现已验证通过。
+- 已补优先级回归测试，明确模块服务容器 repo / PG 注册始终优先于 request scope 兼容兜底，避免后续正式注册值被兼容层抢走。
+- `module-service-scope.ts` 现已支持 `resolve(key)` 与模块容器属性键两条解析路径；route 拿 `chinaPaymentNotification` 模块服务时不再只靠 `.resolve`。
+- 新增 `container-access.ts`，把模块服务、readers、PG 三条容器解析链统一到同一套 helper 上，减少后续正式容器注册时的兼容逻辑漂移。
+- 已补模块服务内部优先级回归测试，明确 `readers provider > repo 属性 > PG fallback`，防止后续正式注册值被兼容路径提前吞掉。
+- refund state mutation review query surface 已从 fixture registry 第一层继续推进到 local-only 代码实现：新增 local fixture scenario、fixture registry、fixture adapter、query surface config/request/response/composition/local resolver。
+- 新增 Admin 只读 GET route `packages/api/src/api/admin/china/refund-review-query-surface/route.ts`，默认 disabled，仅允许 local fixture mode，仍不连接 DB、不执行 workflow、不写 refund success state。
+- `refund-state-mutation-isolated-preprod-query-surface.unit.spec.ts` 已改为复用真实 fixture 输入，减少后续 adapter / route 测试重复手写数据。
+- 修复 review query surface 顶层 response 的 fail-closed 语义：未知 fixture selector 或 adapter blocked 现在直接返回 `status=blocked` 和 HTTP 400，不再误报为 resolved。
+- response sanitizer 已继续收紧：对外只保留安全的 `selectorResolution.manifestEntry` 和 redacted `reviewCaseResult`，不再暴露 fixture bundle / `reviewInput` 原文。
+- request parser 已补齐 `scenario_type` / `provider_name` runtime allowlist、空白字符串拒绝、多值数组拒绝，以及 `selector_mode` / `query_kind` 的非空校验。
+- config parser 与 route runtime env 解析都改为先 `trim()`；带空格的 `local_fixture` / `local` 能正常通过，本地 route 对带空格的 production-like `APP_ENV` 仍会 fail-closed。
+- 新增 `.codex/scripts/refund-review-query-surface-local-smoke.sh`，用本地 route smoke 覆盖 disabled / resolved / blocked 三条关键路径，并校验 route 不读取 body、不泄露 `bundle` / `reviewInput`。
+- 新增 `refund-state-mutation-review-query-surface-repository-resolver.ts`，通过 approval / audit / runtime attempt / terminal conflict 四段 persistence contract 组装 repository-backed review input，并输出 async review case；production 环境仍 fail-closed。
+- 新增 `refund-state-mutation-review-query-surface-repository-resolver.unit.spec.ts`，覆盖 platform refund、provider refund reference、production blocked 和缺失 audit evidence 的 incomplete 路径。
+- query surface config / composition / route 已升级成双模式骨架：`local_fixture` 与 `isolated_preprod_repository` 可以共存；repository mode 需要显式 `isolated_preprod` target env 和注入 repository readers，未注入时继续 fail-closed。
+- request parser 已支持 repository mode 的无 selector 查询；route 可通过 `req.scope.resolve("refundReviewQuerySurfaceRepositoryReaders")` 受控接入 repository readers。
+- 新增 `refund-state-mutation-review-query-surface-repository-readers-scope.ts`，支持 route 从 scope 直接解析整体 readers provider，或从四个独立 repository key 组装 readers。
+- 新增 `refund-state-mutation-review-query-surface-repository-readers-scope.unit.spec.ts`，覆盖 direct readers provider、逐个 repository key 组装和缺失 repository 时返回 `undefined`。
+- 新增 `Migration20260514000100.ts`，补上 audit / runtime attempt / terminal conflict 三段核心 record/snapshot 表结构和索引。
+- 新增 `refund-state-mutation-review-query-surface-pg-readers.ts`，支持在 scope 中只有 `pgConnection` 且四张核心表齐备时直接构建 PG-backed readers。
+- 新增 `refund-state-mutation-review-query-surface-pg-readers.unit.spec.ts`，覆盖核心表齐备时构建 readers、缺表时返回 `undefined`；route 也新增 PG fallback 测试。
+- 新增 `refund-state-mutation-review-query-surface-pg-repositories.ts`，把四段 refund review query surface 的 PG 读路径收成可复用 repository factory，后续 container registration 不再需要把查询逻辑散在 route helper 里。
+- 新增 `refund-review-query-surface-repository-readers-scope-key.ts`，收掉 `refundReviewQuerySurfaceRepositoryReaders` magic string，并同步 route / scope helper / focused tests。
+- `.codex/scripts/refund-review-query-surface-pg-readers-local-dry-run.sh` 已补齐 review migration SQL block 计数、DB 名正则和 medusa-config 未注册检查；本地 disposable DB rehearsal 成功跑通 approval + review 两段 migration、fixtures、计数校验与自动清库。
+- 新增 `.codex/scripts/refund-review-query-surface-repository-route-pg-smoke.ts` 和 `.codex/scripts/refund-review-query-surface-repository-route-pg-smoke.sh`，把 route-level repository mode 也拉到真实 disposable PG 上验证了一轮。
+- 新增 `packages/api/src/api/admin/china/refund-review-query-surface/register-repository-readers-middleware.ts`，把 repository readers 的 request-scope registration 从测试注入推进到真实 API middleware 链。
+- `packages/api/src/api/middlewares.ts` 现已为 `/admin/china/refund-review-query-surface` 挂载 registration middleware；route 优先吃 direct readers provider，缺失时再走 PG fallback。
+- 新增 middleware focused tests，覆盖 registration 成功和缺表 no-op。
+- focused tests `63/63`、middleware/route focused tests `16/16`、local smoke `all`、PG readers local dry-run、repository route PG smoke 与 `git diff --check` 通过；全局 API typecheck 仍受既有 workspace 级依赖/类型问题影响，未在本轮收敛。
+
 ## 2026-05-06
 
 - `128d4f5` API seed 创建可见中国 demo seller/products。
@@ -488,6 +780,19 @@
 - 完成 `refund-state-mutation-preprod-rehearsal-readiness-validation`，记录 PR #474 合并后 `git diff --check` 和文件范围验证通过；确认 preprod rehearsal readiness review 仍 docs-only。
 - 完成 `refund-state-mutation-approval-persistence-adapter-plan`，docs-only 规划 approval persistence repository adapter 在 isolated preprod 中的读写边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-approval-persistence-adapter-validation`，记录 PR #476 合并后 `git diff --check` 和文件范围验证通过；确认 approval persistence adapter plan 仍 docs-only。
+- 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-local-implementation` 的真实 HTTP smoke 收口：新增 `.codex/scripts/admin-login-smoke.sh`、`.codex/scripts/refund-review-query-surface-admin-http-smoke.sh`、`.codex/scripts/refund-review-query-surface-admin-http-smoke-local-db.sh`，并在本地 `medusa develop :19000` 上跑通 authenticated repository-mode review query surface。
+- 修复 `packages/api/src/api/admin/china/refund-review-query-surface/register-repository-readers-middleware.ts` 在真实 request scope 未注册 PG 连接时抛 500 的问题，改为 fail-closed no-op。
+- 修正 `packages/api/src/modules/china-payment-notification/pg-connection-scope-key.ts`：Medusa 真实 PG scope key 必须是 `__pg_connection__`，此前硬编码 `pgConnection` 会让真实运行时始终拿不到 DB 连接，导致 repository mode 被错误阻断。
+- 新增 `refund-state-mutation-review-query-surface-pg-scope.ts` 统一解析 PG 连接，并兼容 `__pg_connection__` 与历史 `pgConnection` 两种 scope key，避免不同 runtime 姿势下再次出现 repository mode 假阻断。
+- 把 repository readers 接线往正式模块服务注册前推一档：新增 `packages/api/src/modules/china-payment-notification/module-key.ts`，并在 `service.ts` 中提供 `getRefundReviewQuerySurfaceRepositoryReaders()`；middleware 现在优先通过 `chinaPaymentNotification` 模块服务解析 readers，再退回 PG scope fallback。
+- 新增 focused test `packages/api/src/modules/china-payment-notification/__tests__/service.unit.spec.ts`，并补齐 middleware 的模块服务优先路径验证。
+- 把 `refund-review-query-surface-admin-http-smoke-local-db.sh` 升级为同一 `medusa develop :19000` 进程内的重复 authenticated HTTP smoke，连续验证 `platform_refund_id` 与 `approval_persistence_idempotency_key` 两种 query key，确认 repository-mode 不是一次性巧合。
+- 进一步把 route 收到统一 runtime readers 解析链：`route.ts` 现在直接通过 direct readers / 独立 repo / 模块服务 / PG fallback 四层顺序解析，不再依赖 `api/middlewares.ts` 为该 admin route 注入专用 middleware；真实 `medusa develop :19000` 重复 authenticated HTTP smoke 仍然通过。
+- 删除不再参与真实运行时的冗余兼容支线：移除 `register-repository-readers-middleware.ts` 和对应 `middlewares.unit.spec.ts`，把 review query surface 主链收成 route -> runtime readers resolver -> direct readers / repo / module service / PG fallback。
+- 继续把 route 层的 readers 感知收进模块服务：新增 `module-service-scope.ts`，并让 `route.ts` 只解析 `chinaPaymentNotification` 模块服务，再由 `service.ts` 内部处理 direct readers / 独立 repo / PG fallback。真实 `medusa develop :19000` 重复 authenticated HTTP smoke 继续通过。
+- 收掉 route 对 `new ChinaPaymentNotificationModuleService()` 的本地 fallback；现在 repository mode 没有容器里注册的模块服务时会明确返回 blocked，不再偷偷走本地兜底。真实 `medusa develop :19000` 重复 authenticated HTTP smoke 继续通过。
+- 把 `refund-review-query-surface-admin-http-smoke-local-db.sh` 升级成更长生命周期的常驻进程验证：第三次请求会在默认 `15s` 等待后，继续用 `provider_refund_reference` 查询同一 `medusa develop :19000` 进程，确认读链不是只在启动窗口内稳定。
+- 验证通过：review query surface focused tests `40/40`、route/pg readers/repository readers/service focused tests `19/19`、`refund-review-query-surface-local-smoke.sh all`、`refund-review-query-surface-pg-readers-local-dry-run.sh`、`refund-review-query-surface-repository-route-pg-smoke.sh`、`refund-review-query-surface-module-migrate-smoke.sh`、`admin-login-smoke.sh`、`refund-review-query-surface-admin-http-smoke-local-db.sh`、`git diff --check`。
 - 完成 `refund-state-mutation-audit-persistence-adapter-plan`，docs-only 规划 audit persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
 - 完成 `refund-state-mutation-audit-persistence-adapter-validation`，记录 PR #478 合并后 `git diff --check` 和文件范围验证通过；确认 audit persistence adapter plan 仍 docs-only。
 - 完成 `refund-state-mutation-runtime-attempt-persistence-adapter-plan`，docs-only 规划 runtime attempt persistence repository adapter 在 isolated preprod 中的写入边界、查询边界、fail-closed 规则和回滚门槛；仍不执行 workflow、不写 production refund success state。
@@ -528,6 +833,9 @@
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-bundle-metadata-contract-validation`，记录 PR #514 合并后 `git diff --check`、`git status --short --branch` 和文件范围复核通过；确认 bundle metadata contract plan 仍然只是 docs-only 规划，没有混入 bundle metadata implementation、manifest implementation、loader implementation、registry wiring、route、repository resolver implementation 或 runtime wiring。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-evidence-shape-contract-plan`，规划 review case evidence payload 的 versioned shape contract，固定 `summary`、`references`、`timeline`、`decisionGuards`、`operatorHints` 五段结构和 redaction boundary；验证通过 `git diff --check` 和 `git status --short --branch`。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-evidence-shape-contract-validation`，记录 PR #516 合并后 `git diff --check`、`git status --short --branch` 和文件范围复核通过；确认 evidence shape contract plan 仍然只是 docs-only 规划，没有混入 evidence payload implementation、bundle metadata implementation、builder wiring、route、repository resolver implementation 或 runtime wiring。
+- 新增外置常驻 server 验证拆分：`refund-review-query-surface-devserver-start.sh` 负责保留 `19000` 常驻进程，`refund-review-query-surface-existing-server-smoke.sh` 负责对已运行服务执行三段式 authenticated smoke，`refund-review-query-surface-seed-local-db.sh` 负责 seed / cleanup。
+- 已验证对外置常驻 `http://127.0.0.1:19000` 的独立 smoke：三次查询依次覆盖 `platform_refund_id`、`approval_persistence_idempotency_key`、延迟 `15s` 后的 `provider_refund_reference`，全部通过。
+- 新增 `refund-review-query-surface` 与主开发 API 共用启动 helper：`run-api-dev.sh`。`start-dev.sh` 和 `refund-review-query-surface-devserver-start.sh` 现在共用同一条 API 启动路径，且 `start-dev.sh` 已支持透传 `CHINA_REFUND_REVIEW_QUERY_SURFACE_*` 环境变量；验证 `19000` existing-server smoke 继续通过，`start-dev.sh status` 也保持正常。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-reference-slot-contract-plan`，规划 approval / audit / runtime attempt / terminal conflict / fixture source key 各 reference slot 的 redacted handle、empty / blocked / present 三态和 cross-link 约束；验证通过 `git diff --check` 和 `git status --short --branch`。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-reference-slot-contract-validation`，记录 PR #518 合并后 `git diff --check`、`git status --short --branch` 和文件范围复核通过；确认 reference slot contract plan 仍然只是 docs-only 规划，没有混入 reference slot implementation、evidence payload implementation、builder wiring、route、repository resolver implementation 或 runtime wiring。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-timeline-event-contract-plan`，规划 timeline event 的字段结构、排序键、timestamp redaction、event reference handle 和 empty timeline contract，要求 timeline 成为稳定只读事件数组而不是依赖文件顺序的隐式输出；验证通过 `git diff --check` 和 `git status --short --branch`。
@@ -559,3 +867,557 @@
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-launch-readiness-validation`，记录本轮 `git diff --check`、`git status --short --branch` 和文件范围复核通过；确认 launch readiness review 仍然只是 docs-only 收口，没有混入 implementation、runtime、DB wiring 或 workflow execution，并补齐 `implementation-blocker-map` 任务文件作为下一跳。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-blocker-map`，把当前 No-Go 缺口拆成 implementation、execution evidence、rollback / disable、environment isolation、operator readiness 五层 blocker，并固定必须继续 fail-closed 的串行顺序；下一跳为 `implementation-blocker-map-validation`。
 - 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-blocker-map-validation`，记录本轮 `git diff --check`、`git status --short --branch` 和文件范围复核通过；确认 blocker map 仍然只是 docs-only 收口，没有混入 implementation、runtime、DB wiring 或 workflow execution，并补齐 `implementation-sequence-review` 任务文件作为下一跳。
+- 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-local-implementation`，新增 local fixture scenario bundle、fixture registry 类型、manifest/source-key index、scenario default index、bundle loader 和 selector parser；并把现有 query surface focused tests 的输入抽到真实 fixture 文件复用。验证通过 focused tests `13/13` 与 `git diff --check`。当前仍然不连接 production / preprod DB、不执行 workflow、不写 refund success state。
+# 2026-05-14 19:05 Asia/Shanghai
+
+- refund-state-mutation-isolated-preprod-query-surface-fixture-registry-local-implementation：
+  - 新增最小 Medusa 模块壳 `packages/api/src/modules/china-payment-notification/service.ts`，并在 `packages/api/medusa-config.ts` 注册 `./src/modules/china-payment-notification`，让 payment inbox / approval persistence / refund review query surface 三段 migration 进入 runtime discoverable 状态。
+  - 新增 `.codex/scripts/refund-review-query-surface-module-migrate-smoke.sh`，直接用共享 `packages/api/node_modules/.bin/medusa` 对 disposable DB 执行 `medusa db:migrate --skip-links --skip-scripts`，确认 `Migration20260507000200`、`Migration20260512000300`、`Migration20260514000100` 被 `chinaPaymentNotification` 模块真正执行。
+  - 收口 review query surface 相关类型边界：拆开 route / middleware / tests 对模块 barrel 的直接依赖，修复 request selector optional typing、response resolved-result narrowing、PG readers request typing，以及 isolated preprod query surface 中 approval / audit / runtime attempt 的 fail-closed 显式收口。
+  - 更新 `packages/api/src/modules/china-payment-notification/README.md` 和 `.codex/scripts/refund-review-query-surface-pg-readers-local-dry-run.sh`，把边界从“未注册”切到“已注册但仅限 schema discovery / disposable rehearsal”。
+  - 验证通过：review query surface focused tests `40/40`、`.codex/scripts/refund-review-query-surface-local-smoke.sh all`、`.codex/scripts/refund-review-query-surface-pg-readers-local-dry-run.sh`、`.codex/scripts/refund-review-query-surface-repository-route-pg-smoke.sh`、`.codex/scripts/refund-review-query-surface-module-migrate-smoke.sh`、`git diff --check`。
+
+# 2026-05-15 21:35 Asia/Shanghai
+
+- Admin 平台首页视觉微调：将 `运营待办`、`风险提醒`、`近期重点模块` 从横向分隔行改为响应式卡片网格；保持只读 mock 文案和状态来源不变，不接入真实订单、支付、售后、结算或权限数据。
+- 验证通过：`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、Admin 登录态 CDP 截图验证（`sessionStatus=200`，`role_super_admin`，入口 `http://localhost:7000/cn`）。
+- 用户确认该卡片化版本可接受；已将 Admin 登录态视觉 QA 视为通过，并用 `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true` 跑 quick readiness。结果：`PASS 13`，剩余 `NO-GO 2`（preprod disposable DB rehearsal、高风险 payment/refund/settlement runtime approval）。
+
+# 2026-05-15 21:55 Asia/Shanghai
+
+- Admin 模块开关页补齐经营单位级权限可见性：新增 `经营单位权限开关` 区块，按海鲜档口、冻品商户、配送供应商、物料供应商展示不同能力入口的可见 / 隐藏状态。
+- 典型示例：`三门海鲜 A12 档口` 只显示 `海鲜商户`、`提货卡`、`快递打印 / 电子面单`，隐藏 `市场物料`、`直播`、`种苗批发`。
+- 已按用户反馈从“固定示例”改为“运营可手动切换”：每个经营单位能力项都有开关，状态显示 `可见` / `隐藏`。
+- 已继续补齐最小代码闭环：Admin 写入 `/admin/china/unit-permissions` server-memory draft；Vendor 读取 `/china/unit-permissions/effective` 并过滤侧边栏、首页快捷入口、待办 / 风险跳转和多角色入口。
+- 当前不写真实 RBAC、不落库、不影响支付、订单、退款、结算、佣金、履约或物流。
+- 验证通过：`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、CDP 登录态截图验证（`sessionStatus=200`，`role_super_admin`，入口 `http://localhost:7000/cn/operations/module-switches`）、`git diff --check`。
+
+# 2026-05-15 22:12 Asia/Shanghai
+
+- 经营单位权限开关补齐到 Admin API + Vendor 菜单过滤闭环：
+  - 新增 `packages/api/src/lib/china-unit-permission-config.ts`
+  - 新增 Admin 草稿 API：`/admin/china/unit-permissions`
+  - 新增 Vendor 可读 effective API：`/china/unit-permissions/effective`
+  - Vendor 默认单位可用 `VITE_CHINA_VENDOR_UNIT_KEY` 覆盖，未设置时使用 `seafoodStallA12`
+- 已验证 Admin 登录后 POST 打开 `seafoodStallA12/livestream`，effective API 立即返回 `livestream`；DELETE reset 后回到 `seafoodTrade`、`pickupCard`、`expressPrint` 三项。
+- 验证通过：`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、`git diff --check`。
+- 额外说明：`bunx tsc --noEmit --project packages/api/tsconfig.json` 仍被既有 refund review query surface 测试类型错误阻断；本轮未把该高风险主线混入单位菜单可见性工作。
+
+# 2026-05-15 22:45 Asia/Shanghai
+
+- 经营单位权限开关从 server-memory draft 收口到 PG-first 持久化：新增 `china-platform-ops` Medusa 模块和 `china_unit_permission_config` / `china_unit_permission_config_event` migration，Admin 开关写入 PG 并记录 redacted event，effective API 同源读取 PG；PG 未就绪时仍回退到内存草稿，避免本地/测试环境直接 500。
+- Admin / Vendor 闭环保持菜单可见性范围：Admin `/admin/china/unit-permissions` 支持 GET / POST / DELETE；公共 `/china/unit-permissions/effective` 与 Vendor `/vendor/china/unit-permissions/effective` 返回同一单位 effective view，Vendor 菜单、首页入口、待办 / 风险入口继续按 visibleModuleKeys 过滤。
+- 本地 smoke 已在 `9000` 真实 API 验证：DELETE reset 后 `seafoodStallA12` 默认只显示 `seafoodTrade`、`pickupCard`、`expressPrint`；POST 打开 `livestream` 后 effective API 来源为 `pg_admin_draft` 且包含 `livestream`；重启 API 后 `livestream` 仍存在，最后 reset 回默认三项。
+- 验证通过：`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、新增文件不再出现在 API typecheck 错误列表、`git diff --check`。
+- 额外说明：`bunx tsc --noEmit --project packages/api/tsconfig.json` 全量仍被既有 refund review query surface 测试类型错误阻断；本轮未改支付、订单、退款、结算、佣金、履约、物流或真实 RBAC enforcement。
+
+# 2026-05-15 23:13 Asia/Shanghai
+
+- 经营单位权限开关继续补齐 seller 绑定层：`china-platform-ops` migration 新增 `china_unit_permission_seller_binding` 表，Admin API 支持为经营单位保存 `sellerHandle` / `sellerId` 绑定，并通过 `unit_permission_binding_updated` 事件记录 redacted 变更。
+- Vendor 专用 `/vendor/china/unit-permissions/effective` 已改为从 `seller_context.seller_id` 出发解析 seller identity 和 seller binding，不再把前端 query `unit_key` 当成 Vendor 登录态主来源；Vendor 前端先请求专用 Vendor API，未登录时才回退公共 demo effective API。
+- Admin 模块开关页在每个经营单位卡片里新增“绑定商户”输入和保存按钮；示例绑定 `seafoodStallA12 -> a-hai-xian-huo-dang`。
+- 验证通过：`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、`bun --cwd apps/vendor lint`、`bun --cwd apps/vendor build`、`bun test src/lib/__tests__/china-unit-permission-pg-repository.unit.spec.ts`、Admin authenticated smoke、PG event inspection、`git diff --check`。
+- 本地验证后已 reset 回默认：`seafoodStallA12` 可见模块恢复为 `seafoodTrade`、`pickupCard`、`expressPrint`，seller binding 保留 seed/default `a-hai-xian-huo-dang`。
+- 边界仍不变：当前只做菜单 / 入口可见性解析，不做真实 RBAC enforcement，不改支付、订单、退款、结算、佣金、履约或物流写路径。
+
+# 2026-05-16 00:10 Asia/Shanghai
+
+- Admin 模块开关页按用户反馈收口视觉与文案：`/cn/operations/module-switches` 首屏改为先展示经营单位级可见性控制，再下沉平台 / 市场 / 角色只读规划，避免误判为只有全局 mock 开关。
+- `MockNotice` 增加可传入 title/message key 的轻量参数，模块开关页专用说明明确：经营单位权限开关已通过 Admin API 保存到后端，并同步给 Vendor effective / authorize / preview 只读菜单判断；平台总开关仍为只读规划。
+- 更新 zh-CN / en 文案：移除经营单位开关 aria label 中的 `mock 只读占位`，强化 `三门海鲜 A12 档口` 只看海鲜交易、提货卡、快递打印，隐藏直播、市场物料、种苗批发等入口的运营语义。
+- Admin 登录态视觉 QA 重新截图：
+  - `C:/Users/99592/AppData/Local/Temp/fuyi-admin-visual-qa/admin-module-switches-desktop-final.png`
+  - `C:/Users/99592/AppData/Local/Temp/fuyi-admin-visual-qa/admin-module-switches-mobile-final.png`
+- 验证通过：`git diff --check`、`bun --cwd apps/admin lint`、`bun --cwd apps/admin build`、CDP 登录态截图验证 `http://localhost:7000/cn/operations/module-switches`，桌面 `scrollWidth=1440/clientWidth=1440`，移动 `scrollWidth=390/clientWidth=390`。
+- 边界仍不变：只调整 Admin UI 文案和展示顺序，不改真实 RBAC、不改订单、支付、退款、结算、佣金、打款、履约或物流写路径。
+
+# 2026-05-16 01:35 Asia/Shanghai
+
+- 继续执行上线 readiness 机器验证，未新增业务代码。
+- `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh frontend --json --output /tmp/fuyi-readiness-frontend-current.json || true`：
+  - PASS `15`
+  - NO-GO `2`
+  - Admin / Vendor / Storefront build gates 通过；Storefront build 仍只有既有 React hook lint warnings，不阻断 build。
+- `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh refund-smoke --json --output /tmp/fuyi-readiness-refund-smoke-current.json || true`：
+  - PASS `15`
+  - NO-GO `2`
+  - 主 `9000` refund review query surface existing-server HTTP smoke 三次调用通过，第三次含 `15s` 延迟验证。
+- `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh unit-permission-smoke --json --output /tmp/fuyi-readiness-unit-permission-current.json || true`：
+  - PASS `15`
+  - NO-GO `2`
+  - Admin -> Vendor 经营单位权限 HTTP smoke 通过，含 Vendor effective / authorize / preview 三段。
+- 额外跑通本地 disposable module migration smoke：`./.codex/scripts/refund-review-query-surface-module-migrate-smoke.sh`，创建临时库 `fuyi_refund_review_query_surface_module_migrate_20260516013137`，Medusa runtime 发现并执行 `chinaPaymentNotification` 三段 migration 与 `chinaPlatformOps` migration，脚本结束后自动 drop 临时库。
+- 当前剩余 NO-GO 只剩两个外部/高风险门禁：
+  - preprod disposable DB rehearsal 未确认；本地 disposable smoke 不能替代用户提供的可删预发 DB 演练。
+  - payment/refund/settlement/commission/payout/permission/fulfillment runtime 高风险审批未确认；仍不能开启真实写路径。
+
+# 2026-05-16 03:05 Asia/Shanghai
+
+- 新增预发 disposable DB rehearsal 私有 env 包装入口：`.codex/templates/preprod-disposable-db-rehearsal.env.example` 和 `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh`。
+- wrapper 会读取私有 env 文件并调用 readiness `preprod-db-rehearsal --json`，但不会绕过底层 disposable DB 白名单、生产名拒绝、localhost tunnel 确认、本地 WIP ack 或高风险写路径边界。
+- wrapper 已加固：传入路径先解析为绝对路径再做 repo 私有目录判断；repo 内 env 只允许 `.codex/private/` 或 `project-ledger/private/`；核心变量必须在文件内显式声明，不能靠 shell 继承；模板占位值会被拒绝。
+- 验证通过：`bash -n`、`--help`、直接模板拒绝、repo 内非私有 env 拒绝、私有目录占位模板拒绝、缺少必填声明且 shell 继承同名变量时拒绝。
+- 当前仍为 NO-GO：还缺真实可删除预发 DB rehearsal 及清理/回滚证据，也缺 payment/refund/settlement/commission/payout/permission/fulfillment runtime 显式高风险批准。
+
+# 2026-05-16 03:20 Asia/Shanghai
+
+- 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-sequence-review` docs-only 收口。
+- 新增 `docs/refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-sequence-review.md`，把后续实现拆成 Wave 0 至 Wave 5：readiness 基线、fixture registry skeleton、builder wiring、resolver runtime、operator route runtime、execution evidence / launch review。
+- `.codex/queue.md` 已将 sequence review 标为 `done`，并记录下一项建议为 docs-only validation。
+- 本轮不新增 route、不写 fixture registry implementation、不连接 production / preprod DB、不执行 workflow、不写 refund success state。
+
+# 2026-05-16 03:28 Asia/Shanghai
+
+- 完成 `refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-sequence-validation`。
+- 新增 `.codex/tasks/refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-sequence-validation.md` 和 `docs/refund-state-mutation-isolated-preprod-query-surface-fixture-registry-implementation-sequence-validation.md`。
+- validation 确认 sequence review 只作为未来实现拆分顺序，不是上线许可；当前仍未新增 route、未写 fixture registry implementation、未连接 production / preprod DB、未执行 workflow、未写 refund success state。
+- `.codex/queue.md` 已将 sequence review / validation 都标为 `done`；当前没有新的低风险可自动执行任务。
+
+# 2026-05-16 03:35 Asia/Shanghai
+
+- 复跑上线 readiness artifact suite，未新增业务代码。
+- 命令：`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`。
+- 最新输出目录：`/tmp/fuyi-readiness-suite-20260516031018`；`/tmp/fuyi-readiness-suite-latest` 已指向该目录。
+- 结果仍为 `NO-GO`：`frontend`、`refund-smoke`、`unit-permission-smoke` 均为 `pass=15 warnings=0 noGo=2`；`preprod-db-local-script-test` 为 `pass=15 warnings=1 noGo=2`。
+- 剩余 blocker 未变：真实 disposable preprod DB rehearsal 未满足，高风险 payment/refund/settlement/commission/payout/permission/fulfillment runtime approval 未批准。
+
+# 2026-05-16 03:45 Asia/Shanghai
+
+- 新增 `.codex/private/.gitignore` 和 `project-ledger/private/.gitignore`，为真实 disposable preprod DB rehearsal env 预留私有目录护栏。
+- 两个目录只跟踪 `.gitignore`，忽略目录内其他所有文件，避免真实 DB URL、operator、cleanup owner 或 tunnel 信息误提交。
+- 已检查当前没有真实私有 env 文件；preprod rehearsal 仍没有可执行输入。
+
+# 2026-05-16 03:55 Asia/Shanghai
+
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh` 新增 `validate` / `run` 模式。
+- `validate` 只检查私有 env 文件路径、必填声明和占位符，不连接 DB、不跑 migration；`run` 保持先验证再进入 guarded preprod rehearsal。
+- `.codex/templates/preprod-disposable-db-rehearsal.env.example` 已更新为先 validate、再 run 的使用顺序。
+- 验证通过：`bash -n`、`--help`、模板 validate 拒绝、非法 mode 拒绝、临时私有 env validate-only PASS 且临时 env 已删除。
+- 该 validate-only 仍不满足真实 preprod gate；真实 gate 仍需要用户提供可删除、可重建、无生产数据的 disposable preprod DB 并执行 run。
+
+# 2026-05-16 04:05 Asia/Shanghai
+
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-init-env.sh`，用于从模板创建私有 preprod rehearsal env 草稿。
+- 脚本默认写入 `.codex/private/preprod-disposable-db-rehearsal.env`，也支持自定义目标；目标必须位于 `.codex/private/` 或 `project-ledger/private/`，拒绝覆盖既有文件，并以 `600` 权限创建。
+- 脚本不填真实 DB、不连接 DB、不跑 migration；生成后仍必须先填真实 disposable preprod DB 信息，再走 wrapper `validate` / `run`。
+- 验证通过：`bash -n`、`--help`、非私有目标拒绝、创建草稿成功且权限 `600`、重复创建拒绝、未填占位草稿 validate 拒绝、临时 env 已删除。
+
+# 2026-05-16 04:12 Asia/Shanghai
+
+- 已实际生成默认私有草稿 `.codex/private/preprod-disposable-db-rehearsal.env`。
+- 文件权限为 `600`，且被 `.codex/private/.gitignore` 正确忽略；`git status` 不跟踪真实 env 草稿。
+- 该草稿仍是模板占位值，wrapper `validate` 按预期拒绝，因此仍不会误算作真实 preprod gate。
+
+# 2026-05-16 04:20 Asia/Shanghai
+
+- 新增 `.codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh`，用于 redacted 检查私有 preprod rehearsal env 状态。
+- 脚本不 source env、不打印 DB URL、不连接 DB，只报告文件存在性、private path、权限、git ignore、必填变量声明、占位符状态和 `READY_TO_VALIDATE` / `NOT_READY`。
+- 当前默认草稿存在且权限 / ignore / 声明均正确，但仍含占位符，verdict 为 `NOT_READY`。
+- 验证通过：`bash -n`、`--help`、默认草稿 status、缺失 env status、临时已填形状 env 返回 `READY_TO_VALIDATE` 且未打印 DB URL；临时 env 已删除。
+
+# 2026-05-16 10:06 Asia/Shanghai
+
+- `.codex/scripts/china-launch-readiness-check.sh` 新增 `preprod-env-status` mode，运行 quick gates 后检查 redacted private env readiness。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 已把 `preprod-env-status` 纳入 suite。
+- 复跑 suite：`ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`。
+- 最新输出目录：`/tmp/fuyi-readiness-suite-20260516100624`；`/tmp/fuyi-readiness-suite-latest` 已指向该目录。
+- 最新 suite 结果仍为 `NO-GO`：`frontend`、`refund-smoke`、`unit-permission-smoke` 均 `pass=15 warnings=0 noGo=2`；`preprod-env-status` 为 `pass=14 warnings=1 noGo=3`；`preprod-db-local-script-test` 为 `pass=15 warnings=1 noGo=2`。
+- 剩余 blocker 未变：真实 disposable preprod DB rehearsal 未满足，高风险 payment/refund/settlement/commission/payout/permission/fulfillment runtime approval 未批准。
+
+# 2026-05-16 10:15 Asia/Shanghai
+
+- 新增 `docs/preprod-disposable-db-rehearsal-runbook.md`，把真实 preprod gate 操作顺序固化为 `init-env -> env-status -> validate -> preprod-env-status readiness -> run -> artifact suite`。
+- 更新 `docs/china-localization-release-gates.md` Gate 3，指向当前脚本化 runbook，并把状态改为 blocked：默认私有 env 草稿仍含占位符，真实 disposable preprod DB 尚未提供。
+- runbook 不含真实 DB URL，不允许把本地 script-test、validate-only 或 env-status 当成真实 preprod gate。
+
+# 2026-05-16 10:25 Asia/Shanghai
+
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 的 `summary.externalBlockers` 已补动态 preprod env blocker。
+- 当 `preprod-env-status` mode 发现私有 env 尚未 ready 时，summary 会额外列出 `private disposable preprod DB env is not ready to validate`。
+- 该 blocker 只改 summary 表达，不连接 DB、不改变真实 preprod gate，也不批准高风险 runtime writes。
+- 已复跑 suite：`/tmp/fuyi-readiness-suite-20260516101240`；latest link 已更新。
+- 最新 External Blockers 为：私有 disposable preprod DB env 尚未 ready to validate、真实 disposable preprod DB rehearsal 未满足、高风险 runtime approval 未批准。
+
+# 2026-05-16 10:30 Asia/Shanghai
+
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 的 `summary.json` / `summary.md` 新增 `nextActions`。
+- 当私有 env 未 ready 时，summary 会直接给出下一步：填 `.codex/private/preprod-disposable-db-rehearsal.env`、跑 `env-status`、跑 `validate`、再跑 `run`。
+- 已复跑 suite：`/tmp/fuyi-readiness-suite-20260516101608`；latest link 已更新。
+- 最新 summary 已验证包含 `External Blockers` 和 `Next Actions` 两段；整体仍为 `NO-GO`。
+
+# 2026-05-16 10:38 Asia/Shanghai
+
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh` 继续收紧私有 env 安全检查。
+- wrapper 现在要求 env 文件权限必须是 `600`；repo 内 `.codex/private/` 或 `project-ledger/private/` 下的 env 还必须被 git ignore。
+- 验证通过：`bash -n`、默认占位草稿仍 fail-closed、临时 `644` env 被拒绝、临时 `600` 已填形状 env validate-only PASS 且不连接 DB。
+
+# 2026-05-16 10:45 Asia/Shanghai
+
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh` 新增 `--json` 和 `--output <file>`。
+- JSON 输出为 redacted machine-readable summary，不 source env、不打印 DB URL、不连接数据库，且不依赖 Node runtime。
+- `docs/preprod-disposable-db-rehearsal-runbook.md` 已补充 `env-status --json --output <file>` 用法。
+- 验证通过：文本输出兼容、默认草稿 JSON 正确、缺失 env JSON 正确、临时已填形状 env JSON 返回 `READY_TO_VALIDATE` 且不含 `postgres://`；临时 env / JSON 已删除。
+
+# 2026-05-16 18:25 Asia/Shanghai
+
+- 用户明确要求先把“平台开关 / 单位级可见功能”代码做完整，不再继续堆 preprod gate 脚手架。
+- Admin 新增独立入口：`/cn/operations/unit-permissions`，左侧菜单和首页快捷入口都能进入，不再把单位级权限藏在平台全局模块开关里。
+- Admin `模块开关` 页面改回平台级只读规划；具体“某个商户 / 摊位 / 配送队 / 物料供应商能看到什么”统一在 `单位权限开关` 配置。
+- Vendor 端收紧菜单过滤：`market`、`merchantTypes`、`shopDecoration`、`store`、`data` 不再永远可见；`storeDecoration` 被纳入单位级模块，运营可给海鲜档口开关店铺装修 / 资料类入口。
+- Vendor 首页新增 `单位权限开关 · 后台控制` 快照，直接显示当前经营单位、已开通模块和已隐藏模块；隐藏模块不会再在首页快捷入口、角色卡片或侧边栏偷露。
+- API 默认单位配置新增 `storeDecoration` 模块，module surface preview 新增店铺装修只读预览，继续声明 `runtimeEnabled=false`。
+- 验证通过：
+  - `git diff --check`
+  - `/home/codex/.bun/bin/bun --filter @acme/admin build`
+  - `/home/codex/.bun/bin/bun --filter @acme/vendor build`
+  - `npm run test:unit -- src/lib/__tests__/china-unit-permission-access-guard.unit.spec.ts src/lib/__tests__/china-unit-permission-pg-repository.unit.spec.ts src/api/admin/china/unit-permissions/__tests__/admin-vendor-propagation.unit.spec.ts src/api/vendor/china/unit-permissions/authorize/__tests__/route.unit.spec.ts src/api/vendor/china/module-surfaces/preview/__tests__/route.unit.spec.ts`
+  - `./.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh http://127.0.0.1:9000`
+  - `curl http://127.0.0.1:7000/cn/operations/unit-permissions` 返回 `200`
+  - `curl http://127.0.0.1:7001/` 返回 `200`
+- 当前 `seafoodStallA12` effective view 可见：`seafoodTrade`、`storeDecoration`、`pickupCard`、`expressPrint`；隐藏：`marketMaterials`、`livestream`、`seedlingWholesale`、`aiQuickListing`、`deliverySuppliers`。
+
+# 2026-05-16 18:36 Asia/Shanghai
+
+- 用户指出共享本地库会和现有数据重叠，要求用真实数据库结构加模拟数据一次性暴露关系链问题。
+- 修复 refund review query surface 相关测试类型阻塞：补齐 repository reader fake 的完整关系查询方法，修正 PG callable mock 类型，修正非法 fixture fail-closed 测试 cast，`get resolve()` getter 标注为 `never`。
+- API 全量 TypeScript 已通过：`node ./node_modules/typescript/bin/tsc --noEmit -p packages/api/tsconfig.json`。
+- refund review focused tests 已通过：8 个 suite，79 个 tests。
+- `.codex/scripts/refund-review-query-surface-admin-http-smoke-local-db.sh` 已改为默认创建唯一 disposable DB，不再默认打共享 `mercur`。
+- 该 HTTP smoke 现在会：创建 `fuyi_refund_review_query_surface_http_smoke_YYYYMMDDHHMMSS`、跑迁移、补 local-only Medusa 默认 link 兼容表、创建 Admin、seed 四段 refund review 关系数据、启动独立 API、执行三次 authenticated Admin query surface HTTP 查询、最后 terminate 连接并 drop DB。
+- 保留显式共享库逃生口：只有设置 `CODEX_HTTP_SMOKE_ALLOW_SHARED_DB=I_ACCEPT_SHARED_LOCAL_DB_SEED_CLEANUP_ONLY` 才允许使用非 disposable `CODEX_HTTP_SMOKE_DB`。
+- 真实 PostgreSQL 验证通过：
+  - `./.codex/scripts/refund-review-query-surface-module-migrate-smoke.sh` 创建并清理 `fuyi_refund_review_query_surface_module_migrate_20260516183047`
+  - `CODEX_HTTP_SMOKE_PORT=19004 CODEX_HTTP_SMOKE_STABILITY_WAIT_SECONDS=3 ./.codex/scripts/refund-review-query-surface-admin-http-smoke-local-db.sh` 创建、seed、HTTP 查询并清理 `fuyi_refund_review_query_surface_http_smoke_20260516183530`
+  - 残留 disposable DB 检查为 `0`
+- 本轮仍未执行 workflow、未写 refund success state、未触发 settlement / commission / payout / permission / fulfillment / logistics 写路径。
+
+# 2026-05-16 18:52 Asia/Shanghai
+
+- 用户要求测试环境“全部功能都要”，不能只测单个模块。
+- `.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh` 已从单模块 `livestream` smoke 扩展为全矩阵 smoke：
+  - `seafoodStallA12`：`seafoodTrade`、`storeDecoration`、`pickupCard`、`expressPrint`、`marketMaterials`、`livestream`、`seedlingWholesale`、`aiQuickListing`、`deliverySuppliers`
+  - `frozenMerchantB08`：`frozenGoods`、`storeDecoration`、`upstreamSupply`、`remoteWholesalers`、`pickupCard`、`expressPrint`、`livestream`
+  - `deliverySupplierTeam`：`deliverySuppliers`、`expressPrint`、`seafoodTrade`、`storeDecoration`、`pickupCard`、`marketMaterials`、`aiQuickListing`
+  - `materialSupplierNorth`：`marketMaterials`、`storeDecoration`、`fruitsVegetables`、`seedlingWholesale`、`pickupCard`、`expressPrint`、`livestream`
+- smoke 会依次把同一个 Vendor seller 绑定到各经营单位，把该单位配置内模块全部打开，再逐个验证：
+  - Vendor effective view 包含该单位全部测试模块
+  - `/vendor/china/unit-permissions/authorize?module_key=...` 返回 allowed
+  - `/vendor/china/module-surfaces/preview?module_key=...` 返回 read-only preview 且 `runtimeEnabled=false`
+- 修复 `updateChinaUnitPermissionSellerBindingInPg()`：同一个 seller id / seller handle 重新绑定到另一个经营单位时，会先清理旧绑定，再插入新绑定，避免唯一约束冲突。
+- 新增 PG repository 单测：覆盖 seller handle 从 `seafoodStallA12` 移动到 `frozenMerchantB08` 的绑定行为。
+- 验证通过：
+  - API unit permission focused tests：4 suites / 11 tests
+  - API full typecheck：`node ./node_modules/typescript/bin/tsc --noEmit -p packages/api/tsconfig.json`
+  - 全矩阵 HTTP smoke：`./.codex/scripts/china-unit-permission-admin-vendor-http-smoke.sh http://127.0.0.1:9000`
+  - readiness `unit-permission-smoke`：机器项 `pass=15 warnings=0 noGo=2`，剩余 NO-GO 仍为真实 preprod DB rehearsal 和高风险 runtime approval。
+  - reset 后 `seafoodStallA12` 已恢复默认 visible：`seafoodTrade`、`storeDecoration`、`pickupCard`、`expressPrint`；hidden：`marketMaterials`、`livestream`、`seedlingWholesale`、`aiQuickListing`、`deliverySuppliers`。
+
+# 2026-05-16 19:20 Asia/Shanghai
+
+- 新增 readiness `runtime-mock-suite` mode，把“全部功能先用真实关系链路测”的本机证据收成一条命令。
+- `.codex/scripts/china-launch-readiness-check.sh runtime-mock-suite` 现在会在 quick gates 之后继续跑：
+  - runtime mock / dry-run / shadow / read-only contract tests。
+  - main API refund review query surface existing-server HTTP smoke。
+  - Admin -> Vendor unit permission full-matrix HTTP smoke。
+  - 本地 PostgreSQL disposable DB rehearsal script-test，并清理临时库。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 已加入 `runtime-mock-suite`，suite artifact 现在包含该模式的 JSON/log。
+- 修正 `mock-payment-webhook-composition.unit.spec.ts` 的 command-preparation fixtures：
+  - payment session / order 现在补齐 `sellerId` 与 `marketId`，让 state guard 先验证 ownership 对齐。
+  - 测试仍断言 disabled runtime adapter 不允许 workflow/state mutation，只记录 command candidate。
+- 验证通过：
+  - `./.codex/scripts/china-launch-readiness-check.sh runtime-mock-suite --json --output /tmp/fuyi-runtime-mock-suite.json || true`
+    - `pass=17 warnings=1 noGo=3`
+    - 3 个 NO-GO 均为外部门槛：Admin 登录态视觉 QA、真实 preprod disposable DB rehearsal、高风险 runtime approval。
+  - `./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`
+    - 输出目录：`/tmp/fuyi-readiness-suite-20260516191449`
+    - latest link：`/tmp/fuyi-readiness-suite-latest`
+    - `runtime-mock-suite` artifact：`pass=17 warnings=1 noGo=3`
+  - API full typecheck：`node ./node_modules/typescript/bin/tsc --noEmit -p packages/api/tsconfig.json`
+  - `git diff --check`
+- 边界：
+  - 该套件覆盖本地真实 DB + 模拟数据 + mock/dry-run/shadow/read-only 链路，但不批准真实 production/preprod 写路径。
+  - 仍未执行 workflow、未改 payment/refund success state、未触发 settlement / commission / payout / permission / fulfillment / logistics 写路径。
+
+# 2026-05-16 19:40 Asia/Shanghai
+
+- 按用户要求的“关节链”方式继续补平台模块开关，不再停留在 Admin 静态布局。
+- 新增平台模块开关后端链路：
+  - `packages/api/src/lib/china-platform-module-switch-config.ts`
+  - `packages/api/src/lib/china-platform-module-switch-pg-repository.ts`
+  - `packages/api/src/api/admin/china/module-switches/route.ts`
+- `GET /admin/china/module-switches` 返回平台模块开关草稿，PG 表存在时读取 `pg_admin_draft`，否则 fallback 到 `server_memory_draft`。
+- `POST /admin/china/module-switches` 保存单个模块的 `switchOn` 平台默认草稿，并写入事件表；`DELETE` reset 回默认配置。
+- `china-platform-ops` migration 新增两张表：
+  - `china_platform_module_switch_config`
+  - `china_platform_module_switch_config_event`
+- Admin `模块开关` 页面已从只读 `ReadonlySwitchState` 改成真实 `Switch` 控件：
+  - 页面加载 `/admin/china/module-switches`
+  - 切换后 POST 保存
+  - 顶部显示 `source` 和保存状态
+  - 提供 reset 按钮
+  - 文案明确这是平台默认草稿，不改变真实业务 runtime。
+- 新增测试：
+  - `packages/api/src/lib/__tests__/china-platform-module-switch-pg-repository.unit.spec.ts`
+  - `packages/api/src/api/admin/china/module-switches/__tests__/route.unit.spec.ts`
+- 新增 HTTP smoke：
+  - `.codex/scripts/china-platform-module-switch-admin-http-smoke.sh`
+  - 流程：Admin login -> GET 默认 `livestream=false` -> POST 打开 -> GET 确认持久 -> DELETE reset -> GET 确认恢复。
+- readiness 接入：
+  - `.codex/scripts/china-launch-readiness-check.sh platform-module-switch-smoke`
+  - quick 门禁新增 `platform module switch Admin route and PG tests pass`
+  - `runtime-mock-suite` 已包含 platform module switch HTTP smoke
+  - artifact suite 已加入 `platform-module-switch-smoke`
+- preprod disposable DB rehearsal 验表清单已补平台模块开关两张表，避免迁移链漏检。
+- 验证通过：
+  - focused tests：6 tests 通过。
+  - Admin lint 通过。
+  - Admin build 通过。
+  - API full typecheck 通过。
+  - `./.codex/scripts/china-platform-module-switch-admin-http-smoke.sh http://127.0.0.1:9000` 通过。
+  - `./.codex/scripts/china-preprod-disposable-db-rehearsal-local-script-test.sh` 通过，已验证 12 张表并 cleanup 为 `0`。
+  - `./.codex/scripts/china-launch-readiness-check.sh platform-module-switch-smoke --json --output /tmp/fuyi-platform-module-switch-smoke.json || true`
+    - `pass=15 warnings=0 noGo=3`
+  - `./.codex/scripts/china-launch-readiness-check.sh runtime-mock-suite --json --output /tmp/fuyi-runtime-mock-suite-platform-switch-final.json || true`
+    - `pass=19 warnings=1 noGo=3`
+  - `./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`
+    - 输出目录：`/tmp/fuyi-readiness-suite-20260516193834`
+    - latest link：`/tmp/fuyi-readiness-suite-latest`
+- 边界：
+  - 平台模块开关只是 Admin 平台默认规划草稿和审计，不授予 RBAC。
+  - 不控制 Vendor 真实授权；Vendor 可见性仍走经营单位权限。
+  - 未触发订单、支付、退款、结算、佣金、打款、履约、物流或 workflow 写路径。
+
+# 2026-05-16 22:04 Asia/Shanghai
+
+- Admin 登录态视觉 QA 已脚本化，不再停留在一次性 `/tmp` Playwright 片段：
+  - 新增 `.codex/scripts/china-admin-logged-in-visual-qa.sh`。
+  - 支持 `plan` / `--help`，默认登录本地 Admin `http://localhost:7000`。
+  - 截图单位权限页桌面、单位权限页 seller selector 打开态、单位权限页移动、模块开关桌面、模块开关移动。
+  - 输出目录默认 `.codex/artifacts/admin-visual-qa-YYYYMMDDHHMMSS`，并写 `summary.json`。
+- readiness 已接入：
+  - `.codex/scripts/china-launch-readiness-check.sh` 新增 `admin-visual-qa` mode。
+  - `.codex/scripts/china-launch-readiness-artifact-suite.sh` 已把 `admin-visual-qa` 放在第一项；该 mode 的 JSON passItems 出现 `Admin logged-in visual QA script passes` 后，suite 会给后续 mode 自动设置 `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true`。
+- 验证通过：
+  - `bash -n .codex/scripts/china-admin-logged-in-visual-qa.sh`
+  - `bash -n .codex/scripts/china-launch-readiness-check.sh`
+  - `bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`
+  - `./.codex/scripts/china-admin-logged-in-visual-qa.sh plan`
+  - `./.codex/scripts/china-admin-logged-in-visual-qa.sh`
+    - 输出：`/home/codex/code/fuyi-pr-bx-workflow-runtime/.codex/artifacts/admin-visual-qa-20260516220058`
+  - `./.codex/scripts/china-launch-readiness-check.sh admin-visual-qa --json --output /tmp/fuyi-admin-visual-qa-readiness.json || true`
+    - `pass=15 warnings=0 noGo=2`
+    - Admin 视觉脚本通过；剩余 NO-GO 为真实 preprod disposable DB rehearsal 和高风险 runtime approval。
+  - `CODEX_READINESS_SUITE_OUTPUT_DIR=/tmp/fuyi-readiness-suite-admin-visual-qa-202605162204 CODEX_READINESS_SUITE_LATEST_LINK=/tmp/fuyi-readiness-suite-latest ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`
+    - 最新完整 suite：`/tmp/fuyi-readiness-suite-admin-visual-qa-202605162204`
+    - latest link：`/tmp/fuyi-readiness-suite-latest`
+    - suite overall 仍为 `NO-GO`，但后续 mode 已不再报 Admin 登录态视觉 QA 未确认。
+- 边界：
+  - 该脚本只做本地 Admin 登录态截图和页面断言。
+  - 不调用 Admin / Vendor 写 route，不改订单、支付、退款、结算、佣金、打款、履约、物流或 RBAC。
+  - 完整 suite 仍不能替代真实 disposable preprod DB rehearsal，也不批准高风险 runtime writes。
+
+# 2026-05-16 22:17 Asia/Shanghai
+
+- readiness suite 汇总继续收紧，避免把“本机证据是否通过”和“上线外部门槛是否放行”混在一个 `NO-GO` 里误读。
+- `.codex/scripts/china-launch-readiness-artifact-suite.sh` 已新增：
+  - `results[].passItems`
+  - `results[].warningItems`
+  - `localEvidence`
+  - `derivedGateConfirmations.adminLoggedInVisualQa`
+  - `adminVisualQaScreenshots`
+- `summary.md` 新增：
+  - `Local Evidence` 表格。
+  - `Derived Gate Confirmations` 区块。
+  - `Admin Visual QA Screenshots` 列表。
+- 验证通过：
+  - `bash -n .codex/scripts/china-launch-readiness-artifact-suite.sh`
+  - `CODEX_READINESS_SUITE_OUTPUT_DIR=/tmp/fuyi-readiness-suite-evidence-split-202605162217 CODEX_READINESS_SUITE_LATEST_LINK=/tmp/fuyi-readiness-suite-latest ./.codex/scripts/china-launch-readiness-artifact-suite.sh || true`
+  - `/tmp/fuyi-readiness-suite-evidence-split-202605162217/summary.md` 已确认：
+    - overall `Verdict: NO-GO`
+    - `admin-visual-qa`、`frontend`、`refund-smoke`、`unit-permission-smoke`、`platform-module-switch-smoke`、`runtime-mock-suite`、`preprod-db-local-script-test` 的 Local Evidence 均为 `PASS`
+    - `preprod-env-status` 的 Local Evidence 仍为 `NO-GO`
+    - `Admin logged-in visual QA: confirmed`
+- 边界：
+  - 只改 readiness summary 汇总，不改业务 route。
+  - 不放松真实 disposable preprod DB rehearsal gate。
+  - 不批准 payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime writes。
+
+# 2026-05-18 00:00 Asia/Shanghai
+
+- 已精确 stage manifest 第 4 组：Admin / Vendor / Storefront UI 自用可见面。
+- 当前 staged files：`139`。
+- 范围：
+  - Admin 中国平台首页 / 运营台视觉、页面壳、菜单文案和运营卡片布局。
+  - Vendor 单位权限可见性消费端与入口过滤。
+  - Storefront 中国首页 / footer 覆盖。
+  - `docs/storefront-china-page-coverage.md` 与 `memory/ui-decisions.md` 的自用 UI 决策记录。
+- 验证通过：
+  - `cd apps/admin && bun run lint && bun run build`
+    - 通过；Vite 仅保留 chunk size warning。
+  - `cd apps/vendor && bun run lint && bun run build`
+    - 通过。
+  - `cd apps/storefront && bun run build`
+    - 通过；仅保留既有 React Hook dependency warnings。
+  - `./.codex/scripts/current-worktree-staging-preflight.sh --expect-staged`
+    - `pass=9 warnings=1 no_go=0`；warning 为 staged 文件名包含 refund/payment/permission 高风险关键词，来自第 2/3 组已知范围。
+  - `git diff --cached --check`
+    - 通过。
+- 边界：
+  - 未扩展订单、支付、退款、结算、佣金、打款、履约、物流、RBAC enforcement 或 workflow runtime 写路径。
+  - 剩余 7 个 modified tracked 文件尚未进入第 4 组，需要下一轮单独 review 是否 stage 或排除。
+
+# 2026-05-18 00:10 Asia/Shanghai
+
+- 已精确 stage residual 第 5 组，收口剩余 7 个 modified tracked 文件。
+- 当前 staged files：`146`。
+- 范围：
+  - `.codex/scripts/start-dev.sh`：开发入口统一走 `run-api-dev.sh`，避免 `start-dev` 与 refund review query surface 专用 dev helper 在 CORS / DB URL / env gate 上漂移。
+  - refund provider inbox 两个 route unit tests：补 production-like 阻断先于读 body / 解析 DB scope，以及 local DB host/name 不安全时不打开 transaction 的回归覆盖。
+  - Vendor market context helper / test：把 repository rows 读取收成安全数组，避免非数组查询结果进入 read-model。
+  - china market read-model repository adapter：数组防御，非数组 rows 不再直接 `.reduce`。
+  - `packages/api/src/api/middlewares.ts`：格式整理，无业务语义变更。
+- 验证通过：
+  - `bash -n .codex/scripts/start-dev.sh`
+  - `bun test src/api/china/refund-inbox/alipay/__tests__/route.unit.spec.ts src/api/china/refund-inbox/wechat-pay/__tests__/route.unit.spec.ts src/api/vendor/china/market-context/__tests__/helpers.unit.spec.ts`
+    - `31/31` 通过。
+  - `bun test src/modules/china-market-read-model/__tests__/repository-market-read-model-adapter.unit.spec.ts`
+    - `2/2` 通过。
+  - `git diff --cached --check`
+    - 通过。
+- 额外检查：
+  - `bun run check-types` 可执行，但 turbo 当前没有实际 `check-types` task，输出 `Tasks: 0 successful, 0 total`；本轮不把它算作类型覆盖证据。
+  - stage 后 unstaged modified 为 `0`，untracked non-ignored 为 `0`。
+- 边界：
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-18 00:20 Asia/Shanghai
+
+- 已完成 staged 后最终证据核对。
+- 当前 staged files：`146`；unstaged modified：`0`；untracked non-ignored：`0`。
+- 高风险 staged 文件名核对：
+  - 命中范围集中在 refund review query surface / provider inbox / permission 相关受控文件。
+  - 未命中 settlement、commission、payout、fulfillment、logistics、workflow 文件名。
+- staged diff 新增行核对：
+  - 未发现 `refundSuccessState: true`、`runtimeMutationBlocked: false`、`stateMutationBlocked: false`、`productionExplicitlyEnabled: true`。
+  - 未发现 `settlementMutationAllowed: true`、`commissionMutationAllowed: true`、`payoutMutationAllowed: true`。
+  - `execute workflows` / `grant RBAC` 命中均为否定边界文案或测试断言。
+- private / artifact 路径核对：
+  - staged private/artifact 路径只包含 `.gitignore`。
+  - 未 stage `.codex/private/preprod-disposable-db-rehearsal.env` 或任何 `/tmp/fuyi-*` 证据产物。
+- quick readiness 已复跑：
+  - `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED=true PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true ./.codex/scripts/china-launch-readiness-check.sh quick --json --output /tmp/fuyi-staged-final-quick.json || true`
+  - 输出：`GO-FOR-CHECKED-SCOPE`，`pass=17 warnings=0 noGo=0`。
+- 边界：
+  - 本次核对不新增功能。
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-18 00:30 Asia/Shanghai
+
+- 已完成 staged 后 full readiness 复验。
+- 命令：
+  - `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true PREPROD_DISPOSABLE_DB_REHEARSAL_CONFIRMED=true PAYMENT_REFUND_SETTLEMENT_RUNTIME_APPROVED=true ./.codex/scripts/china-launch-readiness-check.sh full --json --output /tmp/fuyi-staged-final-full.json || true`
+- 输出：
+  - `GO-FOR-CHECKED-SCOPE`
+  - `pass=18 warnings=0 noGo=0`
+  - 输出文件：`/tmp/fuyi-staged-final-full.json`
+- 覆盖：
+  - quick gates
+  - Admin build
+  - Vendor build
+  - Storefront build
+- 备注：
+  - Storefront build 仍保留既有 React Hook dependency warnings，未升级为 blocking error。
+  - Admin build 仍保留 Vite chunk size warning，未升级为 blocking error。
+- 边界：
+  - 本次复验不新增功能。
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-18 00:40 Asia/Shanghai
+
+- 已同步 `docs/current-worktree-staging-manifest.md` 到最终 staged 交付状态。
+- manifest 现在记录：
+  - staged files：`146`
+  - unstaged modified：`0`
+  - untracked non-ignored：`0`
+  - quick readiness：`GO-FOR-CHECKED-SCOPE`，`pass=17 warnings=0 noGo=0`
+  - full readiness：`GO-FOR-CHECKED-SCOPE`，`pass=18 warnings=0 noGo=0`
+  - residual 第 5 组范围和验证命令
+  - generated type surface `packages/api/.mercur/index.d.ts` 的 review 提醒
+- 边界：
+  - 本次只更新 review / staging 文档和 ledger。
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-18 00:50 Asia/Shanghai
+
+- 已完成 staged shell 脚本语法复验。
+- 当前 staged 包包含 `29` 个 `.sh` 脚本。
+- 命令：
+  - `git diff --cached --name-only | grep -E '\.sh$' | tee /tmp/fuyi-staged-shell-scripts.txt`
+  - `wc -l /tmp/fuyi-staged-shell-scripts.txt`
+  - `xargs -a /tmp/fuyi-staged-shell-scripts.txt -I{} bash -n {}`
+- 输出：
+  - `29 /tmp/fuyi-staged-shell-scripts.txt`
+  - `STAGED_SHELL_SYNTAX_OK`
+- 已同步该证据到 `docs/current-worktree-staging-manifest.md`、`project-ledger/status.md`、`project-ledger/handoff.md`。
+- 边界：
+  - 本次只做 staged 脚本语法验证和文档/ledger 记录。
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-18 01:00 Asia/Shanghai
+
+- 已完成 staged API 单测集合复验。
+- 当前 staged 包包含 `31` 个 API test 文件。
+- 命令：
+  - `git diff --cached --name-only | grep -E '^packages/api/src/.+(__tests__/.+\.spec\.ts|\.unit\.spec\.ts)$' | sort | tee /tmp/fuyi-staged-api-tests.txt`
+  - `sed 's#^packages/api/##' /tmp/fuyi-staged-api-tests.txt > /tmp/fuyi-staged-api-tests-relative.txt`
+  - `cd packages/api && xargs bun test < /tmp/fuyi-staged-api-tests-relative.txt`
+- 输出：
+  - `228 pass`
+  - `0 fail`
+  - `738 expect() calls`
+- 已同步该证据到 `docs/current-worktree-staging-manifest.md`、`project-ledger/status.md`、`project-ledger/handoff.md`。
+- 边界：
+  - 本次只做 staged API 单测集合复验和文档/ledger 记录。
+  - 未执行 production DB / production workflow。
+  - 未写 refund success state。
+  - 未触发 settlement、commission、payout、permission enforcement、fulfillment 或 logistics mutation。
+
+# 2026-05-16 22:24 Asia/Shanghai
+
+- preprod private env 链路继续加固，把 `run` 阶段才会发现的一批基础输入错误提前到 `env-status` / `validate`。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh`：
+  - 保持 redacted：不 source env、不打印 DB URL、不连接数据库。
+  - 保持 dependency-free：不依赖 Node runtime。
+  - 新增 `preflight_ok` / `preflight_reason` 文本输出。
+  - JSON 新增 `preflightOk` / `preflightReason`。
+  - 只有确认 token、备份确认、DB URL 形状、DB 名白名单、production-like 名称、localhost tunnel 确认和自定义 allow regex 确认都通过，才会给 `READY_TO_VALIDATE`。
+- `.codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh validate`：
+  - 新增非连接 target safety preflight。
+  - 错误 disposable confirm token、localhost 缺 tunnel confirm、production-like DB 名、自定义 allow regex 缺 confirm 会提前 fail-closed。
+- `docs/preprod-disposable-db-rehearsal-runbook.md` 已补充 redacted preflight / validate preflight 说明，latest suite 更新为 `/tmp/fuyi-readiness-suite-evidence-split-202605162217`。
+- 验证通过：
+  - `bash -n .codex/scripts/china-preprod-disposable-db-rehearsal-env-status.sh`
+  - `bash -n .codex/scripts/china-preprod-disposable-db-rehearsal-from-env.sh`
+  - 默认占位草稿 env-status：`verdict=NOT_READY`，`preflightOk=false`，原因是占位符仍存在。
+  - 默认占位草稿 validate：被拒绝，仍含 placeholder DB URL。
+  - 临时合法形状 env：env-status 返回 `READY_TO_VALIDATE`，validate 通过，并明确未连接 DB、不满足真实 gate。
+  - 临时错误 confirm token env：validate 被拒绝。
+  - 临时 localhost 缺 tunnel token env：validate 被拒绝。
+  - 临时 localhost 加 tunnel token env：validate 通过。
+  - 临时 DB 名 `prod` env：validate 被拒绝。
+  - `ADMIN_LOGIN_VISUAL_QA_CONFIRMED=true ./.codex/scripts/china-launch-readiness-check.sh preprod-env-status --json --output /tmp/fuyi-preprod-env-status-preflight.json || true` 仍为 `NO-GO`。
+  - `git diff --check`
+- 边界：
+  - 未连接真实 preprod / production DB。
+  - 未执行 migration。
+  - 未触碰 payment / refund / settlement / commission / payout / permission / fulfillment / logistics runtime。

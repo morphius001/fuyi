@@ -187,6 +187,7 @@
         "configureMarket": "Configure market",
         "reviewMerchant": "View merchants",
         "orderMonitor": "Order monitor",
+        "unitPermissions": "Unit permission switches",
         "moduleSwitches": "Module switches",
         "capabilityContracts": "Capability contracts"
       },
@@ -266,7 +267,11 @@
       },
       "moduleSwitches": {
         "title": "Module Switches",
-        "description": "Placeholder for platform-level module switches that plan which capabilities are enabled, in pilot, under review, or paused. This does not affect Vendor menus yet."
+        "description": "Platform-level switches plan enabled, pilot, review, and paused states. Use Unit Permission Switches to control what each merchant, stall, delivery team, or material supplier can see."
+      },
+      "unitPermissions": {
+        "title": "Unit Permission Switches",
+        "description": "Controls China Vendor menu visibility per operating unit. For example, a seafood stall sees seafood trade, pickup cards, and fulfillment tools, while unrelated supplier or livestream entries stay hidden."
       },
       "marketCapabilities": {
         "title": "Market Settings",
@@ -970,7 +975,7 @@
     },
     "operations": {
       "actions": {
-        "mockConfigure": "Mock config placeholder"
+        "mockConfigure": "Platform config placeholder"
       },
       "mockNotice": {
         "title": "Mock Console Notice",
@@ -978,8 +983,8 @@
       },
       "summary": {
         "mockOnly": {
-          "title": "Read-only mock switches",
-          "description": "All from frontend placeholder constants"
+          "title": "Platform switch plan",
+          "description": "Platform / market / role remain display-level"
         },
         "marketScoped": {
           "title": "Market-level capabilities",
@@ -1046,7 +1051,99 @@
       },
       "moduleSwitches": {
         "title": "Platform Module Switches",
-        "description": "Core capability states for the local fresh supply chain and multi-role commerce platform. All switches are read-only mock / configuration placeholders."
+        "description": "Core capability states for the local fresh supply chain and multi-role commerce platform. This platform-level switch group now saves as a backend platform-default draft, but it does not change real business runtime behavior.",
+        "noticeTitle": "Switch Control Notice",
+        "noticeMessage": "Platform / market / role switches save as an Admin platform-default draft and audit events. Operating-unit permission switches still separately feed Vendor effective / authorize / preview read-only menu decisions. These controls are not RBAC and do not change orders, payments, refunds, settlements, commissions, payouts, or fulfillment.",
+        "serverDraftNotice": "Operators can toggle these switches and save them to PG platform-default config and event tables. Save status: {{status}}. This is a platform planning draft only and does not enable real business runtime.",
+        "switchAriaLabel": "{{module}} platform default switch",
+        "switchOn": "Platform default on",
+        "switchOff": "Platform default off",
+        "actions": {
+          "reset": "Reset platform defaults"
+        },
+        "saveStatus": {
+          "ready": "Pending",
+          "saving": "Saving",
+          "saved": "Saved",
+          "error": "Save failed, using current page state"
+        }
+      },
+      "unitPermissionControls": {
+        "title": "Operating Unit Permission Switches",
+        "description": "Controls visible capabilities per merchant, stall, delivery team, or material supplier. For example, a seafood stall only sees seafood trade, pickup card, and fulfillment tool entries, while unrelated livestream or seedling wholesale entries stay hidden.",
+        "noticeTitle": "Unit-Level Switch Notice",
+        "noticeMessage": "These controls manage Vendor menu visibility per operating unit, not global platform switches. After saving, Vendor resolves the config through seller binding. Real RBAC, orders, payments, refunds, settlements, commissions, payouts, and fulfillment logic are not changed here.",
+        "switchAriaLabel": "{{unit}} {{module}} visibility switch",
+        "localDraftNotice": "Operators can toggle these switches now; changes are saved as a local browser draft. A later backend API can persist, audit, and sync them to Vendor menus.",
+        "serverDraftNotice": "Operators can toggle these switches and save them to PG config and event tables. Save status: {{status}}. Vendor sessions resolve these settings through seller bindings first, then use them for China custom menus, effective, authorize, and preview read-only decisions.",
+        "sellerHandlePlaceholder": "Enter seller handle, e.g. a-hai-xian-huo-dang",
+        "sellerSelectPlaceholder": "Select a real seller",
+        "bindingNotice": "This binding only resolves which operating-unit menu config a seller dashboard should read. It does not grant real RBAC permissions.",
+        "effectivePreview": {
+          "title": "Vendor menu effective preview",
+          "description": "Reads the backend effective endpoint for the selected operating unit so operators can verify which vendor entries will appear after saving switches.",
+          "selectUnit": "Select operating unit to preview",
+          "loading": "Loading backend effective view...",
+          "errorMessage": "Failed to load effective view: {{message}}.",
+          "visibleModules": "Visible in Vendor",
+          "hiddenModules": "Hidden in Vendor",
+          "vendorEntryCount": "Affects {{count}} entries"
+        },
+        "switchOn": "Visible",
+        "switchOff": "Hidden",
+        "hiddenByOperator": "Disabled by operator, backend entry hidden",
+        "actions": {
+          "reset": "Reset sample config",
+          "saveBinding": "Save binding"
+        },
+        "saveStatus": {
+          "ready": "Pending",
+          "saving": "Saving",
+          "saved": "Saved",
+          "error": "Save failed, using current page state"
+        },
+        "fields": {
+          "unitType": "Unit type",
+          "market": "Market",
+          "visibleCount": "Visible capabilities",
+          "sellerBinding": "Seller binding"
+        },
+        "reasons": {
+          "coreCategory": "Allowed by core category",
+          "enabledForUnit": "Allowed for this operating unit",
+          "rolePilot": "Allowed by role pilot",
+          "notInUnitScope": "Outside this unit scope",
+          "providerBlocked": "Real provider is not connected yet",
+          "categoryBlocked": "Category mismatch, entry hidden",
+          "marketNotEnabled": "Market has not enabled it",
+          "pendingReview": "Waiting for qualification or operations review",
+          "enabledByOperator": "Manually enabled by operator",
+          "highRiskReadOnly": "High-risk finance, read-only entry only"
+        }
+      },
+      "unitTypes": {
+        "merchantStall": "Merchant stall",
+        "merchantStore": "Merchant store",
+        "deliverySupplier": "Delivery supplier",
+        "materialSupplier": "Material supplier"
+      },
+      "units": {
+        "seafoodStallA12": {
+          "name": "Sanmen Seafood Stall A12",
+          "description": "Seafood stall example: only seafood trade, pickup card, and fulfillment tool entries are visible."
+        },
+        "frozenMerchantB08": {
+          "name": "Coastal Frozen Merchant B08",
+          "description": "Frozen goods merchant example: frozen goods, upstream supply, and remote wholesale pilot entries are visible."
+        },
+        "deliverySupplierTeam": {
+          "name": "Sanmen Local Delivery Team",
+          "description": "Delivery supplier example: only delivery-service entries are visible, not product trading capabilities."
+        },
+        "materialSupplierNorth": {
+          "name": "North Produce Material Supplier",
+          "description": "Material supplier example: only market material entries are visible, not consumer trade capabilities."
+        }
       },
       "marketCapabilities": {
         "switchTitle": "Market Selection",
@@ -1309,7 +1406,8 @@
         "aiQuickListing": "AI Quick Listing",
         "expressPrint": "Express Print / E-waybill",
         "pickupCard": "Pickup Card",
-        "storeDecoration": "Store Decoration"
+        "storeDecoration": "Store Decoration",
+        "financeReadOnly": "Finance Read-only"
       },
       "switchPreview": {
         "readonly": "Mock read-only placeholder",

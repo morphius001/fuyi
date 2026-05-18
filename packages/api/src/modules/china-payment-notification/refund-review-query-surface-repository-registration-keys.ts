@@ -1,0 +1,11 @@
+export const REFUND_STATE_MUTATION_APPROVAL_PERSISTENCE_REPOSITORY_KEY =
+  "refundStateMutationApprovalPersistenceRepository" as const;
+
+export const REFUND_STATE_MUTATION_AUDIT_PERSISTENCE_REPOSITORY_KEY =
+  "refundStateMutationAuditPersistenceRepository" as const;
+
+export const REFUND_STATE_MUTATION_RUNTIME_ATTEMPT_PERSISTENCE_REPOSITORY_KEY =
+  "refundStateMutationRuntimeAttemptPersistenceRepository" as const;
+
+export const REFUND_STATE_MUTATION_TERMINAL_CONFLICT_PERSISTENCE_REPOSITORY_KEY =
+  "refundStateMutationTerminalConflictPersistenceRepository" as const;

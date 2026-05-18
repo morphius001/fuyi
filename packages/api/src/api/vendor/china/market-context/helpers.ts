@@ -103,11 +103,10 @@ export const buildVendorMarketContextFromRepositoryRows = async ({
   marketId?: string;
   rows: ChinaMarketRepositoryRows;
 }): Promise<VendorMarketContextBuildResult> => {
-  const readModel = new ChinaMarketReadModelService(
-    await buildChinaMarketReadModelSeedFromRepository({
-      listChinaMarketReadRows: () => rows,
-    }),
-  );
+  const seed = await buildChinaMarketReadModelSeedFromRepository({
+    listChinaMarketReadRows: () => rows,
+  });
+  const readModel = new ChinaMarketReadModelService(seed);
   const repositoryContext = buildChinaVendorMarketContext({
     readModel,
     sellerId,
@@ -142,6 +141,12 @@ const selectVisibleRows = (
   tableName: string,
 ) => pg(tableName).whereNull("deleted_at");
 
+const selectQueryRows = async (query: VendorMarketContextQueryBuilder) => {
+  const rows = (await query.select("*")) as unknown;
+
+  return Array.isArray(rows) ? (rows as Record<string, unknown>[]) : [];
+};
+
 const selectRowsForMarkets = async ({
   pg,
   tableName,
@@ -157,9 +162,9 @@ const selectRowsForMarkets = async ({
     return [];
   }
 
-  return (await selectVisibleRows(pg, tableName)
-    .whereIn(marketKey, marketIds)
-    .select("*")) as Record<string, unknown>[];
+  return selectQueryRows(
+    selectVisibleRows(pg, tableName).whereIn(marketKey, marketIds),
+  );
 };
 
 export const readVendorMarketContextRepositoryRows = async ({
@@ -186,9 +191,9 @@ export const readVendorMarketContextRepositoryRows = async ({
     pg,
     "china_market_membership",
   ).where("seller_id", sellerId);
-  const memberships = (await (
-    marketId ? membershipQuery.where("market_id", marketId) : membershipQuery
-  ).select("*")) as Record<string, unknown>[];
+  const memberships = await selectQueryRows(
+    marketId ? membershipQuery.where("market_id", marketId) : membershipQuery,
+  );
   const marketIds = Array.from(
     new Set(
       memberships
@@ -206,9 +211,12 @@ export const readVendorMarketContextRepositoryRows = async ({
     }),
     memberships,
     roles: (await tableExists(pg, "china_seller_role"))
-      ? ((await selectVisibleRows(pg, "china_seller_role")
-          .where("seller_id", sellerId)
-          .select("*")) as Record<string, unknown>[])
+      ? await selectQueryRows(
+          selectVisibleRows(pg, "china_seller_role").where(
+            "seller_id",
+            sellerId,
+          ),
+        )
       : [],
     announcements: await selectRowsForMarkets({
       pg,

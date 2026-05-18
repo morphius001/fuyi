@@ -76,8 +76,11 @@ const toStringArray = (value: unknown): string[] =>
 const isDeleted = (row: RepositoryRow) =>
   Boolean(row.deleted_at ?? row.deletedAt);
 
+const safeRows = (rows: RepositoryRow[] | undefined) =>
+  Array.isArray(rows) ? rows : [];
+
 const mapMarkets = (rows: RepositoryRow[] = []): ChinaMarket[] =>
-  rows.reduce<ChinaMarket[]>((markets, row) => {
+  safeRows(rows).reduce<ChinaMarket[]>((markets, row) => {
     if (isDeleted(row)) {
       return markets;
     }
@@ -116,7 +119,7 @@ const mapMarkets = (rows: RepositoryRow[] = []): ChinaMarket[] =>
   }, []);
 
 const mapMemberships = (rows: RepositoryRow[] = []): ChinaMarketMembership[] =>
-  rows.reduce<ChinaMarketMembership[]>((memberships, row) => {
+  safeRows(rows).reduce<ChinaMarketMembership[]>((memberships, row) => {
     if (isDeleted(row)) {
       return memberships;
     }
@@ -156,7 +159,7 @@ const mapMemberships = (rows: RepositoryRow[] = []): ChinaMarketMembership[] =>
   }, []);
 
 const mapRoles = (rows: RepositoryRow[] = []): ChinaSellerRole[] =>
-  rows.reduce<ChinaSellerRole[]>((roles, row) => {
+  safeRows(rows).reduce<ChinaSellerRole[]>((roles, row) => {
     if (isDeleted(row)) {
       return roles;
     }
@@ -194,7 +197,7 @@ const mapRoles = (rows: RepositoryRow[] = []): ChinaSellerRole[] =>
 const mapAnnouncements = (
   rows: RepositoryRow[] = [],
 ): ChinaMarketAnnouncement[] =>
-  rows.reduce<ChinaMarketAnnouncement[]>((announcements, row) => {
+  safeRows(rows).reduce<ChinaMarketAnnouncement[]>((announcements, row) => {
     if (isDeleted(row)) {
       return announcements;
     }
@@ -243,7 +246,7 @@ const mapAnnouncements = (
 const mapBusinessHours = (
   rows: RepositoryRow[] = [],
 ): ChinaMarketBusinessHour[] =>
-  rows.reduce<ChinaMarketBusinessHour[]>((businessHours, row) => {
+  safeRows(rows).reduce<ChinaMarketBusinessHour[]>((businessHours, row) => {
     if (isDeleted(row)) {
       return businessHours;
     }
@@ -282,7 +285,7 @@ const mapBusinessHours = (
 const mapDeliveryProfiles = (
   rows: RepositoryRow[] = [],
 ): ChinaMarketDeliveryProfile[] =>
-  rows.reduce<ChinaMarketDeliveryProfile[]>((profiles, row) => {
+  safeRows(rows).reduce<ChinaMarketDeliveryProfile[]>((profiles, row) => {
     if (isDeleted(row)) {
       return profiles;
     }

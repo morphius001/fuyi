@@ -1,0 +1,3 @@
+# Keep generated local QA artifacts out of git.
+*
+!.gitignore

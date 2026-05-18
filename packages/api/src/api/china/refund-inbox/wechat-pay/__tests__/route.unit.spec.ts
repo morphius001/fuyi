@@ -183,6 +183,32 @@ describe("WeChat Pay refund provider inbox route disabled skeleton", () => {
     expectSafeBody(res.json.mock.calls[0]?.[0]);
   });
 
+  it("blocks production-like route config before reading body or resolving local DB", async () => {
+    enableLocalWechatDb();
+    process.env.APP_ENV = "preprod";
+    process.env.CHINA_REFUND_STATE_MUTATION_ENABLED = "true";
+    const query = jest.fn();
+    const req = makeSignedWechatLocalDbRequest({ query });
+    const scope = req.scope as unknown as { resolve: jest.Mock };
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(req.text).not.toHaveBeenCalled();
+    expect(scope.resolve).not.toHaveBeenCalled();
+    expect(query).not.toHaveBeenCalled();
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "disabled",
+      provider: "wechat_pay",
+      code: "REFUND_PROVIDER_ROUTE_PRODUCTION_BLOCKED",
+      runtimeMutationBlocked: true,
+      stateMutationBlocked: true,
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
   it("accepts verified local fixture into inbox-only response", async () => {
     enableLocalWechat();
     const req = makeSignedWechatRequest();
@@ -234,6 +260,65 @@ describe("WeChat Pay refund provider inbox route disabled skeleton", () => {
 
     expect(res.status).toHaveBeenCalledWith(503);
     expect(req.text).not.toHaveBeenCalled();
+    expect(res.json.mock.calls[0]?.[0]).toMatchObject({
+      status: "disabled",
+      provider: "wechat_pay",
+      code: "REFUND_PROVIDER_ROUTE_LOCAL_DB_UNAVAILABLE",
+      refundSuccessState: false,
+    });
+    expectSafeBody(res.json.mock.calls[0]?.[0]);
+  });
+
+  it("does not read body or open a transaction when local DB host is remote", async () => {
+    enableLocalWechatDb();
+    const query = jest.fn();
+    const transaction = jest.fn(async () => ({
+      raw: query,
+      commit: jest.fn(async () => undefined),
+      rollback: jest.fn(async () => undefined),
+    }));
+    const raw = jest.fn(async (sql: string) => {
+      if (sql.includes("current_database")) {
+        return { rows: [{ database_name: localDbName }] };
+      }
+
+      if (sql.includes("inet_server_addr")) {
+        return {
+          rows: [{ server_host: "10.0.0.5", server_port: 15432 }],
+        };
+      }
+
+      return { rows: [] };
+    });
+    const req = {
+      ...makeRequest(),
+      scope: {
+        resolve: jest.fn(() => ({
+          raw,
+          transaction,
+        })),
+      },
+    } as unknown as MedusaRequest & {
+      text: jest.Mock;
+      scope: { resolve: jest.Mock };
+    };
+    const res = makeResponse();
+
+    await POST(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(503);
+    expect(req.text).not.toHaveBeenCalled();
+    expect(req.scope.resolve).toHaveBeenCalledTimes(1);
+    expect(raw).toHaveBeenCalledWith("select current_database() as database_name");
+    expect(JSON.stringify(raw.mock.calls)).toContain("inet_server_addr");
+    expect(transaction).not.toHaveBeenCalled();
+    expect(query).not.toHaveBeenCalled();
+    expect(JSON.stringify(raw.mock.calls)).not.toContain(
+      "insert into payment_notification_inbox",
+    );
+    expect(JSON.stringify(raw.mock.calls)).not.toContain(
+      "update payment_notification_inbox",
+    );
     expect(res.json.mock.calls[0]?.[0]).toMatchObject({
       status: "disabled",
       provider: "wechat_pay",
